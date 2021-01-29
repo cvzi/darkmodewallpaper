@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
+
+    This file is part of DarkModeLiveWallpaper.
+
+    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <path
+        android:fillColor="#969696"
+        android:pathData="m20.107,155.682c-2.684,-3.069 -6.127,-7.522 -7.651,-9.894 0,0 -0.668,-1.661 0.56,-2.278 1.199,-0.604 2.859,-0.635 2.859,-0.635 26.194,5.925 51.557,1.418 73.095,-12.988 8.749,-5.852 21.472,-19.517 26.95,-28.945 13.082,-22.516 15.676,-49.773 7.159,-75.221 -1.575,-4.704 -4.965,-7.774 -4.805,-12.116 0.025,-0.686 0.381,-1.612 0.898,-1.853 0.727,-0.298 1.581,-0.032 1.581,-0.032 13.514,5.13 44.622,30.187 53.573,55.207 3.508,9.806 4.694,16.123 5.165,27.507 1.06,25.623 -7.094,47.291 -24.707,65.658 -17.613,18.366 -38.921,27.42 -64.565,27.434 -11.414,0.004 -17.408,-0.868 -27.507,-4.012 -16.76,-5.218 -30.914,-14.464 -42.605,-27.831z"
+        android:strokeWidth="0.968822" />
+    <path
+        android:fillColor="#ffff82"
+        android:pathData="m47.604,114.603 l-13.214,-5.311 -11.866,7.874 0.968,-14.208 -11.156,-8.852 13.812,-3.47 4.972,-13.345 7.568,12.064 14.229,0.604 -9.135,10.926z"
+        android:strokeWidth="0.264583" />
+    <path
+        android:fillColor="#ffff82"
+        android:pathData="m61.058,28.314 l-6.866,-5.83 -8.695,2.351 3.422,-8.332 -4.923,-7.543 8.981,0.68 5.652,-7.013 2.128,8.752 8.416,3.208 -7.666,4.729z"
+        android:strokeWidth="0.264583" />
+</vector>

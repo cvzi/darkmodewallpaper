@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
+
+    This file is part of DarkModeLiveWallpaper.
+
+    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+    <path
+        android:fillColor="#999999"
+        android:pathData="M0,0h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M4,0h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M8,0h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M12,0h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M16,0h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M0,4h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M4,4h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M8,4h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M12,4h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M16,4h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M0,8h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M4,8h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M8,8h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M12,8h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M16,8h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M0,12h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M4,12h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M8,12h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M12,12h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M16,12h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M0,16h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M4,16h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M8,16h4v4h-4z" />
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M12,16h4v4h-4z" />
+    <path
+        android:fillColor="#999999"
+        android:pathData="M16,16h4v4h-4z" />
+    <path android:pathData="m0,0h10c0,0 0.0314159,10-10,10 z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="8"
+                android:endY="8"
+                android:startX="0"
+                android:startY="0"
+                android:type="linear">
+                <item
+                    android:color="#FF000000"
+                    android:offset="0" />
+                <item
+                    android:color="#FFFF0000"
+                    android:offset="0.12" />
+                <item
+                    android:color="#FFFF00FF"
+                    android:offset="0.25" />
+                <item
+                    android:color="#FF0000FF"
+                    android:offset="0.37" />
+                <item
+                    android:color="#FF00FFFF"
+                    android:offset="0.5" />
+                <item
+                    android:color="#FF00FF00"
+                    android:offset="0.62" />
+                <item
+                    android:color="#FFFFFF00"
+                    android:offset="0.7" />
+                <item
+                    android:color="#FFFFF000"
+                    android:offset="0.80" />
+                <item
+                    android:color="#FFFF6400"
+                    android:offset="0.85" />
+                <item
+                    android:color="#FFFFFFFF"
+                    android:offset="0.90" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>
