@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
+
+    This file is part of DarkModeLiveWallpaper.
+
+    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="pref_file" translatable="false">com.github.cvzi.darkmodewallpaper_preferences</string>
+    <string name="pref_file_lock_screen" translatable="false">com.github.cvzi.darkmodewallpaper_preferences_lock_screen</string>
+
+    <string name="pref_separate_lock_screen_key" translatable="false">separate_lock_screen_key</string>
+    <bool name="pref_separate_lock_screen_default">false</bool>
+    <string name="pref_color_day_key" translatable="false">color_day</string>
+    <string name="pref_color_day_default" translatable="false">0</string>
+    <string name="pref_color_night_key" translatable="false">color_night</string>
+    <string name="pref_color_night_default" translatable="false">-2080374784</string>
+    <string name="pref_brightness_day_key" translatable="false">brightness_day</string>
+    <string name="pref_brightness_day_default" translatable="false">1.0</string>
+    <string name="pref_brightness_night_key" translatable="false">brightness_night</string>
+    <string name="pref_brightness_night_default" translatable="false">1.0</string>
+    <string name="pref_contrast_day_key" translatable="false">contrast_day</string>
+    <string name="pref_contrast_day_default" translatable="false">1.0</string>
+    <string name="pref_contrast_night_key" translatable="false">contrast_night</string>
+    <string name="pref_contrast_night_default" translatable="false">1.0</string>
+    <string name="pref_use_night_wallpaper_key" translatable="false">use_night_wallpaper</string>
+    <bool name="pref_use_night_wallpaper_default">false</bool>
+    <string name="pref_use_day_color_key" translatable="false">use_day_color</string>
+    <bool name="pref_use_day_color_default">true</bool>
+    <string name="pref_use_night_color_key" translatable="false">use_night_color</string>
+    <bool name="pref_use_night_color_default">true</bool>
+    <string name="pref_use_day_color_only_key" translatable="false">use_day_color_only</string>
+    <bool name="pref_use_day_color_only_default">false</bool>
+    <string name="pref_use_night_color_only_key" translatable="false">use_night_color_only</string>
+    <bool name="pref_use_night_color_only_default">false</bool>
+    <string name="pref_preview_mode_key" translatable="false">preview_mode</string>
+    <string name="pref_preview_mode_default" translatable="false">0</string>
+    <string name="pref_animate_from_lock_screen_key" translatable="false">animate_from_lock_screen</string>
+    <bool name="pref_animate_from_lock_screen_default">true</bool>
+
+</resources>

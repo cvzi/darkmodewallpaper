@@ -1,6 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.jaredsburrows.license'
+}
+
+licenseReport {
+    generateCsvReport = false
+    generateHtmlReport = true
+    generateJsonReport = false
+    copyHtmlReportToAssets = true
 }
 
 android {
@@ -31,10 +39,11 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.5.0-beta01'
     implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
     implementation 'com.google.android.material:material:1.3.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.rarepebble:colorpicker:3.0.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

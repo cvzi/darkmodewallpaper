@@ -1,3 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
+
+    This file is part of DarkModeLiveWallpaper.
+
+    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+-->
 <resources>
     <string name="app_name">DarkModeLiveWallpaper</string>
+
+    <string name="use_as_day_home">Day home screen wallpaper</string>
+    <string name="use_as_night_home">Night home screen wallpaper</string>
+    <string name="use_as_day_lock">Day lock screen wallpaper</string>
+    <string name="use_as_night_lock">Night lock wallpaper</string>
+
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Automatically changes wallpaper to fit Light/Dark theme</string>
+    <string name="wallpaper_is_loading">loading…</string>
+
+    <string name="color_chooser_day">Choose day time overlay color</string>
+    <string name="color_chooser_night">Choose night time overlay color</string>
+
+    <string name="status_darkmode">Dark mode status:</string>
+    <string name="status_darkmode_day">Day time/Light theme</string>
+    <string name="status_darkmode_night">Night time/Dark theme</string>
+
+    <string name="status_requested_image_size">Recommended image size:</string>
+    <string name="status_screen_size">Screen size:</string>
+    <string name="resolution_width_x_height" translatable="false">%1$dx%2$d</string>
+
+    <string name="wallpaper_file_chooser_title">Select image (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Day time</string>
+    <string name="wallpaper_file_chooser_night_time">Night time</string>
+    <string name="wallpaper_file_chooser_home_screen">Home screen</string>
+    <string name="wallpaper_file_chooser_lock_screen">Lock screen</string>
+
+
+    <string name="wallpaper_file_chooser_success">Image stored in %1$s</string>
+    <string name="wallpaper_file_chooser_error">Could not retrieve image</string>
+
+    <string name="wallpaper_import_dialog_title">Import current wallpaper</string>
+    <string name="wallpaper_import_dialog_message">Would you like to import your current wallpaper?
+\n\n(may not work for live wallpapers)
+\n\nAsks for storage permission in the next step</string>
+    <string name="wallpaper_import_success">Wallpaper imported\n%1$s</string>
+    <string name="wallpaper_import_failed">Could not retrieve image</string>
+    <string name="wallpaper_import_permission_missing">The storage permission is needed to import a wallpaper!</string>
+
+    <string name="image_file_import_success">Image stored in %1$s</string>
+    <string name="image_file_import_error">Could not import image</string>
+    <string name="image_file_import_loading_title">Importing image file</string>
+    <string name="image_file_import_loading_message">Optimizing %2$s from %1$s</string>
+
+    <string name="button_import_wallpaper">Import wallpaper</string>
+    <string name="button_apply_wallpaper">Apply as wallpaper</string>
+    <string name="button_lock_screen_settings">Lock screen</string>
+    <string name="switch_only_use_color">Only color</string>
+    <string name="switch_use_color_overlay">Color overlay</string>
+    <string name="button_select_image">Select image</string>
+    <string name="heading_day_time_settings">Day time</string>
+    <string name="heading_night_time_settings">Night time</string>
+    <string name="dialog_advanced_title">Actions:</string>
+    <string name="dialog_button_preview">Preview wallpaper</string>
+    <string name="dialog_button_advanced">Contrast &amp; Brightness</string>
+    <string name="dialog_button_select_image">Select another image</string>
+    <string name="switch_separate_lock_screen_settings">Separate lock screen settings</string>
+    <string name="switch_separate_lock_screen_settings_description">Enable to use separate lock screen settings</string>
+    <string name="switch_animate_from_lock_screen">Animate transition to home screen wallpaper after unlock</string>
+    <string name="switch_animate_from_lock_screen_description">Enable to use an animation from lock screen to home screen wallpaper after unlock</string>
+    <string name="lock_symbol_description">Lock screen symbol</string>
+    <string name="sun_symbol_description">Sun/Day</string>
+    <string name="moon_symbol_description">Moon/Night</string>
+    <string name="button_select_color_description">Select color</string>
+    <string name="switch_reuse_day_image_for_night">Use day time image</string>
+    <string name="switch_reuse_day_image_for_night_description">Use separate night time wallpaper or reuse day time wallpaper</string>
+    <string name="text_lock_screen_explanation">If you enable the switch at the top, you can set different wallpapers and different colors for the lock screen.
+\nUnfortunately, this does not work on all phones because some phone manufacturers set their own lock screen wallpaper and won\'t let you change it.
+\n\nMake sure to press \"Home screen and lock screen\", when you set the live wallpaper.
+\n\nThe lock screen image should match the screen size. If it is larger than the screen, it will be scaled and centered.\n</string>
+    <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
+
+    <string name="about_license" translatable="false"><![CDATA[<br>
+Copyright © 2021 cuzi (<a href="mailto:cuzi-android@openmail.cc?subject=DarkModeLiveWallpaper">cuzi-android@openmail.cc</a>)<br><br>
+<a href="https://github.com/cvzi/darkmodewallpaper\">https://github.com/cvzi/darkmodewallpaper</a><br>
+<br>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+<br><br>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+<a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a> for more details.]]></string>
+    <string name="about_open_source_licenses" translatable="false">Open source licenses</string>
+    
 </resources>

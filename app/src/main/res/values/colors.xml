@@ -2,11 +2,15 @@
 <resources>
     <color name="night_background">#004D9B</color>
     <color name="day_background">#61BDE3</color>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="night_variant">#448DD6</color>
+    <color name="secondary">#3A3A3A</color>
+    <color name="secondary_variant">#EAEAEA</color>
+    <color name="secondary_variant_night">#686868</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="night_gray">#727272</color>
+    <color name="day_dark_gray">#212121</color>
+    <color name="day_red">#F44336</color>
+    <color name="night_red">#B81E13</color>
+    <color name="switch_green">#13AF3A</color>
 </resources>

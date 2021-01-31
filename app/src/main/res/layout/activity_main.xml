@@ -21,17 +21,459 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="0dp"
     tools:context=".activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewLockScreenSwitch"
+                style="@style/CardViewPrimary"
+                android:visibility="gone">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switchSeparateLockScreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/switch_separate_lock_screen_settings_description"
+                            app:thumbTint="@color/switch_thumb_red"
+                            app:trackTint="@color/switch_track_red"
+                            app:useMaterialThemeColors="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_separate_lock_screen_settings"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switchAnimateFromLockScreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/switch_animate_from_lock_screen_description"
+                            app:useMaterialThemeColors="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_animate_from_lock_screen" />
+                    </TableRow>
+                </TableLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView style="@style/CardViewPrimary"
+                android:id="@+id/cardViewDay">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="20dp"
+                            android:contentDescription="@string/sun_symbol_description"
+                            android:src="@drawable/ic_sun" />
+
+                        <ImageView
+                            android:id="@+id/imageViewLockSymbolDay"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="-17dp"
+                            android:contentDescription="@string/lock_symbol_description"
+                            android:src="@android:drawable/ic_lock_lock"
+                            android:translationZ="-5dp"
+                            android:visibility="gone"
+                            app:tint="#ed9e00" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewHeadingDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/heading_day_time_settings"
+                            android:textAlignment="center"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:textSize="24sp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/buttonSelectFileDay"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/button_select_image" />
+
+
+                            <ImageButton
+                                android:id="@+id/imageButtonColorDay"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:background="@android:color/black"
+                                android:contentDescription="@string/button_select_color_description"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_rainbow" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchColorDay"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:contentDescription="@string/switch_use_color_overlay" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/switch_use_color_overlay" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchColorOnlyDay"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:contentDescription="@string/switch_only_use_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/switch_only_use_color" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.github.cvzi.darkmodewallpaper.view.PreviewView
+                        android:id="@+id/viewColorDay"
+                        android:layout_width="90sp"
+                        android:layout_height="160sp"
+                        android:layout_weight="2" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView style="@style/CardViewPrimary"
+                android:id="@+id/cardViewNight">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="top"
+                            android:layout_marginTop="20dp"
+                            android:contentDescription="@string/moon_symbol_description"
+                            android:src="@drawable/ic_moon" />
+
+                        <ImageView
+                            android:id="@+id/imageViewLockSymbolNight"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="-15dp"
+                            android:contentDescription="@string/lock_symbol_description"
+                            android:src="@android:drawable/ic_lock_lock"
+                            android:translationZ="-5dp"
+                            android:visibility="gone"
+                            app:tint="#969696" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewHeadingNight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/heading_night_time_settings"
+                            android:textAlignment="center"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchWallpaperReuseDay"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:contentDescription="@string/switch_reuse_day_image_for_night_description" />
+
+                            <TextView
+                                android:id="@+id/textTitleLegacy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/switch_reuse_day_image_for_night" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/buttonSelectFileNight"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/button_select_image" />
+
+                            <ImageButton
+                                android:id="@+id/imageButtonColorNight"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:background="@android:color/black"
+                                android:contentDescription="@string/button_select_color_description"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/ic_rainbow" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchColorNight"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:contentDescription="@string/switch_use_color_overlay" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/switch_use_color_overlay" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchColorOnlyNight"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:contentDescription="@string/switch_only_use_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/switch_only_use_color" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.github.cvzi.darkmodewallpaper.view.PreviewView
+                        android:id="@+id/viewColorNight"
+                        android:layout_width="90sp"
+                        android:layout_height="160sp"
+                        android:layout_weight="2" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView style="@style/CardViewPrimary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewLockScreenDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_lock_screen_explanation"
+                        android:visibility="gone" />
+
+                    <TableLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_darkmode" />
+
+                            <TextView
+                                android:id="@+id/textStatusDayOrNight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_darkmode_day" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_screen_size" />
+
+                            <TextView
+                                android:id="@+id/textStatusScreenDimensions"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_requested_image_size" />
+
+                            <TextView
+                                android:id="@+id/textStatusDesiredDimensions"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </TableRow>
+
+                        <TableRow android:id="@+id/tableRowButtonLockScreenSettings">
+
+                            <Button
+                                android:id="@+id/buttonLockScreenSettings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/button_lock_screen_settings" />
+
+                        </TableRow>
+
+                        <TableRow>
+
+                            <Button
+                                android:id="@+id/buttonImportWallpaper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/button_import_wallpaper" />
+
+                        </TableRow>
+
+                        <TableRow android:id="@+id/tableRowButtonApplyWallpaper">
+
+                            <Button
+                                android:id="@+id/buttonApplyWallpaper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/button_apply_wallpaper" />
+
+                            <ImageButton
+                                android:id="@+id/imageButtonAbout"
+                                android:background="@color/button_dialog_transparent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:src="@android:drawable/ic_menu_info_details" />
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

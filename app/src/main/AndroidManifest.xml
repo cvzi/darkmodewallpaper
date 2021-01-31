@@ -20,20 +20,152 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.cvzi.darkmodewallpaper">
 
+    <uses-feature
+        android:name="android.software.live_wallpaper"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.service.wallpaper.CHANGE_LIVE_WALLPAPER" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DarkModeLiveWallpaper">
-        <activity android:name=".activity.MainActivity">
+        android:theme="@style/Theme.DarkModeWallpaper">
+        <activity
+            android:name=".activity.MainActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_day"
+                android:label="@string/use_as_day_home">
+                <action android:name="android.intent.action.ATTACH_DATA" />
+
+                <data android:mimeType="image/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_day"
+                android:label="@string/use_as_day_home">
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.SetNightActivity"
+            android:icon="@mipmap/ic_launcher_night"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_night"
+                android:label="@string/use_as_night_home">
+                <action android:name="android.intent.action.ATTACH_DATA" />
+
+                <data android:mimeType="image/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_night"
+                android:label="@string/use_as_night_home">
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LockScreenActivity"
+            android:icon="@mipmap/ic_launcher_day"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_day"
+                android:label="@string/use_as_day_lock">
+                <action android:name="android.intent.action.ATTACH_DATA" />
+
+                <data android:mimeType="image/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_day"
+                android:label="@string/use_as_day_lock">
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SetLockScreenNightActivity"
+            android:icon="@mipmap/ic_launcher_night"
+            android:parentActivityName=".activity.LockScreenActivity"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_night"
+                android:label="@string/use_as_night_lock">
+                <action android:name="android.intent.action.ATTACH_DATA" />
+
+                <data android:mimeType="image/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter
+                android:icon="@mipmap/ic_launcher_night"
+                android:label="@string/use_as_night_lock">
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:parentActivityName=".activity.LockScreenActivity"
+            android:theme="@style/Theme.AppCompat.DayNight"/>
+        <service
+            android:name=".DarkWallpaperService"
+            android:enabled="true"
+            android:label="@string/wallpaper_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_info" />
+        </service>
     </application>
 
 </manifest>
