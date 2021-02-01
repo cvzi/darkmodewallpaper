@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
     Copyright © 2021 cuzi@openmail.cc
 
@@ -50,6 +49,7 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/switchSeparateLockScreen"
                             android:layout_width="wrap_content"
@@ -65,9 +65,11 @@
                             android:text="@string/switch_separate_lock_screen_settings"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
                     </TableRow>
+
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/switchAnimateFromLockScreen"
                             android:layout_width="wrap_content"
@@ -85,8 +87,9 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView style="@style/CardViewPrimary"
-                android:id="@+id/cardViewDay">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewDay"
+                style="@style/CardViewPrimary">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -217,8 +220,9 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView style="@style/CardViewPrimary"
-                android:id="@+id/cardViewNight">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewNight"
+                style="@style/CardViewPrimary">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -459,10 +463,11 @@
 
                             <ImageButton
                                 android:id="@+id/imageButtonAbout"
-                                android:background="@color/button_dialog_transparent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
+                                android:background="@color/button_dialog_transparent"
+                                android:contentDescription="@string/about"
                                 android:src="@android:drawable/ic_menu_info_details" />
                         </TableRow>
 

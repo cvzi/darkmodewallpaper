@@ -152,7 +152,8 @@
         <activity
             android:name=".activity.AboutActivity"
             android:parentActivityName=".activity.LockScreenActivity"
-            android:theme="@style/Theme.AppCompat.DayNight"/>
+            android:theme="@style/Theme.AppCompat.DayNight" />
+
         <service
             android:name=".DarkWallpaperService"
             android:enabled="true"

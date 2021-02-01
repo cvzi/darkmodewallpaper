@@ -65,7 +65,8 @@ open class LockScreenActivity : MainActivity() {
         findViewById<View>(R.id.imageViewLockSymbolDay).visibility = View.VISIBLE
         findViewById<View>(R.id.imageViewLockSymbolNight).visibility = View.VISIBLE
 
-        findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).isChecked = isAnimateFromLockScreen()
+        findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).isChecked =
+            isAnimateFromLockScreen()
         findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).isChecked =
             isSeparateLockScreenEnabled()
     }

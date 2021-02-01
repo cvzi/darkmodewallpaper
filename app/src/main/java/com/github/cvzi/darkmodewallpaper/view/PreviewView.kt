@@ -60,6 +60,7 @@ class PreviewView @JvmOverloads constructor(
     var scaledScreenWidth: Int? = 0
     var scaledScreenHeight: Int? = 0
     private var shouldScroll = true
+
     init {
         overlayPaint.style = Paint.Style.FILL
         textPaint.isAntiAlias = true
@@ -93,7 +94,7 @@ class PreviewView @JvmOverloads constructor(
     var file: File? = null
         set(value) {
             field?.let {
-                for(i in bitmaps) {
+                for (i in bitmaps) {
                     if (i.key.endsWith(it.absolutePath)) {
                         bitmaps.remove(i.key)
                     }
@@ -225,7 +226,7 @@ class PreviewView @JvmOverloads constructor(
                 )
 
             }
-            if(bitmap == null && file == null) {
+            if (bitmap == null && file == null) {
                 overlayPaint.color = overlayPaint.color or 0xFF000000.toInt()
             }
             drawPaint(overlayPaint)

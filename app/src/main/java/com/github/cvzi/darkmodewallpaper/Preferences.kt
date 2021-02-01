@@ -23,7 +23,8 @@ import android.content.SharedPreferences
 
 class Preferences(mContext: Context, private val prefFile: StringRes) {
     private val context = mContext.applicationContext
-    private val pref: SharedPreferences = context.getSharedPreferences(context.getString(prefFile), Context.MODE_PRIVATE)
+    private val pref: SharedPreferences =
+        context.getSharedPreferences(context.getString(prefFile), Context.MODE_PRIVATE)
     var colorDay: Int
         get() = pref.getString(
             context.getString(R.string.pref_color_day_key),
@@ -85,40 +86,58 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
         ).apply()
 
     var useNightWallpaper: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_use_night_wallpaper_key), context.resources.getBoolean(R.bool.pref_use_night_wallpaper_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_use_night_wallpaper_key),
+            context.resources.getBoolean(R.bool.pref_use_night_wallpaper_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_use_night_wallpaper_key),
             value
         ).apply()
     var useDayColor: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_use_day_color_key), context.resources.getBoolean(R.bool.pref_use_day_color_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_use_day_color_key),
+            context.resources.getBoolean(R.bool.pref_use_day_color_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_use_day_color_key),
             value
         ).apply()
     var useNightColor: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_use_night_color_key), context.resources.getBoolean(R.bool.pref_use_night_color_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_use_night_color_key),
+            context.resources.getBoolean(R.bool.pref_use_night_color_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_use_night_color_key),
             value
         ).apply()
 
     var useDayColorOnly: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_use_day_color_only_key), context.resources.getBoolean(R.bool.pref_use_day_color_only_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_use_day_color_only_key),
+            context.resources.getBoolean(R.bool.pref_use_day_color_only_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_use_day_color_only_key),
             value
         ).apply()
 
     var useNightColorOnly: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_use_night_color_only_key), context.resources.getBoolean(R.bool.pref_use_night_color_only_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_use_night_color_only_key),
+            context.resources.getBoolean(R.bool.pref_use_night_color_only_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_use_night_color_only_key),
             value
         ).apply()
 
     var separateLockScreen: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_separate_lock_screen_key), context.resources.getBoolean(R.bool.pref_separate_lock_screen_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_separate_lock_screen_key),
+            context.resources.getBoolean(R.bool.pref_separate_lock_screen_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_separate_lock_screen_key),
             value
@@ -135,7 +154,10 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
         ).apply()
 
     var animateFromLockScreen: Boolean
-        get() = pref.getBoolean(context.getString(R.string.pref_animate_from_lock_screen_key), context.resources.getBoolean(R.bool.pref_animate_from_lock_screen_default))
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_animate_from_lock_screen_key),
+            context.resources.getBoolean(R.bool.pref_animate_from_lock_screen_default)
+        )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_animate_from_lock_screen_key),
             value

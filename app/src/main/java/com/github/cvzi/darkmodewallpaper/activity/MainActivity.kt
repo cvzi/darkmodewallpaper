@@ -473,7 +473,11 @@ open class MainActivity : AppCompatActivity() {
         return saveFileFromUri(result.data?.data, file)
     }
 
-    private fun saveFileFromUri(uri: Uri?, file: File, callback: ((success: Boolean) -> Unit)? = null) {
+    private fun saveFileFromUri(
+        uri: Uri?,
+        file: File,
+        callback: ((success: Boolean) -> Unit)? = null
+    ) {
         val wallpaperManager = WallpaperManager.getInstance(this)
         val desiredMax =
             max(wallpaperManager.desiredMinimumWidth, wallpaperManager.desiredMinimumHeight)
@@ -503,7 +507,7 @@ open class MainActivity : AppCompatActivity() {
                         Toast.makeText(
                             appContext,
                             getString(
-                                R.string.wallpaper_file_chooser_success,
+                                R.string.image_file_import_success,
                                 file.absolutePath
                             ),
                             Toast.LENGTH_SHORT
@@ -515,10 +519,10 @@ open class MainActivity : AppCompatActivity() {
                     } else {
                         progressBar?.isVisible = false
                         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = true
-                        alert?.setMessage(getString(R.string.wallpaper_file_chooser_error))
+                        alert?.setMessage(getString(R.string.image_file_import_error))
                         Toast.makeText(
                             appContext,
-                            R.string.wallpaper_file_chooser_error,
+                            R.string.image_file_import_error,
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -529,7 +533,13 @@ open class MainActivity : AppCompatActivity() {
         progressBar = ProgressBar(this)
         alert = AlertDialog.Builder(this)
             .setTitle(getString(R.string.image_file_import_loading_title))
-            .setMessage(getString(R.string.image_file_import_loading_message, uri?.toString(), file.absolutePath))
+            .setMessage(
+                getString(
+                    R.string.image_file_import_loading_message,
+                    uri?.toString(),
+                    file.absolutePath
+                )
+            )
             .setView(progressBar)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 importFileThread?.join()

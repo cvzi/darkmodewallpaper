@@ -46,22 +46,19 @@
     <string name="wallpaper_file_chooser_home_screen">Home screen</string>
     <string name="wallpaper_file_chooser_lock_screen">Lock screen</string>
 
-
-    <string name="wallpaper_file_chooser_success">Image stored in %1$s</string>
-    <string name="wallpaper_file_chooser_error">Could not retrieve image</string>
-
     <string name="wallpaper_import_dialog_title">Import current wallpaper</string>
     <string name="wallpaper_import_dialog_message">Would you like to import your current wallpaper?
 \n\n(may not work for live wallpapers)
-\n\nAsks for storage permission in the next step</string>
+\n\nAsks for storage permission in the next step.
+\nYou can safely revoke the permission when the wallpaper was imported.</string>
     <string name="wallpaper_import_success">Wallpaper imported\n%1$s</string>
     <string name="wallpaper_import_failed">Could not retrieve image</string>
     <string name="wallpaper_import_permission_missing">The storage permission is needed to import a wallpaper!</string>
 
-    <string name="image_file_import_success">Image stored in %1$s</string>
     <string name="image_file_import_error">Could not import image</string>
     <string name="image_file_import_loading_title">Importing image file</string>
-    <string name="image_file_import_loading_message">Optimizing %2$s from %1$s</string>
+    <string name="image_file_import_success">Image stored in %1$s</string>
+    <string name="image_file_import_loading_message">Optimizing %2$s\n(imported from %1$s)</string>
 
     <string name="button_import_wallpaper">Import wallpaper</string>
     <string name="button_apply_wallpaper">Apply as wallpaper</string>
@@ -90,8 +87,8 @@
 \nUnfortunately, this does not work on all phones because some phone manufacturers set their own lock screen wallpaper and won\'t let you change it.
 \n\nMake sure to press \"Home screen and lock screen\", when you set the live wallpaper.
 \n\nThe lock screen image should match the screen size. If it is larger than the screen, it will be scaled and centered.\n</string>
+    <string name="about">About</string>
     <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
-
     <string name="about_license" translatable="false"><![CDATA[<br>
 Copyright © 2021 cuzi (<a href="mailto:cuzi-android@openmail.cc?subject=DarkModeLiveWallpaper">cuzi-android@openmail.cc</a>)<br><br>
 <a href="https://github.com/cvzi/darkmodewallpaper\">https://github.com/cvzi/darkmodewallpaper</a><br>
@@ -106,5 +103,5 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a> for more details.]]></string>
     <string name="about_open_source_licenses" translatable="false">Open source licenses</string>
-    
+
 </resources>
