@@ -75,6 +75,7 @@
     <string name="dialog_button_preview">Preview wallpaper</string>
     <string name="dialog_button_advanced">Contrast &amp; Brightness</string>
     <string name="dialog_button_select_image">Select another image</string>
+    <string name="dialog_button_delete_image">Delete image</string>
     <string name="switch_separate_lock_screen_settings">Separate lock screen settings</string>
     <string name="switch_separate_lock_screen_settings_description">Enable to use separate lock screen settings</string>
     <string name="switch_animate_from_lock_screen">Animate transition to home screen wallpaper after unlock</string>

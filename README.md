@@ -4,7 +4,6 @@ A live wallpaper for Android that respects dark theme mode
 TODO:
 *   Crop/move/zoom image
 *   Customize animation duration
-*   Delete image again
 
 Implemented:
 *   Import current wallpaper
@@ -21,3 +20,4 @@ Implemented:
 *   Multi display support
 *   Allow drag and drop images from other apps into MainActivity
 *   onZoomChanged()
+*   Delete image again

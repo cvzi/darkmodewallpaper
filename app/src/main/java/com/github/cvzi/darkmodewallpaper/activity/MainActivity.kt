@@ -650,6 +650,18 @@ open class MainActivity : AppCompatActivity() {
                 startForPickNightHomeScreenFile.launch(imagePickIntent())
             }
         }
+        linearLayout.findViewById<Button>(R.id.buttonDeleteImage).setOnClickListener {
+            alert.dismiss()
+            if (dayOrNight == DAY) {
+                dayFileLocation(isLockScreenActivity).delete()
+            } else {
+                nightFileLocation(isLockScreenActivity).delete()
+            }
+            previewViewDay.file = currentDayFile()
+            previewViewNight.file = currentNightFile()
+            DarkWallpaperService.invalidate(forceReload = true)
+        }
+
         alert.show()
     }
 
