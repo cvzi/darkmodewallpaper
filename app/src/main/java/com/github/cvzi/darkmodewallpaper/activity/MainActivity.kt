@@ -483,7 +483,6 @@ open class MainActivity : AppCompatActivity() {
             max(wallpaperManager.desiredMinimumWidth, wallpaperManager.desiredMinimumHeight)
         var alert: AlertDialog? = null
         var progressBar: ProgressBar? = null
-        val appContext = applicationContext
         importFileThread = object : Thread("saveFileFromUri") {
             override fun run() {
 
@@ -505,7 +504,7 @@ open class MainActivity : AppCompatActivity() {
                     if (success) {
                         alert?.dismiss()
                         Toast.makeText(
-                            appContext,
+                            this@MainActivity,
                             getString(
                                 R.string.image_file_import_success,
                                 file.absolutePath
@@ -521,7 +520,7 @@ open class MainActivity : AppCompatActivity() {
                         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = true
                         alert?.setMessage(getString(R.string.image_file_import_error))
                         Toast.makeText(
-                            appContext,
+                            this@MainActivity,
                             R.string.image_file_import_error,
                             Toast.LENGTH_LONG
                         ).show()
@@ -861,34 +860,54 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun handleImportWallpaper() {
-        if (importWallpaper()) {
-            Toast.makeText(
-                this,
-                getString(R.string.wallpaper_import_success, dayImageFile?.absolutePath),
-                Toast.LENGTH_SHORT
-            ).show()
+        importWallpaper()
 
-            previewViewDay.file = currentDayFile()
-            previewViewNight.file = currentNightFile()
-            DarkWallpaperService.invalidate(forceReload = true)
-        } else {
-            Toast.makeText(
-                this,
-                R.string.wallpaper_import_failed,
-                Toast.LENGTH_LONG
-            ).show()
-        }
     }
 
-    private fun importWallpaper(): Boolean {
+    private fun importWallpaper() {
         val wallpaperManager = WallpaperManager.getInstance(this)
-        wallpaperManager.drawable?.let {
-            Log.v(TAG, "Storing in $dayImageFile")
-            val r = storeFile(dayFileLocation(isLockScreenActivity), it)
-            Log.v(TAG, "Stored $dayImageFile")
-            return r
-        }
-        return false
+        val alert: AlertDialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.image_file_import_loading_title))
+            .setMessage(
+                getString(
+                    R.string.image_file_import_loading_message,
+                    dayFileLocation(isLockScreenActivity).toString(),
+                    "WallpaperManager.getDrawable()"
+                )
+            )
+            .setView(ProgressBar(this))
+            .show()
+        object : Thread("saveFileFromUri") {
+            override fun run() {
+                var success = false
+                wallpaperManager.drawable?.let {
+                    success = storeFile(dayFileLocation(isLockScreenActivity), it)
+                }
+                runOnUiThread {
+                    alert.dismiss()
+                    if (success) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            getString(
+                                R.string.wallpaper_import_success,
+                                dayImageFile?.absolutePath
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        previewViewDay.file = currentDayFile()
+                        previewViewNight.file = currentNightFile()
+                        DarkWallpaperService.invalidate(forceReload = true)
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            R.string.wallpaper_import_failed,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+        }.start()
     }
 
     private fun handleSendToAction(intent: Intent) {
