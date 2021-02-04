@@ -21,22 +21,19 @@ package com.github.cvzi.darkmodewallpaper.animation
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import kotlin.random.Random
 
 class WaitAnimation(val width: Int, val height: Int, private val loadingMessage: String) {
     companion object {
         private val faces = arrayOf(
-            "️\uD83E\uDD37\uD83C\uDFFE\u200D♀️️",
-            "\uD83D\uDC86\uD83C\uDFFE\u200D♀️",
-            "\uD83E\uDD26\uD83C\uDFFE\u200D♀️",
-            "\uD83D\uDE45\uD83C\uDFFE\u200D♀️",
-            "\uD83D\uDE46\uD83C\uDFFE\u200D♀️",
-            "\uD83D\uDC81\uD83C\uDFFE\u200D♀️"
+            "\uD83E\uDD37\uD83C\uDFFE\u200D\u2640",
+            "\uD83D\uDE45\uD83C\uDFFE\u200D\u2640",
+            "\uD83D\uDE46\uD83C\uDFFE\u200D\u2640",
+            "\uD83D\uDC81\uD83C\uDFFE\u200D\u2640"
         )
     }
 
     private var animationColor = 0x0000
-    private val animationColorEnd = 0x505050
+    private val animationColorEnd = 0x202020
     private var animationColorDir = 1
     private var animationIndex = 0
     private var textPositionX = width / 4f
@@ -51,8 +48,8 @@ class WaitAnimation(val width: Int, val height: Int, private val loadingMessage:
     fun draw(canvas: Canvas, errorStr: String?) {
         canvas.drawPaint(Paint().apply {
             style = Paint.Style.FILL
-            color = 0xFF404040.toInt() + animationColor
-            animationColor += 0x050505 * animationColorDir + Random.nextInt(5)
+            color = 0xFF101010.toInt() + animationColor
+            animationColor += 0x020202 * animationColorDir
             if (animationColor >= animationColorEnd) {
                 animationColor = animationColorEnd
                 animationColorDir = -animationColorDir
@@ -62,8 +59,8 @@ class WaitAnimation(val width: Int, val height: Int, private val loadingMessage:
             }
         })
         val text = if (errorStr.isNullOrEmpty()) {
-            animationIndex = (animationIndex + 1) % (2 * faces.size)
-            "${faces[animationIndex / 2]} $loadingMessage"
+            animationIndex = (animationIndex + 1) % (4 * faces.size)
+            "${faces[animationIndex / 4]} $loadingMessage"
         } else {
             errorStr
         }
