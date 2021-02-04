@@ -1,9 +1,21 @@
 # darkmodewallpaper
 A live wallpaper for Android that respects dark theme mode
 
+The app automatically changes the wallpaper when the dark theme is enabled or disabled.
+You can set a different image for dark theme or change the color/contrast/brightness of
+your image.
+
+This app requires Android 10. If you are using an earlier version of Android, you may be able to
+achieve a comparable experience by using MacroDroid, Tasker or a similar automation tool.
+
+Permissions:
+*   `READ_EXTERNAL_STORAGE` (read the contents of your internal storage/sd card)
+    Required if you want to import you existing wallpaper, otherwise you may revoke it.
+
 TODO:
 *   Crop/move/zoom image
 *   Customize animation duration
+*   Run after boot (possible?)
 
 Implemented:
 *   Import current wallpaper
