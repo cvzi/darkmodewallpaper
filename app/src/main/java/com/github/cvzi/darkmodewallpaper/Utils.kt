@@ -37,6 +37,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -85,7 +86,7 @@ fun Context.setAnimateFromLockScreen(isEnabled: Boolean) {
 
 
 /**
- * Save the drawable to webp file
+ * Save the drawable to image file
  */
 fun storeFile(file: File, drawable: Drawable): Boolean {
     val bitmap = Bitmap.createBitmap(
@@ -100,17 +101,21 @@ fun storeFile(file: File, drawable: Drawable): Boolean {
 }
 
 /**
- * Save the bitmap to webp file
+ * Save the bitmap to image file
  */
 fun storeFile(file: File, bitmap: Bitmap): Boolean {
     var outputStream: FileOutputStream? = null
     try {
         outputStream = FileOutputStream(file)
         bitmap.compress(
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                Bitmap.CompressFormat.WEBP_LOSSLESS
+            if (file.extension.toLowerCase(Locale.ROOT) == "webp") {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                    Bitmap.CompressFormat.WEBP_LOSSLESS
+                } else {
+                    Bitmap.CompressFormat.WEBP
+                }
             } else {
-                Bitmap.CompressFormat.WEBP
+                Bitmap.CompressFormat.PNG
             }, 100, outputStream
         )
         return true
