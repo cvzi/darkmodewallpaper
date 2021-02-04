@@ -313,7 +313,6 @@ class DarkWallpaperService : WallpaperService() {
             dayImageLocation = dayFileLocation(isLockScreen)
             nightImageLocation = nightFileLocation(isLockScreen)
 
-
             if (isLockScreen) {
                 // Store current offsets
                 offsetXBeforeLock = offsetX
