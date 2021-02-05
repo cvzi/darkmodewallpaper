@@ -36,7 +36,7 @@ class BlendBitmaps(
     fun draw(
         canvas: Canvas,
         toBitmap: Bitmap? = null,
-        toPaint: Paint,
+        toNewPaint: Paint,
         newColor: Int,
         offsetX: Float,
         offsetY: Float,
@@ -67,6 +67,7 @@ class BlendBitmaps(
         }
 
         // New Bitmap
+        val toPaint = Paint(toNewPaint)
         toPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
         toPaint.alpha = blendAlpha
         canvas.drawBitmap(
@@ -87,6 +88,7 @@ class BlendBitmaps(
         }
         blendAlpha += step
         if (blendAlpha > 0xFF) {
+            blendAlpha = 0xFF
             return false
         }
 
