@@ -219,6 +219,7 @@ class DarkWallpaperService : WallpaperService() {
         private var currentBitmapFile: File? = null
         private var wallpaperColors: WallpaperColors? = null
         private var zoom = 0f
+        private var hasZoom = true
         private var offsetX = 0.5f
         private var offsetY = 0.5f
         private var shouldScroll = true
@@ -391,6 +392,7 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onZoomChanged(newZoom: Float) {
+            hasZoom = true
             if (abs(zoom - newZoom) > 0.12f || newZoom == 0f || newZoom == 1f) {
                 zoom = newZoom
                 if (visible) {
@@ -659,9 +661,10 @@ class DarkWallpaperService : WallpaperService() {
                     }
                     lastBitmapPaint = Paint(bitmapPaint)
 
-
-                    canvas.save()
-                    canvas.scale(1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom)
+                    if (hasZoom) {
+                        canvas.save()
+                        canvas.scale(1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom)
+                    }
 
                     canvas.drawBitmap(
                         bm,
@@ -669,7 +672,12 @@ class DarkWallpaperService : WallpaperService() {
                         blendFromOffsetYPixel,
                         bitmapPaint
                     )
-                    canvas.restore()
+                    if (hasZoom) {
+                        canvas.restore()
+                        if(zoom == 0f) {
+                            hasZoom = false
+                        }
+                    }
 
                     //  and color
                     if (overlayPaint.color != 0) {
