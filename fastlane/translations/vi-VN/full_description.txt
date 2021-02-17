@@ -1,0 +1,16 @@
+A live wallpaper for Android 10+ that respects dark theme mode.
+
+With this app you can set an image for light theme mode and another image
+for the dark theme.
+When the dark theme of the system is enabled or disabled, the wallpaper will be
+changed automatically.
+
+Instead of a different image you can also adjust the color, contrast and
+brightness of your existing wallpaper image to make it darker.
+
+It is possible to select a different images for home screen and the
+lock screen.
+
+The app requires the "read storage" permission if you want import your current
+wallpaper. If you don't want to import you current wallpaper, you don't need to
+grant this permission.
