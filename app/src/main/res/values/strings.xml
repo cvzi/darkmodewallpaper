@@ -23,7 +23,7 @@
     <string name="use_as_day_home">Day home screen wallpaper</string>
     <string name="use_as_night_home">Night home screen wallpaper</string>
     <string name="use_as_day_lock">Day lock screen wallpaper</string>
-    <string name="use_as_night_lock">Night lock wallpaper</string>
+    <string name="use_as_night_lock">Night lock screen wallpaper</string>
 
     <string name="wallpaper_label">DarkModeWallpaper</string>
     <string name="wallpaper_description">Automatically changes wallpaper to fit Light/Dark theme</string>
