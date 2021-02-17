@@ -33,3 +33,5 @@ Implemented:
 *   Allow drag and drop images from other apps into MainActivity
 *   onZoomChanged()
 *   Delete image again
+
+<img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" width="500" />
