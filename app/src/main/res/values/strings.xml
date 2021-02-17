@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--
     DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
 
     This file is part of DarkModeLiveWallpaper.
 
@@ -22,7 +23,7 @@
     <string name="use_as_day_home">Day home screen wallpaper</string>
     <string name="use_as_night_home">Night home screen wallpaper</string>
     <string name="use_as_day_lock">Day lock screen wallpaper</string>
-    <string name="use_as_night_lock">Night lock screen wallpaper</string>
+    <string name="use_as_night_lock">Night lock wallpaper</string>
 
     <string name="wallpaper_label">DarkModeWallpaper</string>
     <string name="wallpaper_description">Automatically changes wallpaper to fit Light/Dark theme</string>
@@ -37,10 +38,8 @@
 
     <string name="status_requested_image_size">Recommended image size:</string>
     <string name="status_screen_size">Screen size:</string>
-    <!-- For example: 720x1080 -->
     <string name="resolution_width_x_height" translatable="false">%1$dx%2$d</string>
 
-    <!-- For example: Select image (Day time/Home screen) -->
     <string name="wallpaper_file_chooser_title">Select image (%1$s/%2$s)</string>
     <string name="wallpaper_file_chooser_day_time">Day time</string>
     <string name="wallpaper_file_chooser_night_time">Night time</string>
@@ -52,16 +51,13 @@
 \n\n(may not work for live wallpapers)
 \n\nAsks for storage permission in the next step.
 \nYou can safely revoke the permission when the wallpaper was imported.</string>
-    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
     <string name="wallpaper_import_success">Wallpaper imported\n%1$s</string>
     <string name="wallpaper_import_failed">Could not retrieve image</string>
     <string name="wallpaper_import_permission_missing">The storage permission is needed to import a wallpaper!</string>
 
     <string name="image_file_import_error">Could not import image</string>
     <string name="image_file_import_loading_title">Importing image file</string>
-    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
     <string name="image_file_import_success">Image stored in %1$s</string>
-    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Optimizing %2$s\n(imported from %1$s)</string>
 
     <string name="button_import_wallpaper">Import wallpaper</string>
