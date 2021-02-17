@@ -1,1 +1,1 @@
-A live wallpaper for Android that respects dark theme mode
+Live wallpaper that respects dark theme mode
