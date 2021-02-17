@@ -674,7 +674,7 @@ class DarkWallpaperService : WallpaperService() {
                     )
                     if (hasZoom) {
                         canvas.restore()
-                        if(zoom == 0f) {
+                        if (zoom == 0f) {
                             hasZoom = false
                         }
                     }

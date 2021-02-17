@@ -112,6 +112,7 @@ fun storeFile(file: File, bitmap: Bitmap): Boolean {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                     Bitmap.CompressFormat.WEBP_LOSSLESS
                 } else {
+                    @Suppress("DEPRECATION")
                     Bitmap.CompressFormat.WEBP
                 }
             } else {
