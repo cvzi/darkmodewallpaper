@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
+
+    This file is part of DarkModeLiveWallpaper.
+
+    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Heller Startbildschirm Hintergrund</string>
+    <string name="use_as_night_home">Dunkler Startbildschirm Hintergrund</string>
+    <string name="use_as_day_lock">Heller Startbildschirm Hintergrund</string>
+    <string name="use_as_night_lock">Dunkler Sperrbildschirm Hintergrund</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Wechselt den Hintergrund automatisch entsprechend dem Hellen/Dunklen Design</string>
+    <string name="wallpaper_is_loading">lädt…</string>
+    <string name="color_chooser_day">Farbe für Tages Overlay wählen</string>
+    <string name="color_chooser_night">Farbe für Nacht Overlay wählen</string>
+    <string name="status_darkmode">Design Status:</string>
+    <string name="status_darkmode_day">Tages/Helles Design</string>
+    <string name="status_darkmode_night">Nacht/Dunkles Design</string>
+    <string name="status_requested_image_size">Empfohlene Bildgröße:</string>
+    <string name="status_screen_size">Bildschirmgröße:</string>
+    <string name="wallpaper_file_chooser_title">Bild auswählen (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Helles Design</string>
+    <string name="wallpaper_file_chooser_night_time">Dunkles Design</string>
+    <string name="wallpaper_file_chooser_home_screen">Startbildschirm</string>
+    <string name="wallpaper_file_chooser_lock_screen">Sperrbildschirm</string>
+    <string name="wallpaper_import_dialog_title">Aktuellen Hintergrund importieren</string>
+    <string name="wallpaper_import_dialog_message">Möchtest du deinen aktuellen Hintergrund importieren?
+\n\n(funktioniert möglicherweise nicht für Live-Hintergründe)
+\n\nIm nächsten Schritt wird die Berechtigung für den Zugriff auf den Telefonspeicher erfragt.
+\nDu kannst die Berechtigung widerrufen, wenn das Hintergrundbild importiert wurde.</string>
+    <string name="wallpaper_import_success">Hintergrundbild importiert\n%1$s</string>
+    <string name="wallpaper_import_failed">Bilddatei konnte nicht geladen werden</string>
+    <string name="wallpaper_import_permission_missing">Die Speicher-Berechtigung wird benötigt um ein Hintergrundbild zu importieren!</string>
+    <string name="image_file_import_error">Bilddatei konnte nicht importiert werden</string>
+    <string name="image_file_import_loading_title">Bild wird importiert</string>
+    <string name="image_file_import_success">Bild gespeichert unter %1$s</string>
+    <string name="image_file_import_loading_message">Optimiere %2$s\n(importiert aus %1$s)</string>
+    <string name="button_import_wallpaper">Hintergrundbild importieren</string>
+    <string name="button_apply_wallpaper">Als Hintergrund festlegen</string>
+    <string name="button_lock_screen_settings">Sperrbildschirm</string>
+    <string name="switch_only_use_color">Nur Farbe</string>
+    <string name="switch_use_color_overlay">Farb-Overlay</string>
+    <string name="button_select_image">Bild auswählen</string>
+    <string name="heading_day_time_settings">Helles Design</string>
+    <string name="heading_night_time_settings">Dunkles Design</string>
+    <string name="dialog_advanced_title">Aktionen:</string>
+    <string name="dialog_button_preview">Vorschau des Hintergrunds</string>
+    <string name="dialog_button_advanced">Kontrast &amp; Helligkeit</string>
+    <string name="dialog_button_select_image">Anderes Bild auswählen</string>
+    <string name="dialog_button_delete_image">Bild löschen</string>
+    <string name="switch_separate_lock_screen_settings">Gesonderte Sperrbildschirm-Einstellungen</string>
+    <string name="switch_separate_lock_screen_settings_description">Aktivieren um separate Sperrbildschirm-Einstellungen zu verwenden</string>
+    <string name="switch_animate_from_lock_screen">Animiere den Übergang zum Homescreen-Hintergrund nach dem Entsperren</string>
+    <string name="switch_animate_from_lock_screen_description">Aktivieren um eine Animation vom Sperrbildschirm zum Startbildschirm-Hintergrund nach dem Entsperren zu verwenden</string>
+    <string name="lock_symbol_description">Sperrbildschirm Symbol</string>
+    <string name="sun_symbol_description">Sonne/Tag</string>
+    <string name="moon_symbol_description">Mond/Nacht</string>
+    <string name="button_select_color_description">Farbe auswählen</string>
+    <string name="switch_reuse_day_image_for_night">Tages-Bild verwenden</string>
+    <string name="switch_reuse_day_image_for_night_description">Verwende ein anderes Nacht-Hintergrundbild oder benutze das Tages-Hintergrundbild</string>
+    <string name="text_lock_screen_explanation">Wenn du den Schalter oben aktivieren, kannst du verschiedene Hintergrundbilder und Farben für den Sperrbildschirm festlegen.
+\nLeider funktioniert das nicht auf allen Handys, da einige Hersteller ihren eigenen Sperrbildschirm-Hintergrund einstellen und dieser sich nicht ändern lässt.
+\n\nWenn du den Live-Hintergrunds aktivierst, musst du \"Startbildschirm und Sperrbildschirm\" auswählen.
+\n\nDas Sperrbildschirm-Bild sollte mit der Bildschirmgröße übereinstimmen. Wenn es größer als der Bildschirm ist, wird es skaliert und zentriert.\n</string>
+    <string name="about">Info</string>
+</resources>
