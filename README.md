@@ -10,7 +10,7 @@ achieve a comparable experience by using MacroDroid, Tasker or a similar automat
 
 Permissions:
 *   `READ_EXTERNAL_STORAGE` (read the contents of your internal storage/sd card)
-    Required if you want to import you existing wallpaper, otherwise you may revoke it.
+    Required if you want to import your existing wallpaper, otherwise you may revoke it.
 
 TODO:
 *   Crop/move/zoom image

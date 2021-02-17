@@ -8,9 +8,9 @@ changed automatically.
 Instead of a different image you can also adjust the color, contrast and
 brightness of your existing wallpaper image to make it darker.
 
-It is possible to select a different images for home screen and the
-lock screen.
+It is possible to select different images for home screen and lock screen.
 
-The app requires the "read storage" permission if you want import your current
-wallpaper. If you don't want to import you current wallpaper, you don't need to
-grant this permission.
+The "read storage" permission is required if you want to import your current
+wallpaper image. Once you imported your wallpaper you can safely revoke the
+permission. If you don't want to import you current wallpaper, you don't need
+to grant this permission.
