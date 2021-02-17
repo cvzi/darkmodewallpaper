@@ -102,6 +102,7 @@ class PreviewView @JvmOverloads constructor(
                 bitmap = null
             }
             field = value
+            errorLoadingFile = null
             loadFile()
         }
 
