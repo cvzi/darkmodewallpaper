@@ -69,6 +69,7 @@
     <string name="button_lock_screen_settings">Lock screen</string>
     <string name="switch_only_use_color">Only color</string>
     <string name="switch_use_color_overlay">Color overlay</string>
+    <string name="color">Color</string>
     <string name="button_select_image">Select image</string>
     <string name="heading_day_time_settings">Day time</string>
     <string name="heading_night_time_settings">Night time</string>
