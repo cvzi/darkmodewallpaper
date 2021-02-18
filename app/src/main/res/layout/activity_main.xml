@@ -99,29 +99,52 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="0"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginTop="20dp"
                             android:contentDescription="@string/sun_symbol_description"
                             android:src="@drawable/ic_sun" />
 
                         <ImageView
                             android:id="@+id/imageViewLockSymbolDay"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="-17dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-14dp"
                             android:contentDescription="@string/lock_symbol_description"
                             android:src="@android:drawable/ic_lock_lock"
                             android:translationZ="-5dp"
                             android:visibility="gone"
                             app:tint="#ed9e00" />
 
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp" />
 
+                        <ImageButton
+                            android:id="@+id/imageButtonColorDay"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="end"
+                            android:adjustViewBounds="true"
+                            android:background="@android:color/black"
+                            android:contentDescription="@string/button_select_color_description"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_rainbow" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="3dp"
+                            android:text="@string/color"
+                            android:textAlignment="textEnd"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -139,9 +162,8 @@
                             android:textAppearance="@android:style/TextAppearance.Material.Title"
                             android:textSize="24sp" />
 
-
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
@@ -153,16 +175,6 @@
                                 android:text="@string/button_select_image" />
 
 
-                            <ImageButton
-                                android:id="@+id/imageButtonColorDay"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center"
-                                android:adjustViewBounds="true"
-                                android:background="@android:color/black"
-                                android:contentDescription="@string/button_select_color_description"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/ic_rainbow" />
                         </LinearLayout>
 
 
@@ -212,7 +224,7 @@
 
                     <com.github.cvzi.darkmodewallpaper.view.PreviewView
                         android:id="@+id/viewColorDay"
-                        android:layout_width="90sp"
+                        android:layout_width="160sp"
                         android:layout_height="160sp"
                         android:layout_weight="2" />
 
@@ -237,8 +249,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="top"
                             android:layout_marginTop="20dp"
                             android:contentDescription="@string/moon_symbol_description"
@@ -246,14 +258,39 @@
 
                         <ImageView
                             android:id="@+id/imageViewLockSymbolNight"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="-15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-12dp"
                             android:contentDescription="@string/lock_symbol_description"
                             android:src="@android:drawable/ic_lock_lock"
                             android:translationZ="-5dp"
                             android:visibility="gone"
                             app:tint="#969696" />
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp" />
+
+                        <ImageButton
+                            android:id="@+id/imageButtonColorNight"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="end"
+                            android:adjustViewBounds="true"
+                            android:background="@android:color/black"
+                            android:contentDescription="@string/button_select_color_description"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_rainbow" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="3dp"
+                            android:text="@string/color"
+                            android:textAlignment="textEnd"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
 
                     </LinearLayout>
 
@@ -307,16 +344,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/button_select_image" />
 
-                            <ImageButton
-                                android:id="@+id/imageButtonColorNight"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center"
-                                android:adjustViewBounds="true"
-                                android:background="@android:color/black"
-                                android:contentDescription="@string/button_select_color_description"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/ic_rainbow" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -360,11 +387,12 @@
                                 android:text="@string/switch_only_use_color" />
 
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <com.github.cvzi.darkmodewallpaper.view.PreviewView
                         android:id="@+id/viewColorNight"
-                        android:layout_width="90sp"
+                        android:layout_width="160sp"
                         android:layout_height="160sp"
                         android:layout_weight="2" />
 
