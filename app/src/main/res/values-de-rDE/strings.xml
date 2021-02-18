@@ -60,6 +60,7 @@
     <string name="button_lock_screen_settings">Sperrbildschirm</string>
     <string name="switch_only_use_color">Nur Farbe</string>
     <string name="switch_use_color_overlay">Farb-Overlay</string>
+    <string name="color">Farbe</string>
     <string name="button_select_image">Bild auswählen</string>
     <string name="heading_day_time_settings">Helles Design</string>
     <string name="heading_night_time_settings">Dunkles Design</string>
@@ -76,7 +77,7 @@
     <string name="sun_symbol_description">Sonne/Tag</string>
     <string name="moon_symbol_description">Mond/Nacht</string>
     <string name="button_select_color_description">Farbe auswählen</string>
-    <string name="switch_reuse_day_image_for_night">Tages-Bild verwenden</string>
+    <string name="switch_reuse_day_image_for_night">Gleiches Bild verwenden</string>
     <string name="switch_reuse_day_image_for_night_description">Verwende ein anderes Nacht-Hintergrundbild oder benutze das Tages-Hintergrundbild</string>
     <string name="text_lock_screen_explanation">Wenn du den Schalter oben aktivieren, kannst du verschiedene Hintergrundbilder und Farben für den Sperrbildschirm festlegen.
 \nLeider funktioniert das nicht auf allen Handys, da einige Hersteller ihren eigenen Sperrbildschirm-Hintergrund einstellen und dieser sich nicht ändern lässt.
