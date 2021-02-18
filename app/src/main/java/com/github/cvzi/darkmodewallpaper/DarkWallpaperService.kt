@@ -411,7 +411,7 @@ class DarkWallpaperService : WallpaperService() {
         ) {
             if (fixedConfig) return
             // Scrolling on lock screen is uncommon, check whether its really still locked
-            if (!fixedConfig && isLockScreen && !keyguardService.isDeviceLocked) {
+            if (isLockScreen && !keyguardService.isDeviceLocked) {
                 // Device was unlocked
                 isLockScreen = hasSeparateLockScreenSettings && keyguardService.isDeviceLocked
                 offsetX = xOffset
