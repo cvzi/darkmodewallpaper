@@ -1,0 +1,11 @@
+Un fond d'écran live pour Android 10+ qui respecte le mode thème sombre.
+
+Avec cette application, vous pouvez définir une image pour le mode thème clair et une autre image pour le thème sombre.
+Lorsque le thème sombre du système est activé ou désactivé, le fond d'écran sera
+modifié automatiquement.
+
+Au lieu d'une image différente, vous pouvez également ajuster la couleur, le contraste et la luminosité de votre image de fond d'écran existante pour la rendre plus sombre.
+
+Il est possible de sélectionner différentes images pour l'écran d'accueil et l'écran de verrouillage.
+
+La permission "lire le stockage" est requise si vous voulez importer votre image de fond d'écran actuelle. Une fois que vous avez importé votre fond d'écran, vous pouvez révoquer en toute sécurité la permission. Si vous ne voulez pas importer votre fond d'écran actuel, vous n'avez pas besoin d'accorder cette permission.
