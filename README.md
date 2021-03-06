@@ -15,7 +15,6 @@ Permissions:
 TODO:
 *   Crop/move/zoom image
 *   Customize animation duration
-*   Run after boot (possible?)
 
 Implemented:
 *   Import current wallpaper
