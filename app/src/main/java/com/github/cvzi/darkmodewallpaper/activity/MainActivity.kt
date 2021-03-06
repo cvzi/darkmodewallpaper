@@ -502,7 +502,7 @@ open class MainActivity : AppCompatActivity() {
                         callback(success)
                     }
                     if (success) {
-                        alert?.dismiss()
+                        alert?.safeDismiss()
                         Toast.makeText(
                             this@MainActivity,
                             getString(
@@ -542,7 +542,7 @@ open class MainActivity : AppCompatActivity() {
             .setView(progressBar)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 importFileThread?.join()
-                dialog.dismiss()
+                dialog.safeDismiss()
                 file.delete()
                 File(file.parent, "${file.name}.tmp").delete()
                 previewViewDay.file = currentDayFile()
@@ -618,7 +618,7 @@ open class MainActivity : AppCompatActivity() {
             LayoutInflater.from(this).inflate(R.layout.dialog_advanced, alert.listView)
         alert.setView(linearLayout)
         linearLayout.findViewById<Button>(R.id.buttonPreview).setOnClickListener {
-            alert.dismiss()
+            alert.safeDismiss()
 
             var c = 1
             if (dayOrNight == NIGHT) {
@@ -640,7 +640,7 @@ open class MainActivity : AppCompatActivity() {
 
         }
         linearLayout.findViewById<Button>(R.id.buttonAdvanced).setOnClickListener {
-            alert.dismiss()
+            alert.safeDismiss()
             if (dayOrNight == NIGHT) {
                 openAdvancedLayoutNight()
             } else {
@@ -648,7 +648,7 @@ open class MainActivity : AppCompatActivity() {
             }
         }
         linearLayout.findViewById<Button>(R.id.buttonNewImage).setOnClickListener {
-            alert.dismiss()
+            alert.safeDismiss()
             if (isLockScreenActivity && dayOrNight == DAY) {
                 startForPickDayLockScreenFile.launch(imagePickIntent())
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
@@ -660,7 +660,7 @@ open class MainActivity : AppCompatActivity() {
             }
         }
         linearLayout.findViewById<Button>(R.id.buttonDeleteImage).setOnClickListener {
-            alert.dismiss()
+            alert.safeDismiss()
             if (dayOrNight == DAY) {
                 dayFileLocation(isLockScreenActivity).delete()
             } else {
@@ -846,7 +846,7 @@ open class MainActivity : AppCompatActivity() {
         builder.setTitle(R.string.wallpaper_import_dialog_title)
         builder.setMessage(R.string.wallpaper_import_dialog_message)
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
-            dialog.dismiss()
+            dialog.safeDismiss()
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED
             ) {
@@ -884,7 +884,7 @@ open class MainActivity : AppCompatActivity() {
                     success = storeFile(dayFileLocation(isLockScreenActivity), it)
                 }
                 runOnUiThread {
-                    alert.dismiss()
+                    alert.safeDismiss()
                     if (success) {
                         Toast.makeText(
                             this@MainActivity,
@@ -941,7 +941,7 @@ open class MainActivity : AppCompatActivity() {
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             val color = dialogLayout.findViewById<ColorPickerView>(R.id.colorPicker).color
             storeColor(color)
-            dialog.dismiss()
+            dialog.safeDismiss()
         }
         builder.setNegativeButton(android.R.string.cancel, null)
         val dialog = builder.show()
