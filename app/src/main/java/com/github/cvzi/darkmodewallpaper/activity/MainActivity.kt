@@ -478,6 +478,9 @@ open class MainActivity : AppCompatActivity() {
         file: File,
         callback: ((success: Boolean) -> Unit)? = null
     ) {
+        if (isLockScreenActivity) {
+            findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).isChecked = true
+        }
         val wallpaperManager = WallpaperManager.getInstance(this)
         val desiredMax =
             max(wallpaperManager.desiredMinimumWidth, wallpaperManager.desiredMinimumHeight)
