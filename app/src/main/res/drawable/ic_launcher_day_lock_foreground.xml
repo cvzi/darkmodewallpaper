@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
+    Copyright © 2021 cuzi@openmail.cc
+
+    This file is part of DarkModeLiveWallpaper.
+
+    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.432"
+        android:scaleY="0.432">
+        <path
+            android:fillColor="#009494"
+            android:fillType="evenOdd"
+            android:pathData="m122.296,74.729 l63.626,132.969h-63.626z"
+            android:strokeWidth="0.186359" />
+        <path
+            android:fillColor="#61bde3"
+            android:pathData="M0,-0h249.99v250.031h-249.99z"
+            android:strokeWidth="0.544745" />
+        <path
+            android:fillColor="#ffdd55"
+            android:pathData="M78.155,88.199m-14.762,0a14.762,14.762 45,1 1,29.523 0a14.762,14.762 135,1 1,-29.523 0"
+            android:strokeWidth="0.264583" />
+        <path
+            android:fillColor="#ffdd55"
+            android:pathData="m78.648,69.985 l-1.401,2.572a15.933,15.933 0,0 1,0.823 -0.021,15.933 15.933,135 0,1 1.755,0.097zM67.889,72.655 L68.176,75.981a15.933,15.933 0,0 1,2.433 -1.59zM90.157,74.526 L87.52,75.642a15.933,15.933 135,0 1,1.916 1.663zM63.5,82.021 L60.055,82.38 62.522,84.987a15.933,15.933 135,0 1,0.978 -2.966zM93.13,83.268a15.933,15.933 0,0 1,0.677 2.706l2.376,-2.136zM62.298,90.728 L59.229,93.255 63.194,94.175a15.933,15.933 0,0 1,-0.895 -3.447zM93.091,93.782a15.933,15.933 45,0 1,-1.253 2.707l3.421,-0.207zM66.954,99.884 L66.098,103.894 69.842,102.114a15.933,15.933 0,0 1,-2.888 -2.23zM87.93,100.985a15.933,15.933 0,0 1,-2.926 1.83l3.422,1.979zM74.639,104.029 L76.144,107.857 78.226,104.402a15.933,15.933 135,0 1,-0.156 0.001,15.933 15.933,45 0,1 -3.431,-0.374z"
+            android:strokeWidth="0.264583" />
+        <path
+            android:fillColor="#d7e1e5"
+            android:fillType="evenOdd"
+            android:pathData="M80.228,134.695 L102.369,207.698H44.803Z"
+            android:strokeWidth="0.214898" />
+        <path
+            android:fillColor="#c1e1e5"
+            android:fillType="evenOdd"
+            android:pathData="m122.296,74.729 l63.626,132.969H64.729Z"
+            android:strokeWidth="0.186359" />
+        <path
+            android:fillColor="#a4cfe5"
+            android:fillType="evenOdd"
+            android:pathData="m170.656,124.267 l33.561,83.431 -70.851,0z"
+            android:strokeWidth="0.235704" />
+    </group>
+
+    <group
+        android:scaleX="2.3"
+        android:scaleY="2.3"
+        android:translateX="45"
+        android:translateY="30">
+        <path
+            android:fillColor="#BBC5CA"
+            android:pathData="M4.3641,8.1089l11.2657,0l0,9.5493l-11.2657,0z"
+            android:strokeWidth="0.918411" />
+        <path
+            android:fillColor="#969D9F"
+            android:fillType="evenOdd"
+            android:pathData="m10,12.8681m-1.6957,0a1.6957,1.6957 0,1 1,3.3914 0,1.6957 1.6957,0 1,1 -3.3914,0"
+            android:strokeWidth="0.236651" />
+        <path
+            android:fillColor="#969D9F"
+            android:fillType="evenOdd"
+            android:pathData="M15.4263,6.7636L13.8662,6.7636L13.8662,4.2539C13.8662,2.1512 12.1705,0.3877 10,0.3877 7.8973,0.3877 6.1338,2.0834 6.1338,4.2539L6.1338,6.7636L4.5737,6.7636c-0.8818,0 -1.5601,0.6783 -1.5601,1.5601l0,9.0212c0,0.8818 0.6783,1.5601 1.5601,1.5601l10.8526,0c0.8818,0 1.5601,-0.6783 1.5601,-1.5601L16.9864,8.3236C16.9864,7.4418 16.3081,6.7636 15.4263,6.7636ZM7.4903,4.2539c0,-1.3566 1.0853,-2.5097 2.5097,-2.5097 1.3566,0 2.5097,1.0853 2.5097,2.5097L12.5097,6.7636L7.5582,6.7636L7.5582,4.2539ZM15.6298,17.4127C15.6298,17.5483 15.5619,17.6161 15.4263,17.6161L4.5737,17.6161C4.4381,17.6161 4.3702,17.5483 4.3702,17.4127L4.3702,8.3236C4.3702,8.188 4.4381,8.1201 4.5737,8.1201l10.8526,0c0.1357,0 0.2035,0.0678 0.2035,0.2035z"
+            android:strokeWidth="0.205223" />
+    </group>
+</vector>

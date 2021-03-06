@@ -104,11 +104,11 @@
         </activity>
         <activity
             android:name=".activity.LockScreenActivity"
-            android:icon="@mipmap/ic_launcher_day"
+            android:icon="@mipmap/ic_launcher_day_lock"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter
-                android:icon="@mipmap/ic_launcher_day"
+                android:icon="@mipmap/ic_launcher_day_lock"
                 android:label="@string/use_as_day_lock">
                 <action android:name="android.intent.action.ATTACH_DATA" />
 
@@ -117,7 +117,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter
-                android:icon="@mipmap/ic_launcher_day"
+                android:icon="@mipmap/ic_launcher_day_lock"
                 android:label="@string/use_as_day_lock">
                 <action android:name="android.intent.action.SEND" />
 
@@ -128,11 +128,11 @@
         </activity>
         <activity
             android:name=".activity.SetLockScreenNightActivity"
-            android:icon="@mipmap/ic_launcher_night"
+            android:icon="@mipmap/ic_launcher_night_lock"
             android:parentActivityName=".activity.LockScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter
-                android:icon="@mipmap/ic_launcher_night"
+                android:icon="@mipmap/ic_launcher_night_lock"
                 android:label="@string/use_as_night_lock">
                 <action android:name="android.intent.action.ATTACH_DATA" />
 
@@ -141,7 +141,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter
-                android:icon="@mipmap/ic_launcher_night"
+                android:icon="@mipmap/ic_launcher_night_lock"
                 android:label="@string/use_as_night_lock">
                 <action android:name="android.intent.action.SEND" />
 
