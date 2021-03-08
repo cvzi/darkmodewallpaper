@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
@@ -68,4 +69,5 @@
 \n\nWenn du den Live-Hintergrunds aktivierst, musst du \"Startbildschirm und Sperrbildschirm\" auswählen.
 \n\nDas Sperrbildschirm-Bild sollte mit der Bildschirmgröße übereinstimmen. Wenn es größer als der Bildschirm ist, wird es skaliert und zentriert.\n</string>
     <string name="about">Info</string>
+    <string name="about_issues"><![CDATA[Du hast ein Problem gefunden oder hast eine Idee?<br>Öffne ein Thema auf <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
 </resources>
