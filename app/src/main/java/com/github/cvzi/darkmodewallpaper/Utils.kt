@@ -19,7 +19,6 @@
 package com.github.cvzi.darkmodewallpaper
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -35,7 +34,6 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.SeekBar
-import com.github.cvzi.darkmodewallpaper.activity.MainActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException

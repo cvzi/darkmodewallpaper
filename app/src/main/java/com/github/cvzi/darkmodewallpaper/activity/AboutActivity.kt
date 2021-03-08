@@ -25,19 +25,14 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.github.cvzi.darkmodewallpaper.R
+import com.github.cvzi.darkmodewallpaper.*
 
 class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
-        val textViewAboutLicense = findViewById<TextView>(R.id.textViewAboutLicense)
-        textViewAboutLicense.movementMethod = LinkMovementMethod()
-        textViewAboutLicense.text = Html.fromHtml(
-            getString(R.string.about_license),
-            Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV
-        )
+        setHtmlText(R.id.textViewAboutLicense, R.string.about_license)
 
         val buttonAboutOpenSourceLicenses =
             findViewById<TextView>(R.id.buttonAboutOpenSourceLicenses)
@@ -48,9 +43,39 @@ class AboutActivity : AppCompatActivity() {
                     loadUrl("file:///android_asset/open_source_licenses.html")
                 })
                 .setPositiveButton(android.R.string.ok) { dialog, _ ->
-                    dialog.dismiss()
+                    dialog.safeDismiss()
                 }
                 .show()
+        }
+
+        setHtmlText(
+            R.id.textViewAppVersion,
+            R.string.about_version,
+            BuildConfig.VERSION_NAME,
+            BuildConfig.VERSION_CODE,
+            BuildConfig.BUILD_TYPE
+        )
+
+        setHtmlText(R.id.textViewIssues, R.string.about_issues)
+
+        setHtmlText(R.id.textViewTranslate, R.string.about_translate)
+    }
+
+    private fun setHtmlText(
+        viewId: IdRes,
+        stringRes: StringRes,
+        vararg formatArgs: Any?
+    ): TextView {
+        return setHtmlText(viewId, getString(stringRes, *formatArgs))
+    }
+
+    private fun setHtmlText(viewId: IdRes, htmlString: String): TextView {
+        return findViewById<TextView>(viewId).apply {
+            movementMethod = LinkMovementMethod()
+            text = Html.fromHtml(
+                htmlString,
+                Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV
+            )
         }
     }
 }

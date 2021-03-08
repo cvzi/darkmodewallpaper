@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
-    Copyright © 2021 cuzi@openmail.cc
-
-    This file is part of DarkModeLiveWallpaper.
-
-    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
 
@@ -24,4 +8,27 @@
     <string name="file_name_day_lock_wallpaper" translatable="false">lock_day.webp</string>
     <string name="file_name_night_lock_wallpaper" translatable="false">Lock_night.webp</string>
 
+    <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
+
+
+    <string name="about_license" translatable="false"><![CDATA[<br>
+Copyright © 2021 cuzi (<a href="mailto:cuzi-android@openmail.cc?subject=DarkModeLiveWallpaper">cuzi-android@openmail.cc</a>)<br><br>
+<a href="https://github.com/cvzi/darkmodewallpaper\">https://github.com/cvzi/darkmodewallpaper</a><br>
+<br>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+<br><br>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+<a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a> for more details.]]></string>
+    <string name="about_open_source_licenses" translatable="false">Open source licenses</string>
+    <string name="about_version" translatable="false"><![CDATA[Version: <a href="https://github.com/cvzi/darkmodewallpaper/blob/main/CHANGELOG.md">%1$s (%2$d)</a> %3$s]]></string>
+
+    <string name="about_translate" translatable="false"><![CDATA[Would you like to help us translate this app into other languages?
+<br>
+Contribute your translation on <a href="https://crwd.in/darkmodewallpaper">crwd.in/darkmodewallpaper</a> or <a href="mailto:cuzi-android@openmail.cc?subject=Translate%%20DarkModeLiveWallpaper%%20app">email me</a> if you need help translating.
+]]></string>
 </resources>

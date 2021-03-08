@@ -23,3 +23,4 @@ const val NIGHT = true
 
 typealias DayOrNight = Boolean
 typealias StringRes = Int
+typealias IdRes = Int

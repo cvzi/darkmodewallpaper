@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-    DarkModeLiveWallpaper github.com/cvzi/darkmodewallpaper
-
-    This file is part of DarkModeLiveWallpaper.
-
-    DarkModeLiveWallpaper is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    DarkModeLiveWallpaper is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
     <string name="app_name">DarkModeLiveWallpaper</string>
@@ -93,20 +78,6 @@
 \n\nMake sure to press \"Home screen and lock screen\", when you set the live wallpaper.
 \n\nThe lock screen image should match the screen size. If it is larger than the screen, it will be scaled and centered.\n</string>
     <string name="about">About</string>
-    <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
-    <string name="about_license" translatable="false"><![CDATA[<br>
-Copyright © 2021 cuzi (<a href="mailto:cuzi-android@openmail.cc?subject=DarkModeLiveWallpaper">cuzi-android@openmail.cc</a>)<br><br>
-<a href="https://github.com/cvzi/darkmodewallpaper\">https://github.com/cvzi/darkmodewallpaper</a><br>
-<br>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-<br><br>
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-<a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a> for more details.]]></string>
-    <string name="about_open_source_licenses" translatable="false">Open source licenses</string>
+    <string name="about_issues"><![CDATA[You found a problem or you have a suggestion?<br>Open an issue at <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
 
 </resources>
