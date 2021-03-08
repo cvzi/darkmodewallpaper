@@ -289,23 +289,35 @@ class DarkWallpaperService : WallpaperService() {
                     onLockScreenStatusChanged()
                 }
             }
+
+            fun register() {
+                registerReceiver(this, IntentFilter().apply {
+                    addAction(Intent.ACTION_USER_PRESENT)
+                })
+            }
+
+            fun unregister() {
+                unregisterReceiver(this)
+            }
         }
 
         private fun registerOnUnLock() {
-            val broadcastReceiver = onUnLockBroadcastReceiver
-            if (broadcastReceiver == null) {
+            if (onUnLockBroadcastReceiver == null) {
                 onUnLockBroadcastReceiver = OnUnLockBroadcastReceiver()
-                return registerOnUnLock()
             }
-            registerReceiver(broadcastReceiver, IntentFilter().apply {
-                addAction(Intent.ACTION_USER_PRESENT)
-            })
+            onUnLockBroadcastReceiver?.register()
+            Handler(Looper.getMainLooper()).postDelayed({
+                // Check if the device was already unlocked before the broadcast receiver was ready
+                if (isLockScreen && !keyguardService.isDeviceLocked) {
+                    // Device was already unlocked
+                    isLockScreen = hasSeparateLockScreenSettings && keyguardService.isDeviceLocked
+                    onLockScreenStatusChanged()
+                }
+            }, 200)
         }
 
         private fun unRegisterOnUnLock() {
-            onUnLockBroadcastReceiver?.let {
-                unregisterReceiver(it)
-            }
+            onUnLockBroadcastReceiver?.unregister()
         }
 
         private fun onLockScreenStatusChanged() {
