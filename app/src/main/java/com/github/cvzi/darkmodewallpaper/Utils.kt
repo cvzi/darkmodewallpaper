@@ -387,7 +387,7 @@ fun Activity.disableFullScreen() {
         window.setDecorFitsSystemWindows(true)
         window.insetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         window.insetsController?.systemBarsBehavior =
-            WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_TOUCH
+            WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     } else {
         @Suppress("DEPRECATION")
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
