@@ -98,7 +98,7 @@ open class MainActivity : AppCompatActivity() {
             RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                handleImportWallpaper()
+                importWallpaper()
             } else {
                 Toast.makeText(
                     this,
@@ -855,16 +855,11 @@ open class MainActivity : AppCompatActivity() {
             ) {
                 startForStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             } else {
-                handleImportWallpaper()
+                importWallpaper()
             }
         }
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
-    }
-
-    private fun handleImportWallpaper() {
-        importWallpaper()
-
     }
 
     private fun importWallpaper() {
@@ -883,8 +878,12 @@ open class MainActivity : AppCompatActivity() {
         object : Thread("saveFileFromUri") {
             override fun run() {
                 var success = false
-                wallpaperManager.drawable?.let {
-                    success = storeFile(dayFileLocation(isLockScreenActivity), it)
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
+                    wallpaperManager.drawable?.let {
+                        success = storeFile(dayFileLocation(isLockScreenActivity), it)
+                    }
                 }
                 runOnUiThread {
                     alert.safeDismiss()
