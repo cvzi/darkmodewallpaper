@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
@@ -68,4 +69,5 @@
 \n\nAssurez-vous d\'appuyer sur \"Écran d\'accueil et de verrouillage\", lorsque vous définissez le fond d\'écran live.
 \n\nL\'image de l\'écran de verrouillage doit correspondre à la taille de l\'écran. Si elle est plus grande que l\'écran, elle sera mise à l\'échelle et centrée.\n</string>
     <string name="about">À propos</string>
+    <string name="about_issues"><![CDATA[Tu as trouvé un problème ou tu as une idée?<br>Ouvre une discussion sur <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
 </resources>
