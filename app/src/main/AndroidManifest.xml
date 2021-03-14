@@ -50,12 +50,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DarkModeWallpaper"
-        tools:ignore="LockedOrientationActivity">
+        android:theme="@style/Theme.DarkModeWallpaper">
         <activity
             android:name=".activity.MainActivity"
-            android:icon="@mipmap/ic_launcher"
-            android:screenOrientation="portrait">
+            android:icon="@mipmap/ic_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,8 +81,7 @@
         <activity
             android:name=".activity.SetNightActivity"
             android:icon="@mipmap/ic_launcher_night"
-            android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter
                 android:icon="@mipmap/ic_launcher_night"
                 android:label="@string/use_as_night_home">
@@ -107,8 +104,7 @@
         <activity
             android:name=".activity.LockScreenActivity"
             android:icon="@mipmap/ic_launcher_day_lock"
-            android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter
                 android:icon="@mipmap/ic_launcher_day_lock"
                 android:label="@string/use_as_day_lock">
@@ -131,8 +127,7 @@
         <activity
             android:name=".activity.SetLockScreenNightActivity"
             android:icon="@mipmap/ic_launcher_night_lock"
-            android:parentActivityName=".activity.LockScreenActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".activity.LockScreenActivity">
             <intent-filter
                 android:icon="@mipmap/ic_launcher_night_lock"
                 android:label="@string/use_as_night_lock">
