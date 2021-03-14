@@ -8,9 +8,15 @@ your image.
 This app requires Android 10. If you are using an earlier version of Android, you may be able to
 achieve a comparable experience by using MacroDroid, Tasker or a similar automation tool.
 
-Permissions:
+## Permissions:
 *   `READ_EXTERNAL_STORAGE` (read the contents of your internal storage/sd card)
     Required if you want to import your existing wallpaper, otherwise you may revoke it.
+
+## Languages
+
+To help translate this app, please visit [crowdin.com/project/darkmodewallpaper](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on), where the localizations are managed. If you like to add a new language, please open an issue or email me and I will add it.
+
+<a href="https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on" rel="nofollow"><img style="width:140;height:40px" src="https://badges.crowdin.net/badge/dark/crowdin-on-light.png" srcset="https://badges.crowdin.net/badge/dark/crowdin-on-light.png 1x,https://badges.crowdin.net/badge/crowdin-on-light@2x.png 2x"  alt="Crowdin | Agile localization for tech companies" /></a>
 
 TODO:
 *   Crop/move/zoom image
