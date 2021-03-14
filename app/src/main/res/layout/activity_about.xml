@@ -31,21 +31,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewAboutLicense"
+                android:id="@+id/textViewIssues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="" />
+                android:text="@string/about_issues" />
 
-            <Button
-                android:id="@+id/buttonAboutOpenSourceLicenses"
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/textViewTranslate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/about_open_source_licenses" />
+                android:text="@string/about_translate" />
 
             <Space
                 android:layout_width="match_parent"
@@ -63,20 +66,18 @@
                 android:layout_height="15dp" />
 
             <TextView
-                android:id="@+id/textViewIssues"
+                android:id="@+id/textViewAboutLicense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_issues" />
+                android:fontFamily="monospace"
+                android:text="" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="15dp" />
-
-            <TextView
-                android:id="@+id/textViewTranslate"
+            <Button
+                android:id="@+id/buttonAboutOpenSourceLicenses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_translate" />
+                android:layout_marginTop="10dp"
+                android:text="@string/about_open_source_licenses" />
 
         </LinearLayout>
     </ScrollView>
