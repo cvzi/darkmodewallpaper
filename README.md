@@ -5,6 +5,8 @@ The app automatically changes the wallpaper when the dark theme is enabled or di
 You can set a different image for dark theme or change the color/contrast/brightness of
 your image.
 
+[<img src="https://raw.githubusercontent.com/cvzi/ScreenshotTile/master/docs/imgs/get-it-on-f-droid.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.github.cvzi.darkmodewallpaper/) 
+
 This app requires Android 10. If you are using an earlier version of Android, you may be able to
 achieve a comparable experience by using MacroDroid, Tasker or a similar automation tool.
 
