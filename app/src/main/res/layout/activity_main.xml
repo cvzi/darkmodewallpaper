@@ -416,7 +416,7 @@
                         android:visibility="gone" />
 
                     <TableLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TableRow>
@@ -467,7 +467,17 @@
                                 android:id="@+id/buttonLockScreenSettings"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
                                 android:text="@string/button_lock_screen_settings" />
+
+                            <ImageButton
+                                android:id="@+id/imageButtonAbout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="@color/button_dialog_transparent"
+                                android:contentDescription="@string/about"
+                                android:src="@android:drawable/ic_menu_info_details" />
 
                         </TableRow>
 
@@ -477,6 +487,8 @@
                                 android:id="@+id/buttonImportWallpaper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_span="2"
                                 android:text="@string/button_import_wallpaper" />
 
                         </TableRow>
@@ -487,16 +499,10 @@
                                 android:id="@+id/buttonApplyWallpaper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_span="2"
                                 android:text="@string/button_apply_wallpaper" />
 
-                            <ImageButton
-                                android:id="@+id/imageButtonAbout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:background="@color/button_dialog_transparent"
-                                android:contentDescription="@string/about"
-                                android:src="@android:drawable/ic_menu_info_details" />
                         </TableRow>
 
                     </TableLayout>
