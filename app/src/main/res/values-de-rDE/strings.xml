@@ -42,6 +42,7 @@
     <string name="image_file_import_loading_message">Optimiere %2$s\n(importiert aus %1$s)</string>
     <string name="button_import_wallpaper">Hintergrundbild importieren</string>
     <string name="button_apply_wallpaper">Als Hintergrund festlegen</string>
+    <string name="apply_wallpaper_unavailable">Bitte aktiviere den Hintergrund manuell in den Android Einstellungen</string>
     <string name="button_lock_screen_settings">Sperrbildschirm</string>
     <string name="switch_only_use_color">Nur Farbe</string>
     <string name="switch_use_color_overlay">Farb-Overlay</string>

@@ -210,14 +210,36 @@ open class MainActivity : AppCompatActivity() {
                 c += 10
             }
             Preferences(this, R.string.pref_file).previewMode = c
-            startActivity(Intent(
+
+            Intent(
                 WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
             ).apply {
                 putExtra(
                     WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
                     ComponentName(this@MainActivity, DarkWallpaperService::class.java)
                 )
-            })
+                if (resolveActivity(packageManager) != null) {
+                    startActivity(this)
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        R.string.apply_wallpaper_unavailable,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    buttonApplyWallpaper.isEnabled = false
+                }
+            }
+        }
+        Intent(
+            WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
+        ).apply {
+            putExtra(
+                WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+                ComponentName(this@MainActivity, DarkWallpaperService::class.java)
+            )
+            if (resolveActivity(packageManager) == null) {
+                buttonApplyWallpaper.isEnabled = false
+            }
         }
 
         findViewById<View>(R.id.imageButtonAbout).setOnClickListener {
@@ -639,6 +661,15 @@ open class MainActivity : AppCompatActivity() {
                     WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
                     ComponentName(this@MainActivity, DarkWallpaperService::class.java)
                 )
+                if (resolveActivity(packageManager) != null) {
+                    startActivity(this)
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        R.string.apply_wallpaper_unavailable,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             })
 
         }

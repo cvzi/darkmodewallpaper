@@ -42,6 +42,7 @@
     <string name="image_file_import_loading_message">Optimisation de %2$s\n(importé de %1$s)</string>
     <string name="button_import_wallpaper">Importer un fond d\'écran</string>
     <string name="button_apply_wallpaper">Appliquer en tant que fond d\'écran</string>
+    <string name="apply_wallpaper_unavailable">Définir manuellement le fond d\'écran à partir des paramètres Android</string>
     <string name="button_lock_screen_settings">Écran de verrouillage</string>
     <string name="switch_only_use_color">Couleur uniquement</string>
     <string name="switch_use_color_overlay">Surcouche de couleur</string>

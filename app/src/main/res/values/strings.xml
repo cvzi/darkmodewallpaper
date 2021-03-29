@@ -51,6 +51,7 @@
 
     <string name="button_import_wallpaper">Import wallpaper</string>
     <string name="button_apply_wallpaper">Apply as wallpaper</string>
+    <string name="apply_wallpaper_unavailable">Please set the wallpaper manually from the Android settings</string>
     <string name="button_lock_screen_settings">Lock screen</string>
     <string name="switch_only_use_color">Only color</string>
     <string name="switch_use_color_overlay">Color overlay</string>
