@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0
+*   Fix: "Activity not found" when opening wallpaper preview
+*   Minor design changes
 ## 1.0-alpha3
 *   Fix: Unlock not detected [#7](https://github.com/cvzi/darkmodewallpaper/issues/7)
 *   Fix: Safely dismiss() dialogs
