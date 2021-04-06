@@ -19,6 +19,7 @@
 package com.github.cvzi.darkmodewallpaper
 
 import android.app.Activity
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -29,15 +30,18 @@ import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.SeekBar
+import android.widget.TimePicker
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.time.LocalTime
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -403,5 +407,37 @@ fun DialogInterface.safeDismiss() {
         this.dismiss()
     } catch (e: IllegalArgumentException) {
         // no-op
+    }
+}
+
+fun createTimePicker(
+    context: Context,
+    load: (() -> String),
+    save: ((String) -> Unit)
+): TimePickerDialog {
+    val listener = { _: TimePicker, hour: Int, minute: Int ->
+        save("%02d:%02d".format(hour, minute))
+    }
+    val parts = load().split(":")
+    val (hour, minute) = if (parts.size < 2) {
+        // default to current time
+        Calendar.getInstance().run {
+            Pair(get(Calendar.HOUR_OF_DAY), get(Calendar.MINUTE))
+        }
+    } else {
+        Pair(parts[0].toInt(), parts[1].toInt())
+    }
+    val is24HourView = DateFormat.is24HourFormat(context)
+    return TimePickerDialog(context, listener, hour, minute, is24HourView)
+}
+
+fun timeIsInTimeRange (timeRangeStr: String, now: LocalTime = LocalTime.now()): Boolean {
+    val (startStr, endStr) = timeRangeStr.split("-")
+    val startTime = LocalTime.parse(startStr)
+    val endTime = LocalTime.parse(endStr)
+    return if (startTime.isAfter(endTime)) {
+        !(now.isAfter(endTime) && now.isBefore(startTime))
+    } else  {
+        now.isAfter(startTime) && now.isBefore(endTime)
     }
 }

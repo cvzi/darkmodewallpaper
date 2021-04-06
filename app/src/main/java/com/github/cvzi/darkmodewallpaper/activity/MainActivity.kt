@@ -19,6 +19,7 @@
 package com.github.cvzi.darkmodewallpaper.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.WallpaperManager
@@ -76,6 +77,10 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var buttonImportWallpaper: Button
     private lateinit var buttonApplyWallpaper: Button
     private lateinit var textStatusDayOrNight: TextView
+    private lateinit var switchTriggerSystem: SwitchMaterial
+    private lateinit var textViewStartTime: TextView
+    private lateinit var textViewEndTime: TextView
+    private lateinit var tableRowTimeRangeTrigger: TableRow
     private var previewViewLayoutIndex = -1
 
     private lateinit var startForPickDayHomeScreenFile: ActivityResultLauncher<Intent>
@@ -133,6 +138,10 @@ open class MainActivity : AppCompatActivity() {
         val switchColorOnlyNight = findViewById<SwitchMaterial>(R.id.switchColorOnlyNight)
         imageButtonColorDay = findViewById(R.id.imageButtonColorDay)
         imageButtonColorNight = findViewById(R.id.imageButtonColorNight)
+        switchTriggerSystem = findViewById(R.id.switchTriggerSystem)
+        textViewStartTime = findViewById(R.id.textViewStartTime)
+        textViewEndTime = findViewById(R.id.textViewEndTime)
+        tableRowTimeRangeTrigger = findViewById(R.id.tableRowTimeRangeTrigger)
 
         makeCardViewReceiveDragAndDrop(
             findViewById(R.id.cardViewDay),
@@ -202,6 +211,7 @@ open class MainActivity : AppCompatActivity() {
         buttonImportWallpaper.setOnClickListener {
             askToImport()
         }
+
 
         buttonApplyWallpaper.setOnClickListener {
             var c = 1
@@ -399,6 +409,33 @@ open class MainActivity : AppCompatActivity() {
             openAdvancedDialog(NIGHT)
         }
 
+
+        switchTriggerSystem.isChecked = preferences.nightModeTrigger == NightModeTrigger.SYSTEM
+        switchTriggerSystem.setOnCheckedChangeListener { _, isChecked ->
+            onTriggerModeChanged(isChecked)
+        }
+        onTriggerModeChanged(switchTriggerSystem.isChecked)
+
+        textViewStartTime.setOnClickListener {
+            createTimePicker(
+                this,
+                load = { textViewStartTime.text.toString() },
+                save = { v ->
+                    textViewStartTime.setText(v)
+                    saveTimeRange()
+                }).show()
+        }
+        textViewEndTime.setOnClickListener {
+            createTimePicker(
+                this,
+                load = { textViewEndTime.text.toString() },
+                save = { v ->
+                    textViewEndTime.setText(v)
+                    saveTimeRange()
+                }).show()
+        }
+        loadTimeRange()
+
         if (intent != null
             && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_ATTACH_DATA)
             && intent.type?.startsWith("image/") == true
@@ -406,10 +443,37 @@ open class MainActivity : AppCompatActivity() {
             // "Send to" / "Use as" from another app
             handleSendToAction(intent)
         } else if (dayImageFile?.exists() != true && !DarkWallpaperService.isRunning() && !isLockScreenActivity) {
-            //If there is no file and the services are not running (i.e. usually a new install)
+            // If there is no file and the services are not running (i.e. usually a new install)
             askToImport()
         }
+    }
 
+    private fun onTriggerModeChanged (isChecked: Boolean) {
+        if (isChecked) {
+            tableRowTimeRangeTrigger.visibility = View.GONE
+            preferences.nightModeTrigger = NightModeTrigger.SYSTEM
+            switchTriggerSystem.setText(R.string.night_mode_trigger_follow_system)
+        } else {
+            tableRowTimeRangeTrigger.visibility = View.VISIBLE
+            preferences.nightModeTrigger = NightModeTrigger.TIMERANGE
+            switchTriggerSystem.setText(R.string.night_mode_trigger_time_range)
+        }
+    }
+
+    private fun saveTimeRange() {
+        preferences.nightModeTimeRange = "${textViewStartTime.text}-${textViewEndTime.text}"
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun loadTimeRange() {
+        val parts = preferences.nightModeTimeRange.split("-")
+        if (parts.size > 1) {
+            textViewStartTime.text = parts[0]
+            textViewEndTime.text = parts[1]
+        } else {
+            textViewStartTime.text = "20:00"
+            textViewEndTime.text = "08:00"
+        }
     }
 
     private fun makeCardViewReceiveDragAndDrop(cardViewDay: CardView, file: File) {

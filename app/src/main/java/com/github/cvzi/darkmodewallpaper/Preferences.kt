@@ -163,6 +163,26 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value
         ).apply()
 
+    var nightModeTrigger: NightModeTrigger
+        get() = NightModeTrigger.valueOfOrFirst(pref.getString(
+            context.getString(R.string.pref_night_mode_trigger_key),
+            context.getString(R.string.pref_night_mode_trigger_default)
+        ))
+        set(value) = pref.edit().putString(
+            context.getString(R.string.pref_night_mode_trigger_key),
+           value.toString()
+        ).apply()
+
+    var nightModeTimeRange: String
+        get() = pref.getString(
+            context.getString(R.string.pref_night_mode_time_range_key),
+            context.getString(R.string.pref_night_mode_time_range_default)
+        ) ?: context.getString(R.string.pref_night_mode_time_range_default)
+        set(value) = pref.edit().putString(
+            context.getString(R.string.pref_night_mode_time_range_key),
+            value
+        ).apply()
+
     override fun toString(): String {
         return super.toString() + "[${context.getString(prefFile)}]"
     }

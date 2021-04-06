@@ -49,5 +49,8 @@
     <string name="pref_preview_mode_default" translatable="false">0</string>
     <string name="pref_animate_from_lock_screen_key" translatable="false">animate_from_lock_screen</string>
     <bool name="pref_animate_from_lock_screen_default">true</bool>
-
+    <string name="pref_night_mode_trigger_key" translatable="false">night_mode_trigger</string>
+    <string name="pref_night_mode_trigger_default" translatable="false">0</string>
+    <string name="pref_night_mode_time_range_key" translatable="false">night_mode_time_range</string>
+    <string name="pref_night_mode_time_range_default" translatable="false">20:00-08:00</string>
 </resources>

@@ -419,6 +419,66 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+
+                        <TableRow android:id="@+id/tableRowTimeRangeTrigger">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/start_time" />
+
+                                <TextView
+                                    android:id="@+id/textViewStartTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/white"
+                                    android:ems="5"
+                                    android:textColor="@android:color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/end_time" />
+
+                                <TextView
+                                    android:id="@+id/textViewEndTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/white"
+                                    android:ems="5"
+                                    android:textColor="@android:color/black" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/night_mode_trigger" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchTriggerSystem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/night_mode_trigger_follow_system"
+                                android:text="@string/night_mode_trigger_follow_system"
+                                app:useMaterialThemeColors="true" />
+
+                        </TableRow>
+
+
                         <TableRow>
 
                             <TextView

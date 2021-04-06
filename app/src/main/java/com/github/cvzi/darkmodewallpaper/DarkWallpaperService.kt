@@ -41,6 +41,7 @@ import com.github.cvzi.darkmodewallpaper.animation.WaitAnimation
 import java.io.File
 import java.lang.ref.SoftReference
 import java.lang.ref.WeakReference
+import java.time.LocalTime
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
@@ -168,23 +169,28 @@ class DarkWallpaperService : WallpaperService() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        var newDayOrNight: DayOrNight? = null
-        when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_NO -> {
-                newDayOrNight = DAY
+        if (preferences.nightModeTrigger == NightModeTrigger.SYSTEM) {
+            var newDayOrNight: DayOrNight? = null
+            when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    newDayOrNight = DAY
+                }
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    newDayOrNight = NIGHT
+                }
             }
-            Configuration.UI_MODE_NIGHT_YES -> {
-                newDayOrNight = NIGHT
+            if (newDayOrNight != null) {
+                updateDayOrNightForAll(newDayOrNight)
             }
         }
-        if (newDayOrNight != null) {
-            synchronized(engines) {
-                for (engine in engines) {
-                    engine.get()?.run {
-                        if (!this.fixedConfig) {
-                            this.dayOrNight = newDayOrNight
-                            this.update()
-                        }
+    }
+    private fun updateDayOrNightForAll(newDayOrNight: Boolean) {
+        synchronized(engines) {
+            for (engine in engines) {
+                engine.get()?.run {
+                    if (!this.fixedConfig) {
+                        this.dayOrNight = newDayOrNight
+                        this.update()
                     }
                 }
             }
@@ -267,8 +273,7 @@ class DarkWallpaperService : WallpaperService() {
                     preferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
                 }
             } else {
-                dayOrNight =
-                    resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                dayOrNight = isDayOrNightMode()
             }
             dayImageLocation = dayFileLocation(isLockScreen)
             nightImageLocation = nightFileLocation(isLockScreen)
@@ -280,6 +285,17 @@ class DarkWallpaperService : WallpaperService() {
                 engines.remove(self)
             }
             unRegisterOnUnLock()
+        }
+
+        fun isDayOrNightMode(): DayOrNight {
+            return when (preferences.nightModeTrigger) {
+                NightModeTrigger.TIMERANGE -> {
+                    timeIsInTimeRange(preferences.nightModeTimeRange)
+                }
+                else -> {
+                    resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                }
+            }
         }
 
         inner class OnUnLockBroadcastReceiver : BroadcastReceiver() {
@@ -368,6 +384,13 @@ class DarkWallpaperService : WallpaperService() {
             if (!fixedConfig && hasSeparateLockScreenSettings && isLockScreen != keyguardService.isDeviceLocked) {
                 isLockScreen = keyguardService.isDeviceLocked
                 return onLockScreenStatusChanged()
+            }
+            if (!fixedConfig && preferences.nightModeTrigger == NightModeTrigger.TIMERANGE) {
+                // Update night mode according to time range
+                val newDayOrNight: DayOrNight = isDayOrNightMode()
+                if (newDayOrNight != dayOrNight) {
+                    updateDayOrNightForAll(newDayOrNight)
+                }
             }
 
             if (visible && invalid) {

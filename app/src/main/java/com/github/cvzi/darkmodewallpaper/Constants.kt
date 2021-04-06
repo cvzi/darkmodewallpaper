@@ -18,9 +18,25 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
+
 const val DAY = false
 const val NIGHT = true
 
 typealias DayOrNight = Boolean
 typealias StringRes = Int
 typealias IdRes = Int
+
+enum class NightModeTrigger {
+    SYSTEM,
+    TIMERANGE;
+
+    companion object {
+        fun valueOfOrFirst(value: String?) = value?.run {
+            try {
+                valueOf(value)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        } ?: values()[0]
+    }
+}
