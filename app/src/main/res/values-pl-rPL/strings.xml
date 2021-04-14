@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Dzienna tapeta ekranu głównego</string>
+    <string name="use_as_night_home">Nocna tapeta ekranu głównego</string>
+    <string name="use_as_day_lock">Dzienna tapeta ekranu blokady</string>
+    <string name="use_as_night_lock">Nocna tapeta ekranu blokady</string>
+    <string name="wallpaper_label">Ciemna tapeta</string>
+    <string name="wallpaper_description">Automatycznie zmienia tapetę aby pasowała do jasnego/ciemnego motywu</string>
+    <string name="wallpaper_is_loading">ładowanie…</string>
+    <string name="color_chooser_day">Wybierz kolor nakładki podczas dnia</string>
+    <string name="color_chooser_night">Wybierz kolor nakładki w nocy</string>
+    <string name="status_darkmode">Status trybu ciemnego:</string>
+    <string name="status_darkmode_day">Dzienna godzina/Jasny motyw</string>
+    <string name="status_darkmode_night">Godzina nocna/Ciemny motyw</string>
+    <string name="status_requested_image_size">Zalecana wielkość obrazu:</string>
+    <string name="status_screen_size">Rozmiar ekranu:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Wybierz obraz (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Tryb dzienny</string>
+    <string name="wallpaper_file_chooser_night_time">Tryb nocny</string>
+    <string name="wallpaper_file_chooser_home_screen">Ekran główny</string>
+    <string name="wallpaper_file_chooser_lock_screen">Ekran blokady</string>
+    <string name="wallpaper_import_dialog_title">Importuj bieżącą tapetę</string>
+    <string name="wallpaper_import_dialog_message">Czy chcesz zaimportować bieżącą tapetę?
+\n\n(może nie działać dla żywych tapet)
+\n\nW następnym kroku aplikacja pyta o dostęp do pamięci.
+\nMożesz bezpiecznie cofnąć uprawnienie, gdy tapeta zostanie zaimportowana.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Tapeta zaimportowana\n%1$s</string>
+    <string name="wallpaper_import_failed">Nie można odczytać obrazu</string>
+    <string name="wallpaper_import_permission_missing">Aby zaimportować tapetę, wymagane jest uprawnienie do pamięci!</string>
+    <string name="image_file_import_error">Nie można importować obrazu</string>
+    <string name="image_file_import_loading_title">Importowanie obrazu</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Obraz zapisany w %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Optymalizacja %2$s\n(zaimportowane z %1$s)</string>
+    <string name="button_import_wallpaper">Importuj tapetę</string>
+    <string name="button_apply_wallpaper">Ustaw jako tapetę</string>
+    <string name="apply_wallpaper_unavailable">Proszę ustawić tapetę ręcznie w ustawieniach Androida</string>
+    <string name="button_lock_screen_settings">Ekran blokady</string>
+    <string name="switch_only_use_color">Tylko kolor</string>
+    <string name="switch_use_color_overlay">Kolory nakładki</string>
+    <string name="color">Kolor</string>
+    <string name="button_select_image">Wybierz obraz</string>
+    <string name="heading_day_time_settings">Tryb dzienny</string>
+    <string name="heading_night_time_settings">Tryb nocny</string>
+    <string name="dialog_advanced_title">Działania:</string>
+    <string name="dialog_button_preview">Podgląd tapety</string>
+    <string name="dialog_button_advanced">Kontrast &amp; Jasność</string>
+    <string name="dialog_button_select_image">Wybierz inny obraz</string>
+    <string name="dialog_button_delete_image">Usuń obraz</string>
+    <string name="switch_separate_lock_screen_settings">Oddziel ustawienia ekranu blokady</string>
+    <string name="switch_separate_lock_screen_settings_description">Włącz, aby używać oddzielnych ustawień dla ekranu blokady</string>
+    <string name="switch_animate_from_lock_screen">Animuj przejście do ekranu głównego po odblokowaniu</string>
+    <string name="switch_animate_from_lock_screen_description">Włącz animację przejścia od ekranu blokady do tapety ekranu głównego po odblokowaniu</string>
+    <string name="lock_symbol_description">Symbol ekranu blokady</string>
+    <string name="sun_symbol_description">Słońce/Dzień</string>
+    <string name="moon_symbol_description">Księżyc/Noc</string>
+    <string name="button_select_color_description">Wybierz kolor</string>
+    <string name="switch_reuse_day_image_for_night">Użyj dziennego obrazu</string>
+    <string name="switch_reuse_day_image_for_night_description">Użyj oddzielnej tapety nocnej lub ponownie użyj tapety dziennej</string>
+    <string name="text_lock_screen_explanation">Jeśli włączysz przełącznik u góry, możesz ustawić różne tapety i różne kolory dla ekranu blokady.
+\nNiestety, nie działa to na wszystkich telefonach, ponieważ niektórzy producenci telefonów ustawiają własne tapety ekranu blokady i nie pozwalają na ich zmianę.
+\n\nUpewnij się, że po ustawieniu tapety na żywo nacisnąłeś \"Ekran główny i ekran blokady\".
+\n\nTapeta ekranu blokady powinna być zgodna z rozmiarem ekranu. Jeśli jest ona większa niż ekran, zostanie przeskalowana i wyśrodkowana.\n</string>
+    <string name="about">O aplikacji</string>
+    <string name="about_issues"><![CDATA[Znalazłeś problem lub masz sugestię?<br>Utwórz zgłoszenie pod adresem <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+</resources>
