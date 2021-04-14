@@ -1,0 +1,11 @@
+Tapeta na żywo dla Androida 10+, która respektuje ciemny motyw.
+
+Dzięki tej aplikacji możesz ustawić osobną tapetę dla trybu jasnego oraz ciemnego.
+W zależności od ustawionego motywu systemowego, tapeta będzie automatycznie zmieniana.
+
+Zamiast innego obrazu możesz również dostosować kolor, kontrast i
+jasności bieżącego obrazu tapety aby był ciemniejszy.
+
+Możliwe jest wybranie różnych obrazów dla ekranu głównego i ekranu blokady.
+
+Uprawnienie do odczytu pamięci jest wymagane gdy chcesz zaimportować swoją obecną tapetę. Po zaimportowaniu tapety możesz bezpiecznie cofnąć uprawnienia. Jeśli nie chcesz importować bieżącej tapety, nie potrzebujesz udzielać tego uprawnienia.
