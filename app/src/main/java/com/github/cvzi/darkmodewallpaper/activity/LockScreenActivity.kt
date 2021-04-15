@@ -39,8 +39,10 @@ open class LockScreenActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dayImageFile = dayFileLocation(isLockScreenActivity)
-        nightImageFile = nightFileLocation(isLockScreenActivity)
+        dayImageFile =
+            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
+        nightImageFile =
+            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
         findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).setOnCheckedChangeListener { _, isChecked ->
             setSeparateLockScreenEnabled(isChecked)
@@ -55,8 +57,10 @@ open class LockScreenActivity : MainActivity() {
     override fun onResume() {
         super.onResume()
 
-        dayImageFile = dayFileLocation(isLockScreenActivity)
-        nightImageFile = nightFileLocation(isLockScreenActivity)
+        dayImageFile =
+            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
+        nightImageFile =
+            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
         findViewById<ViewGroup>(R.id.tableRowButtonLockScreenSettings).removeAllViews()
         findViewById<ViewGroup>(R.id.tableRowButtonApplyWallpaper).removeAllViews()

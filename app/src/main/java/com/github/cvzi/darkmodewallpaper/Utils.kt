@@ -51,28 +51,6 @@ const val UTILSTAG = "Utils.kt"
 
 data class ScaledBitmap(val bitmap: Bitmap, val isDesiredSize: Boolean)
 
-fun Context.dayFileName(isLockScreen: Boolean): String {
-    return getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
-}
-
-fun Context.nightFileName(isLockScreen: Boolean): String {
-    return getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
-}
-
-fun Context.dayFileLocation(isLockScreen: Boolean): File {
-    return File(
-        getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-        dayFileName(isLockScreen)
-    )
-}
-
-fun Context.nightFileLocation(isLockScreen: Boolean): File {
-    return File(
-        getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-        nightFileName(isLockScreen)
-    )
-}
-
 fun Context.isSeparateLockScreenEnabled(): Boolean {
     return Preferences(this, R.string.pref_file).separateLockScreen
 }

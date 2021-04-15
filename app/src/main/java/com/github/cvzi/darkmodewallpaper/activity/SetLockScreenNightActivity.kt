@@ -26,8 +26,8 @@ import com.github.cvzi.darkmodewallpaper.NIGHT
  */
 class SetLockScreenNightActivity : LockScreenActivity() {
     override fun sendToActionIsNight(): DayOrNight {
-        preferences.useNightWallpaper = true
-        preferences.useNightColorOnly = false
+        imageProvider.setUseNightWallpaper(isLockScreenActivity, true)
+        imageProvider.setUseColorOnly(NIGHT, isLockScreenActivity, false)
         return NIGHT
     }
 

@@ -41,7 +41,6 @@ import com.github.cvzi.darkmodewallpaper.animation.WaitAnimation
 import java.io.File
 import java.lang.ref.SoftReference
 import java.lang.ref.WeakReference
-import java.time.LocalTime
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
@@ -99,6 +98,17 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         /**
+         * Event for the night mode trigger settings
+         */
+        fun updateNightMode() {
+            synchronized(SERVICES) {
+                for (service in SERVICES) {
+                    service.get()?.updateDayOrNightForAll()
+                }
+            }
+        }
+
+        /**
          * Returns true if any wallpaper is currently running, may be a real wallpaper or a preview.
          */
         fun isRunning(): Boolean {
@@ -120,9 +130,7 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     private val self = WeakReference(this)
-    private lateinit var preferences: Preferences
-    private lateinit var preferencesLockScreen: Preferences
-    private lateinit var preferencesHomeScreen: Preferences
+    private lateinit var preferencesGlobal: Preferences
 
     private var engines: ArrayList<WeakReference<DarkWallpaperService.WallpaperEngine>> =
         ArrayList()
@@ -151,9 +159,7 @@ class DarkWallpaperService : WallpaperService() {
 
         keyguardService = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
-        preferencesHomeScreen = Preferences(this, R.string.pref_file)
-        preferencesLockScreen = Preferences(this, R.string.pref_file_lock_screen)
-        preferences = preferencesHomeScreen
+        preferencesGlobal = Preferences(this, R.string.pref_file)
     }
 
     override fun onDestroy() {
@@ -169,7 +175,7 @@ class DarkWallpaperService : WallpaperService() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        if (preferences.nightModeTrigger == NightModeTrigger.SYSTEM) {
+        if (preferencesGlobal.nightModeTrigger == NightModeTrigger.SYSTEM) {
             var newDayOrNight: DayOrNight? = null
             when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_NO -> {
@@ -184,12 +190,14 @@ class DarkWallpaperService : WallpaperService() {
             }
         }
     }
-    private fun updateDayOrNightForAll(newDayOrNight: Boolean) {
+
+    private fun updateDayOrNightForAll(newDayOrNight: Boolean? = null) {
+        Log.v(TAG, "updateDayOrNightForAll()")
         synchronized(engines) {
             for (engine in engines) {
                 engine.get()?.run {
                     if (!this.fixedConfig) {
-                        this.dayOrNight = newDayOrNight
+                        this.dayOrNight = newDayOrNight ?: this.isDayOrNightMode()
                         this.update()
                     }
                 }
@@ -215,9 +223,13 @@ class DarkWallpaperService : WallpaperService() {
         var fixedConfig = false
 
         private var invalid = true
+        private var imageProvider: ImageProvider =
+            StaticDayAndNightProvider(this@DarkWallpaperService)
         private val self = WeakReference(this)
-        private lateinit var dayImageLocation: File
-        private lateinit var nightImageLocation: File
+
+        //private lateinit var dayImageLocation: File
+        //private lateinit var nightImageLocation: File
+        private var wallpaperImage: WallpaperImage? = null
         private var isSecondaryDisplay = false
         private var width = 0
         private var height = 0
@@ -258,9 +270,9 @@ class DarkWallpaperService : WallpaperService() {
 
             hasSeparateLockScreenSettings = isSeparateLockScreenEnabled()
 
-            var c = preferencesHomeScreen.previewMode
+            var c = preferencesGlobal.previewMode
             if (isPreview && c > 0) {
-                preferencesHomeScreen.previewMode = 0
+                preferencesGlobal.previewMode = 0
                 dayOrNight = if (c > 10) {
                     c -= 10
                     true
@@ -269,14 +281,14 @@ class DarkWallpaperService : WallpaperService() {
                 }
                 isLockScreen = c > 1
                 fixedConfig = true
-                if (isLockScreen) {
-                    preferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
-                }
             } else {
                 dayOrNight = isDayOrNightMode()
             }
-            dayImageLocation = dayFileLocation(isLockScreen)
-            nightImageLocation = nightFileLocation(isLockScreen)
+            //dayImageLocation = dayFileLocation(isLockScreen)
+            //nightImageLocation = nightFileLocation(isLockScreen)
+            imageProvider.get(dayOrNight, isLockScreen) {
+                wallpaperImage = it
+            }
         }
 
         override fun onDestroy() {
@@ -288,9 +300,9 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         fun isDayOrNightMode(): DayOrNight {
-            return when (preferences.nightModeTrigger) {
+            return when (preferencesGlobal.nightModeTrigger) {
                 NightModeTrigger.TIMERANGE -> {
-                    timeIsInTimeRange(preferences.nightModeTimeRange)
+                    timeIsInTimeRange(preferencesGlobal.nightModeTimeRange)
                 }
                 else -> {
                     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
@@ -338,45 +350,47 @@ class DarkWallpaperService : WallpaperService() {
 
         private fun onLockScreenStatusChanged() {
             if (fixedConfig) return
-            preferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
-            dayImageLocation = dayFileLocation(isLockScreen)
-            nightImageLocation = nightFileLocation(isLockScreen)
 
-            if (isLockScreen) {
-                // Store current offsets
-                offsetXBeforeLock = offsetX
-                offsetYBeforeLock = offsetY
-                // Center wallpaper on lock screen
-                offsetX = 0.5f
-                registerOnUnLock()
-            } else {
-                unRegisterOnUnLock()
-                blendBitmaps = null
-                if (isAnimateFromLockScreen()) {
-                    currentBitmapFile?.let {
-                        val (desiredWidth, desiredHeight) = desiredDimensions()
-                        val key = "$width $height $desiredWidth $desiredHeight ${it.absolutePath}"
-                        val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
-                        if (scaledBitmap != null) {
-                            val (blendFromBitmap, _) = scaledBitmap
-                            blendBitmaps = BlendBitmaps(
-                                blendFromBitmap,
-                                lastBitmapPaint,
-                                overlayPaint.color,
-                                blendFromOffsetXPixel,
-                                blendFromOffsetYPixel
-                            )
+            imageProvider.get(dayOrNight, isLockScreen) { newWallpaperImage ->
+                wallpaperImage = newWallpaperImage
+                if (isLockScreen) {
+                    // Store current offsets
+                    offsetXBeforeLock = offsetX
+                    offsetYBeforeLock = offsetY
+                    // Center wallpaper on lock screen
+                    offsetX = 0.5f
+                    registerOnUnLock()
+                } else {
+                    unRegisterOnUnLock()
+                    blendBitmaps = null
+                    if (isAnimateFromLockScreen()) {
+                        currentBitmapFile?.let {
+                            val (desiredWidth, desiredHeight) = desiredDimensions()
+                            val key =
+                                "$width $height $desiredWidth $desiredHeight ${it.absolutePath}"
+                            val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
+                            if (scaledBitmap != null) {
+                                val (blendFromBitmap, _) = scaledBitmap
+                                blendBitmaps = BlendBitmaps(
+                                    blendFromBitmap,
+                                    lastBitmapPaint,
+                                    overlayPaint.color,
+                                    blendFromOffsetXPixel,
+                                    blendFromOffsetYPixel
+                                )
+                            }
                         }
                     }
+                    // Restore offsets from before lock
+                    offsetX = offsetXBeforeLock
+                    offsetY = offsetYBeforeLock
                 }
-                // Restore offsets from before lock
-                offsetX = offsetXBeforeLock
-                offsetY = offsetYBeforeLock
+
+                invalid = true
+
+                update()
             }
 
-            invalid = true
-
-            update()
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -385,7 +399,7 @@ class DarkWallpaperService : WallpaperService() {
                 isLockScreen = keyguardService.isDeviceLocked
                 return onLockScreenStatusChanged()
             }
-            if (!fixedConfig && preferences.nightModeTrigger == NightModeTrigger.TIMERANGE) {
+            if (!fixedConfig && preferencesGlobal.nightModeTrigger == NightModeTrigger.TIMERANGE) {
                 // Update night mode according to time range
                 val newDayOrNight: DayOrNight = isDayOrNightMode()
                 if (newDayOrNight != dayOrNight) {
@@ -562,27 +576,25 @@ class DarkWallpaperService : WallpaperService() {
 
         }
 
+
         /**
          * Update the wallpaper appearance.
          * Reloads all preferences and draws on the canvas
          */
         fun update(customBitmap: Bitmap? = null) {
-            overlayPaint.color = if (dayOrNight == NIGHT && preferences.useNightColor) {
-                preferences.colorNight
-            } else if (dayOrNight == DAY && preferences.useDayColor) {
-                preferences.colorDay
-            } else {
-                0
+            imageProvider.get(dayOrNight, isLockScreen) {
+                wallpaperImage = it
+                updateCanvas(customBitmap)
             }
+        }
 
-            val imageFile =
-                if ((dayOrNight == NIGHT && preferences.useNightColorOnly) || (dayOrNight == DAY && preferences.useDayColorOnly)) {
-                    null
-                } else if (dayOrNight == NIGHT && preferences.useNightWallpaper && nightImageLocation.exists()) {
-                    nightImageLocation
-                } else {
-                    dayImageLocation
-                }
+        /**
+         * Draw on the canvas
+         */
+        fun updateCanvas(customBitmap: Bitmap? = null) {
+            overlayPaint.color = wallpaperImage?.color ?: 0
+
+            val imageFile = wallpaperImage?.imageFile
 
             val (desiredWidth, desiredHeight) = desiredDimensions()
             var currentBitmap: Bitmap? = null
@@ -619,11 +631,7 @@ class DarkWallpaperService : WallpaperService() {
                 }
             }
 
-            if (dayOrNight == NIGHT) {
-                updateColorMatrix(preferences.brightnessNight, preferences.contrastNight)
-            } else {
-                updateColorMatrix(preferences.brightnessDay, preferences.contrastDay)
-            }
+            updateColorMatrix(wallpaperImage?.brightness ?: 1f, wallpaperImage?.contrast ?: 1f)
 
             // Draw on canvas
             var canvas: Canvas? = null
