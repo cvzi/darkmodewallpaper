@@ -1,7 +1,7 @@
 # <img src="https://raw.githubusercontent.com/cvzi/darkmodewallpaper/main/app/src/main/ic_launcher-playstore.png" alt="Launcher icon" height="48"> DarkModeLiveWallpaper
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3%20or%20later-a32d2a?style=for-the-badge&logo=GNU)](https://www.gnu.org/licenses/gpl-3.0)
-[![F-Droid](https://img.shields.io/f-droid/v/com.github.cvzi.darkmodewallpaper.svg?style=for-the-badge)](https://f-droid.org/packages/com.github.cvzi.darkmodewallpaper/)
-[![Download APK file](https://img.shields.io/github/release/cvzi/darkmodewallpaper.svg?style=for-the-badge&label=Download%20.apk&logo=android)](https://github.com/cvzi/darkmodewallpaper/releases/latest)
+[![F-Droid](https://img.shields.io/f-droid/v/com.github.cvzi.darkmodewallpaper.svg?style=for-the-badge&logo=f-droid)](https://f-droid.org/packages/com.github.cvzi.darkmodewallpaper/)
+[![Download APK file](https://img.shields.io/github/release/cvzi/darkmodewallpaper.svg?style=for-the-badge&label=Download%20apk&logo=android&color=3d8)](https://github.com/cvzi/darkmodewallpaper/releases/latest)
 
 A live wallpaper for Android that respects dark theme mode
 
