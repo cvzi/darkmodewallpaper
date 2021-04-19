@@ -42,7 +42,7 @@
     <string name="image_file_import_loading_message">Optimiere %2$s\n(importiert aus %1$s)</string>
     <string name="button_import_wallpaper">Hintergrundbild importieren</string>
     <string name="button_apply_wallpaper">Als Hintergrund festlegen</string>
-    <string name="apply_wallpaper_unavailable">Bitte aktiviere den Hintergrund manuell in den Android Einstellungen</string>
+    <string name="apply_wallpaper_unavailable">Bitte aktiviere das Hintergrundbild manuell in den Android-Einstellungen</string>
     <string name="button_lock_screen_settings">Sperrbildschirm</string>
     <string name="switch_only_use_color">Nur Farbe</string>
     <string name="switch_use_color_overlay">Farb-Overlay</string>
@@ -71,4 +71,9 @@
 \n\nDas Sperrbildschirm-Bild sollte mit der Bildschirmgröße übereinstimmen. Wenn es größer als der Bildschirm ist, wird es skaliert und zentriert.\n</string>
     <string name="about">Info</string>
     <string name="about_issues"><![CDATA[Du hast ein Problem gefunden oder hast eine Idee?<br>Öffne ein Thema auf <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Startzeit:</string>
+    <string name="end_time">Endzeit:</string>
+    <string name="night_mode_trigger">Auslöser des Nachtmodus:</string>
+    <string name="night_mode_trigger_follow_system">Wie System</string>
+    <string name="night_mode_trigger_time_range">Zeitspanne</string>
 </resources>
