@@ -37,6 +37,9 @@ android {
         jvmTarget = '1.8'
         useIR = true
     }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {
