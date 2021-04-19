@@ -1,0 +1,3 @@
+☆ Show hex color code in color chooser
+☆ Activate night wallpaper according to a specified time range
+🇵🇱 Polish translation by gnu-ewm

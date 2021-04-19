@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+*   Hex color code in color chooser [#12](https://github.com/cvzi/darkmodewallpaper/issues/12)
+*   Activate night wallpaper according to time range or follow system theme [#10](https://github.com/cvzi/darkmodewallpaper/issues/10)
+*   🇵🇱 Polish translation by [@gnu-ewm](https://github.com/gnu-ewm)
 ## 1.0.0
 *   Fix: "Activity not found" when opening wallpaper preview
 *   Minor design changes
