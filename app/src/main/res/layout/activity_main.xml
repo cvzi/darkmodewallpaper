@@ -521,6 +521,23 @@
                                 android:text="" />
                         </TableRow>
 
+                        <TableRow android:id="@+id/tableRowSwitchZoom">
+
+                            <TextView
+                                android:id="@+id/textZoomEnabled"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zoom_effect" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchZoomEnabled"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription=""
+                                app:useMaterialThemeColors="true" />
+
+                        </TableRow>
+
                         <TableRow android:id="@+id/tableRowButtonLockScreenSettings">
 
                             <Button

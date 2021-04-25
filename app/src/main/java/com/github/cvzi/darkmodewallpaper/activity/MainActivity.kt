@@ -82,6 +82,8 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var textViewStartTime: TextView
     private lateinit var textViewEndTime: TextView
     private lateinit var tableRowTimeRangeTrigger: TableRow
+    private lateinit var switchZoomEnabled: SwitchMaterial
+    private lateinit var textZoomEnabled: TextView
     private var previewViewLayoutIndex = -1
 
     private lateinit var startForPickDayHomeScreenFile: ActivityResultLauncher<Intent>
@@ -180,6 +182,8 @@ open class MainActivity : AppCompatActivity() {
         textViewStartTime = findViewById(R.id.textViewStartTime)
         textViewEndTime = findViewById(R.id.textViewEndTime)
         tableRowTimeRangeTrigger = findViewById(R.id.tableRowTimeRangeTrigger)
+        switchZoomEnabled = findViewById(R.id.switchZoomEnabled)
+        textZoomEnabled = findViewById(R.id.textZoomEnabled)
 
         makeCardViewReceiveDragAndDrop(
             findViewById(R.id.cardViewDay),
@@ -485,6 +489,19 @@ open class MainActivity : AppCompatActivity() {
                 }).show()
         }
         loadTimeRange()
+
+        @SuppressLint("SetTextI18n")
+        textZoomEnabled.text = "${textZoomEnabled.text} ❓"
+        textZoomEnabled.setOnClickListener {
+            AlertDialog.Builder(this).create().apply {
+                title = getString(R.string.zoom_effect)
+                setMessage(getString(R.string.zoom_effect_description))
+            }.show()
+        }
+        switchZoomEnabled.isChecked = preferencesGlobal.zoomEnabled
+        switchZoomEnabled.setOnCheckedChangeListener { _, isChecked ->
+            preferencesGlobal.zoomEnabled = isChecked
+        }
 
         if (intent != null
             && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_ATTACH_DATA)
@@ -961,6 +978,8 @@ open class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
 
         buttonImportWallpaper.isVisible = !DarkWallpaperService.isRunning()
+
+        findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
 
         DarkWallpaperService.invalidate()
     }

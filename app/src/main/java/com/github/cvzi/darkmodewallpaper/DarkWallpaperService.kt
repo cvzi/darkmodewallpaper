@@ -441,11 +441,15 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onZoomChanged(newZoom: Float) {
+            if (!preferencesGlobal.zoomEnabled) {
+                zoom = 0f
+                return
+            }
             hasZoom = true
-            if (abs(zoom - newZoom) > 0.12f || newZoom == 0f || newZoom == 1f) {
+            if (abs(zoom - newZoom) > 0.04f || newZoom == 0f || newZoom == 1f) {
                 zoom = newZoom
                 if (visible) {
-                    update()
+                    updateCanvas()
                 }
             }
         }

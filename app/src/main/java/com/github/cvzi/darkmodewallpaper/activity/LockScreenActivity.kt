@@ -68,6 +68,7 @@ open class LockScreenActivity : MainActivity() {
         findViewById<View>(R.id.cardViewLockScreenSwitch).visibility = View.VISIBLE
         findViewById<View>(R.id.imageViewLockSymbolDay).visibility = View.VISIBLE
         findViewById<View>(R.id.imageViewLockSymbolNight).visibility = View.VISIBLE
+        findViewById<View>(R.id.tableRowSwitchZoom).visibility = View.GONE
 
         findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).isChecked =
             isAnimateFromLockScreen()
