@@ -1,0 +1,1 @@
+Option to disable the zoom effect on Android 11+
