@@ -250,7 +250,6 @@ class DarkWallpaperService : WallpaperService() {
         private var blendFromOffsetYPixel = 0f
         private var errorLoadingFile: String? = null
         private var onUnLockBroadcastReceiver: OnUnLockBroadcastReceiver? = null
-
         fun invalidate() {
             invalid = true
         }
@@ -446,12 +445,12 @@ class DarkWallpaperService : WallpaperService() {
                 return
             }
             hasZoom = true
-            if (abs(zoom - newZoom) > 0.04f || newZoom == 0f || newZoom == 1f) {
-                zoom = newZoom
-                if (visible) {
+            if (visible && (abs(zoom - newZoom) > 0.04f || newZoom == 0f || newZoom == 1f)) {
+                Handler(Looper.getMainLooper()).post {
                     updateCanvas()
                 }
             }
+            zoom = newZoom
         }
 
         override fun onOffsetsChanged(
