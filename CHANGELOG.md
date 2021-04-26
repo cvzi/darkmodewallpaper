@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.2
+*   Improve performance of zoom effect
+
 ## 1.1.1
 *   Option to disable the zoom effect on Android 11+
 *   Disabled zoom effect by default
