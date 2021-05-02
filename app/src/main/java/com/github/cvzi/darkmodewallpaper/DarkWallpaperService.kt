@@ -324,7 +324,11 @@ class DarkWallpaperService : WallpaperService() {
             }
 
             fun unregister() {
-                unregisterReceiver(this)
+                try {
+                    unregisterReceiver(this)
+                } catch (e: IllegalArgumentException) {
+                    Log.e(TAG, e.stackTraceToString())
+                }
             }
         }
 
