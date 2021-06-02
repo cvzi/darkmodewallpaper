@@ -1,0 +1,17 @@
+Một hình nền động tôn trọng chế độ chủ đề tối dành cho Android 10+.
+
+Với ứng dụng này, bạn có thể đặt một hình ảnh cho chế độ chủ đề sáng và một hình ảnh khác cho chế độ tối.
+Khi chủ đề tối của hệ thống được bật hoặc tắt, hình nền sẽ được tự động thay đổi.
+
+Thay vì một hình ảnh khác, bạn cũng có thể điều chỉnh màu sắc, độ tương phản và
+độ sáng của hình ảnh hình nền hiện có của bạn để làm cho nó tối hơn.
+
+Bạn có thể chọn các hình ảnh khác nhau cho màn hình chính và màn hình khoá.
+
+Quyền "đọc bộ nhớ" là bắt buộc nếu bạn muốn
+nhập hình ảnh hình nền
+hiện có của bạn. Khi bạn đã nhập hình nền của bạn, bạn có thể
+thu hồi
+quyền đó an toàn. Nếu bạn không muốn nhập hình nền hiện tại của bạn, thì bạn
+không cần
+cấp quyền này.
