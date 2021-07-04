@@ -20,6 +20,7 @@ package com.github.cvzi.darkmodewallpaper.view
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -68,7 +69,9 @@ class PreviewView @JvmOverloads constructor(
         clippingPaint.color = 0x88777777.toInt()
         clippingPaint.strokeWidth = 3f
         clippingPaint.maskFilter
-        clippingPaint.blendMode = BlendMode.PLUS
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            clippingPaint.blendMode = BlendMode.PLUS
+        }
     }
 
     var color = 0x78FF0000
