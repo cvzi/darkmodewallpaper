@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
-        minSdkVersion 29
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 8
         versionName "1.1.2"
