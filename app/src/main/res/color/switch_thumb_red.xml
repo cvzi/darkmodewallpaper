@@ -18,6 +18,6 @@
     along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/switch_green" android:state_checked="true" />
-    <item android:color="@color/day_red" />
+    <item android:color="@color/switch_green" android:state_checked="true" android:drawable="@android:color/transparent"/>
+    <item android:color="@color/day_red" android:drawable="@android:color/transparent" />
 </selector>
