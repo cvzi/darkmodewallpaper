@@ -344,7 +344,7 @@ class DarkWallpaperService : WallpaperService() {
                     isLockScreen = hasSeparateLockScreenSettings && keyguardService.isDeviceLocked
                     onLockScreenStatusChanged()
                 }
-            }, 200)
+            }, 150)
         }
 
         private fun unRegisterOnUnLock() {
@@ -354,7 +354,13 @@ class DarkWallpaperService : WallpaperService() {
         private fun onLockScreenStatusChanged() {
             if (fixedConfig) return
 
+            isLockScreen = hasSeparateLockScreenSettings && keyguardService.isDeviceLocked
             imageProvider.get(dayOrNight, isLockScreen) { newWallpaperImage ->
+                if (isLockScreen != hasSeparateLockScreenSettings && keyguardService.isDeviceLocked) {
+                    // lock screen status has changed in the meantime -> wrong image was loaded
+                    return@get onLockScreenStatusChanged()
+                }
+
                 wallpaperImage = newWallpaperImage
                 if (isLockScreen) {
                     // Store current offsets
@@ -485,7 +491,7 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onComputeColors(): WallpaperColors? {
-            return wallpaperColors ?: super.onComputeColors()
+            return wallpaperColors
         }
 
         override fun onSurfaceChanged(
@@ -503,6 +509,32 @@ class DarkWallpaperService : WallpaperService() {
         override fun onDesiredSizeChanged(desiredWidth: Int, desiredHeight: Int) {
             invalid = true
         }
+
+
+        private fun calculateWallpaperColors(bitmap: Bitmap) {
+            wallpaperColors = WallpaperColors.fromBitmap(bitmap)
+            val opacity = (overlayPaint.color shr 24) and 255
+            if (opacity > 127) {
+                wallpaperColors?.run {
+                    wallpaperColors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && dayOrNight == NIGHT) {
+                        WallpaperColors(
+                            Color.valueOf(overlayPaint.color),
+                            primaryColor,
+                            secondaryColor,
+                            WallpaperColors.HINT_SUPPORTS_DARK_THEME
+                        )
+                    } else {
+                        WallpaperColors(
+                            Color.valueOf(overlayPaint.color),
+                            primaryColor,
+                            secondaryColor
+                        )
+                    }
+                }
+            }
+            notifyColorsChanged()
+        }
+
 
         private fun loadFile(imageFile: File, desiredWidth: Int, desiredHeight: Int) {
             if (loadFileThread.get()?.isAlive == true) {
@@ -549,20 +581,8 @@ class DarkWallpaperService : WallpaperService() {
 
                             currentBitmapFile = imageFile
 
-
                             currentBitmap?.let {
-                                wallpaperColors = WallpaperColors.fromBitmap(it)
-                                val opacity = (overlayPaint.color shr 24) and 255
-                                if (opacity > 127) {
-                                    wallpaperColors?.run {
-                                        wallpaperColors = WallpaperColors(
-                                            Color.valueOf(overlayPaint.color),
-                                            primaryColor,
-                                            secondaryColor
-                                        )
-                                    }
-                                }
-                                notifyColorsChanged()
+                                calculateWallpaperColors(it)
                             }
 
                             if (currentBitmap == null) {
@@ -614,6 +634,7 @@ class DarkWallpaperService : WallpaperService() {
                     if (scaledBitmap != null) {
                         currentBitmap = scaledBitmap.bitmap
                         shouldScroll = scaledBitmap.isDesiredSize
+                        calculateWallpaperColors(currentBitmap)
                     }
                 }
 
@@ -638,7 +659,10 @@ class DarkWallpaperService : WallpaperService() {
                 }
             }
 
-            updateColorMatrix(wallpaperImage?.brightness ?: 1f, wallpaperImage?.contrast ?: 1f)
+            updateColorMatrix(
+                wallpaperImage?.brightness ?: 1f,
+                wallpaperImage?.contrast ?: 1f
+            )
 
             // Draw on canvas
             var canvas: Canvas? = null
