@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.4
+*   New gradle version 7.0.0
+
 ## 1.1.3
 *   Improve detection of wallpaper colors [#26](https://github.com/cvzi/darkmodewallpaper/issues/26)
 *   Upgrade to SDK 30
