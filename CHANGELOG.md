@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.5
+*   Fix layout on Android 12 [#27](https://github.com/cvzi/darkmodewallpaper/issues/27)
+*   Improve detection of wallpaper colors [#28](https://github.com/cvzi/darkmodewallpaper/issues/28)
+
 ## 1.1.4
 *   New gradle version 7.0.0
 
