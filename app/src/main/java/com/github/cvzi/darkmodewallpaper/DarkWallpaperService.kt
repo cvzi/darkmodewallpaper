@@ -250,6 +250,8 @@ class DarkWallpaperService : WallpaperService() {
         private var blendFromOffsetYPixel = 0f
         private var errorLoadingFile: String? = null
         private var onUnLockBroadcastReceiver: OnUnLockBroadcastReceiver? = null
+        private var lastCalculatedColorsKey: String? = null
+        private var lastNotifiedColorsTime: Long = 0L
         fun invalidate() {
             invalid = true
         }
@@ -511,7 +513,11 @@ class DarkWallpaperService : WallpaperService() {
         }
 
 
-        private fun calculateWallpaperColors(bitmap: Bitmap) {
+        private fun calculateWallpaperColors(bitmap: Bitmap, key: String? = null) {
+            if (wallpaperColors != null && key != null && key == lastCalculatedColorsKey) {
+                return
+            }
+            lastCalculatedColorsKey = key
             wallpaperColors = WallpaperColors.fromBitmap(bitmap)
             val opacity = (overlayPaint.color shr 24) and 255
             if (opacity > 127) {
@@ -532,7 +538,12 @@ class DarkWallpaperService : WallpaperService() {
                     }
                 }
             }
-            notifyColorsChanged()
+
+            if (System.nanoTime() - lastNotifiedColorsTime > 60000000000L) {
+                //  notifyColorsChanged() should only be called every 60 seconds
+                lastNotifiedColorsTime = System.nanoTime()
+                notifyColorsChanged()
+            }
         }
 
 
@@ -582,7 +593,7 @@ class DarkWallpaperService : WallpaperService() {
                             currentBitmapFile = imageFile
 
                             currentBitmap?.let {
-                                calculateWallpaperColors(it)
+                                calculateWallpaperColors(it, key)
                             }
 
                             if (currentBitmap == null) {
@@ -634,7 +645,7 @@ class DarkWallpaperService : WallpaperService() {
                     if (scaledBitmap != null) {
                         currentBitmap = scaledBitmap.bitmap
                         shouldScroll = scaledBitmap.isDesiredSize
-                        calculateWallpaperColors(currentBitmap)
+                        calculateWallpaperColors(currentBitmap, key)
                     }
                 }
 
