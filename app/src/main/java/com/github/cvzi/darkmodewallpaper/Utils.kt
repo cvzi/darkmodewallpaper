@@ -67,6 +67,9 @@ fun Context.setAnimateFromLockScreen(isEnabled: Boolean) {
     Preferences(this, R.string.pref_file).animateFromLockScreen = isEnabled
 }
 
+fun Context.getThumbnailPath(fileName: String): File {
+    return File(externalCacheDir, fileName)
+}
 
 /**
  * Save the drawable to image file
@@ -91,7 +94,7 @@ fun storeFile(file: File, bitmap: Bitmap): Boolean {
     try {
         outputStream = FileOutputStream(file)
         bitmap.compress(
-            if (file.extension.toLowerCase(Locale.ROOT) == "webp") {
+            if (file.extension.lowercase(Locale.ROOT) == "webp") {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                     Bitmap.CompressFormat.WEBP_LOSSLESS
                 } else {
@@ -319,7 +322,10 @@ fun scaleBitmap(
 fun Activity.getScreenSize(): Point {
     val screenSize = Point(0, 0)
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && display != null) {
-        display?.getRealSize(screenSize)
+        windowManager.maximumWindowMetrics.bounds.run {
+            screenSize.x = width()
+            screenSize.y = height()
+        }
     } else {
         @Suppress("DEPRECATION")
         windowManager.defaultDisplay.getRealSize(screenSize)
