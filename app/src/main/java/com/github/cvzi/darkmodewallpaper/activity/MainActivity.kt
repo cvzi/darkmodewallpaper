@@ -217,30 +217,8 @@ open class MainActivity : AppCompatActivity() {
             screenSize.y
         )
 
-        previewViewDay.layoutParams = LinearLayout.LayoutParams(previewViewDay.layoutParams).apply {
-            if (isLockScreenActivity) {
-                width = screenSize.x / 5
-                height = screenSize.y / 5
-            } else {
-                width = wallpaperManager.desiredMinimumWidth / 5
-                height = wallpaperManager.desiredMinimumWidth / 5
-            }
-        }
-        previewViewDay.scaledScreenWidth = screenSize.x / 5
-        previewViewDay.scaledScreenHeight = screenSize.y / 5
-
-        previewViewNight.layoutParams =
-            LinearLayout.LayoutParams(previewViewNight.layoutParams).apply {
-                if (isLockScreenActivity) {
-                    width = screenSize.x / 5
-                    height = screenSize.y / 5
-                } else {
-                    width = wallpaperManager.desiredMinimumWidth / 5
-                    height = wallpaperManager.desiredMinimumWidth / 5
-                }
-            }
-        previewViewNight.scaledScreenWidth = screenSize.x / 5
-        previewViewNight.scaledScreenHeight = screenSize.y / 5
+        setPreviewDimension(previewViewDay)
+        setPreviewDimension(previewViewNight)
 
         findViewById<Button>(R.id.buttonLockScreenSettings).setOnClickListener {
             Handler(Looper.getMainLooper()).postDelayed({
@@ -513,6 +491,31 @@ open class MainActivity : AppCompatActivity() {
             // If there is no file and the services are not running (i.e. usually a new install)
             askToImport()
         }
+    }
+
+    private fun setPreviewDimension(
+        previewView: PreviewView,
+        divideBy: Int = 5,
+        maxRatioToScreenWidth: Int = 2,
+        maxRatioToScreenHeight: Int = 1
+    ) {
+        val screenSize = getScreenSize()
+        previewView.layoutParams = LinearLayout.LayoutParams(previewView.layoutParams).apply {
+            if (isLockScreenActivity) {
+                width = screenSize.x / divideBy
+                height = screenSize.y / divideBy
+            } else {
+                val wallpaperManager = WallpaperManager.getInstance(this@MainActivity)
+                width = wallpaperManager.desiredMinimumWidth / divideBy
+                height = wallpaperManager.desiredMinimumWidth / divideBy
+            }
+            while (width > screenSize.x / maxRatioToScreenWidth || height > screenSize.y / maxRatioToScreenHeight) {
+                width = width * 3 / 4
+                height = height * 3 / 4
+            }
+        }
+        previewView.scaledScreenWidth = screenSize.x / divideBy
+        previewView.scaledScreenHeight = screenSize.y / divideBy
     }
 
     private fun onTriggerModeChanged(isChecked: Boolean) {
@@ -917,21 +920,8 @@ open class MainActivity : AppCompatActivity() {
             brightnessSeekBar.progress = 500
             contrastSeekBar.progress = 500
         }
-        val screenSize = getScreenSize()
 
-        previewView.scaledScreenWidth = screenSize.x / 3
-        previewView.scaledScreenHeight = screenSize.y / 3
-        previewView.layoutParams = LinearLayout.LayoutParams(previewView.layoutParams).apply {
-            if (isLockScreenActivity) {
-                width = screenSize.x / 3
-                height = screenSize.y / 3
-            } else {
-                val wallpaperManager = WallpaperManager.getInstance(this@MainActivity)
-                width = wallpaperManager.desiredMinimumWidth / 3
-                height = wallpaperManager.desiredMinimumWidth / 3
-            }
-        }
-
+        setPreviewDimension(previewView,3, 1, 2)
     }
 
 
@@ -953,19 +943,7 @@ open class MainActivity : AppCompatActivity() {
         }
 
         // Resize color view
-        val wallpaperManager = WallpaperManager.getInstance(this)
-        val screenSize = getScreenSize()
-        previewView.scaledScreenWidth = screenSize.x / 5
-        previewView.scaledScreenHeight = screenSize.y / 5
-        previewView.layoutParams = LinearLayout.LayoutParams(previewView.layoutParams).apply {
-            if (isLockScreenActivity) {
-                width = screenSize.x / 5
-                height = screenSize.y / 5
-            } else {
-                width = wallpaperManager.desiredMinimumWidth / 5
-                height = wallpaperManager.desiredMinimumWidth / 5
-            }
-        }
+        setPreviewDimension(previewView)
 
         disableFullScreen()
 
