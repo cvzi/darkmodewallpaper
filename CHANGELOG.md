@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.6
+*   Detect colors from wallpaper instead of from the image file [#26](https://github.com/cvzi/darkmodewallpaper/issues/28), [#28](https://github.com/cvzi/darkmodewallpaper/issues/28), [#29](https://github.com/cvzi/darkmodewallpaper/issues/29)
+
 ## 1.1.5
 *   Fix layout on Android 12 [#27](https://github.com/cvzi/darkmodewallpaper/issues/27)
 *   Improve detection of wallpaper colors [#28](https://github.com/cvzi/darkmodewallpaper/issues/28)
