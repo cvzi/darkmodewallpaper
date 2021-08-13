@@ -493,6 +493,7 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onComputeColors(): WallpaperColors? {
+            // Log.v(TAG, "onComputeColors() $wallpaperColors")
             return wallpaperColors
         }
 
@@ -512,40 +513,32 @@ class DarkWallpaperService : WallpaperService() {
             invalid = true
         }
 
-
-        private fun calculateWallpaperColors(bitmap: Bitmap, key: String? = null) {
-            if (wallpaperColors != null && key != null && key == lastCalculatedColorsKey) {
+        private fun calculateWallpaperColors(
+            canvas: Canvas,
+            key: String,
+            currentBitmap: Bitmap?,
+            imageFile: File?
+        ) {
+            val wallpaperColorsKey = "$key ${overlayPaint.color} ${colorMatrixArray.contentToString()}"
+            if (wallpaperColors != null && wallpaperColorsKey == lastCalculatedColorsKey) {
                 return
             }
-            lastCalculatedColorsKey = key
-            wallpaperColors = WallpaperColors.fromBitmap(bitmap)
-            val opacity = (overlayPaint.color shr 24) and 255
-            if (opacity > 127) {
-                wallpaperColors?.run {
-                    wallpaperColors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && dayOrNight == NIGHT) {
-                        WallpaperColors(
-                            Color.valueOf(overlayPaint.color),
-                            primaryColor,
-                            secondaryColor,
-                            WallpaperColors.HINT_SUPPORTS_DARK_THEME
-                        )
-                    } else {
-                        WallpaperColors(
-                            Color.valueOf(overlayPaint.color),
-                            primaryColor,
-                            secondaryColor
-                        )
-                    }
-                }
-            }
+            val tmpBitmap =
+                Bitmap.createBitmap(canvas.width, canvas.height, Bitmap.Config.ARGB_8888)
+            canvas.setBitmap(tmpBitmap)
+            drawOnCanvas(canvas, currentBitmap, imageFile)
+            wallpaperColors = WallpaperColors.fromBitmap(tmpBitmap)
+            canvas.setBitmap(null)
+            tmpBitmap.recycle()
 
-            if (System.nanoTime() - lastNotifiedColorsTime > 60000000000L) {
-                //  notifyColorsChanged() should only be called every 60 seconds
+            if (System.nanoTime() - lastNotifiedColorsTime > 1000000000L) {
+                // notifyColorsChanged() should only be called every 1 second
                 lastNotifiedColorsTime = System.nanoTime()
+                lastCalculatedColorsKey = wallpaperColorsKey
+                // Log.v(TAG, "notifyColorsChanged(): $wallpaperColors")
                 notifyColorsChanged()
             }
         }
-
 
         private fun loadFile(imageFile: File, desiredWidth: Int, desiredHeight: Int) {
             if (loadFileThread.get()?.isAlive == true) {
@@ -592,10 +585,6 @@ class DarkWallpaperService : WallpaperService() {
 
                             currentBitmapFile = imageFile
 
-                            currentBitmap?.let {
-                                calculateWallpaperColors(it, key)
-                            }
-
                             if (currentBitmap == null) {
                                 errorLoadingFile = "Failed to load $imageFile"
                                 invalid = false
@@ -636,8 +625,9 @@ class DarkWallpaperService : WallpaperService() {
 
             val (desiredWidth, desiredHeight) = desiredDimensions()
             var currentBitmap: Bitmap? = null
+            val key: String
             if (imageFile != null) {
-                val key =
+                key =
                     "$width $height $desiredWidth $desiredHeight ${imageFile.absolutePath}"
                 currentBitmap = customBitmap
                 if (currentBitmap == null) {
@@ -645,7 +635,6 @@ class DarkWallpaperService : WallpaperService() {
                     if (scaledBitmap != null) {
                         currentBitmap = scaledBitmap.bitmap
                         shouldScroll = scaledBitmap.isDesiredSize
-                        calculateWallpaperColors(currentBitmap, key)
                     }
                 }
 
@@ -668,8 +657,10 @@ class DarkWallpaperService : WallpaperService() {
                         errorLoadingFile = "\uD83D\uDC81\uD83C\uDFFE\u200D♀ no image file️"
                     }
                 }
+            } else {
+                key = "solidColor"
+                shouldScroll = false
             }
-
             updateColorMatrix(
                 wallpaperImage?.brightness ?: 1f,
                 wallpaperImage?.contrast ?: 1f
@@ -681,6 +672,7 @@ class DarkWallpaperService : WallpaperService() {
                 canvas = surfaceHolder?.lockCanvas()
                 if (canvas != null) {
                     drawOnCanvas(canvas, currentBitmap, imageFile)
+                    calculateWallpaperColors(canvas, key, currentBitmap, imageFile)
                 }
             } catch (e: IllegalArgumentException) {
                 Log.e(TAG, "lockCanvas(): ${e.stackTraceToString()}")
