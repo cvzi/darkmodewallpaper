@@ -26,6 +26,13 @@ typealias DayOrNight = Boolean
 typealias StringRes = Int
 typealias IdRes = Int
 
+open class WallpaperStatus
+class WallpaperStatusLoading : WallpaperStatus()
+open class WallpaperStatusLoaded : WallpaperStatus()
+class WallpaperStatusLoadedImage : WallpaperStatusLoaded()
+class WallpaperStatusLoadedSolid : WallpaperStatusLoaded()
+class WallpaperStatusLoadedBlending : WallpaperStatusLoaded()
+
 enum class NightModeTrigger {
     SYSTEM,
     TIMERANGE;
