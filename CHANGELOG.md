@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.7
+*   Improve color detection performance
+*   Error in layout [#32](https://github.com/cvzi/darkmodewallpaper/issues/32) fixed in [#33](https://github.com/cvzi/darkmodewallpaper/pull/33) by [@yuhuitech](https://github.com/yuhuitech)
+
 ## 1.1.6
 *   Detect colors from wallpaper instead of from the image file [#26](https://github.com/cvzi/darkmodewallpaper/issues/28), [#28](https://github.com/cvzi/darkmodewallpaper/issues/28), [#29](https://github.com/cvzi/darkmodewallpaper/issues/29)
 

@@ -1,0 +1,1 @@
+Bugfix by @yuhuitech for larger font sizes
