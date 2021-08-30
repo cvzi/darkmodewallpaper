@@ -402,6 +402,11 @@
 
             <androidx.cardview.widget.CardView style="@style/CardViewPrimary">
 
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -584,6 +589,8 @@
 
                     </TableLayout>
                 </LinearLayout>
+
+                </HorizontalScrollView>
 
             </androidx.cardview.widget.CardView>
 
