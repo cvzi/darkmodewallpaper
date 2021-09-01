@@ -335,7 +335,9 @@ class DarkWallpaperService : WallpaperService() {
                 try {
                     unregisterReceiver(this)
                 } catch (e: IllegalArgumentException) {
-                    Log.e(TAG, e.stackTraceToString())
+                    Log.e(TAG, "IllegalArgumentException 01: ${e.stackTraceToString()}")
+                } catch (e: RuntimeException) {
+                    Log.e(TAG, "RuntimeException 02: ${e.stackTraceToString()}")
                 }
             }
         }
@@ -357,6 +359,7 @@ class DarkWallpaperService : WallpaperService() {
 
         private fun unRegisterOnUnLock() {
             onUnLockBroadcastReceiver?.unregister()
+            onUnLockBroadcastReceiver = null
         }
 
         private fun onLockScreenStatusChanged() {
@@ -692,6 +695,8 @@ class DarkWallpaperService : WallpaperService() {
                     try {
                         surfaceHolder?.unlockCanvasAndPost(canvas)
                     } catch (e: IllegalArgumentException) {
+                        Log.e(TAG, "unlockCanvasAndPost(): ${e.stackTraceToString()}")
+                    } catch (e: IllegalStateException) {
                         Log.e(TAG, "unlockCanvasAndPost(): ${e.stackTraceToString()}")
                     }
                 }
