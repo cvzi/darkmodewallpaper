@@ -309,8 +309,8 @@ fun scaleBitmap(
     return ScaledBitmap(
         Bitmap.createScaledBitmap(
             src,
-            ceil(src.width * scale).toInt(),
-            ceil(src.height * scale).toInt(),
+            max(1, ceil(src.width * scale).toInt()),
+            max(1, ceil(src.height * scale).toInt()),
             true
         ), isDesired
     )
