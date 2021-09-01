@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.8
+*   Fix small bugs
+
 ## 1.1.7
 *   Improve color detection performance
 *   Error in layout [#32](https://github.com/cvzi/darkmodewallpaper/issues/32) fixed in [#33](https://github.com/cvzi/darkmodewallpaper/pull/33) by [@yuhuitech](https://github.com/yuhuitech)
