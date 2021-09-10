@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Fondo de pantalla de inicio diario</string>
+    <string name="use_as_night_home">Fondo de pantalla de inicio nocturno</string>
+    <string name="use_as_day_lock">Fondo de pantalla de bloqueo diario</string>
+    <string name="use_as_night_lock">Fondo de pantalla de bloqueo nocturno</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Cambia automáticamente el fondo de pantalla para que encaje con el tema Luz/Oscuro</string>
+    <string name="wallpaper_is_loading">cargando…</string>
+    <string name="color_chooser_day">Elige el color de la superposición del día</string>
+    <string name="color_chooser_night">Elige el color de la superposición de la noche</string>
+    <string name="status_darkmode">Estado del modo oscuro:</string>
+    <string name="status_darkmode_day">Tema para hora del día/claro</string>
+    <string name="status_darkmode_night">Tema para hora de la noche/oscuro</string>
+    <string name="status_requested_image_size">Tamaño de imagen recomendado:</string>
+    <string name="status_screen_size">Tamaño de pantalla:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Seleccionar imagen (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Diurno</string>
+    <string name="wallpaper_file_chooser_night_time">Nocturno</string>
+    <string name="wallpaper_file_chooser_home_screen">Pantalla de inicio</string>
+    <string name="wallpaper_file_chooser_lock_screen">Pantalla de bloqueo</string>
+    <string name="wallpaper_import_dialog_title">Importar fondo de pantalla actual</string>
+    <string name="wallpaper_import_dialog_message">¿Quieres importar tu fondo de pantalla actual?
+\n\n(puede no funcionar para fondos de pantalla en vivo)
+\n\nPide permiso de almacenamiento en el siguiente paso.
+\nPuede revocar el permiso cuando se importó el fondo de pantalla.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Fondo de pantalla importado\n%1$s</string>
+    <string name="wallpaper_import_failed">No se pudo recuperar la imagen</string>
+    <string name="wallpaper_import_permission_missing">¡El permiso de almacenamiento es necesario para importar un fondo de pantalla!</string>
+    <string name="image_file_import_error">No se pudo importar la imagen</string>
+    <string name="image_file_import_loading_title">Importando imagen</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Imagen almacenada en %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Optimizando %2$s\n(importado de %1$s)</string>
+    <string name="button_import_wallpaper">Importar fondo</string>
+    <string name="button_apply_wallpaper">Aplicar fondo de pantalla</string>
+    <string name="apply_wallpaper_unavailable">Por favor, establece el fondo de pantalla manualmente desde la configuración de Android</string>
+    <string name="button_lock_screen_settings">Pantalla de bloqueo</string>
+    <string name="switch_only_use_color">Solo el color</string>
+    <string name="switch_use_color_overlay">Superposición de color</string>
+    <string name="color">Color</string>
+    <string name="button_select_image">Seleccionar imagen</string>
+    <string name="heading_day_time_settings">Diurno</string>
+    <string name="heading_night_time_settings">Nocturno</string>
+    <string name="dialog_advanced_title">Acciones:</string>
+    <string name="dialog_button_preview">Previsualizar fondo</string>
+    <string name="dialog_button_advanced">Contraste y brillo</string>
+    <string name="dialog_button_select_image">Seleccionar otra imagen</string>
+    <string name="dialog_button_delete_image">Eliminar imagen</string>
+    <string name="switch_separate_lock_screen_settings">Separar ajustes de la pantalla de bloqueo</string>
+    <string name="switch_separate_lock_screen_settings_description">Activar el uso de ajustes separados de la pantalla de bloqueo</string>
+    <string name="switch_animate_from_lock_screen">Animar la transición al fondo de pantalla de inicio después de desbloquear</string>
+    <string name="switch_animate_from_lock_screen_description">Activar para utilizar una animación de la pantalla de bloqueo a la pantalla de inicio después de desbloquear</string>
+    <string name="lock_symbol_description">Símbolo de bloqueo de pantalla</string>
+    <string name="sun_symbol_description">Sol/Día</string>
+    <string name="moon_symbol_description">Luna/Noche</string>
+    <string name="button_select_color_description">Seleccionar color</string>
+    <string name="switch_reuse_day_image_for_night">Usar imagen de hora del día</string>
+    <string name="switch_reuse_day_image_for_night_description">Usar fondo de pantalla nocturno separado o reutilizar el fondo de pantalla de hora del día</string>
+    <string name="text_lock_screen_explanation">Si activas el interruptor en la parte superior, puedes establecer diferentes fondos de pantalla y diferentes colores para la pantalla de bloqueo.
+\nDesafortunadamente, este no funciona en todos los teléfonos debido a que algunos fabricantes establecen su propio fondo de bloqueo de pantalla y no se permite cambiar.
+\n\nAsegúrese de pulsar \"Pantalla de inicio y pantalla de bloqueo\", cuando configure el fondo animado.
+\n\nLa imagen de la pantalla de bloqueo debe coincidir con el tamaño de la pantalla. Si es más grande que la pantalla, se escalará y centrará.\n</string>
+    <string name="about">Acerca de</string>
+    <string name="about_issues"><![CDATA[¿Has encontrado un problema o tienes una sugerencia?<br>Abre un tema en <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Tiempo inicio:</string>
+    <string name="end_time">Tiempo final:</string>
+    <string name="night_mode_trigger">Cambio del modo nocturno:</string>
+    <string name="night_mode_trigger_follow_system">Seguir sistema</string>
+    <string name="night_mode_trigger_time_range">Periodo de tiempo</string>
+    <string name="zoom_effect">Efecto zoom:</string>
+    <string name="zoom_effect_description">En Android 11+ una animación de ampliación ocurre cuando despliegas el área de notificaciones o cuando abres la vista general de aplicaciones recientes.</string>
+</resources>
