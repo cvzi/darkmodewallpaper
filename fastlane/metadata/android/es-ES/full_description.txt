@@ -1,0 +1,15 @@
+Un fondo de pantalla vivo para Android 10+ que respeta el modo de tema oscuro.
+
+Con esta aplicación puede establecer una imagen para el modo de tema claro y otra imagen
+para el tema oscuro.
+Cuando el tema oscuro del sistema está habilitado o desactivado, el fondo de pantalla será
+cambiado automáticamente.
+
+En lugar de una imagen diferente, también puedes ajustar el color, el contraste y el brillo
+de tu imagen de fondo de pantalla existente para hacerla más oscura.
+
+Es posible seleccionar diferentes imágenes para la pantalla de inicio y la pantalla de bloqueo.
+
+Se requiere el permiso "leer almacenamiento" si desea importar su imagen actual
+de fondo de pantalla. Una vez que hayas importado tu fondo de pantalla puedes revocar con seguridad el permiso. Si no quieres importar tu fondo de pantalla actual, no necesitas
+para conceder este permiso.
