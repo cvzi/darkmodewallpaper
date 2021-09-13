@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.9
+*   🇪🇸 Spanish translation by [@sguinetti](https://github.com/sguinetti)
+
 ## 1.1.8
 *   Fix small bugs
 
