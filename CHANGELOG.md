@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.10
+*   Fix Material You preview size [#31](https://github.com/cvzi/darkmodewallpaper/issues/31)
+
 ## 1.1.9
 *   🇪🇸 Spanish translation by [@sguinetti](https://github.com/sguinetti)
 
