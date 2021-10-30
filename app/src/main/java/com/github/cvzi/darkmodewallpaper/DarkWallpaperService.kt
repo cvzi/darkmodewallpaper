@@ -440,6 +440,10 @@ class DarkWallpaperService : WallpaperService() {
                 // Home screen preview -> use original desired width because the preview screen has usually a wrong dimension
                 desiredWidth = MainActivity.originalDesiredWidth
                 desiredHeight = MainActivity.originalDesiredHeight
+            } else if(isPreview && (desiredMinimumWidth < width || desiredMinimumHeight < height)) {
+                // Material You preview in Android settings under "Wallpaper & style"
+                desiredWidth = width
+                desiredHeight = height
             } else if (isSecondaryDisplay) {
                 desiredWidth = width
                 desiredHeight = height
