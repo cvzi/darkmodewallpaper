@@ -678,7 +678,6 @@ class DarkWallpaperService : WallpaperService() {
                 key = "solidColor"
                 shouldScroll = false
             }
-            // TODO shouldScroll -> call setOffsetNotificationsEnabled(boolean enabled)
             updateColorMatrix(
                 wallpaperImage?.brightness ?: 1f,
                 wallpaperImage?.contrast ?: 1f
