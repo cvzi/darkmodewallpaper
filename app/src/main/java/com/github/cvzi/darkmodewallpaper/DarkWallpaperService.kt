@@ -258,12 +258,13 @@ class DarkWallpaperService : WallpaperService() {
         private var calculateWallpaperColorsKey: String? = null
         private var calculateWallpaperColorsFile: File? = null
         private var calculateWallpaperColorsTime: Long = 0L
+        private var notifyColorsOnVisibilityChange = false
         fun invalidate() {
             invalid = true
         }
 
         fun lockScreenSettingsChanged() {
-            hasSeparateLockScreenSettings = isSeparateLockScreenEnabled()
+            hasSeparateLockScreenSettings = preferencesGlobal.separateLockScreen
             isLockScreen = false
             invalidate()
         }
@@ -275,7 +276,7 @@ class DarkWallpaperService : WallpaperService() {
                 engines.add(self)
             }
 
-            hasSeparateLockScreenSettings = isSeparateLockScreenEnabled()
+            hasSeparateLockScreenSettings = preferencesGlobal.separateLockScreen
 
             var c = preferencesGlobal.previewMode
             if (isPreview && c > 0) {
@@ -383,7 +384,7 @@ class DarkWallpaperService : WallpaperService() {
                 } else {
                     unRegisterOnUnLock()
                     blendBitmaps = null
-                    if (isAnimateFromLockScreen()) {
+                    if (preferencesGlobal.animateFromLockScreen) {
                         currentBitmapFile?.let {
                             val (desiredWidth, desiredHeight) = desiredDimensions()
                             val key =
@@ -430,6 +431,11 @@ class DarkWallpaperService : WallpaperService() {
             if (visible && invalid) {
                 update()
             }
+
+            if (!visible && notifyColorsOnVisibilityChange) {
+                notifyColorsOnVisibilityChange = false
+                notifyColorsChanged()
+            }
         }
 
 
@@ -440,7 +446,7 @@ class DarkWallpaperService : WallpaperService() {
                 // Home screen preview -> use original desired width because the preview screen has usually a wrong dimension
                 desiredWidth = MainActivity.originalDesiredWidth
                 desiredHeight = MainActivity.originalDesiredHeight
-            } else if(isPreview && (desiredMinimumWidth < width || desiredMinimumHeight < height)) {
+            } else if (isPreview && (desiredMinimumWidth < width || desiredMinimumHeight < height)) {
                 // Material You preview in Android settings under "Wallpaper & style"
                 desiredWidth = width
                 desiredHeight = height
@@ -537,7 +543,6 @@ class DarkWallpaperService : WallpaperService() {
         private fun computeWallpaperColors() {
             if (System.nanoTime() - calculateWallpaperColorsTime > 1000000000L) {
                 // notifyColorsChanged() should only be called every 1 second
-                // Log.v(TAG, "computeWallpaperColors() -> Calculating...")
                 val bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bm)
                 drawOnCanvas(canvas, calculateWallpaperColorsBitmap, calculateWallpaperColorsFile)
@@ -550,8 +555,14 @@ class DarkWallpaperService : WallpaperService() {
                 calculateWallpaperColorsBitmap = null
                 calculateWallpaperColorsKey = null
                 calculateWallpaperColorsFile = null
-                // Log.v(TAG, "computeWallpaperColors() -> notifyColorsChanged(): $wallpaperColors")
-                notifyColorsChanged()
+                if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
+                    notifyColorsChanged()
+                } else {
+                    // Don't notify on home screen, it will cause a flicker after the blending
+                    // animation. Instead wait for the next app to open which will
+                    // trigger an OnVisibilityChanged event
+                    notifyColorsOnVisibilityChange = true
+                }
             } else {
                 Log.v(TAG, "computeWallpaperColors() deferred")
             }

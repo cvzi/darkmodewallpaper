@@ -28,7 +28,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Point
 import android.graphics.drawable.Drawable
-import android.os.Environment
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.util.Log
@@ -50,22 +49,6 @@ import kotlin.math.max
 const val UTILSTAG = "Utils.kt"
 
 data class ScaledBitmap(val bitmap: Bitmap, val isDesiredSize: Boolean)
-
-fun Context.isSeparateLockScreenEnabled(): Boolean {
-    return Preferences(this, R.string.pref_file).separateLockScreen
-}
-
-fun Context.setSeparateLockScreenEnabled(isEnabled: Boolean) {
-    Preferences(this, R.string.pref_file).separateLockScreen = isEnabled
-}
-
-fun Context.isAnimateFromLockScreen(): Boolean {
-    return Preferences(this, R.string.pref_file).animateFromLockScreen
-}
-
-fun Context.setAnimateFromLockScreen(isEnabled: Boolean) {
-    Preferences(this, R.string.pref_file).animateFromLockScreen = isEnabled
-}
 
 fun Context.getThumbnailPath(fileName: String): File {
     return File(externalCacheDir, fileName)
@@ -415,13 +398,13 @@ fun createTimePicker(
     return TimePickerDialog(context, listener, hour, minute, is24HourView)
 }
 
-fun timeIsInTimeRange (timeRangeStr: String, now: LocalTime = LocalTime.now()): Boolean {
+fun timeIsInTimeRange(timeRangeStr: String, now: LocalTime = LocalTime.now()): Boolean {
     val (startStr, endStr) = timeRangeStr.split("-")
     val startTime = LocalTime.parse(startStr)
     val endTime = LocalTime.parse(endStr)
     return if (startTime.isAfter(endTime)) {
         !(now.isAfter(endTime) && now.isBefore(startTime))
-    } else  {
+    } else {
         now.isAfter(startTime) && now.isBefore(endTime)
     }
 }

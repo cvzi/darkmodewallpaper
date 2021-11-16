@@ -31,7 +31,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial
  * Separate settings for lock screen wallpaper
  */
 open class LockScreenActivity : MainActivity() {
-
     init {
         isLockScreenActivity = true
     }
@@ -45,12 +44,12 @@ open class LockScreenActivity : MainActivity() {
             imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
         findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).setOnCheckedChangeListener { _, isChecked ->
-            setSeparateLockScreenEnabled(isChecked)
+            preferencesGlobal.separateLockScreen = isChecked
             DarkWallpaperService.lockScreenSettingsChanged()
         }
 
         findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).setOnCheckedChangeListener { _, isChecked ->
-            setAnimateFromLockScreen(isChecked)
+            preferencesGlobal.animateFromLockScreen = isChecked
         }
     }
 
@@ -71,9 +70,9 @@ open class LockScreenActivity : MainActivity() {
         findViewById<View>(R.id.tableRowSwitchZoom).visibility = View.GONE
 
         findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).isChecked =
-            isAnimateFromLockScreen()
+            preferencesGlobal.animateFromLockScreen
         findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).isChecked =
-            isSeparateLockScreenEnabled()
+            preferencesGlobal.separateLockScreen
     }
 
     override fun onPause() {
@@ -81,7 +80,7 @@ open class LockScreenActivity : MainActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             findViewById<View>(R.id.layoutRoot).visibility = View.INVISIBLE
-        }, 200)
+        }, 500)
     }
 
 }

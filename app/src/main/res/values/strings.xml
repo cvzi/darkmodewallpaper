@@ -50,6 +50,7 @@
     <string name="image_file_import_loading_message">Optimizing %2$s\n(imported from %1$s)</string>
 
     <string name="button_import_wallpaper">Import wallpaper</string>
+    <string name="button_more_settings">Advanced settings</string>
     <string name="button_apply_wallpaper">Apply as wallpaper</string>
     <string name="apply_wallpaper_unavailable">Please set the wallpaper manually from the Android settings</string>
     <string name="button_lock_screen_settings">Lock screen</string>

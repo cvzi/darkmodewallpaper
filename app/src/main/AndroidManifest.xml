@@ -155,6 +155,10 @@
             android:exported="true"
             android:parentActivityName=".activity.LockScreenActivity"
             android:theme="@style/Theme.AppCompat.DayNight" />
+        <activity
+            android:name=".activity.MoreSettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight" />
 
         <service
             android:name=".DarkWallpaperService"

@@ -63,7 +63,7 @@ open class MainActivity : AppCompatActivity() {
         var originalDesiredHeight = -1
     }
 
-    private lateinit var preferencesGlobal: Preferences
+    protected lateinit var preferencesGlobal: Preferences
     protected var isLockScreenActivity = false
     protected lateinit var imageProvider: StaticDayAndNightProvider
     protected var dayImageFile: File? = null
@@ -76,6 +76,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var switchColorDay: SwitchMaterial
     private lateinit var switchColorNight: SwitchMaterial
     private lateinit var buttonImportWallpaper: Button
+    private lateinit var buttonMoreSettings: Button
     private lateinit var buttonApplyWallpaper: Button
     private lateinit var textStatusDayOrNight: TextView
     private lateinit var switchTriggerSystem: SwitchMaterial
@@ -168,6 +169,7 @@ open class MainActivity : AppCompatActivity() {
         previewViewDay = findViewById(R.id.viewColorDay)
         previewViewNight = findViewById(R.id.viewColorNight)
         buttonImportWallpaper = findViewById(R.id.buttonImportWallpaper)
+        buttonMoreSettings = findViewById(R.id.buttonMoreSettings)
         buttonApplyWallpaper = findViewById(R.id.buttonApplyWallpaper)
         val buttonSelectFileDay = findViewById<Button>(R.id.buttonSelectFileDay)
         val buttonSelectFileNight = findViewById<Button>(R.id.buttonSelectFileNight)
@@ -232,6 +234,9 @@ open class MainActivity : AppCompatActivity() {
             askToImport()
         }
 
+        buttonMoreSettings.setOnClickListener {
+            startActivity(Intent(this, MoreSettingsActivity::class.java))
+        }
 
         buttonApplyWallpaper.setOnClickListener {
             var c = 1
@@ -921,7 +926,7 @@ open class MainActivity : AppCompatActivity() {
             contrastSeekBar.progress = 500
         }
 
-        setPreviewDimension(previewView,3, 1, 2)
+        setPreviewDimension(previewView, 3, 1, 2)
     }
 
 
@@ -960,6 +965,14 @@ open class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
 
         DarkWallpaperService.invalidate()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            findViewById<View>(R.id.layoutRoot).visibility = View.INVISIBLE
+        }, 500)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

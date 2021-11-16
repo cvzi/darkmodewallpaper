@@ -193,6 +193,16 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value
         ).apply()
 
+    var notifyColorsImmediatelyAfterUnlock: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_notify_colors_immediately_after_unlock_key),
+            context.resources.getBoolean(R.bool.pref_notify_colors_immediately_after_unlock_default)
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_notify_colors_immediately_after_unlock_key),
+            value
+        ).apply()
+
     override fun toString(): String {
         return super.toString() + "[${context.getString(prefFile)}]"
     }
