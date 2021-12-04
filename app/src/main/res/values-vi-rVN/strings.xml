@@ -41,6 +41,7 @@
     <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Đang tối ưu hoá %2$s\n(đã nhập từ %1$s)</string>
     <string name="button_import_wallpaper">Nhập hình nền</string>
+    <string name="button_more_settings">Cài đặt nâng cao</string>
     <string name="button_apply_wallpaper">Áp dụng làm hình nền</string>
     <string name="apply_wallpaper_unavailable">Vui lòng đặt hình nền theo cách thủ công từ cài đặt của Android</string>
     <string name="button_lock_screen_settings">Màn hình khoá</string>
