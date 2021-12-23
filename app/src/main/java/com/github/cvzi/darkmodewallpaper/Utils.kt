@@ -20,6 +20,8 @@ package com.github.cvzi.darkmodewallpaper
 
 import android.app.Activity
 import android.app.TimePickerDialog
+import android.app.WallpaperManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -406,5 +408,25 @@ fun timeIsInTimeRange(timeRangeStr: String, now: LocalTime = LocalTime.now()): B
         !(now.isAfter(endTime) && now.isBefore(startTime))
     } else {
         now.isAfter(startTime) && now.isBefore(endTime)
+    }
+}
+
+/**
+ * Open the wallpaper preview to set a live wallpaper
+ */
+fun applyLiveWallpaper(activity: Activity, c: Int, onError: () -> Unit) {
+    Preferences(activity, R.string.pref_file).previewMode = c
+    Intent(
+        WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
+    ).apply {
+        putExtra(
+            WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+            ComponentName(activity, DarkWallpaperService::class.java)
+        )
+        if (resolveActivity(activity.packageManager) != null) {
+            activity.startActivity(this)
+        } else {
+            onError()
+        }
     }
 }

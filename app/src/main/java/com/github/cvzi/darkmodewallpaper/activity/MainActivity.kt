@@ -75,6 +75,9 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var imageButtonColorNight: ImageButton
     private lateinit var switchColorDay: SwitchMaterial
     private lateinit var switchColorNight: SwitchMaterial
+    private lateinit var switchWallpaperReuseDay: SwitchMaterial
+    private lateinit var switchColorOnlyNight: SwitchMaterial
+    private lateinit var switchColorOnlyDay: SwitchMaterial
     private lateinit var buttonImportWallpaper: Button
     private lateinit var buttonMoreSettings: Button
     private lateinit var buttonApplyWallpaper: Button
@@ -173,11 +176,11 @@ open class MainActivity : AppCompatActivity() {
         buttonApplyWallpaper = findViewById(R.id.buttonApplyWallpaper)
         val buttonSelectFileDay = findViewById<Button>(R.id.buttonSelectFileDay)
         val buttonSelectFileNight = findViewById<Button>(R.id.buttonSelectFileNight)
-        val switchWallpaperReuseDay = findViewById<SwitchMaterial>(R.id.switchWallpaperReuseDay)
+        switchWallpaperReuseDay = findViewById(R.id.switchWallpaperReuseDay)
         switchColorDay = findViewById(R.id.switchColorDay)
         switchColorNight = findViewById(R.id.switchColorNight)
-        val switchColorOnlyDay = findViewById<SwitchMaterial>(R.id.switchColorOnlyDay)
-        val switchColorOnlyNight = findViewById<SwitchMaterial>(R.id.switchColorOnlyNight)
+        switchColorOnlyDay = findViewById(R.id.switchColorOnlyDay)
+        switchColorOnlyNight = findViewById(R.id.switchColorOnlyNight)
         imageButtonColorDay = findViewById(R.id.imageButtonColorDay)
         imageButtonColorNight = findViewById(R.id.imageButtonColorNight)
         switchTriggerSystem = findViewById(R.id.switchTriggerSystem)
@@ -244,25 +247,14 @@ open class MainActivity : AppCompatActivity() {
             if (isDayOrNightMode() == NIGHT) {
                 c += 10
             }
-            preferencesGlobal.previewMode = c
 
-            Intent(
-                WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
-            ).apply {
-                putExtra(
-                    WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                    ComponentName(this@MainActivity, DarkWallpaperService::class.java)
-                )
-                if (resolveActivity(packageManager) != null) {
-                    startActivity(this)
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        R.string.apply_wallpaper_unavailable,
-                        Toast.LENGTH_LONG
-                    ).show()
-                    buttonApplyWallpaper.isEnabled = false
-                }
+            applyLiveWallpaper(this@MainActivity, c) {
+                Toast.makeText(
+                    this@MainActivity,
+                    R.string.apply_wallpaper_unavailable,
+                    Toast.LENGTH_LONG
+                ).show()
+                buttonApplyWallpaper.isEnabled = false
             }
         }
         Intent(
@@ -351,6 +343,7 @@ open class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+            switchColorOnlyDay.isChecked = false
         }
 
         buttonSelectFileNight.isEnabled = imageProvider.getUseNightWallpaper(isLockScreenActivity)
@@ -376,6 +369,8 @@ open class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+            switchColorOnlyNight.isChecked = false
+            switchWallpaperReuseDay.isChecked = false
         }
 
         switchWallpaperReuseDay.isChecked =
@@ -833,12 +828,18 @@ open class MainActivity : AppCompatActivity() {
             alert.safeDismiss()
             if (isLockScreenActivity && dayOrNight == DAY) {
                 startForPickDayLockScreenFile.launch(imagePickIntent())
+                switchColorOnlyDay.isChecked = false
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
                 startForPickNightLockScreenFile.launch(imagePickIntent())
+                switchColorOnlyNight.isChecked = false
+                switchWallpaperReuseDay.isChecked = false
             } else if (dayOrNight == DAY) {
                 startForPickDayHomeScreenFile.launch(imagePickIntent())
+                switchColorOnlyDay.isChecked = false
             } else {
                 startForPickNightHomeScreenFile.launch(imagePickIntent())
+                switchColorOnlyNight.isChecked = false
+                switchWallpaperReuseDay.isChecked = false
             }
         }
         linearLayout.findViewById<Button>(R.id.buttonDeleteImage).setOnClickListener {

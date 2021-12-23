@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+*   Fix minor bugs
+
 ## 1.2.0
 *   New advanced settings activity
 *   First advanced setting: Delay color notification after unlock [#35](https://github.com/cvzi/darkmodewallpaper/issues/35)
