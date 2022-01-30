@@ -1,8 +1,11 @@
 name: Publish package to GitHub Packages
-on: [push, workflow_dispatch]
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
 jobs:
   publish:
-    #if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
