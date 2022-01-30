@@ -36,16 +36,23 @@ android {
 }
 
 publishing {
-  repositories {
-    maven {
-      name = "GitHubPackages"
-      url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY")
-      credentials {
-        username = System.getenv("GITHUB_ACTOR")
-        password = System.getenv("GITHUB_TOKEN")
-      }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
-  }
+    publications {
+        gpr(MavenPublication) {
+            groupId = 'com.github.cvzi'
+            artifactId = 'darkmodewallpaper'
+            version = '1.2.1'
+        }
+    }
 }
 
 
