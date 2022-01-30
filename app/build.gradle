@@ -47,10 +47,10 @@ publishing {
         }
     }
     publications {
-        gpr(MavenPublication) {
+        release(MavenPublication) {
             groupId = 'com.github.cvzi'
             artifactId = 'darkmodewallpaper'
-            version = '1.2.1'
+            version = android.defaultConfig.versionName
         }
     }
 }
