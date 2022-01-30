@@ -1,0 +1,38 @@
+name: publishPackage
+
+on: [push, workflow_dispatch]
+
+env:
+  RUNNING_ON_CI: "true"
+  GITHUB_PACKAGES_USERNAME: ${{ github.actor }}
+  GITHUB_PACKAGES_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  PUBLISH_APPS: "false"
+
+jobs:
+  publish:
+    name: Publish packages
+    #if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    runs-on: ubuntu-latest
+    env:
+      PUBLISHING: "true"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '15'
+          check-latest: true
+      - name: Add exec permission
+        run: chmod +x gradlew
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Assemble build
+        run: ./gradlew assemble --stacktrace
+      - name: Publish package
+        run: ./gradlew publish
+        env:
+          PUBLICATION_URL: 'https://maven.pkg.github.com/${{ github.repository }}'
+          PUBLICATION_USERNAME: ${{ github.actor }}
+          PUBLICATION_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
