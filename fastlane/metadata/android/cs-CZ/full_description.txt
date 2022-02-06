@@ -1,0 +1,10 @@
+Živá tapeta pro Android 10+, která respektuje nastavení tmavého režimu.
+
+Pomocí této aplikace můžete nastavit obrázek tapety zvlášť pro světlý a zvlášť pro tmavý režim.
+Když zapnete nebo vypnete tmavý motiv zařízení, tapeta se automaticky změní.
+
+Místo použití jiného obrázku můžete také změnit barvu, kontrast a jas již nastavené tapety a ztmavit ji.
+
+Je možné vybrat odlišné obrázky pro domovskou a zamykací obrazovku.
+
+Oprávnění pro přístup k úložišti je vyžadováno, pokud chcete importovat aktuální obrázek tapety. Jakmile naimportujete svou tapetu, můžete oprávnění klidně odebrat. Pokud nechcete importovat vaši aktuální tapetu, nepotřebujete udělit toto oprávnění.
