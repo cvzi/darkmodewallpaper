@@ -41,6 +41,7 @@
     <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Optymalizacja %2$s\n(zaimportowane z %1$s)</string>
     <string name="button_import_wallpaper">Importuj tapetę</string>
+    <string name="button_more_settings">Ustawienia zaawansowane</string>
     <string name="button_apply_wallpaper">Ustaw jako tapetę</string>
     <string name="apply_wallpaper_unavailable">Proszę ustawić tapetę ręcznie w ustawieniach Androida</string>
     <string name="button_lock_screen_settings">Ekran blokady</string>
@@ -71,4 +72,10 @@
 \n\nTapeta ekranu blokady powinna być zgodna z rozmiarem ekranu. Jeśli jest ona większa niż ekran, zostanie przeskalowana i wyśrodkowana.\n</string>
     <string name="about">O aplikacji</string>
     <string name="about_issues"><![CDATA[Znalazłeś problem lub masz sugestię?<br>Utwórz zgłoszenie pod adresem <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Data rozpoczęcia:</string>
+    <string name="end_time">Godzina zakończenia:</string>
+    <string name="night_mode_trigger">Wyzwalacz trybu nocnego:</string>
+    <string name="night_mode_trigger_follow_system">Zgodnie z motywem systemu</string>
+    <string name="night_mode_trigger_time_range">Zakres czasu</string>
+    <string name="zoom_effect">Efekt powiększenia:</string>
 </resources>
