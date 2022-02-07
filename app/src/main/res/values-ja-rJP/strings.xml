@@ -67,8 +67,8 @@
     <string name="switch_reuse_day_image_for_night">昼の時間の画像を使用する</string>
     <string name="switch_reuse_day_image_for_night_description">夜の時間の壁紙を別々に使用するか、昼の時間の壁紙を再利用します</string>
     <string name="text_lock_screen_explanation">上部のスイッチを有効にすると、ロック画面に異なる壁紙や異なる色を設定することができます。
-\n残念ながら、一部の携帯電話メーカーは独自のロック画面の壁紙を設定し、それを変更することはできませんので、これはすべての携帯電話で動作しません。
-\n\nライブ壁紙を設定する際は、必ず「ホーム画面とロック画面」を押してください。
+\n残念ながら、一部の携帯電話メーカーは独自のロック画面の壁紙を設定し、それを変更することはできませんので、これはすべての携帯電話では動作しません。
+\n\nライブ壁紙を設定する際は、必ず「ホームとロック画面」を押してください。
 \n\nロック画面の画像は、画面サイズと一致させる必要があります。画面より大きい場合は、拡大縮小され、中央に配置されます。\n</string>
     <string name="about">概要</string>
     <string name="about_issues"><![CDATA[問題を見つけたか、提案がありますか？<br> <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a> でIssue を開きます]]></string>
