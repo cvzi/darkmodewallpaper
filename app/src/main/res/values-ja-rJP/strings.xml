@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">昼のホーム画面の壁紙</string>
     <string name="use_as_night_home">夜のホーム画面の壁紙</string>
     <string name="use_as_day_lock">昼のロック画面の壁紙</string>
@@ -65,9 +65,9 @@
     <string name="moon_symbol_description">月/夜</string>
     <string name="button_select_color_description">色の選択</string>
     <string name="switch_reuse_day_image_for_night">昼の時間の画像を使用する</string>
-    <string name="switch_reuse_day_image_for_night_description">夜の時間の壁紙を別々に使用するか、昼の時間の壁紙を再利用します</string>
+    <string name="switch_reuse_day_image_for_night_description">夜の時間の壁紙を別々に使用するか、昼の時間の壁紙をそのまま使用します</string>
     <string name="text_lock_screen_explanation">上部のスイッチを有効にすると、ロック画面に異なる壁紙や異なる色を設定することができます。
-\n残念ながら、一部の携帯電話メーカーは独自のロック画面の壁紙を設定し、それを変更することはできませんので、これはすべての携帯電話では動作しません。
+\n残念ながら、一部の携帯電話メーカーは独自のロック画面の壁紙を設定し、変更できないようにしている場合があり、すべての携帯電話では動作しません。
 \n\nライブ壁紙を設定する際は、必ず「ホームとロック画面」を押してください。
 \n\nロック画面の画像は、画面サイズと一致させる必要があります。画面より大きい場合は、拡大縮小され、中央に配置されます。\n</string>
     <string name="about">概要</string>
