@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.5
+*   🇯🇵 Japanese translation by [@Npepperlinux](https://github.com/Npepperlinux)
+
 ## 1.2.4
 *   Remove publish from build.gradle
 

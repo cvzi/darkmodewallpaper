@@ -12,14 +12,20 @@ android {
         applicationId "com.github.cvzi.darkmodewallpaper"
         minSdkVersion 29
         targetSdkVersion 32
-        versionCode 21
-        versionName "1.2.4"
+        versionCode 22
+        versionName "1.2.5"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix '.debug'
+            versionNameSuffix '.debug'
         }
     }
     compileOptions {
@@ -30,7 +36,7 @@ android {
         jvmTarget = 11
         useIR = true
     }
-    lintOptions {
+    lint {
         disable 'MissingTranslation'
     }
 }
