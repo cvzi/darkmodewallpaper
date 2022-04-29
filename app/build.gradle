@@ -7,7 +7,6 @@ apply plugin: 'com.jaredsburrows.license'
 android {
     compileSdkVersion 32
     buildToolsVersion "32.0.0"
-
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
         minSdkVersion 29
@@ -18,7 +17,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
