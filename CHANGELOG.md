@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.6
+*   Set `minifyEnabled true` in release [#42](https://github.com/cvzi/darkmodewallpaper/issues/42)
+
 ## 1.2.5
 *   🇯🇵 Japanese translation by [@Npepperlinux](https://github.com/Npepperlinux)
 
