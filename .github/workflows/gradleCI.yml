@@ -28,7 +28,7 @@ jobs:
       run: ./gradlew build
     - name: Upload Lint report
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: lint-results.html
         path: app/build/reports/lint-results*.html
