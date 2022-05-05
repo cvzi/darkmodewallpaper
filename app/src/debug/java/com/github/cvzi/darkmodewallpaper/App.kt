@@ -33,17 +33,14 @@ class App : Application() {
                     .detectResourceMismatches()
                     .detectUnbufferedIo()
                     .penaltyLog()
-                    .penaltyDeath()
                     .build()
             )
             StrictMode.setVmPolicy(
                 VmPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
-                    .penaltyDeath()
                     .build()
             )
         }
     }
-
 }

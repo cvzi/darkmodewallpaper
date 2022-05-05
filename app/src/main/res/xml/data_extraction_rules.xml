@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   See https://developer.android.com/guide/topics/data/autobackup#include-exclude-android-12
+   for details.
+-->
+<data-extraction-rules>
+    <cloud-backup disableIfNoEncryptionCapabilities="false" />
+    <device-transfer disableIfNoEncryptionCapabilities="false" />
+</data-extraction-rules>
