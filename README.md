@@ -60,9 +60,5 @@ Implemented:
 *   onZoomChanged()
 *   Delete image again
 
-
-[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg?style=for-the-badge)](https://saythanks.io/to/cuzi%40openmail.cc)
-
-
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcvzi%2Fdarkmodewallpaper.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcvzi%2Fdarkmodewallpaper?ref=badge_large)
