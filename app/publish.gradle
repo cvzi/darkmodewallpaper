@@ -22,7 +22,7 @@ afterEvaluate {
                 version = android.defaultConfig.versionName
                 artifact sourcesJar
                 pom.withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
+                    def dependenciesNode = asNode(null).appendNode('dependencies')
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
                         dependencyNode.appendNode('groupId', it.group)

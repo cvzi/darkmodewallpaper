@@ -24,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:accessibilityHeading="true"
-                    android:text="Advanced Settings"
+                    android:text="@string/button_more_settings"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
