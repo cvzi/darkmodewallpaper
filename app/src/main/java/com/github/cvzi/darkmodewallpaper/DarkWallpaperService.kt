@@ -136,8 +136,12 @@ class DarkWallpaperService : WallpaperService() {
         ArrayList()
     private lateinit var keyguardService: KeyguardManager
 
-    private val overlayPaint = Paint()
-    private val bitmapPaint = Paint()
+    private val overlayPaint = Paint().apply {
+        isAntiAlias = false
+    }
+    private val bitmapPaint = Paint().apply {
+        isAntiAlias = false
+    }
     private val colorMatrixArray = floatArrayOf(
         1f, 0f, 0f, 0f, 0f,
         0f, 1f, 0f, 0f, 0f,
@@ -271,6 +275,7 @@ class DarkWallpaperService : WallpaperService() {
 
         override fun onCreate(surfaceHolder: SurfaceHolder?) {
             super.onCreate(surfaceHolder)
+            setTouchEventsEnabled(false)
             invalid = true
             synchronized(engines) {
                 engines.add(self)
