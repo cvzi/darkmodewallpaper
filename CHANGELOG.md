@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.8
+*   Improve drawing speed when contrast and brightness are set
+
 ## 1.2.7
 *   Improve drawing speed when contrast and brightness are not set
 
