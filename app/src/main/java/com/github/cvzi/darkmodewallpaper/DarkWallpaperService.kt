@@ -212,14 +212,18 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     private fun updateColorMatrix(brightness: Float, contrast: Float) {
-        val b = (brightness - contrast) / 2f
-        colorMatrixArray[0] = contrast
-        colorMatrixArray[4] = b
-        colorMatrixArray[6] = contrast
-        colorMatrixArray[9] = b
-        colorMatrixArray[12] = contrast
-        colorMatrixArray[14] = b
-        bitmapPaint.colorFilter = ColorMatrixColorFilter(colorMatrixArray)
+        if (abs(brightness) > 3f || abs(contrast - 1f) > 0.01f) {
+            val b = (brightness - contrast) / 2f
+            colorMatrixArray[0] = contrast
+            colorMatrixArray[4] = b
+            colorMatrixArray[6] = contrast
+            colorMatrixArray[9] = b
+            colorMatrixArray[12] = contrast
+            colorMatrixArray[14] = b
+            bitmapPaint.colorFilter = ColorMatrixColorFilter(colorMatrixArray)
+        } else {
+            bitmapPaint.colorFilter = null
+        }
     }
 
     private inner class WallpaperEngine : WallpaperService.Engine() {
