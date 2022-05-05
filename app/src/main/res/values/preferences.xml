@@ -28,9 +28,9 @@
     <string name="pref_color_night_key" translatable="false">color_night</string>
     <string name="pref_color_night_default" translatable="false">-2080374784</string>
     <string name="pref_brightness_day_key" translatable="false">brightness_day</string>
-    <string name="pref_brightness_day_default" translatable="false">1.0</string>
+    <string name="pref_brightness_day_default" translatable="false">0.0</string>
     <string name="pref_brightness_night_key" translatable="false">brightness_night</string>
-    <string name="pref_brightness_night_default" translatable="false">1.0</string>
+    <string name="pref_brightness_night_default" translatable="false">0.0</string>
     <string name="pref_contrast_day_key" translatable="false">contrast_day</string>
     <string name="pref_contrast_day_default" translatable="false">1.0</string>
     <string name="pref_contrast_night_key" translatable="false">contrast_night</string>

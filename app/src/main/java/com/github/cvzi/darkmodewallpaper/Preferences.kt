@@ -45,26 +45,29 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value.toString()
         ).apply()
 
+    /** Value ≈-255 to 0 to ≈255 */
     var brightnessDay: Float
         get() = pref.getString(
             context.getString(R.string.pref_brightness_day_key),
             context.getString(R.string.pref_brightness_day_default)
-        )?.toFloatOrNull() ?: 1f
+        )?.toFloatOrNull() ?: 0f
         set(value) = pref.edit().putString(
             context.getString(R.string.pref_brightness_day_key),
             value.toString()
         ).apply()
 
+    /** Value ≈-255 to 0 to ≈255 */
     var brightnessNight: Float
         get() = pref.getString(
             context.getString(R.string.pref_brightness_night_key),
             context.getString(R.string.pref_brightness_night_default)
-        )?.toFloatOrNull() ?: 1f
+        )?.toFloatOrNull() ?: 0f
         set(value) = pref.edit().putString(
             context.getString(R.string.pref_brightness_night_key),
             value.toString()
         ).apply()
 
+    /** Value ≈0.1 to 1 to ≈1.5 */
     var contrastDay: Float
         get() = pref.getString(
             context.getString(R.string.pref_contrast_day_key),
@@ -75,6 +78,7 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value.toString()
         ).apply()
 
+    /** Value ≈0.1 to 1 to ≈1.5 */
     var contrastNight: Float
         get() = pref.getString(
             context.getString(R.string.pref_contrast_night_key),
@@ -164,13 +168,15 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
         ).apply()
 
     var nightModeTrigger: NightModeTrigger
-        get() = NightModeTrigger.valueOfOrFirst(pref.getString(
-            context.getString(R.string.pref_night_mode_trigger_key),
-            context.getString(R.string.pref_night_mode_trigger_default)
-        ))
+        get() = NightModeTrigger.valueOfOrFirst(
+            pref.getString(
+                context.getString(R.string.pref_night_mode_trigger_key),
+                context.getString(R.string.pref_night_mode_trigger_default)
+            )
+        )
         set(value) = pref.edit().putString(
             context.getString(R.string.pref_night_mode_trigger_key),
-           value.toString()
+            value.toString()
         ).apply()
 
     var nightModeTimeRange: String
