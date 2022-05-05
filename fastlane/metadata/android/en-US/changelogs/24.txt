@@ -1,0 +1,2 @@
+Improved animation between home screen pages.
+On Android 12 the animation is still shaky when contrast/brightness of the wallpaper were changed.

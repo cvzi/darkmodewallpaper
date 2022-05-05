@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.7
+*   Improve drawing speed when contrast and brightness are not set
+
 ## 1.2.6
 *   Set `minifyEnabled true` in release [#42](https://github.com/cvzi/darkmodewallpaper/issues/42)
 
