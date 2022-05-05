@@ -1,4 +1,4 @@
-name: gradleCI
+name: 🔨 Gradle Build
 
 on:  
   push:
@@ -24,9 +24,9 @@ jobs:
       run: chmod +x gradlew
     - name: Validate Gradle Wrapper
       uses: gradle/wrapper-validation-action@v1
-    - name: Build
+    - name: 🔨 Build
       run: ./gradlew build
-    - name: Upload Lint report
+    - name: 💬 Upload Lint report
       if: always()
       uses: actions/upload-artifact@v3
       with:
