@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'maven-publish'
+    id 'com.jaredsburrows.license'
 }
-apply plugin: 'com.jaredsburrows.license'
 android {
     compileSdkVersion 32
     buildToolsVersion "32.0.0"
@@ -40,7 +40,13 @@ android {
         disable 'MissingTranslation'
     }
 }
-
+licenseReport {
+    // Run via `gradlew licenseReleaseReport`
+    generateCsvReport = false
+    generateHtmlReport = true
+    generateJsonReport = false
+    copyHtmlReportToAssets = true
+}
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
