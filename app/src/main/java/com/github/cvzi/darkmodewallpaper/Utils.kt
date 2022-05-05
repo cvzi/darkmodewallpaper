@@ -25,10 +25,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Point
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
 import android.text.format.DateFormat
@@ -221,6 +218,52 @@ fun imagePickIntent(): Intent {
  */
 fun imageChooserIntent(label: String): Intent {
     return Intent.createChooser(imagePickIntent(), label)
+}
+
+
+/**
+ * Create color matrix to adjust brightness and contrast
+ */
+fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilter {
+    val b = (brightness - contrast) / 2f
+    return ColorMatrixColorFilter(
+        floatArrayOf(
+            contrast, 0f, 0f, 0f, b,
+            0f, contrast, 0f, 0f, b,
+            0f, 0f, contrast, 0f, b,
+            0f, 0f, 0f, 1f, 0f
+        )
+    )
+}
+
+/**
+ * Scale a bitmap so it fits destWidth X destHeight or desiredMinWidth X desiredMinHeight, choose
+ * by comparing the image ratio to the given dimensions.
+ * Adjust contrast and brightness if provided:
+ * drawBitmap() with a ColorMatrix is slow, therefore it is done once before scaling the
+ * bitmap instead of every time the bitmap is drawn.
+ */
+fun scaleAndAdjustBitmap(
+    src: Bitmap,
+    destWidth: Int,
+    destHeight: Int,
+    desiredMinWidth: Int,
+    desiredMinHeight: Int,
+    changeBrightness: Float?,
+    changeContrast: Float?
+): ScaledBitmap {
+    val brightness = changeBrightness ?: 0f
+    val contrast = changeContrast ?: 1f
+    val adjustedBitmap = if (abs(brightness) > 3f || abs(contrast - 1f) > 0.01f) {
+        val paint = Paint().apply {
+            colorFilter = createColorMatrix(brightness, contrast)
+        }
+        Bitmap.createBitmap(src.width, src.height, src.config).apply {
+            val canvas = Canvas(this)
+            canvas.drawBitmap(src, 0f, 0f, paint)
+        }
+    } else src
+    return scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
 }
 
 /**

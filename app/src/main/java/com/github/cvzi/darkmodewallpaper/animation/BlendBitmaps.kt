@@ -22,7 +22,6 @@ import android.graphics.*
 
 class BlendBitmaps(
     private val blendFromBitmap: Bitmap,
-    private val blendFromPaint: Paint,
     private val blendFromColor: Int,
     private val blendFromOffsetXPixel: Float,
     private val blendFromOffsetYPixel: Float,
@@ -36,7 +35,6 @@ class BlendBitmaps(
     fun draw(
         canvas: Canvas,
         toBitmap: Bitmap? = null,
-        toNewPaint: Paint,
         newColor: Int,
         offsetX: Float,
         offsetY: Float,
@@ -57,7 +55,7 @@ class BlendBitmaps(
             blendFromBitmap,
             blendFromOffsetXPixel,
             blendFromOffsetYPixel,
-            blendFromPaint
+            null
         )
 
         // Old color
@@ -67,9 +65,10 @@ class BlendBitmaps(
         }
 
         // New Bitmap
-        val toPaint = Paint(toNewPaint)
+        val toPaint = Paint()
         toPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
         toPaint.alpha = blendAlpha
+        toPaint.isAntiAlias = false
         canvas.drawBitmap(
             toBM,
             -offsetX * (toBM.width - width),

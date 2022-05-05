@@ -139,15 +139,6 @@ class DarkWallpaperService : WallpaperService() {
     private val overlayPaint = Paint().apply {
         isAntiAlias = false
     }
-    private val bitmapPaint = Paint().apply {
-        isAntiAlias = false
-    }
-    private val colorMatrixArray = floatArrayOf(
-        1f, 0f, 0f, 0f, 0f,
-        0f, 1f, 0f, 0f, 0f,
-        0f, 0f, 1f, 0f, 0f,
-        0f, 0f, 0f, 1f, 0f
-    )
 
     // Keeps the last calculated value, so a new engine doesn't start with null
     private var lastWallpaperColors: WallpaperColors? = null
@@ -211,21 +202,6 @@ class DarkWallpaperService : WallpaperService() {
         }
     }
 
-    private fun updateColorMatrix(brightness: Float, contrast: Float) {
-        if (abs(brightness) > 3f || abs(contrast - 1f) > 0.01f) {
-            val b = (brightness - contrast) / 2f
-            colorMatrixArray[0] = contrast
-            colorMatrixArray[4] = b
-            colorMatrixArray[6] = contrast
-            colorMatrixArray[9] = b
-            colorMatrixArray[12] = contrast
-            colorMatrixArray[14] = b
-            bitmapPaint.colorFilter = ColorMatrixColorFilter(colorMatrixArray)
-        } else {
-            bitmapPaint.colorFilter = null
-        }
-    }
-
     private inner class WallpaperEngine : WallpaperService.Engine() {
         var dayOrNight: DayOrNight = DAY
         var hasSeparateLockScreenSettings = false
@@ -252,7 +228,6 @@ class DarkWallpaperService : WallpaperService() {
         private var shouldScroll = true
         private var offsetXBeforeLock = 0f
         private var offsetYBeforeLock = 0f
-        private var lastBitmapPaint = Paint()
         private var waitAnimation: WaitAnimation? = null
         private var blendBitmaps: BlendBitmaps? = null
         private var blendFromOffsetXPixel = 0f
@@ -396,14 +371,20 @@ class DarkWallpaperService : WallpaperService() {
                     if (preferencesGlobal.animateFromLockScreen) {
                         currentBitmapFile?.let {
                             val (desiredWidth, desiredHeight) = desiredDimensions()
-                            val key =
-                                "$width $height $desiredWidth $desiredHeight ${it.absolutePath}"
+                            val key = generateBitmapKey(
+                                width,
+                                height,
+                                desiredWidth,
+                                desiredHeight,
+                                wallpaperImage?.brightness,
+                                wallpaperImage?.contrast,
+                                it.absolutePath
+                            )
                             val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
                             if (scaledBitmap != null) {
                                 val (blendFromBitmap, _) = scaledBitmap
                                 blendBitmaps = BlendBitmaps(
                                     blendFromBitmap,
-                                    lastBitmapPaint,
                                     overlayPaint.color,
                                     blendFromOffsetXPixel,
                                     blendFromOffsetYPixel
@@ -542,7 +523,7 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         private fun wallpaperColorsKey(key: String): String {
-            return "$key ${overlayPaint.color} ${colorMatrixArray.contentToString()}"
+            return "$key ${overlayPaint.color} ${wallpaperImage?.brightness} {wallpaperImage?.contrast}"
         }
 
         private fun wallpaperColorsShouldCalculate(key: String): Boolean {
@@ -595,12 +576,14 @@ class DarkWallpaperService : WallpaperService() {
                             )
 
                             if (originalBitmap != null) {
-                                val (bm, isDesired) = scaleBitmap(
+                                val (bm, isDesired) = scaleAndAdjustBitmap(
                                     originalBitmap,
                                     width,
                                     height,
                                     desiredWidth,
-                                    desiredHeight
+                                    desiredHeight,
+                                    wallpaperImage?.brightness,
+                                    wallpaperImage?.contrast
                                 )
                                 shouldScroll = isDesired
                                 currentBitmap = bm
@@ -611,8 +594,15 @@ class DarkWallpaperService : WallpaperService() {
                             } else {
                                 Log.e(TAG, "Failed to read image from file $imageFile")
                             }
-                            val key =
-                                "$width $height $desiredWidth $desiredHeight ${imageFile.absolutePath}"
+                            val key = generateBitmapKey(
+                                width,
+                                height,
+                                desiredWidth,
+                                desiredHeight,
+                                wallpaperImage?.brightness,
+                                wallpaperImage?.contrast,
+                                imageFile.absolutePath
+                            )
                             if (currentBitmap == null) {
                                 bitmaps.remove(key)
                             } else {
@@ -664,8 +654,15 @@ class DarkWallpaperService : WallpaperService() {
             var currentBitmap: Bitmap? = null
             val key: String
             if (imageFile != null) {
-                key =
-                    "$width $height $desiredWidth $desiredHeight ${imageFile.absolutePath}"
+                key = generateBitmapKey(
+                    width,
+                    height,
+                    desiredWidth,
+                    desiredHeight,
+                    wallpaperImage?.brightness,
+                    wallpaperImage?.contrast,
+                    imageFile.absolutePath
+                )
                 currentBitmap = customBitmap
                 if (currentBitmap == null) {
                     val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
@@ -695,13 +692,9 @@ class DarkWallpaperService : WallpaperService() {
                     }
                 }
             } else {
-                key = "solidColor"
+                key = generateSolidColorKey()
                 shouldScroll = false
             }
-            updateColorMatrix(
-                wallpaperImage?.brightness ?: 1f,
-                wallpaperImage?.contrast ?: 1f
-            )
 
             // Draw on canvas
             var canvas: Canvas? = null
@@ -764,7 +757,6 @@ class DarkWallpaperService : WallpaperService() {
                     if (blendBitmaps?.draw(
                             canvas,
                             bm,
-                            bitmapPaint,
                             overlayPaint.color,
                             oX,
                             oY,
@@ -793,18 +785,16 @@ class DarkWallpaperService : WallpaperService() {
                         // Preview always set it offsetY=0.0
                         blendFromOffsetYPixel = -0.5f * (bm.height - height)
                     }
-                    lastBitmapPaint = Paint(bitmapPaint)
 
                     if (hasZoom) {
                         canvas.save()
                         canvas.scale(1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom)
                     }
-
                     canvas.drawBitmap(
                         bm,
                         blendFromOffsetXPixel,
                         blendFromOffsetYPixel,
-                        bitmapPaint
+                        null
                     )
                     if (hasZoom) {
                         canvas.restore()
@@ -840,5 +830,21 @@ class DarkWallpaperService : WallpaperService() {
             }
         }
 
+    }
+
+    private fun generateSolidColorKey(): String {
+        return "solidColor"
+    }
+
+    private fun generateBitmapKey(
+        width: Int,
+        height: Int,
+        desiredWidth: Int,
+        desiredHeight: Int,
+        brightness: Float?,
+        contrast: Float?,
+        absolutePath: String
+    ): String {
+        return "$width $height $desiredWidth $desiredHeight $brightness $contrast $absolutePath"
     }
 }
