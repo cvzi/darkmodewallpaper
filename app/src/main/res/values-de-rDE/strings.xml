@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">Heller Startbildschirm Hintergrund</string>
     <string name="use_as_night_home">Dunkler Startbildschirm Hintergrund</string>
     <string name="use_as_day_lock">Heller Startbildschirm Hintergrund</string>
@@ -41,6 +41,7 @@
     <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Optimiere %2$s\n(importiert aus %1$s)</string>
     <string name="button_import_wallpaper">Hintergrundbild importieren</string>
+    <string name="button_more_settings">Erweiterte Einstellungen</string>
     <string name="button_apply_wallpaper">Als Hintergrund festlegen</string>
     <string name="apply_wallpaper_unavailable">Bitte aktiviere das Hintergrundbild manuell in den Android-Einstellungen</string>
     <string name="button_lock_screen_settings">Sperrbildschirm</string>

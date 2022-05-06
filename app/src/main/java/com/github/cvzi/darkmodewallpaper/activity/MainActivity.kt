@@ -63,7 +63,7 @@ open class MainActivity : AppCompatActivity() {
         var originalDesiredHeight = -1
     }
 
-    private lateinit var preferencesGlobal: Preferences
+    protected lateinit var preferencesGlobal: Preferences
     protected var isLockScreenActivity = false
     protected lateinit var imageProvider: StaticDayAndNightProvider
     protected var dayImageFile: File? = null
@@ -75,7 +75,11 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var imageButtonColorNight: ImageButton
     private lateinit var switchColorDay: SwitchMaterial
     private lateinit var switchColorNight: SwitchMaterial
+    private lateinit var switchWallpaperReuseDay: SwitchMaterial
+    private lateinit var switchColorOnlyNight: SwitchMaterial
+    private lateinit var switchColorOnlyDay: SwitchMaterial
     private lateinit var buttonImportWallpaper: Button
+    private lateinit var buttonMoreSettings: Button
     private lateinit var buttonApplyWallpaper: Button
     private lateinit var textStatusDayOrNight: TextView
     private lateinit var switchTriggerSystem: SwitchMaterial
@@ -168,14 +172,15 @@ open class MainActivity : AppCompatActivity() {
         previewViewDay = findViewById(R.id.viewColorDay)
         previewViewNight = findViewById(R.id.viewColorNight)
         buttonImportWallpaper = findViewById(R.id.buttonImportWallpaper)
+        buttonMoreSettings = findViewById(R.id.buttonMoreSettings)
         buttonApplyWallpaper = findViewById(R.id.buttonApplyWallpaper)
         val buttonSelectFileDay = findViewById<Button>(R.id.buttonSelectFileDay)
         val buttonSelectFileNight = findViewById<Button>(R.id.buttonSelectFileNight)
-        val switchWallpaperReuseDay = findViewById<SwitchMaterial>(R.id.switchWallpaperReuseDay)
+        switchWallpaperReuseDay = findViewById(R.id.switchWallpaperReuseDay)
         switchColorDay = findViewById(R.id.switchColorDay)
         switchColorNight = findViewById(R.id.switchColorNight)
-        val switchColorOnlyDay = findViewById<SwitchMaterial>(R.id.switchColorOnlyDay)
-        val switchColorOnlyNight = findViewById<SwitchMaterial>(R.id.switchColorOnlyNight)
+        switchColorOnlyDay = findViewById(R.id.switchColorOnlyDay)
+        switchColorOnlyNight = findViewById(R.id.switchColorOnlyNight)
         imageButtonColorDay = findViewById(R.id.imageButtonColorDay)
         imageButtonColorNight = findViewById(R.id.imageButtonColorNight)
         switchTriggerSystem = findViewById(R.id.switchTriggerSystem)
@@ -217,30 +222,8 @@ open class MainActivity : AppCompatActivity() {
             screenSize.y
         )
 
-        previewViewDay.layoutParams = LinearLayout.LayoutParams(previewViewDay.layoutParams).apply {
-            if (isLockScreenActivity) {
-                width = screenSize.x / 5
-                height = screenSize.y / 5
-            } else {
-                width = wallpaperManager.desiredMinimumWidth / 5
-                height = wallpaperManager.desiredMinimumWidth / 5
-            }
-        }
-        previewViewDay.scaledScreenWidth = screenSize.x / 5
-        previewViewDay.scaledScreenHeight = screenSize.y / 5
-
-        previewViewNight.layoutParams =
-            LinearLayout.LayoutParams(previewViewNight.layoutParams).apply {
-                if (isLockScreenActivity) {
-                    width = screenSize.x / 5
-                    height = screenSize.y / 5
-                } else {
-                    width = wallpaperManager.desiredMinimumWidth / 5
-                    height = wallpaperManager.desiredMinimumWidth / 5
-                }
-            }
-        previewViewNight.scaledScreenWidth = screenSize.x / 5
-        previewViewNight.scaledScreenHeight = screenSize.y / 5
+        setPreviewDimension(previewViewDay)
+        setPreviewDimension(previewViewNight)
 
         findViewById<Button>(R.id.buttonLockScreenSettings).setOnClickListener {
             Handler(Looper.getMainLooper()).postDelayed({
@@ -254,6 +237,9 @@ open class MainActivity : AppCompatActivity() {
             askToImport()
         }
 
+        buttonMoreSettings.setOnClickListener {
+            startActivity(Intent(this, MoreSettingsActivity::class.java))
+        }
 
         buttonApplyWallpaper.setOnClickListener {
             var c = 1
@@ -261,25 +247,14 @@ open class MainActivity : AppCompatActivity() {
             if (isDayOrNightMode() == NIGHT) {
                 c += 10
             }
-            preferencesGlobal.previewMode = c
 
-            Intent(
-                WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
-            ).apply {
-                putExtra(
-                    WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                    ComponentName(this@MainActivity, DarkWallpaperService::class.java)
-                )
-                if (resolveActivity(packageManager) != null) {
-                    startActivity(this)
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        R.string.apply_wallpaper_unavailable,
-                        Toast.LENGTH_LONG
-                    ).show()
-                    buttonApplyWallpaper.isEnabled = false
-                }
+            applyLiveWallpaper(this@MainActivity, c) {
+                Toast.makeText(
+                    this@MainActivity,
+                    R.string.apply_wallpaper_unavailable,
+                    Toast.LENGTH_LONG
+                ).show()
+                buttonApplyWallpaper.isEnabled = false
             }
         }
         Intent(
@@ -368,6 +343,7 @@ open class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+            switchColorOnlyDay.isChecked = false
         }
 
         buttonSelectFileNight.isEnabled = imageProvider.getUseNightWallpaper(isLockScreenActivity)
@@ -393,6 +369,8 @@ open class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+            switchColorOnlyNight.isChecked = false
+            switchWallpaperReuseDay.isChecked = false
         }
 
         switchWallpaperReuseDay.isChecked =
@@ -513,6 +491,31 @@ open class MainActivity : AppCompatActivity() {
             // If there is no file and the services are not running (i.e. usually a new install)
             askToImport()
         }
+    }
+
+    private fun setPreviewDimension(
+        previewView: PreviewView,
+        divideBy: Int = 5,
+        maxRatioToScreenWidth: Int = 2,
+        maxRatioToScreenHeight: Int = 1
+    ) {
+        val screenSize = getScreenSize()
+        previewView.layoutParams = LinearLayout.LayoutParams(previewView.layoutParams).apply {
+            if (isLockScreenActivity) {
+                width = screenSize.x / divideBy
+                height = screenSize.y / divideBy
+            } else {
+                val wallpaperManager = WallpaperManager.getInstance(this@MainActivity)
+                width = wallpaperManager.desiredMinimumWidth / divideBy
+                height = wallpaperManager.desiredMinimumWidth / divideBy
+            }
+            while (width > screenSize.x / maxRatioToScreenWidth || height > screenSize.y / maxRatioToScreenHeight) {
+                width = width * 3 / 4
+                height = height * 3 / 4
+            }
+        }
+        previewView.scaledScreenWidth = screenSize.x / divideBy
+        previewView.scaledScreenHeight = screenSize.y / divideBy
     }
 
     private fun onTriggerModeChanged(isChecked: Boolean) {
@@ -825,12 +828,18 @@ open class MainActivity : AppCompatActivity() {
             alert.safeDismiss()
             if (isLockScreenActivity && dayOrNight == DAY) {
                 startForPickDayLockScreenFile.launch(imagePickIntent())
+                switchColorOnlyDay.isChecked = false
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
                 startForPickNightLockScreenFile.launch(imagePickIntent())
+                switchColorOnlyNight.isChecked = false
+                switchWallpaperReuseDay.isChecked = false
             } else if (dayOrNight == DAY) {
                 startForPickDayHomeScreenFile.launch(imagePickIntent())
+                switchColorOnlyDay.isChecked = false
             } else {
                 startForPickNightHomeScreenFile.launch(imagePickIntent())
+                switchColorOnlyNight.isChecked = false
+                switchWallpaperReuseDay.isChecked = false
             }
         }
         linearLayout.findViewById<Button>(R.id.buttonDeleteImage).setOnClickListener {
@@ -917,21 +926,8 @@ open class MainActivity : AppCompatActivity() {
             brightnessSeekBar.progress = 500
             contrastSeekBar.progress = 500
         }
-        val screenSize = getScreenSize()
 
-        previewView.scaledScreenWidth = screenSize.x / 3
-        previewView.scaledScreenHeight = screenSize.y / 3
-        previewView.layoutParams = LinearLayout.LayoutParams(previewView.layoutParams).apply {
-            if (isLockScreenActivity) {
-                width = screenSize.x / 3
-                height = screenSize.y / 3
-            } else {
-                val wallpaperManager = WallpaperManager.getInstance(this@MainActivity)
-                width = wallpaperManager.desiredMinimumWidth / 3
-                height = wallpaperManager.desiredMinimumWidth / 3
-            }
-        }
-
+        setPreviewDimension(previewView, 3, 1, 2)
     }
 
 
@@ -953,19 +949,7 @@ open class MainActivity : AppCompatActivity() {
         }
 
         // Resize color view
-        val wallpaperManager = WallpaperManager.getInstance(this)
-        val screenSize = getScreenSize()
-        previewView.scaledScreenWidth = screenSize.x / 5
-        previewView.scaledScreenHeight = screenSize.y / 5
-        previewView.layoutParams = LinearLayout.LayoutParams(previewView.layoutParams).apply {
-            if (isLockScreenActivity) {
-                width = screenSize.x / 5
-                height = screenSize.y / 5
-            } else {
-                width = wallpaperManager.desiredMinimumWidth / 5
-                height = wallpaperManager.desiredMinimumWidth / 5
-            }
-        }
+        setPreviewDimension(previewView)
 
         disableFullScreen()
 
@@ -982,6 +966,14 @@ open class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
 
         DarkWallpaperService.invalidate()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            findViewById<View>(R.id.layoutRoot).visibility = View.INVISIBLE
+        }, 500)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

@@ -1,5 +1,61 @@
 # Changelog
 
+## 1.2.8
+*   Improve drawing speed when contrast and brightness are set
+
+## 1.2.7
+*   Improve drawing speed when contrast and brightness are not set
+
+## 1.2.6
+*   Set `minifyEnabled true` in release [#42](https://github.com/cvzi/darkmodewallpaper/issues/42)
+
+## 1.2.5
+*   🇯🇵 Japanese translation by [@Npepperlinux](https://github.com/Npepperlinux)
+
+## 1.2.4
+*   Remove publish from build.gradle
+
+## 1.2.3
+*   🇯🇵 Japanese translation by [@Npepperlinux](https://github.com/Npepperlinux)
+
+## 1.2.2
+*   🇯🇵 Japanese translation by [@Npepperlinux](https://github.com/Npepperlinux)
+
+## 1.2.1
+*   Fix minor bugs
+
+## 1.2.0
+*   New advanced settings activity
+*   First advanced setting: Delay color notification after unlock [#35](https://github.com/cvzi/darkmodewallpaper/issues/35)
+
+## 1.1.10
+*   Fix Material You preview size [#31](https://github.com/cvzi/darkmodewallpaper/issues/31)
+
+## 1.1.9
+*   🇪🇸 Spanish translation by [@sguinetti](https://github.com/sguinetti)
+
+## 1.1.8
+*   Fix small bugs
+
+## 1.1.7
+*   Improve color detection performance
+*   Error in layout [#32](https://github.com/cvzi/darkmodewallpaper/issues/32) fixed in [#33](https://github.com/cvzi/darkmodewallpaper/pull/33) by [@yuhuitech](https://github.com/yuhuitech)
+
+## 1.1.6
+*   Detect colors from wallpaper instead of from the image file [#26](https://github.com/cvzi/darkmodewallpaper/issues/28), [#28](https://github.com/cvzi/darkmodewallpaper/issues/28), [#29](https://github.com/cvzi/darkmodewallpaper/issues/29)
+
+## 1.1.5
+*   Fix layout on Android 12 [#27](https://github.com/cvzi/darkmodewallpaper/issues/27)
+*   Improve detection of wallpaper colors [#28](https://github.com/cvzi/darkmodewallpaper/issues/28)
+
+## 1.1.4
+*   New gradle version 7.0.0
+
+## 1.1.3
+*   Improve detection of wallpaper colors [#26](https://github.com/cvzi/darkmodewallpaper/issues/26)
+*   Upgrade to SDK 30
+*   Remove jcenter() and temporarily removed [gradle-license-plugin](https://github.com/jaredsburrows/gradle-license-plugin/issues/146)
+
 ## 1.1.2
 *   Improve performance of zoom effect
 

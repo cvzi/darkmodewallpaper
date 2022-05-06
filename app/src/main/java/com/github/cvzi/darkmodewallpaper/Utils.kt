@@ -20,15 +20,13 @@ package com.github.cvzi.darkmodewallpaper
 
 import android.app.Activity
 import android.app.TimePickerDialog
+import android.app.WallpaperManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Point
+import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Environment
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.util.Log
@@ -51,22 +49,9 @@ const val UTILSTAG = "Utils.kt"
 
 data class ScaledBitmap(val bitmap: Bitmap, val isDesiredSize: Boolean)
 
-fun Context.isSeparateLockScreenEnabled(): Boolean {
-    return Preferences(this, R.string.pref_file).separateLockScreen
+fun Context.getThumbnailPath(fileName: String): File {
+    return File(externalCacheDir, fileName)
 }
-
-fun Context.setSeparateLockScreenEnabled(isEnabled: Boolean) {
-    Preferences(this, R.string.pref_file).separateLockScreen = isEnabled
-}
-
-fun Context.isAnimateFromLockScreen(): Boolean {
-    return Preferences(this, R.string.pref_file).animateFromLockScreen
-}
-
-fun Context.setAnimateFromLockScreen(isEnabled: Boolean) {
-    Preferences(this, R.string.pref_file).animateFromLockScreen = isEnabled
-}
-
 
 /**
  * Save the drawable to image file
@@ -91,7 +76,7 @@ fun storeFile(file: File, bitmap: Bitmap): Boolean {
     try {
         outputStream = FileOutputStream(file)
         bitmap.compress(
-            if (file.extension.toLowerCase(Locale.ROOT) == "webp") {
+            if (file.extension.lowercase(Locale.ROOT) == "webp") {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                     Bitmap.CompressFormat.WEBP_LOSSLESS
                 } else {
@@ -235,6 +220,52 @@ fun imageChooserIntent(label: String): Intent {
     return Intent.createChooser(imagePickIntent(), label)
 }
 
+
+/**
+ * Create color matrix to adjust brightness and contrast
+ */
+fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilter {
+    val b = (brightness - contrast) / 2f
+    return ColorMatrixColorFilter(
+        floatArrayOf(
+            contrast, 0f, 0f, 0f, b,
+            0f, contrast, 0f, 0f, b,
+            0f, 0f, contrast, 0f, b,
+            0f, 0f, 0f, 1f, 0f
+        )
+    )
+}
+
+/**
+ * Scale a bitmap so it fits destWidth X destHeight or desiredMinWidth X desiredMinHeight, choose
+ * by comparing the image ratio to the given dimensions.
+ * Adjust contrast and brightness if provided:
+ * drawBitmap() with a ColorMatrix is slow, therefore it is done once before scaling the
+ * bitmap instead of every time the bitmap is drawn.
+ */
+fun scaleAndAdjustBitmap(
+    src: Bitmap,
+    destWidth: Int,
+    destHeight: Int,
+    desiredMinWidth: Int,
+    desiredMinHeight: Int,
+    changeBrightness: Float?,
+    changeContrast: Float?
+): ScaledBitmap {
+    val brightness = changeBrightness ?: 0f
+    val contrast = changeContrast ?: 1f
+    val adjustedBitmap = if (abs(brightness) > 3f || abs(contrast - 1f) > 0.01f) {
+        val paint = Paint().apply {
+            colorFilter = createColorMatrix(brightness, contrast)
+        }
+        Bitmap.createBitmap(src.width, src.height, src.config).apply {
+            val canvas = Canvas(this)
+            canvas.drawBitmap(src, 0f, 0f, paint)
+        }
+    } else src
+    return scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
+}
+
 /**
  * Scale a bitmap so it fits destWidth X destHeight or desiredMinWidth X desiredMinHeight, choose
  * by comparing the image ratio to the given dimensions.
@@ -306,8 +337,8 @@ fun scaleBitmap(
     return ScaledBitmap(
         Bitmap.createScaledBitmap(
             src,
-            ceil(src.width * scale).toInt(),
-            ceil(src.height * scale).toInt(),
+            max(1, ceil(src.width * scale).toInt()),
+            max(1, ceil(src.height * scale).toInt()),
             true
         ), isDesired
     )
@@ -319,7 +350,10 @@ fun scaleBitmap(
 fun Activity.getScreenSize(): Point {
     val screenSize = Point(0, 0)
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && display != null) {
-        display?.getRealSize(screenSize)
+        windowManager.maximumWindowMetrics.bounds.run {
+            screenSize.x = width()
+            screenSize.y = height()
+        }
     } else {
         @Suppress("DEPRECATION")
         windowManager.defaultDisplay.getRealSize(screenSize)
@@ -409,13 +443,33 @@ fun createTimePicker(
     return TimePickerDialog(context, listener, hour, minute, is24HourView)
 }
 
-fun timeIsInTimeRange (timeRangeStr: String, now: LocalTime = LocalTime.now()): Boolean {
+fun timeIsInTimeRange(timeRangeStr: String, now: LocalTime = LocalTime.now()): Boolean {
     val (startStr, endStr) = timeRangeStr.split("-")
     val startTime = LocalTime.parse(startStr)
     val endTime = LocalTime.parse(endStr)
     return if (startTime.isAfter(endTime)) {
         !(now.isAfter(endTime) && now.isBefore(startTime))
-    } else  {
+    } else {
         now.isAfter(startTime) && now.isBefore(endTime)
+    }
+}
+
+/**
+ * Open the wallpaper preview to set a live wallpaper
+ */
+fun applyLiveWallpaper(activity: Activity, c: Int, onError: () -> Unit) {
+    Preferences(activity, R.string.pref_file).previewMode = c
+    Intent(
+        WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
+    ).apply {
+        putExtra(
+            WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+            ComponentName(activity, DarkWallpaperService::class.java)
+        )
+        if (resolveActivity(activity.packageManager) != null) {
+            activity.startActivity(this)
+        } else {
+            onError()
+        }
     }
 }

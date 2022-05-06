@@ -2,6 +2,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3%20or%20later-a32d2a?style=for-the-badge&logo=GNU)](https://www.gnu.org/licenses/gpl-3.0)
 [![F-Droid](https://img.shields.io/f-droid/v/com.github.cvzi.darkmodewallpaper.svg?style=for-the-badge&logo=f-droid)](https://f-droid.org/packages/com.github.cvzi.darkmodewallpaper/)
 [![Download APK file](https://img.shields.io/github/release/cvzi/darkmodewallpaper.svg?style=for-the-badge&label=Download%20apk&logo=android&color=3d8)](https://github.com/cvzi/darkmodewallpaper/releases/latest)
+[![FOSSA Status](https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Funtitled-1ieeta2z95od.runkit.sh%2F%3Furl%3Dhttps%253A%252F%252Fapp.fossa.com%252Fapi%252Fprojects%252Fgit%25252Bgithub.com%25252Fcvzi%25252Fdarkmodewallpaper.svg%253Ftype%253Dshield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcvzi%2Fdarkmodewallpaper?ref=badge_shield)
 
 A live wallpaper for Android that respects dark theme mode
 
@@ -59,5 +60,5 @@ Implemented:
 *   onZoomChanged()
 *   Delete image again
 
-
-[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg?style=for-the-badge)](https://saythanks.io/to/cuzi%40openmail.cc)
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcvzi%2Fdarkmodewallpaper.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcvzi%2Fdarkmodewallpaper?ref=badge_large)

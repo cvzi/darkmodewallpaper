@@ -62,6 +62,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/switchSeparateLockScreen"
                             android:text="@string/switch_separate_lock_screen_settings"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
                     </TableRow>
@@ -80,6 +81,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:labelFor="@id/switchAnimateFromLockScreen"
                             android:text="@string/switch_animate_from_lock_screen" />
                     </TableRow>
                 </TableLayout>
@@ -157,6 +159,7 @@
                             android:id="@+id/textViewHeadingDay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:accessibilityHeading="true"
                             android:text="@string/heading_day_time_settings"
                             android:textAlignment="center"
                             android:textAppearance="@android:style/TextAppearance.Material.Title"
@@ -185,7 +188,6 @@
 
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/switchColorDay"
-
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
@@ -195,6 +197,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:labelFor="@id/switchColorDay"
                                 android:text="@string/switch_use_color_overlay" />
 
                         </LinearLayout>
@@ -216,6 +219,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:labelFor="@id/switchColorOnlyDay"
                                 android:text="@string/switch_only_use_color" />
 
                         </LinearLayout>
@@ -305,6 +309,7 @@
                             android:id="@+id/textViewHeadingNight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:accessibilityHeading="true"
                             android:text="@string/heading_night_time_settings"
                             android:textAlignment="center"
                             android:textAppearance="@android:style/TextAppearance.Material.Title"
@@ -328,6 +333,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:labelFor="@id/switchWallpaperReuseDay"
                                 android:text="@string/switch_reuse_day_image_for_night" />
 
                         </LinearLayout>
@@ -363,6 +369,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:labelFor="@id/switchColorNight"
                                 android:text="@string/switch_use_color_overlay" />
 
                         </LinearLayout>
@@ -384,6 +391,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:labelFor="@id/switchColorOnlyNight"
                                 android:text="@string/switch_only_use_color" />
 
                         </LinearLayout>
@@ -402,188 +410,211 @@
 
             <androidx.cardview.widget.CardView style="@style/CardViewPrimary">
 
-                <LinearLayout
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:fillViewport="true">
 
-                    <TextView
-                        android:id="@+id/textViewLockScreenDescription"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_lock_screen_explanation"
-                        android:visibility="gone" />
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/textViewLockScreenDescription"
+                            android:layout_width="300sp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_lock_screen_explanation"
+                            android:visibility="gone" />
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
 
-                        <TableRow android:id="@+id/tableRowTimeRangeTrigger">
+                            <TableRow android:id="@+id/tableRowTimeRangeTrigger">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@id/textViewStartTime"
+                                        android:text="@string/start_time" />
+
+                                    <TextView
+                                        android:id="@+id/textViewStartTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/white"
+                                        android:ems="5"
+                                        android:textColor="@android:color/black" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@id/textViewEndTime"
+                                        android:text="@string/end_time" />
+
+                                    <TextView
+                                        android:id="@+id/textViewEndTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/white"
+                                        android:ems="5"
+                                        android:textColor="@android:color/black" />
+                                </LinearLayout>
+                            </TableRow>
+
+                            <TableRow>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/start_time" />
+                                    android:labelFor="@id/switchTriggerSystem"
+                                    android:text="@string/night_mode_trigger" />
 
-                                <TextView
-                                    android:id="@+id/textViewStartTime"
+                                <com.google.android.material.switchmaterial.SwitchMaterial
+                                    android:id="@+id/switchTriggerSystem"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@android:color/white"
-                                    android:ems="5"
-                                    android:textColor="@android:color/black" />
-                            </LinearLayout>
+                                    android:contentDescription="@string/night_mode_trigger_follow_system"
+                                    android:text="@string/night_mode_trigger_follow_system"
+                                    app:useMaterialThemeColors="true" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                            </TableRow>
+
+
+                            <TableRow>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/end_time" />
+                                    android:text="@string/status_darkmode" />
 
                                 <TextView
-                                    android:id="@+id/textViewEndTime"
+                                    android:id="@+id/textStatusDayOrNight"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@android:color/white"
-                                    android:ems="5"
-                                    android:textColor="@android:color/black" />
-                            </LinearLayout>
-                        </TableRow>
+                                    android:text="@string/status_darkmode_day" />
+                            </TableRow>
 
-                        <TableRow>
+                            <TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/night_mode_trigger" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/status_screen_size" />
 
-                            <com.google.android.material.switchmaterial.SwitchMaterial
-                                android:id="@+id/switchTriggerSystem"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="@string/night_mode_trigger_follow_system"
-                                android:text="@string/night_mode_trigger_follow_system"
-                                app:useMaterialThemeColors="true" />
+                                <TextView
+                                    android:id="@+id/textStatusScreenDimensions"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="" />
+                            </TableRow>
 
-                        </TableRow>
+                            <TableRow>
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/status_requested_image_size" />
 
-                        <TableRow>
+                                <TextView
+                                    android:id="@+id/textStatusDesiredDimensions"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/status_darkmode" />
+                            <TableRow android:id="@+id/tableRowSwitchZoom">
 
-                            <TextView
-                                android:id="@+id/textStatusDayOrNight"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/status_darkmode_day" />
-                        </TableRow>
+                                <TextView
+                                    android:id="@+id/textZoomEnabled"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:labelFor="@id/switchZoomEnabled"
+                                    android:text="@string/zoom_effect" />
 
-                        <TableRow>
+                                <com.google.android.material.switchmaterial.SwitchMaterial
+                                    android:id="@+id/switchZoomEnabled"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/zoom_effect"
+                                    app:useMaterialThemeColors="true" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/status_screen_size" />
+                            </TableRow>
 
-                            <TextView
-                                android:id="@+id/textStatusScreenDimensions"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="" />
-                        </TableRow>
+                            <TableRow android:id="@+id/tableRowButtonLockScreenSettings">
 
-                        <TableRow>
+                                <Button
+                                    android:id="@+id/buttonLockScreenSettings"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:text="@string/button_lock_screen_settings" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/status_requested_image_size" />
+                                <ImageButton
+                                    android:id="@+id/imageButtonAbout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:background="@color/button_dialog_transparent"
+                                    android:contentDescription="@string/about"
+                                    android:src="@android:drawable/ic_menu_info_details" />
 
-                            <TextView
-                                android:id="@+id/textStatusDesiredDimensions"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="" />
-                        </TableRow>
+                            </TableRow>
 
-                        <TableRow android:id="@+id/tableRowSwitchZoom">
+                            <TableRow>
 
-                            <TextView
-                                android:id="@+id/textZoomEnabled"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/zoom_effect" />
+                                <Button
+                                    android:id="@+id/buttonMoreSettings"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_span="2"
+                                    android:text="@string/button_more_settings" />
 
-                            <com.google.android.material.switchmaterial.SwitchMaterial
-                                android:id="@+id/switchZoomEnabled"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:contentDescription=""
-                                app:useMaterialThemeColors="true" />
+                            </TableRow>
 
-                        </TableRow>
+                            <TableRow>
 
-                        <TableRow android:id="@+id/tableRowButtonLockScreenSettings">
+                                <Button
+                                    android:id="@+id/buttonImportWallpaper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_span="2"
+                                    android:text="@string/button_import_wallpaper" />
 
-                            <Button
-                                android:id="@+id/buttonLockScreenSettings"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:text="@string/button_lock_screen_settings" />
+                            </TableRow>
 
-                            <ImageButton
-                                android:id="@+id/imageButtonAbout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:background="@color/button_dialog_transparent"
-                                android:contentDescription="@string/about"
-                                android:src="@android:drawable/ic_menu_info_details" />
+                            <TableRow android:id="@+id/tableRowButtonApplyWallpaper">
 
-                        </TableRow>
+                                <Button
+                                    android:id="@+id/buttonApplyWallpaper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_span="2"
+                                    android:text="@string/button_apply_wallpaper" />
 
-                        <TableRow>
+                            </TableRow>
 
-                            <Button
-                                android:id="@+id/buttonImportWallpaper"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:layout_span="2"
-                                android:text="@string/button_import_wallpaper" />
+                        </TableLayout>
+                    </LinearLayout>
 
-                        </TableRow>
-
-                        <TableRow android:id="@+id/tableRowButtonApplyWallpaper">
-
-                            <Button
-                                android:id="@+id/buttonApplyWallpaper"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:layout_span="2"
-                                android:text="@string/button_apply_wallpaper" />
-
-                        </TableRow>
-
-                    </TableLayout>
-                </LinearLayout>
+                </HorizontalScrollView>
 
             </androidx.cardview.widget.CardView>
 

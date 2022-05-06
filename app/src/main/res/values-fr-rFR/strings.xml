@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">Fond d\'écran d\'accueil de jour</string>
     <string name="use_as_night_home">Fond d\'écran d\'accueil de nuit</string>
     <string name="use_as_day_lock">Fond d\'écran de verrouillage de jour</string>
@@ -71,4 +71,8 @@
 \n\nL\'image de l\'écran de verrouillage doit correspondre à la taille de l\'écran. Si elle est plus grande que l\'écran, elle sera mise à l\'échelle et centrée.\n</string>
     <string name="about">À propos</string>
     <string name="about_issues"><![CDATA[Tu as trouvé un problème ou tu as une idée?<br>Ouvre une discussion sur <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Heure de début :</string>
+    <string name="end_time">Heure de fin :</string>
+    <string name="night_mode_trigger_time_range">Plage de temps</string>
+    <string name="zoom_effect">Effet de zoom :</string>
 </resources>
