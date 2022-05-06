@@ -9,7 +9,7 @@ android {
     buildToolsVersion "32.0.0"
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
-        minSdkVersion 29
+        minSdkVersion 28
         targetSdkVersion 32
         versionCode 25
         versionName "1.2.8"
