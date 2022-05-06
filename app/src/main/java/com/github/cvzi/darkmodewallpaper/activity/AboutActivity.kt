@@ -53,7 +53,7 @@ class AboutActivity : AppCompatActivity() {
             R.string.about_version,
             BuildConfig.VERSION_NAME,
             BuildConfig.VERSION_CODE,
-            BuildConfig.BUILD_TYPE
+            "${BuildConfig.BUILD_TYPE} (minSdkVersion 28 / Android 9)"
         )
 
         setHtmlText(R.id.textViewIssues, R.string.about_issues)
