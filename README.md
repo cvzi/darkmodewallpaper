@@ -39,7 +39,7 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 
 [<image src="https://badges.crowdin.net/badge/dark/crowdin-on-light.png"
      alt="Crowdin | Agile localization for tech companies"
-     height="40">](https://https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on)
+     height="40">](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on)
 
 ## Screenshots
 
