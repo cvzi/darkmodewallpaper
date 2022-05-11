@@ -44,7 +44,7 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 ## Screenshots
 
 | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" alt="Screenshot-1" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" alt="Screenshot-2"/> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" alt="Screenshot-3"/> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" alt="Screenshot-4" /> |
-| --- | --- | --- | --- |
+| --- | ---- | ---- | --- |
 
 ----------------
 
