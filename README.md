@@ -66,7 +66,7 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 [//]: # (     alt="Screenshot 4")
 
 [//]: # (     height="500">]&#40;https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png&#41;)
-| <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" alt="Screenshot-1" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" alt="Screenshot-2" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" alt="Screenshot-3" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" alt="Screenshot-4" /> |
+| <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" alt="Screenshot-1" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" alt="Screenshot-2" height="500" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" alt="Screenshot-3" height="500" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" alt="Screenshot-4" /> |
 | --- | --- | --- | --- |
 
 ----------------
