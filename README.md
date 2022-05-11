@@ -28,7 +28,7 @@ achieve a comparable experience by using MacroDroid, Tasker or a similar automat
 
 [![Contributors](https://contrib.rocks/image?repo=cvzi/darkmodewallpaper)](https://github.com/cvzi/darkmodewallpaper/graphs/contributors)
 
-## Permissions:
+## Permissions
 
 * `READ_EXTERNAL_STORAGE` (read the contents of your internal storage/sd card)
     Required if you want to import your existing wallpaper, otherwise you may revoke it.
@@ -37,11 +37,24 @@ achieve a comparable experience by using MacroDroid, Tasker or a similar automat
 
 To help translate this app, please visit [crowdin.com/project/darkmodewallpaper](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on), where the localizations are managed. If you like to add a new language, please open an issue or email me and I will add it.
 
-<a href="https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on" rel="nofollow"><img style="width:140;height:40px" src="https://badges.crowdin.net/badge/dark/crowdin-on-light.png" srcset="https://badges.crowdin.net/badge/dark/crowdin-on-light.png 1x,https://badges.crowdin.net/badge/crowdin-on-light@2x.png 2x"  alt="Crowdin | Agile localization for tech companies" /></a>
+[<image src="https://badges.crowdin.net/badge/dark/crowdin-on-light.png"
+     alt="Crowdin | Agile localization for tech companies"
+     height="40">](https://https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on)
 
+## Screenshots
 
-<img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" width="500" />
-
+[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png"
+     alt="Screenshot 1"
+     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png)
+[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png"
+     alt="Screenshot 2"
+     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png)
+[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png"
+     alt="Screenshot 3"
+     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png)
+[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"
+     alt="Screenshot 4"
+     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png)
 
 ----------------
 
@@ -80,7 +93,7 @@ Implemented:
 
 * [ ] Allow drag and drop images from other apps into MainActivity
 
-* [ ]onZoomChanged()
+* [ ] onZoomChanged()
 
 * [ ] Delete image again
 
