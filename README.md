@@ -43,59 +43,58 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 
 ## Screenshots
 
-[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png"
-     alt="Screenshot 1"
-     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png)
-[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png"
-     alt="Screenshot 2"
-     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png)
-[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png"
-     alt="Screenshot 3"
-     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png)
-[<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png"
-     alt="Screenshot 4"
-     height="500">](https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png)
+[//]: # ([<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png")
+
+[//]: # (     alt="Screenshot 1")
+
+[//]: # (     height="500">]&#40;https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png&#41;)
+
+[//]: # ([<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png")
+
+[//]: # (     alt="Screenshot 2")
+
+[//]: # (     height="500">]&#40;https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png&#41;)
+
+[//]: # ([<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png")
+
+[//]: # (     alt="Screenshot 3")
+
+[//]: # (     height="500">]&#40;https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png&#41;)
+
+[//]: # ([<img src="https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png")
+
+[//]: # (     alt="Screenshot 4")
+
+[//]: # (     height="500">]&#40;https://raw.githubusercontent.com/meanindra/darkmodewallpaper/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png&#41;)
+| <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" alt="Screenshot-1" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" alt="Screenshot-2" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" alt="Screenshot-3" /> | <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" alt="Screenshot-4" /> |
+| --- | --- | --- | --- |
 
 ----------------
 
 
 TODO:
 
-* [x] Crop/move/zoom image
-* [x] Customize animation duration
-* [x] Support slideshow from folder instead of a single image
+* [ ] Crop/move/zoom image
+* [ ] Customize animation duration
+* [ ] Support slideshow from folder instead of a single image
 
 Implemented:
 
-* [ ] Import current wallpaper
-
-* [ ] Allow other apps to "share"/"use as" images to this app
-
-* [ ] Color overlay
-
-* [ ] Show a preview in the settings
-
-* [ ] Brightness/contrast settings
-
-* [ ] Show a "loading..." spinner when fetching an image from disk
-
-* [ ] Only move/scroll the wallpaper on page changes if the wallpaper is wide enough
-
-* [ ] Different wallpaper on lock-screen
-
-* [ ] Blend animation to turn lock-screen wallpaper into home-screen wallpaper
-
-* [ ] Show-case used open source software licenses
-
-* [ ] Preview each of the four wallpapers
-
-* [ ] Multi display support
-
-* [ ] Allow drag and drop images from other apps into MainActivity
-
-* [ ] onZoomChanged()
-
-* [ ] Delete image again
+* [x] Import current wallpaper
+* [x] Allow other apps to "share"/"use as" images to this app
+* [x] Color overlay
+* [x] Show a preview in the settings
+* [x] Brightness/contrast settings
+* [x] Show a "loading..." spinner when fetching an image from disk
+* [x] Only move/scroll the wallpaper on page changes if the wallpaper is wide enough
+* [x] Different wallpaper on lock-screen
+* [x] Blend animation to turn lock-screen wallpaper into home-screen wallpaper
+* [x] Show-case used open source software licenses
+* [x] Preview each of the four wallpapers
+* [x] Multi display support
+* [x] Allow drag and drop images from other apps into MainActivity
+* [x] onZoomChanged()
+* [x] Delete image again
 
 ## License
 
