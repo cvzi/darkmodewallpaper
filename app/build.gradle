@@ -39,6 +39,7 @@ android {
     lint {
         disable 'MissingTranslation'
     }
+    namespace 'com.github.cvzi.darkmodewallpaper'
 }
 licenseReport {
     // Run via `gradlew licenseReleaseReport`
