@@ -5,6 +5,7 @@
 [![F-Droid](https://img.shields.io/f-droid/v/com.github.cvzi.darkmodewallpaper.svg?style=for-the-badge&logo=f-droid)](https://f-droid.org/packages/com.github.cvzi.darkmodewallpaper/)
 [![Download APK file](https://img.shields.io/github/release/cvzi/darkmodewallpaper.svg?style=for-the-badge&label=Download%20apk&logo=android&color=3d8)](https://github.com/cvzi/darkmodewallpaper/releases/latest)
 [![F-Droid build status](https://img.shields.io/endpoint?logo=textpattern&logoColor=blue&style=for-the-badge&url=https%3A%2F%2Ff-droid-build.cuzi.workers.dev%2Fcom.github.cvzi.darkmodewallpaper)](https://monitor.f-droid.org/)
+[![Gradle CI](https://img.shields.io/github/workflow/status/cvzi/darkmodewallpaper/gradleCI?&logo=github&style=for-the-badge)]([https://monitor.f-droid.org/](https://github.com/cvzi/darkmodewallpaper/actions/workflows/gradleCI.yml))
 
 A live wallpaper for Android that respects dark theme mode
 
