@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.9
+*   🇷🇺 Russian translation by [Ilyas Khaniev](https://github.com/TheOldBlood)
+
 ## 1.2.8
 *   Improve drawing speed when contrast and brightness are set
 

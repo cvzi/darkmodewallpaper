@@ -5,16 +5,16 @@ plugins {
     id 'com.jaredsburrows.license'
 }
 android {
+    namespace 'com.github.cvzi.darkmodewallpaper'
     compileSdkVersion 32
     buildToolsVersion "32.0.0"
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
         minSdkVersion 29
         targetSdkVersion 32
-        versionCode 25
-        versionName "1.2.8"
+        versionCode 26
+        versionName "1.2.9"
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -39,7 +39,6 @@ android {
     lint {
         disable 'MissingTranslation'
     }
-    namespace 'com.github.cvzi.darkmodewallpaper'
 }
 licenseReport {
     // Run via `gradlew licenseReleaseReport`
