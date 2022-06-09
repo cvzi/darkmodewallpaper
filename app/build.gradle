@@ -34,7 +34,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = 11
-        useIR = true
     }
     lint {
         disable 'MissingTranslation'
