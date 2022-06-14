@@ -25,6 +25,7 @@ import android.app.AlertDialog
 import android.app.WallpaperManager
 import android.content.ClipData
 import android.content.ComponentName
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -33,8 +34,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.*
+import android.view.DragEvent
 import android.view.DragEvent.ACTION_DROP
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -132,7 +136,7 @@ open class MainActivity : AppCompatActivity() {
             RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                importWallpaper()
+                askImportWhichWallpaper()
             } else {
                 Toast.makeText(
                     this,
@@ -1019,17 +1023,71 @@ open class MainActivity : AppCompatActivity() {
             ) {
                 startForStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             } else {
-                importWallpaper()
+                askImportWhichWallpaper()
             }
         }
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
     }
 
-    private fun importWallpaper() {
+    private fun askImportWhichWallpaper() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.wallpaper_import_dialog_title)
+        val choices = arrayOf(
+            "${getString(R.string.wallpaper_file_chooser_day_time)} / ${getString(R.string.wallpaper_file_chooser_home_screen)}",
+            "${getString(R.string.wallpaper_file_chooser_night_time)} / ${getString(R.string.wallpaper_file_chooser_home_screen)}",
+            "${getString(R.string.wallpaper_file_chooser_day_time)} / ${getString(R.string.wallpaper_file_chooser_lock_screen)}",
+            "${getString(R.string.wallpaper_file_chooser_night_time)} / ${getString(R.string.wallpaper_file_chooser_lock_screen)}"
+        )
+        val selection = arrayOf(true, false, false, false)
+        builder.setMultiChoiceItems(
+            choices,
+            selection.toBooleanArray()
+        ) { _: DialogInterface, which: Int, checked: Boolean ->
+            selection[which] = checked
+        }
+        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+            dialog.safeDismiss()
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                startForStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            } else {
+                selection.forEachIndexed { index, checked ->
+                    if (checked) {
+                        val file = when (index) {
+                            0 -> imageProvider.storeFileLocation(
+                                dayOrNight = DAY,
+                                isLockScreen = false
+                            )
+                            1 -> imageProvider.storeFileLocation(
+                                dayOrNight = NIGHT,
+                                isLockScreen = false
+                            )
+                            2 -> imageProvider.storeFileLocation(
+                                dayOrNight = DAY,
+                                isLockScreen = true
+                            )
+                            else -> imageProvider.storeFileLocation(
+                                dayOrNight = NIGHT,
+                                isLockScreen = true
+                            )
+                        }
+                        importWallpaper(file)
+                    }
+                }
+            }
+        }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.show()
+    }
+
+    private fun importWallpaper(file: File? = null) {
         val wallpaperManager = WallpaperManager.getInstance(this)
-        val fileLocation =
-            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
+        val fileLocation = file ?: imageProvider.storeFileLocation(
+            dayOrNight = DAY,
+            isLockScreen = isLockScreenActivity
+        )
         val alert: AlertDialog = AlertDialog.Builder(this)
             .setTitle(getString(R.string.image_file_import_loading_title))
             .setMessage(
