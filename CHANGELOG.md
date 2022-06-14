@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.10
+*   Allow importing to night/lockscreen [#62](https://github.com/cvzi/darkmodewallpaper/issues/62)
+
 ## 1.2.9
 *   🇷🇺 Russian translation by [Ilyas Khaniev](https://github.com/TheOldBlood)
 
