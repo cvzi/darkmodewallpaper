@@ -22,6 +22,7 @@ afterEvaluate {
                 version = android.defaultConfig.versionName
                 artifact sourcesJar
                 pom.withXml {
+                    //noinspection GroovyImplicitNullArgumentCall
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
