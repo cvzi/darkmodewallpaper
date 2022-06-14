@@ -50,6 +50,10 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 ----------------
 
 
+[![Say Thanks!](https://img.shields.io/badge/say-thanks-ff69b4.svg?style=for-the-badge)](https://saythanks.io/to/cvzi)
+
+
+
 TODO:
 
 * [ ] Crop/move/zoom image
