@@ -145,7 +145,7 @@ class PreviewView @JvmOverloads constructor(
                     }
 
                     bitmap = if (fileToLoad.exists() && fileToLoad.canRead() && w > 0 && h > 0) {
-                        Log.v(TAG, "Loading bitmap from $file")
+                        Log.d(TAG, "Loading bitmap from $file")
                         val original = loadImageFile(fileToLoad, w, h)
                         if (original != null) {
                             val (bm, isDesired) = scaleBitmap(

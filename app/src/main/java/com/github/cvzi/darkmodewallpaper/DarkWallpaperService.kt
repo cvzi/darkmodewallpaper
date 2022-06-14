@@ -189,7 +189,6 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     private fun updateDayOrNightForAll(newDayOrNight: Boolean? = null) {
-        Log.v(TAG, "updateDayOrNightForAll()")
         synchronized(engines) {
             for (engine in engines) {
                 engine.get()?.run {
@@ -502,7 +501,6 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onComputeColors(): WallpaperColors? {
-            // Log.v(TAG, "onComputeColors() $wallpaperColors")
             return wallpaperColors
         }
 
@@ -554,7 +552,7 @@ class DarkWallpaperService : WallpaperService() {
                     notifyColorsOnVisibilityChange = true
                 }
             } else {
-                Log.v(TAG, "computeWallpaperColors() deferred")
+                Log.d(TAG, "computeWallpaperColors() deferred")
             }
         }
 

@@ -532,13 +532,11 @@ open class MainActivity : AppCompatActivity() {
             preferencesGlobal.nightModeTrigger = NightModeTrigger.TIMERANGE
             switchTriggerSystem.setText(R.string.night_mode_trigger_time_range)
         }
-        Log.v(TAG, "onTriggerModeChanged")
         DarkWallpaperService.updateNightMode()
     }
 
     private fun saveTimeRange() {
         preferencesGlobal.nightModeTimeRange = "${textViewStartTime.text}-${textViewEndTime.text}"
-        Log.v(TAG, "savetimerange")
         DarkWallpaperService.updateNightMode()
     }
 
@@ -658,7 +656,7 @@ open class MainActivity : AppCompatActivity() {
                     contentResolver.openInputStream(uri)?.let { ifs ->
                         storeFile(file, ifs, desiredMax)
                         success = true
-                        Log.v(
+                        Log.d(
                             TAG,
                             "Stored ${file.nameWithoutExtension} wallpaper in $file"
                         )
@@ -1120,6 +1118,7 @@ open class MainActivity : AppCompatActivity() {
                             ),
                             Toast.LENGTH_SHORT
                         ).show()
+                        Log.d(TAG, "Wallpaper imported to $fileLocation")
 
                         previewViewDay.file = currentDayFile()
                         previewViewNight.file = currentNightFile()
@@ -1138,7 +1137,7 @@ open class MainActivity : AppCompatActivity() {
 
     private fun handleSendToAction(intent: Intent) {
         val dayOrNight = sendToActionIsNight()
-        Log.v(TAG, "isNightSendToAction() = $dayOrNight")
+        Log.d(TAG, "isNightSendToAction() = $dayOrNight")
         val file = imageProvider.storeFileLocation(
             dayOrNight = dayOrNight,
             isLockScreen = isLockScreenActivity

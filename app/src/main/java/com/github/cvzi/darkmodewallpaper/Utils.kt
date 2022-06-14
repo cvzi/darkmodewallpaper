@@ -277,7 +277,7 @@ fun scaleBitmap(
     desiredMinWidth: Int,
     desiredMinHeight: Int
 ): ScaledBitmap {
-    Log.v(
+    Log.d(
         UTILSTAG,
         "scaleBitmap() From ${src.width}x${src.height} -> ${destWidth}x$destHeight or ${desiredMinWidth}x$desiredMinHeight"
     )
@@ -302,7 +302,7 @@ fun scaleBitmap(
     val isDesired: Boolean
 
 
-    Log.v(
+    Log.d(
         UTILSTAG,
         "scaleBitmap() abs(bitmapRatio - destRatio) > abs(bitmapRatio - desiredRatio) = abs($bitmapRatio - $destRatio) > abs($bitmapRatio - $desiredRatio)) = ${
             abs(bitmapRatio - destRatio)
@@ -312,12 +312,12 @@ fun scaleBitmap(
         isDesired = true
         boundingWidth = desiredMinWidth
         boundingHeight = desiredMinHeight
-        Log.v(UTILSTAG, "scaleBitmap() Choosing desired width $desiredMinWidth x $desiredMinHeight")
+        Log.d(UTILSTAG, "scaleBitmap() Choosing desired width $desiredMinWidth x $desiredMinHeight")
     } else {
         isDesired = false
         boundingWidth = destWidth
         boundingHeight = destHeight
-        Log.v(UTILSTAG, "scaleBitmap() Choosing destination width $destWidth x $destHeight")
+        Log.d(UTILSTAG, "scaleBitmap() Choosing destination width $destWidth x $destHeight")
     }
 
     val widthScale = boundingWidth.toFloat() / src.width
@@ -325,7 +325,7 @@ fun scaleBitmap(
 
     val scale = max(widthScale, heightScale)
 
-    Log.v(
+    Log.d(
         UTILSTAG,
         "scaleBitmap() New width ${src.width}x${src.height} -> ${ceil(src.width * scale).toInt()} x ${
             ceil(
