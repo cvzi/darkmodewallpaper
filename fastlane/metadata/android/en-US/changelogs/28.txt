@@ -1,0 +1,2 @@
+🌟 Choice to import current wallpaper as night time or lock-screen image
+🐛 Minor bugfix

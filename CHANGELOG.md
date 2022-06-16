@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.11
+*   Immediately redraw after exiting micro screen [#63](https://github.com/cvzi/darkmodewallpaper/issues/63)
+
 ## 1.2.10
 *   Allow importing to night/lockscreen [#62](https://github.com/cvzi/darkmodewallpaper/issues/62)
 
