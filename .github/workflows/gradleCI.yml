@@ -2,6 +2,10 @@ name: 🔨 Gradle Build
 
 on:  
   push:
+    paths-ignore:
+      - 'docs/**'
+      - 'fastlane/**'
+      - '*.md'
   pull_request:
     branches:
       - main
