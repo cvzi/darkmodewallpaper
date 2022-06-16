@@ -206,10 +206,10 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
  */
 fun imagePickIntent(): Intent {
     val intent = Intent(Intent.ACTION_GET_CONTENT)
-    intent.type = "image/*"
+    intent.type = Intent.normalizeMimeType("image/*")
     val pickIntent =
         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-    pickIntent.type = "image/*"
+    pickIntent.setDataAndTypeAndNormalize(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
     return pickIntent
 }
 
