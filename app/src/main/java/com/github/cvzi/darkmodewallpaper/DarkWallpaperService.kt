@@ -518,6 +518,9 @@ class DarkWallpaperService : WallpaperService() {
 
         override fun onDesiredSizeChanged(desiredWidth: Int, desiredHeight: Int) {
             invalid = true
+            if (visible) {
+                update()
+            }
         }
 
         private fun wallpaperColorsKey(key: String): String {
