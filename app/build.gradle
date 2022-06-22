@@ -53,4 +53,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.0.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.github.android:renderscript-intrinsics-replacement-toolkit:344be3f'
 }

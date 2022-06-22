@@ -35,6 +35,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.SeekBar
 import android.widget.TimePicker
+import com.google.android.renderscript.Toolkit
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -236,6 +237,29 @@ fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilte
     )
 }
 
+
+fun blur(src: Bitmap, radius: Float): Bitmap {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+        Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect()")
+        val result = Bitmap.createBitmap(src.width, src.height, src.config)
+        val canvas = Canvas(result)
+        val bitmapEffect = RenderEffect.createBitmapEffect(src)
+        val blurEffect =
+            RenderEffect.createBlurEffect(radius, radius, bitmapEffect, Shader.TileMode.MIRROR)
+        val renderNode = RenderNode(null)
+        renderNode.setRenderEffect(blurEffect)
+        try {
+            canvas.drawRenderNode(renderNode)
+            return result
+        } catch (e: IllegalArgumentException) {
+            Log.v(UTILSTAG, "RenderEffect failed:", e)
+        }
+    }
+    Log.d(UTILSTAG, "Using renderscript.Toolkit.blur()")
+    return Toolkit.blur(src, max(radius, 25f).toInt())
+}
+
+
 /**
  * Scale a bitmap so it fits destWidth X destHeight or desiredMinWidth X desiredMinHeight, choose
  * by comparing the image ratio to the given dimensions.
@@ -250,7 +274,8 @@ fun scaleAndAdjustBitmap(
     desiredMinWidth: Int,
     desiredMinHeight: Int,
     changeBrightness: Float?,
-    changeContrast: Float?
+    changeContrast: Float?,
+    blur: Float?
 ): ScaledBitmap {
     val brightness = changeBrightness ?: 0f
     val contrast = changeContrast ?: 1f
@@ -263,7 +288,13 @@ fun scaleAndAdjustBitmap(
             canvas.drawBitmap(src, 0f, 0f, paint)
         }
     } else src
-    return scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
+    var scaled =
+        scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
+
+    if (blur != null && blur > 0f) {
+        scaled = ScaledBitmap(blur(scaled.bitmap, blur), scaled.isDesiredSize)
+    }
+    return scaled
 }
 
 /**
