@@ -1091,8 +1091,8 @@ open class MainActivity : AppCompatActivity() {
             .setMessage(
                 getString(
                     R.string.image_file_import_loading_message,
-                    fileLocation.toString(),
-                    "WallpaperManager.getDrawable()"
+                    "WallpaperManager.getDrawable()",
+                    fileLocation.toString()
                 )
             )
             .setView(ProgressBar(this))
