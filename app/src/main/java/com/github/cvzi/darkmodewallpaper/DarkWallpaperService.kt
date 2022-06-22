@@ -584,7 +584,8 @@ class DarkWallpaperService : WallpaperService() {
                                     desiredWidth,
                                     desiredHeight,
                                     wallpaperImage?.brightness,
-                                    wallpaperImage?.contrast
+                                    wallpaperImage?.contrast,
+                                    25f // TODO blur parameter
                                 )
                                 shouldScroll = isDesired
                                 currentBitmap = bm
