@@ -855,6 +855,6 @@ class DarkWallpaperService : WallpaperService() {
         contrast: Float?,
         absolutePath: String
     ): String {
-        return "$width $height $desiredWidth $desiredHeight $brightness $contrast $absolutePath"
+        return "${resources.configuration.orientation} $width $height $desiredWidth $desiredHeight $brightness $contrast $absolutePath"
     }
 }
