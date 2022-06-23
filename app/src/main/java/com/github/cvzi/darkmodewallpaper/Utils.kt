@@ -312,6 +312,7 @@ fun scaleBitmap(
         UTILSTAG,
         "scaleBitmap() From ${src.width}x${src.height} -> ${destWidth}x$destHeight or ${desiredMinWidth}x$desiredMinHeight"
     )
+    val MAX_BYTES = 100 * 1024 * 1024
     if (src.width <= 0 && src.height <= 0) {
         return ScaledBitmap(src, false)
     }
@@ -330,7 +331,7 @@ fun scaleBitmap(
     val boundingWidth: Int
     val boundingHeight: Int
 
-    val isDesired: Boolean
+    var isDesired: Boolean
 
 
     Log.d(
@@ -354,24 +355,77 @@ fun scaleBitmap(
     val widthScale = boundingWidth.toFloat() / src.width
     val heightScale = boundingHeight.toFloat() / src.height
 
-    val scale = max(widthScale, heightScale)
+    var scale = max(widthScale, heightScale)
 
     Log.d(
         UTILSTAG,
-        "scaleBitmap() New width ${src.width}x${src.height} -> ${ceil(src.width * scale).toInt()} x ${
+        "scaleBitmap() New dim ${src.width}x${src.height} -> ${ceil(src.width * scale).toInt()} x ${
             ceil(
                 src.height * scale
             ).toInt()
         }"
     )
 
+    var newBm = Bitmap.createScaledBitmap(
+        src,
+        max(1, ceil(src.width * scale).toInt()),
+        max(1, ceil(src.height * scale).toInt()),
+        true
+    )
+    Log.d(
+        UTILSTAG,
+        "scaleBitmap() created newBm = ${newBm.width}x${newBm.height}@${newBm.byteCount}"
+    )
+
+    if (newBm.byteCount > MAX_BYTES) {
+        Log.d(
+            UTILSTAG,
+            "scaleBitmap() Bitmap (isDesired=$isDesired) is too large"
+        )
+
+        if (isDesired && (destWidth < desiredMinWidth || destHeight < desiredMinHeight)) {
+            isDesired = false
+            Log.d(
+                UTILSTAG,
+                "scaleBitmap() Downsizing to destination dim: $destWidth x $destHeight"
+            )
+            newBm.recycle()
+            newBm = scaleBitmap(
+                src,
+                destWidth,
+                destHeight,
+                destWidth,
+                destHeight
+            ).bitmap
+        } else {
+            isDesired = false
+            while (newBm.byteCount > MAX_BYTES) {
+                newBm.recycle()
+                Log.d(
+                    UTILSTAG,
+                    "scaleBitmap() Downsizing $scale -> ${scale * 2f / 3f}"
+                )
+                scale *= 2f / 3f
+                Log.d(
+                    UTILSTAG,
+                    "scaleBitmap() New size: ${ceil(src.width * scale).toInt()} x ${
+                        ceil(
+                            src.height * scale
+                        ).toInt()
+                    }"
+                )
+                newBm = Bitmap.createScaledBitmap(
+                    src,
+                    max(1, ceil(src.width * scale).toInt()),
+                    max(1, ceil(src.height * scale).toInt()),
+                    true
+                )
+            }
+        }
+
+    }
     return ScaledBitmap(
-        Bitmap.createScaledBitmap(
-            src,
-            max(1, ceil(src.width * scale).toInt()),
-            max(1, ceil(src.height * scale).toInt()),
-            true
-        ), isDesired
+        newBm, isDesired
     )
 }
 
