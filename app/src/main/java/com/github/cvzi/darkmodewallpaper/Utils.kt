@@ -312,7 +312,6 @@ fun scaleBitmap(
         UTILSTAG,
         "scaleBitmap() From ${src.width}x${src.height} -> ${destWidth}x$destHeight or ${desiredMinWidth}x$desiredMinHeight"
     )
-    val MAX_BYTES = 100 * 1024 * 1024
     if (src.width <= 0 && src.height <= 0) {
         return ScaledBitmap(src, false)
     }
@@ -377,7 +376,7 @@ fun scaleBitmap(
         "scaleBitmap() created newBm = ${newBm.width}x${newBm.height}@${newBm.byteCount}"
     )
 
-    if (newBm.byteCount > MAX_BYTES) {
+    if (newBm.byteCount > MAX_BITMAP_BYTES) {
         Log.d(
             UTILSTAG,
             "scaleBitmap() Bitmap (isDesired=$isDesired) is too large"
@@ -399,7 +398,7 @@ fun scaleBitmap(
             ).bitmap
         } else {
             isDesired = false
-            while (newBm.byteCount > MAX_BYTES) {
+            while (newBm.byteCount > MAX_BITMAP_BYTES) {
                 newBm.recycle()
                 Log.d(
                     UTILSTAG,
