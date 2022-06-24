@@ -240,13 +240,15 @@ fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilte
 
 
 fun blur(src: Bitmap, radius: Float): Bitmap {
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-        Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect()")
+    val r = radius.coerceIn(1f, 25f)
+    val canvas = Canvas()
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && canvas.isHardwareAccelerated) {
+        Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
         val result = Bitmap.createBitmap(src.width, src.height, src.config)
-        val canvas = Canvas(result)
+        canvas.setBitmap(result)
         val bitmapEffect = RenderEffect.createBitmapEffect(src)
         val blurEffect =
-            RenderEffect.createBlurEffect(radius, radius, bitmapEffect, Shader.TileMode.MIRROR)
+            RenderEffect.createBlurEffect(r, r, bitmapEffect, Shader.TileMode.MIRROR)
         val renderNode = RenderNode(null)
         renderNode.setRenderEffect(blurEffect)
         try {
@@ -256,8 +258,8 @@ fun blur(src: Bitmap, radius: Float): Bitmap {
             Log.v(UTILSTAG, "RenderEffect failed:", e)
         }
     }
-    Log.d(UTILSTAG, "Using renderscript.Toolkit.blur()")
-    return Toolkit.blur(src, max(radius, 25f).toInt())
+    Log.d(UTILSTAG, "Using renderscript.Toolkit.blur($r)")
+    return Toolkit.blur(src, r.toInt())
 }
 
 
@@ -292,7 +294,7 @@ fun scaleAndAdjustBitmap(
     var scaled =
         scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
 
-    if (blur != null && blur > 0f) {
+    if (blur != null && blur > 1.0f) {
         scaled = ScaledBitmap(blur(scaled.bitmap, blur), scaled.isDesiredSize)
     }
     return scaled
