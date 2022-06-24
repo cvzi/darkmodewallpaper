@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
+    <string name="app_name">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">Fondo de pantalla de inicio diario</string>
     <string name="use_as_night_home">Fondo de pantalla de inicio nocturno</string>
     <string name="use_as_day_lock">Fondo de pantalla de bloqueo diario</string>
@@ -79,4 +79,5 @@
     <string name="night_mode_trigger_time_range">Periodo de tiempo</string>
     <string name="zoom_effect">Efecto zoom:</string>
     <string name="zoom_effect_description">En Android 11+ una animación de ampliación ocurre cuando despliegas el área de notificaciones o cuando abres la vista general de aplicaciones recientes.</string>
+    <string name="seek_bar_blur">Difuminar:</string>
 </resources>
