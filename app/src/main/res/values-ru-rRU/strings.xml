@@ -79,4 +79,5 @@
     <string name="night_mode_trigger_time_range">Интервал времени</string>
     <string name="zoom_effect">Эффект увеличения:</string>
     <string name="zoom_effect_description">В Android 11 и выше анимация увеличения происходит в момент, когда вы открываете область уведомлений или открываете список недавних приложений.</string>
+    <string name="seek_bar_blur">Размывание:</string>
 </resources>

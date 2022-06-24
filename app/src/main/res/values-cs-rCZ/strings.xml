@@ -78,4 +78,5 @@
     <string name="night_mode_trigger_time_range">Časové rozmezí</string>
     <string name="zoom_effect">Efekt přiblížení:</string>
     <string name="zoom_effect_description">Na Androidu 11+ se použije animace přiblížení když stáhnete panel oznámení nebo otevřete přehled nedávných aplikací.</string>
+    <string name="seek_bar_blur">Rozmycie:</string>
 </resources>
