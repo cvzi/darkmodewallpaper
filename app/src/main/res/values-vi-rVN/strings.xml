@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name" maxLength="30">Hình nền động chế độ tối</string>
+    <string name="app_name">Hình nền động chế độ tối</string>
     <string name="use_as_day_home">Hình nền màn hình chính ban ngày</string>
     <string name="use_as_night_home">Hình nền màn hình chính ban đêm</string>
     <string name="use_as_day_lock">Hình nền màn hình khoá ban ngày</string>
@@ -79,4 +79,5 @@
     <string name="night_mode_trigger_time_range">Khoảng thời gian</string>
     <string name="zoom_effect">Hiệu ứng phóng:</string>
     <string name="zoom_effect_description">Trên Android 11+, một hoạt ảnh \"phóng to\" xảy ra khi bạn kéo khu vực thông báo xuống hoặc khi bạn mở mục ứng dụng gần đây.</string>
+    <string name="seek_bar_blur">Làm nhòe:</string>
 </resources>
