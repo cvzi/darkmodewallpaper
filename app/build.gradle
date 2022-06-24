@@ -5,6 +5,14 @@ plugins {
     id 'com.jaredsburrows.license'
 }
 android {
+    signingConfigs {
+        release {
+            storeFile rootProject.file('mykey.jks')
+            storePassword 'password'
+            keyAlias 'key0'
+            keyPassword 'password'
+        }
+    }
     namespace 'com.github.cvzi.darkmodewallpaper'
     compileSdkVersion 32
     defaultConfig {
@@ -19,6 +27,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
