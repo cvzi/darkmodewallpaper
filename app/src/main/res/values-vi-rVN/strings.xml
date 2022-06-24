@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name" maxLength="30">Hình nền động chế độ tối</string>
+    <string name="app_name">Hình nền động chế độ tối</string>
     <string name="use_as_day_home">Hình nền màn hình chính ban ngày</string>
     <string name="use_as_night_home">Hình nền màn hình chính ban đêm</string>
     <string name="use_as_day_lock">Hình nền màn hình khoá ban ngày</string>
