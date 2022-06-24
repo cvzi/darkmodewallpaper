@@ -3,7 +3,7 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
+    <string name="app_name">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">Обои главного экрана в дневное время</string>
     <string name="use_as_night_home">Обои главного экрана в ночное время</string>
     <string name="use_as_day_lock">Обои заблокированного экрана в дневное время</string>
