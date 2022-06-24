@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.1
+*   Fix translations
+
 ## 1.3.0
 *   Blur image in "Brightness & Contrast" menu [#64](https://github.com/cvzi/darkmodewallpaper/issues/64)
 

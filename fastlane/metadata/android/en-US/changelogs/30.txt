@@ -1,0 +1,2 @@
+🌟 Blur image (in the "Brightness & Contrast" menu)
+🐛 Minor bugfix
