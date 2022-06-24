@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.0
+*   Blur image in "Brightness & Contrast" menu [#64](https://github.com/cvzi/darkmodewallpaper/issues/64)
+
 ## 1.2.11
 *   Immediately redraw after exiting micro screen [#63](https://github.com/cvzi/darkmodewallpaper/issues/63)
 

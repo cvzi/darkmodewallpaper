@@ -7,13 +7,12 @@ plugins {
 android {
     namespace 'com.github.cvzi.darkmodewallpaper'
     compileSdkVersion 32
-    buildToolsVersion "32.0.0"
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
         minSdkVersion 29
         targetSdkVersion 32
-        versionCode 28
-        versionName "1.2.11"
+        versionCode 29
+        versionName "1.3.0"
     }
     buildTypes {
         release {
