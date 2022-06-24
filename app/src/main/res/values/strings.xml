@@ -88,5 +88,6 @@
     <string name="night_mode_trigger_time_range">Time range</string>
     <string name="zoom_effect">Zoom effect:</string>
     <string name="zoom_effect_description">On Android 11+ a \"zoom in\" animation happens when you pull down the notifications area or when you open the recent apps overview.</string>
+    <string name="seek_bar_blur">Blur:</string>
 
 </resources>

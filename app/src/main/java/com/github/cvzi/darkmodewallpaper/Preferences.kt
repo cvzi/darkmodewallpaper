@@ -89,6 +89,28 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value.toString()
         ).apply()
 
+    /** Value 0.0 to 25.0 */
+    var blurDay: Float
+        get() = (pref.getString(
+            context.getString(R.string.pref_blur_day_key),
+            context.getString(R.string.pref_blur_day_default)
+        )?.toFloatOrNull() ?: 0f).coerceIn(0f, 25f)
+        set(value) = pref.edit().putString(
+            context.getString(R.string.pref_blur_day_key),
+            value.toString()
+        ).apply()
+
+    /** Value 0.0 to 25.0 */
+    var blurNight: Float
+        get() = (pref.getString(
+            context.getString(R.string.pref_blur_night_key),
+            context.getString(R.string.pref_blur_night_default)
+        )?.toFloatOrNull() ?: 0f).coerceIn(0f, 25f)
+        set(value) = pref.edit().putString(
+            context.getString(R.string.pref_blur_night_key),
+            value.toString()
+        ).apply()
+
     var useNightWallpaper: Boolean
         get() = pref.getBoolean(
             context.getString(R.string.pref_use_night_wallpaper_key),
