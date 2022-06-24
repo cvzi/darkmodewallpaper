@@ -93,6 +93,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var switchZoomEnabled: SwitchMaterial
     private lateinit var textZoomEnabled: TextView
     private var previewViewLayoutIndex = -1
+    private var previewScale = 1f
 
     private lateinit var startForPickDayHomeScreenFile: ActivityResultLauncher<Intent>
     private lateinit var startForPickNightHomeScreenFile: ActivityResultLauncher<Intent>
@@ -427,6 +428,7 @@ open class MainActivity : AppCompatActivity() {
             ) else 0
         previewViewDay.brightness = imageProvider.getBrightness(DAY, isLockScreenActivity)
         previewViewDay.contrast = imageProvider.getContrast(DAY, isLockScreenActivity)
+        previewViewDay.blur = imageProvider.getBlur(DAY, isLockScreenActivity) / previewScale
         previewViewDay.file = currentDayFile()
         previewViewDay.setOnClickListener {
             openAdvancedDialog(DAY)
@@ -439,6 +441,7 @@ open class MainActivity : AppCompatActivity() {
         ) imageProvider.getColor(NIGHT, isLockScreenActivity) else 0
         previewViewNight.brightness = imageProvider.getBrightness(NIGHT, isLockScreenActivity)
         previewViewNight.contrast = imageProvider.getContrast(NIGHT, isLockScreenActivity)
+        previewViewNight.blur = imageProvider.getBlur(NIGHT, isLockScreenActivity) / previewScale
         previewViewNight.file = currentNightFile()
         previewViewNight.setOnClickListener {
             openAdvancedDialog(NIGHT)
@@ -511,7 +514,11 @@ open class MainActivity : AppCompatActivity() {
             } else {
                 val wallpaperManager = WallpaperManager.getInstance(this@MainActivity)
                 width = wallpaperManager.desiredMinimumWidth / divideBy
-                height = wallpaperManager.desiredMinimumWidth / divideBy
+                height = if (divideBy != 5) {
+                    wallpaperManager.desiredMinimumHeight
+                } else {
+                    wallpaperManager.desiredMinimumWidth
+                } / divideBy
             }
             while (width > screenSize.x / maxRatioToScreenWidth || height > screenSize.y / maxRatioToScreenHeight) {
                 width = width * 3 / 4
@@ -520,6 +527,13 @@ open class MainActivity : AppCompatActivity() {
         }
         previewView.scaledScreenWidth = screenSize.x / divideBy
         previewView.scaledScreenHeight = screenSize.y / divideBy
+
+        val wallpaperManager = WallpaperManager.getInstance(this@MainActivity)
+        previewScale = max(
+            wallpaperManager.desiredMinimumWidth / (previewView.scaledScreenWidth?.toFloat() ?: 1f),
+            wallpaperManager.desiredMinimumHeight / (previewView.scaledScreenHeight?.toFloat()
+                ?: 1f)
+        )
     }
 
     private fun onTriggerModeChanged(isChecked: Boolean) {
@@ -723,6 +737,7 @@ open class MainActivity : AppCompatActivity() {
             imageProvider.getColor(DAY, isLockScreenActivity),
             imageProvider.getContrast(DAY, isLockScreenActivity),
             imageProvider.getBrightness(DAY, isLockScreenActivity),
+            imageProvider.getBlur(DAY, isLockScreenActivity),
             { color ->
                 imageProvider.setColor(DAY, isLockScreenActivity, color)
                 imageProvider.setUseColor(DAY, isLockScreenActivity, true)
@@ -735,6 +750,9 @@ open class MainActivity : AppCompatActivity() {
             }, { brightness ->
                 previewViewDay.brightness = brightness
                 imageProvider.setBrightness(DAY, isLockScreenActivity, brightness)
+            }, { blur ->
+                previewViewDay.blur = blur / previewScale
+                imageProvider.setBlur(DAY, isLockScreenActivity, blur)
             })
     }
 
@@ -743,6 +761,7 @@ open class MainActivity : AppCompatActivity() {
             imageProvider.getColor(NIGHT, isLockScreenActivity),
             imageProvider.getContrast(NIGHT, isLockScreenActivity),
             imageProvider.getBrightness(NIGHT, isLockScreenActivity),
+            imageProvider.getBlur(DAY, isLockScreenActivity),
             { color ->
                 imageProvider.setColor(NIGHT, isLockScreenActivity, color)
                 imageProvider.setUseColor(NIGHT, isLockScreenActivity, true)
@@ -755,6 +774,9 @@ open class MainActivity : AppCompatActivity() {
             }, { brightness ->
                 previewViewNight.brightness = brightness
                 imageProvider.setBrightness(NIGHT, isLockScreenActivity, brightness)
+            }, { blur ->
+                previewViewNight.blur = blur / previewScale
+                imageProvider.setBlur(DAY, isLockScreenActivity, blur)
             })
     }
 
@@ -863,9 +885,11 @@ open class MainActivity : AppCompatActivity() {
         initColor: Int,
         initContrast: Float,
         initBrightness: Float,
+        initBlur: Float,
         onColorPick: (color: Int) -> Unit,
         onContrastChanged: (value: Float) -> Unit,
-        onBrightnessChanged: (value: Float) -> Unit
+        onBrightnessChanged: (value: Float) -> Unit,
+        onBlurChanged: (value: Float) -> Unit,
     ) {
         val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
         if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
@@ -923,10 +947,27 @@ open class MainActivity : AppCompatActivity() {
             onBrightnessChanged(v)
         })
 
+        val blurSeekBar = findViewById<SeekBar>(R.id.seekBarBlur)
+        blurSeekBar.rotation = 0.5f
+        blurSeekBar.max = 1000
+        // Seek bar map: 0-1 on bar maps to 0 and 1-26 on bar maps to 0-25
+        // to make it easier to select 0 i.e. no blur
+        blurSeekBar.progress =
+            if (initBlur <= 1f) {
+                0
+            } else {
+                (1000f / 26f * (initBlur.coerceIn(0f, 25f) + 1f)).toInt()
+            }
+        blurSeekBar.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
+            val v = (progress * 26f / 1000f - 1f).coerceIn(0f, 25f)
+            onBlurChanged(v)
+        })
+
         val buttonResetAdvanced = findViewById<Button>(R.id.buttonResetAdvanced)
         buttonResetAdvanced.setOnClickListener {
             brightnessSeekBar.progress = 500
             contrastSeekBar.progress = 500
+            blurSeekBar.progress = 0
         }
 
         setPreviewDimension(previewView, 3, 1, 2)

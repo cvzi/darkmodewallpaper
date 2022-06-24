@@ -64,6 +64,22 @@
                     android:id="@+id/seekBarContrast"
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/seek_bar_blur" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarBlur"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

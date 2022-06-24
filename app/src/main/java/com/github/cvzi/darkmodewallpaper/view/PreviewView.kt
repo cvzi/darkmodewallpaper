@@ -23,6 +23,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import com.github.cvzi.darkmodewallpaper.blur
 import com.github.cvzi.darkmodewallpaper.loadImageFile
 import com.github.cvzi.darkmodewallpaper.scaleBitmap
 import java.io.File
@@ -59,6 +60,7 @@ class PreviewView @JvmOverloads constructor(
     private var errorLoadingFile: String? = null
     var scaledScreenWidth: Int? = 0
     var scaledScreenHeight: Int? = 0
+
     private var shouldScroll = true
 
     init {
@@ -88,6 +90,12 @@ class PreviewView @JvmOverloads constructor(
         set(value) {
             field = value
             updateColorMatrix()
+            invalidate()
+        }
+
+    var blur = 0f
+        set(value) {
+            field = value
             invalidate()
         }
 
@@ -218,14 +226,19 @@ class PreviewView @JvmOverloads constructor(
                         textSize = width / 10f
                     })
             }
+
             bitmap?.let {
+                val bm = if (blur > 1.0f) {
+                    blur(it, blur)
+                } else {
+                    it
+                }
                 canvas.drawBitmap(
-                    it,
+                    bm,
                     -0.5f * (it.width - width),
                     -0.5f * (it.height - height),
                     bitmapPaint
                 )
-
             }
             if (bitmap == null && file == null) {
                 overlayPaint.color = overlayPaint.color or 0xFF000000.toInt()

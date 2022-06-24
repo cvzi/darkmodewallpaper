@@ -377,6 +377,7 @@ class DarkWallpaperService : WallpaperService() {
                                 desiredHeight,
                                 wallpaperImage?.brightness,
                                 wallpaperImage?.contrast,
+                                wallpaperImage?.blur,
                                 it.absolutePath
                             )
                             val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
@@ -585,7 +586,7 @@ class DarkWallpaperService : WallpaperService() {
                                     desiredHeight,
                                     wallpaperImage?.brightness,
                                     wallpaperImage?.contrast,
-                                    25f // TODO blur parameter
+                                    wallpaperImage?.blur
                                 )
                                 shouldScroll = isDesired
                                 currentBitmap = bm
@@ -603,6 +604,7 @@ class DarkWallpaperService : WallpaperService() {
                                 desiredHeight,
                                 wallpaperImage?.brightness,
                                 wallpaperImage?.contrast,
+                                wallpaperImage?.blur,
                                 imageFile.absolutePath
                             )
                             if (currentBitmap == null) {
@@ -663,6 +665,7 @@ class DarkWallpaperService : WallpaperService() {
                     desiredHeight,
                     wallpaperImage?.brightness,
                     wallpaperImage?.contrast,
+                    wallpaperImage?.blur,
                     imageFile.absolutePath
                 )
                 currentBitmap = customBitmap
@@ -853,8 +856,9 @@ class DarkWallpaperService : WallpaperService() {
         desiredHeight: Int,
         brightness: Float?,
         contrast: Float?,
+        blur: Float?,
         absolutePath: String
     ): String {
-        return "${resources.configuration.orientation} $width $height $desiredWidth $desiredHeight $brightness $contrast $absolutePath"
+        return "${resources.configuration.orientation} $width $height $desiredWidth $desiredHeight $brightness $contrast $blur $absolutePath"
     }
 }
