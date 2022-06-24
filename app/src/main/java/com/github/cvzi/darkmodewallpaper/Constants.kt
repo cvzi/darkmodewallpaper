@@ -18,6 +18,7 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
+const val MAX_BITMAP_BYTES = 100 * 1024 * 1024
 
 const val DAY = false
 const val NIGHT = true
