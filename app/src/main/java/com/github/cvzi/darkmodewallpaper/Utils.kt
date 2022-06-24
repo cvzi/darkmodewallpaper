@@ -210,6 +210,7 @@ fun imagePickIntent(): Intent {
     intent.type = Intent.normalizeMimeType("image/*")
     val pickIntent =
         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    pickIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     pickIntent.setDataAndTypeAndNormalize(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
     return pickIntent
 }
