@@ -49,6 +49,12 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 
 ----------------
 
+## Notable libraries we use
+
+* [martin-stone/hsv-alpha-color-picker-android](https://github.com/martin-stone/hsv-alpha-color-picker-android)
+* [android/renderscript-intrinsics-replacement-toolkit](https://github.com/android/renderscript-intrinsics-replacement-toolkit)
+* [jaredsburrows/gradle-license-plugin](https://github.com/jaredsburrows/gradle-license-plugin)
+
 
 [![Say Thanks!](https://img.shields.io/badge/say-thanks-ff69b4.svg?style=for-the-badge)](https://saythanks.io/to/cvzi)
 
