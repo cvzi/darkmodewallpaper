@@ -35,6 +35,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.SeekBar
 import android.widget.TimePicker
+import com.google.android.renderscript.Toolkit
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -209,6 +210,7 @@ fun imagePickIntent(): Intent {
     intent.type = Intent.normalizeMimeType("image/*")
     val pickIntent =
         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    pickIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     pickIntent.setDataAndTypeAndNormalize(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
     return pickIntent
 }
@@ -236,6 +238,31 @@ fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilte
     )
 }
 
+
+fun blur(src: Bitmap, radius: Float): Bitmap {
+    val r = radius.coerceIn(1f, 25f)
+    val canvas = Canvas()
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && canvas.isHardwareAccelerated) {
+        Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
+        val result = Bitmap.createBitmap(src.width, src.height, src.config)
+        canvas.setBitmap(result)
+        val bitmapEffect = RenderEffect.createBitmapEffect(src)
+        val blurEffect =
+            RenderEffect.createBlurEffect(r, r, bitmapEffect, Shader.TileMode.MIRROR)
+        val renderNode = RenderNode(null)
+        renderNode.setRenderEffect(blurEffect)
+        try {
+            canvas.drawRenderNode(renderNode)
+            return result
+        } catch (e: IllegalArgumentException) {
+            Log.v(UTILSTAG, "RenderEffect failed:", e)
+        }
+    }
+    Log.d(UTILSTAG, "Using renderscript.Toolkit.blur($r)")
+    return Toolkit.blur(src, r.toInt())
+}
+
+
 /**
  * Scale a bitmap so it fits destWidth X destHeight or desiredMinWidth X desiredMinHeight, choose
  * by comparing the image ratio to the given dimensions.
@@ -250,7 +277,8 @@ fun scaleAndAdjustBitmap(
     desiredMinWidth: Int,
     desiredMinHeight: Int,
     changeBrightness: Float?,
-    changeContrast: Float?
+    changeContrast: Float?,
+    blur: Float?
 ): ScaledBitmap {
     val brightness = changeBrightness ?: 0f
     val contrast = changeContrast ?: 1f
@@ -263,7 +291,13 @@ fun scaleAndAdjustBitmap(
             canvas.drawBitmap(src, 0f, 0f, paint)
         }
     } else src
-    return scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
+    var scaled =
+        scaleBitmap(adjustedBitmap, destWidth, destHeight, desiredMinWidth, desiredMinHeight)
+
+    if (blur != null && blur > 1.0f) {
+        scaled = ScaledBitmap(blur(scaled.bitmap, blur), scaled.isDesiredSize)
+    }
+    return scaled
 }
 
 /**
@@ -299,7 +333,7 @@ fun scaleBitmap(
     val boundingWidth: Int
     val boundingHeight: Int
 
-    val isDesired: Boolean
+    var isDesired: Boolean
 
 
     Log.d(
@@ -323,24 +357,77 @@ fun scaleBitmap(
     val widthScale = boundingWidth.toFloat() / src.width
     val heightScale = boundingHeight.toFloat() / src.height
 
-    val scale = max(widthScale, heightScale)
+    var scale = max(widthScale, heightScale)
 
     Log.d(
         UTILSTAG,
-        "scaleBitmap() New width ${src.width}x${src.height} -> ${ceil(src.width * scale).toInt()} x ${
+        "scaleBitmap() New dim ${src.width}x${src.height} -> ${ceil(src.width * scale).toInt()} x ${
             ceil(
                 src.height * scale
             ).toInt()
         }"
     )
 
+    var newBm = Bitmap.createScaledBitmap(
+        src,
+        max(1, ceil(src.width * scale).toInt()),
+        max(1, ceil(src.height * scale).toInt()),
+        true
+    )
+    Log.d(
+        UTILSTAG,
+        "scaleBitmap() created newBm = ${newBm.width}x${newBm.height}@${newBm.byteCount}"
+    )
+
+    if (newBm.byteCount > MAX_BITMAP_BYTES) {
+        Log.d(
+            UTILSTAG,
+            "scaleBitmap() Bitmap (isDesired=$isDesired) is too large"
+        )
+
+        if (isDesired && (destWidth < desiredMinWidth || destHeight < desiredMinHeight)) {
+            isDesired = false
+            Log.d(
+                UTILSTAG,
+                "scaleBitmap() Downsizing to destination dim: $destWidth x $destHeight"
+            )
+            newBm.recycle()
+            newBm = scaleBitmap(
+                src,
+                destWidth,
+                destHeight,
+                destWidth,
+                destHeight
+            ).bitmap
+        } else {
+            isDesired = false
+            while (newBm.byteCount > MAX_BITMAP_BYTES) {
+                newBm.recycle()
+                Log.d(
+                    UTILSTAG,
+                    "scaleBitmap() Downsizing $scale -> ${scale * 2f / 3f}"
+                )
+                scale *= 2f / 3f
+                Log.d(
+                    UTILSTAG,
+                    "scaleBitmap() New size: ${ceil(src.width * scale).toInt()} x ${
+                        ceil(
+                            src.height * scale
+                        ).toInt()
+                    }"
+                )
+                newBm = Bitmap.createScaledBitmap(
+                    src,
+                    max(1, ceil(src.width * scale).toInt()),
+                    max(1, ceil(src.height * scale).toInt()),
+                    true
+                )
+            }
+        }
+
+    }
     return ScaledBitmap(
-        Bitmap.createScaledBitmap(
-            src,
-            max(1, ceil(src.width * scale).toInt()),
-            max(1, ceil(src.height * scale).toInt()),
-            true
-        ), isDesired
+        newBm, isDesired
     )
 }
 

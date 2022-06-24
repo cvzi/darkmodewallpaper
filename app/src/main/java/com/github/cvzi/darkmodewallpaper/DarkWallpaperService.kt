@@ -377,6 +377,7 @@ class DarkWallpaperService : WallpaperService() {
                                 desiredHeight,
                                 wallpaperImage?.brightness,
                                 wallpaperImage?.contrast,
+                                wallpaperImage?.blur,
                                 it.absolutePath
                             )
                             val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
@@ -584,7 +585,8 @@ class DarkWallpaperService : WallpaperService() {
                                     desiredWidth,
                                     desiredHeight,
                                     wallpaperImage?.brightness,
-                                    wallpaperImage?.contrast
+                                    wallpaperImage?.contrast,
+                                    wallpaperImage?.blur
                                 )
                                 shouldScroll = isDesired
                                 currentBitmap = bm
@@ -602,6 +604,7 @@ class DarkWallpaperService : WallpaperService() {
                                 desiredHeight,
                                 wallpaperImage?.brightness,
                                 wallpaperImage?.contrast,
+                                wallpaperImage?.blur,
                                 imageFile.absolutePath
                             )
                             if (currentBitmap == null) {
@@ -662,6 +665,7 @@ class DarkWallpaperService : WallpaperService() {
                     desiredHeight,
                     wallpaperImage?.brightness,
                     wallpaperImage?.contrast,
+                    wallpaperImage?.blur,
                     imageFile.absolutePath
                 )
                 currentBitmap = customBitmap
@@ -701,20 +705,24 @@ class DarkWallpaperService : WallpaperService() {
             var canvas: Canvas? = null
             var status: WallpaperStatus? = null
             try {
-                canvas = surfaceHolder?.lockCanvas()
+                if (surfaceHolder?.surface?.isValid == true) {
+                    canvas = surfaceHolder?.lockHardwareCanvas()
+                }
                 if (canvas != null) {
                     status = drawOnCanvas(canvas, currentBitmap, imageFile)
                 }
             } catch (e: IllegalArgumentException) {
-                Log.e(TAG, "lockCanvas(): ${e.stackTraceToString()}")
+                Log.e(TAG, "lockCanvas():", e)
+            } catch (e: IllegalStateException) {
+                Log.e(TAG, "lockCanvas():", e)
             } finally {
                 if (canvas != null) {
                     try {
                         surfaceHolder?.unlockCanvasAndPost(canvas)
                     } catch (e: IllegalArgumentException) {
-                        Log.e(TAG, "unlockCanvasAndPost(): ${e.stackTraceToString()}")
+                        Log.e(TAG, "unlockCanvasAndPost():", e)
                     } catch (e: IllegalStateException) {
-                        Log.e(TAG, "unlockCanvasAndPost(): ${e.stackTraceToString()}")
+                        Log.e(TAG, "unlockCanvasAndPost():", e)
                     }
                 }
             }
@@ -791,12 +799,16 @@ class DarkWallpaperService : WallpaperService() {
                         canvas.save()
                         canvas.scale(1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom)
                     }
-                    canvas.drawBitmap(
-                        bm,
-                        blendFromOffsetXPixel,
-                        blendFromOffsetYPixel,
-                        null
-                    )
+                    try {
+                        canvas.drawBitmap(
+                            bm,
+                            blendFromOffsetXPixel,
+                            blendFromOffsetYPixel,
+                            null
+                        )
+                    } catch(e: RuntimeException) {
+                        Log.e(TAG, "canvas.drawBitmap() Bitmap: ${bm.width}x${bm.height} ${bm.byteCount}bytes", e)
+                    }
                     if (hasZoom) {
                         canvas.restore()
                         if (zoom == 0f) {
@@ -844,8 +856,9 @@ class DarkWallpaperService : WallpaperService() {
         desiredHeight: Int,
         brightness: Float?,
         contrast: Float?,
+        blur: Float?,
         absolutePath: String
     ): String {
-        return "$width $height $desiredWidth $desiredHeight $brightness $contrast $absolutePath"
+        return "${resources.configuration.orientation} $width $height $desiredWidth $desiredHeight $brightness $contrast $blur $absolutePath"
     }
 }

@@ -75,4 +75,5 @@
     <string name="end_time">Heure de fin :</string>
     <string name="night_mode_trigger_time_range">Plage de temps</string>
     <string name="zoom_effect">Effet de zoom :</string>
+    <string name="seek_bar_blur">Flou:</string>
 </resources>

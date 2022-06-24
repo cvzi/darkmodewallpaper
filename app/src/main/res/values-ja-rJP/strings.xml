@@ -79,4 +79,5 @@
     <string name="night_mode_trigger_time_range">時間範囲</string>
     <string name="zoom_effect">拡大効果：</string>
     <string name="zoom_effect_description">Android 11 以降では、通知領域をプルダウンしたり、最近のアプリの概要を開いたりすると、「ズームイン」アニメーションが起こります。</string>
+    <string name="seek_bar_blur">ぼかし：</string>
 </resources>

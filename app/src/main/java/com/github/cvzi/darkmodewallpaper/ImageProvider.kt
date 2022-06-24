@@ -27,12 +27,14 @@ import java.io.File
  *
  * @property brightness Value from ≈-255 to 0 to ≈255
  * @property contrast Value from ≈0.1 to 1 to ≈1.5
+ * @property blur Value from 0.0 to 25.0
  */
 data class WallpaperImage(
     val imageFile: File?,
     val color: Int,
     val brightness: Float,
     val contrast: Float,
+    val blur: Float,
     val expiration: Int?
 )
 
@@ -110,6 +112,24 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
             currentPreferences.contrastNight
         } else {
             currentPreferences.contrastDay
+        }
+    }
+
+    fun setBlur(dayOrNight: DayOrNight, isLockScreen: Boolean, blur: Float) {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        if (dayOrNight == NIGHT) {
+            currentPreferences.blurNight = blur
+        } else {
+            currentPreferences.blurDay = blur
+        }
+    }
+
+    fun getBlur(dayOrNight: DayOrNight, isLockScreen: Boolean): Float {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        return if (dayOrNight == NIGHT) {
+            currentPreferences.blurNight
+        } else {
+            currentPreferences.blurDay
         }
     }
 
@@ -209,10 +229,12 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         val contrast =
             if (dayOrNight == NIGHT) currentPreferences.contrastNight else currentPreferences.contrastDay
 
+        val blur =
+            if (dayOrNight == NIGHT) currentPreferences.blurNight else currentPreferences.blurDay
+
         // TODO expiration via trigger
 
-
-        callback(WallpaperImage(imageFile, overlayColor, brightness, contrast, -1))
+        callback(WallpaperImage(imageFile, overlayColor, brightness, contrast, blur, -1))
     }
 
     override fun storeFileLocation(

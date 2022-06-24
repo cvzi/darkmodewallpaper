@@ -19,12 +19,14 @@
 package com.github.cvzi.darkmodewallpaper.activity
 
 import android.os.Bundle
-
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
-import com.github.cvzi.darkmodewallpaper.*
+import com.github.cvzi.darkmodewallpaper.DAY
+import com.github.cvzi.darkmodewallpaper.DarkWallpaperService
+import com.github.cvzi.darkmodewallpaper.NIGHT
+import com.github.cvzi.darkmodewallpaper.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 /**

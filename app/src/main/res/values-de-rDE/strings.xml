@@ -79,4 +79,5 @@
     <string name="night_mode_trigger_time_range">Zeitspanne</string>
     <string name="zoom_effect">Zoom Effekt:</string>
     <string name="zoom_effect_description">Ab Android 11+ gibt es eine Rein-Zoomen Animation, wenn man die Benachrichtigungen herunterzieht oder wenn man die Übersicht der zuletzt verwenden Apps öffnet.</string>
+    <string name="seek_bar_blur">Weichzeichnen:</string>
 </resources>

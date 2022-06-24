@@ -78,4 +78,5 @@
     <string name="night_mode_trigger_follow_system">Zgodnie z motywem systemu</string>
     <string name="night_mode_trigger_time_range">Zakres czasu</string>
     <string name="zoom_effect">Efekt powiększenia:</string>
+    <string name="seek_bar_blur">Rozmycie:</string>
 </resources>

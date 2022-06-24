@@ -79,4 +79,5 @@
     <string name="night_mode_trigger_time_range">Khoảng thời gian</string>
     <string name="zoom_effect">Hiệu ứng phóng:</string>
     <string name="zoom_effect_description">Trên Android 11+, một hoạt ảnh \"phóng to\" xảy ra khi bạn kéo khu vực thông báo xuống hoặc khi bạn mở mục ứng dụng gần đây.</string>
+    <string name="seek_bar_blur">Làm nhòe:</string>
 </resources>
