@@ -14,7 +14,7 @@ android {
         }
     }
     namespace 'com.github.cvzi.darkmodewallpaper'
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
         minSdkVersion 29
