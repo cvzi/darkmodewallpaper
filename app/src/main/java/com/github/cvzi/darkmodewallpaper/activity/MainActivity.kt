@@ -30,6 +30,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -65,6 +66,7 @@ open class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         var originalDesiredWidth = -1
         var originalDesiredHeight = -1
+        const val READ_WALLPAPER_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
     }
 
     protected lateinit var preferencesGlobal: Preferences
@@ -1057,10 +1059,10 @@ open class MainActivity : AppCompatActivity() {
         builder.setMessage(R.string.wallpaper_import_dialog_message)
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                startForStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                startForStoragePermission.launch(READ_WALLPAPER_PERMISSION)
             } else {
                 askImportWhichWallpaper()
             }
@@ -1087,10 +1089,10 @@ open class MainActivity : AppCompatActivity() {
         }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                startForStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                startForStoragePermission.launch(READ_WALLPAPER_PERMISSION)
             } else {
                 selection.forEachIndexed { index, checked ->
                     if (checked) {
@@ -1141,7 +1143,7 @@ open class MainActivity : AppCompatActivity() {
         object : Thread("saveFileFromUri") {
             override fun run() {
                 var success = false
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
                     == PackageManager.PERMISSION_GRANTED
                 ) {
                     wallpaperManager.drawable?.let {
@@ -1170,6 +1172,9 @@ open class MainActivity : AppCompatActivity() {
                             R.string.wallpaper_import_failed,
                             Toast.LENGTH_LONG
                         ).show()
+                    }
+                    if (Build.VERSION.SDK_INT >= 33) {
+                        revokeSelfPermissionOnKill(READ_WALLPAPER_PERMISSION)
                     }
                 }
             }
