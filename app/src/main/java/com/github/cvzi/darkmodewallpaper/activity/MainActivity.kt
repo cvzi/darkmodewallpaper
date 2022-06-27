@@ -41,6 +41,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.window.OnBackInvokedCallback
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -104,6 +106,17 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var startForStoragePermission: ActivityResultLauncher<String>
 
     private var importFileThread: Thread? = null
+
+    private val onBackInvokedCallback: OnBackInvokedCallback? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Handle back button for Android 13+
+            OnBackInvokedCallback {
+                val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
+                if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
+                    goBackFromAdvancedLayout()
+                }
+            }
+        } else null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -765,24 +778,20 @@ open class MainActivity : AppCompatActivity() {
                 previewViewNight.brightness = brightness
                 imageProvider.setBrightness(NIGHT, isLockScreenActivity, brightness)
             }, { blur ->
+
                 previewViewNight.blur = blur / previewScale
                 imageProvider.setBlur(DAY, isLockScreenActivity, blur)
             })
     }
 
+    @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
+        // This is no longer used on Android 13+/Tiramisu
+        // See onBackInvokedCallback for Android 13+
         val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
         if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
-            revertAdvancedLayout(layoutAdvanced)
-            // Apply changes from advanced layout
-            imageButtonColorDay.setColorFilter(imageProvider.getColor(DAY, isLockScreenActivity))
-            imageButtonColorNight.setColorFilter(
-                imageProvider.getColor(
-                    NIGHT,
-                    isLockScreenActivity
-                )
-            )
-            DarkWallpaperService.invalidate()
+            goBackFromAdvancedLayout()
         } else {
             super.onBackPressed()
         }
@@ -841,33 +850,49 @@ open class MainActivity : AppCompatActivity() {
         linearLayout.findViewById<Button>(R.id.buttonNewImage).setOnClickListener {
             alert.safeDismiss()
             if (isLockScreenActivity && dayOrNight == DAY) {
-                startForPickDayLockScreenFile.launch(imageChooserIntent(                        getString(
-                    R.string.wallpaper_file_chooser_title,
-                    getString(R.string.wallpaper_file_chooser_day_time),
-                    getString(R.string.wallpaper_file_chooser_lock_screen)
-                )))
+                startForPickDayLockScreenFile.launch(
+                    imageChooserIntent(
+                        getString(
+                            R.string.wallpaper_file_chooser_title,
+                            getString(R.string.wallpaper_file_chooser_day_time),
+                            getString(R.string.wallpaper_file_chooser_lock_screen)
+                        )
+                    )
+                )
                 switchColorOnlyDay.isChecked = false
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
-                startForPickNightLockScreenFile.launch(imageChooserIntent(                        getString(
-                    R.string.wallpaper_file_chooser_title,
-                    getString(R.string.wallpaper_file_chooser_night_time),
-                    getString(R.string.wallpaper_file_chooser_lock_screen)
-                )))
+                startForPickNightLockScreenFile.launch(
+                    imageChooserIntent(
+                        getString(
+                            R.string.wallpaper_file_chooser_title,
+                            getString(R.string.wallpaper_file_chooser_night_time),
+                            getString(R.string.wallpaper_file_chooser_lock_screen)
+                        )
+                    )
+                )
                 switchColorOnlyNight.isChecked = false
                 switchWallpaperReuseDay.isChecked = false
             } else if (dayOrNight == DAY) {
-                startForPickDayHomeScreenFile.launch(imageChooserIntent(                        getString(
-                    R.string.wallpaper_file_chooser_title,
-                    getString(R.string.wallpaper_file_chooser_day_time),
-                    getString(R.string.wallpaper_file_chooser_home_screen)
-                )))
+                startForPickDayHomeScreenFile.launch(
+                    imageChooserIntent(
+                        getString(
+                            R.string.wallpaper_file_chooser_title,
+                            getString(R.string.wallpaper_file_chooser_day_time),
+                            getString(R.string.wallpaper_file_chooser_home_screen)
+                        )
+                    )
+                )
                 switchColorOnlyDay.isChecked = false
             } else {
-                startForPickNightHomeScreenFile.launch(imageChooserIntent(                        getString(
-                    R.string.wallpaper_file_chooser_title,
-                    getString(R.string.wallpaper_file_chooser_night_time),
-                    getString(R.string.wallpaper_file_chooser_home_screen)
-                )))
+                startForPickNightHomeScreenFile.launch(
+                    imageChooserIntent(
+                        getString(
+                            R.string.wallpaper_file_chooser_title,
+                            getString(R.string.wallpaper_file_chooser_night_time),
+                            getString(R.string.wallpaper_file_chooser_home_screen)
+                        )
+                    )
+                )
                 switchColorOnlyNight.isChecked = false
                 switchWallpaperReuseDay.isChecked = false
             }
@@ -977,8 +1002,16 @@ open class MainActivity : AppCompatActivity() {
         }
 
         setPreviewDimension(previewView, 3, 1, 2)
-    }
 
+        // Handle back button on Android 13
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            onBackInvokedCallback?.let {
+                onBackInvokedDispatcher.registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, onBackInvokedCallback
+                )
+            }
+        }
+    }
 
     private fun revertAdvancedLayout(layoutAdvanced: ViewGroup) {
         // Remove advanced view
@@ -1003,6 +1036,27 @@ open class MainActivity : AppCompatActivity() {
         disableFullScreen()
 
         previewViewLayoutIndex = -1
+
+        // Remove handler for back button on Android 13
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            onBackInvokedCallback?.let {
+                onBackInvokedDispatcher.unregisterOnBackInvokedCallback(onBackInvokedCallback)
+            }
+        }
+    }
+
+    private fun goBackFromAdvancedLayout() {
+        val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
+        revertAdvancedLayout(layoutAdvanced)
+        // Apply changes from advanced layout
+        imageButtonColorDay.setColorFilter(imageProvider.getColor(DAY, isLockScreenActivity))
+        imageButtonColorNight.setColorFilter(
+            imageProvider.getColor(
+                NIGHT,
+                isLockScreenActivity
+            )
+        )
+        DarkWallpaperService.invalidate()
     }
 
     override fun onResume() {
