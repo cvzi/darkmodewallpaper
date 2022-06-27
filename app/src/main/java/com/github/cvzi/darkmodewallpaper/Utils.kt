@@ -27,6 +27,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.util.Log
@@ -78,7 +79,7 @@ fun storeFile(file: File, bitmap: Bitmap): Boolean {
         outputStream = FileOutputStream(file)
         bitmap.compress(
             if (file.extension.lowercase(Locale.ROOT) == "webp") {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     Bitmap.CompressFormat.WEBP_LOSSLESS
                 } else {
                     @Suppress("DEPRECATION")
@@ -204,22 +205,32 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
 
 /**
  * Let user choose an image file
+ * If forceGetContent is true, a file picker will be used even on Android 13 Tiramisu
  */
-fun imagePickIntent(): Intent {
-    val intent = Intent(Intent.ACTION_GET_CONTENT)
-    intent.type = Intent.normalizeMimeType("image/*")
-    val pickIntent =
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-    pickIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    pickIntent.setDataAndTypeAndNormalize(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-    return pickIntent
+fun imagePickIntent(forceGetContent: Boolean = false): Intent {
+    return if (!forceGetContent && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        // https://developer.android.com/about/versions/13/features/photopicker
+        Intent(MediaStore.ACTION_PICK_IMAGES).apply {
+            setTypeAndNormalize("image/*")
+        }
+    } else {
+        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setDataAndTypeAndNormalize(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                "image/*"
+            )
+        }
+    }
 }
 
 /**
- * Show app chooser for an intent
+ * Show app chooser with a label for an intent
+ * The given label is only shown until Android 11 R / SDK 30
+ * For later Android versions there is no label at all.
  */
 fun imageChooserIntent(label: String): Intent {
-    return Intent.createChooser(imagePickIntent(), label)
+    return Intent.createChooser(imagePickIntent(forceGetContent = true), label)
 }
 
 
@@ -242,7 +253,7 @@ fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilte
 fun blur(src: Bitmap, radius: Float): Bitmap {
     val r = radius.coerceIn(1f, 25f)
     val canvas = Canvas()
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && canvas.isHardwareAccelerated) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && canvas.isHardwareAccelerated) {
         Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
         val result = Bitmap.createBitmap(src.width, src.height, src.config)
         canvas.setBitmap(result)
@@ -436,7 +447,7 @@ fun scaleBitmap(
  */
 fun Activity.getScreenSize(): Point {
     val screenSize = Point(0, 0)
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && display != null) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && display != null) {
         windowManager.maximumWindowMetrics.bounds.run {
             screenSize.x = width()
             screenSize.y = height()
@@ -465,7 +476,7 @@ class OnSeekBarProgress(val onProgress: (progress: Int) -> Unit) : SeekBar.OnSee
  * Make an activity go full screen
  */
 fun Activity.enableFullScreen() {
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         window.setDecorFitsSystemWindows(false)
         window.insetsController?.let {
             it.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
@@ -486,7 +497,7 @@ fun Activity.enableFullScreen() {
  * Revert Activity.enableFullScreen()
  */
 fun Activity.disableFullScreen() {
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         window.setDecorFitsSystemWindows(true)
         window.insetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         window.insetsController?.systemBarsBehavior =

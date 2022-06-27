@@ -331,23 +331,11 @@ open class MainActivity : AppCompatActivity() {
         buttonSelectFileDay.setOnClickListener {
             if (isLockScreenActivity) {
                 startForPickDayLockScreenFile.launch(
-                    imageChooserIntent(
-                        getString(
-                            R.string.wallpaper_file_chooser_title,
-                            getString(R.string.wallpaper_file_chooser_day_time),
-                            getString(R.string.wallpaper_file_chooser_lock_screen)
-                        )
-                    )
+                    imagePickIntent()
                 )
             } else {
                 startForPickDayHomeScreenFile.launch(
-                    imageChooserIntent(
-                        getString(
-                            R.string.wallpaper_file_chooser_title,
-                            getString(R.string.wallpaper_file_chooser_day_time),
-                            getString(R.string.wallpaper_file_chooser_home_screen)
-                        )
-                    )
+                    imagePickIntent()
                 )
             }
             switchColorOnlyDay.isChecked = false
@@ -853,17 +841,33 @@ open class MainActivity : AppCompatActivity() {
         linearLayout.findViewById<Button>(R.id.buttonNewImage).setOnClickListener {
             alert.safeDismiss()
             if (isLockScreenActivity && dayOrNight == DAY) {
-                startForPickDayLockScreenFile.launch(imagePickIntent())
+                startForPickDayLockScreenFile.launch(imageChooserIntent(                        getString(
+                    R.string.wallpaper_file_chooser_title,
+                    getString(R.string.wallpaper_file_chooser_day_time),
+                    getString(R.string.wallpaper_file_chooser_lock_screen)
+                )))
                 switchColorOnlyDay.isChecked = false
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
-                startForPickNightLockScreenFile.launch(imagePickIntent())
+                startForPickNightLockScreenFile.launch(imageChooserIntent(                        getString(
+                    R.string.wallpaper_file_chooser_title,
+                    getString(R.string.wallpaper_file_chooser_night_time),
+                    getString(R.string.wallpaper_file_chooser_lock_screen)
+                )))
                 switchColorOnlyNight.isChecked = false
                 switchWallpaperReuseDay.isChecked = false
             } else if (dayOrNight == DAY) {
-                startForPickDayHomeScreenFile.launch(imagePickIntent())
+                startForPickDayHomeScreenFile.launch(imageChooserIntent(                        getString(
+                    R.string.wallpaper_file_chooser_title,
+                    getString(R.string.wallpaper_file_chooser_day_time),
+                    getString(R.string.wallpaper_file_chooser_home_screen)
+                )))
                 switchColorOnlyDay.isChecked = false
             } else {
-                startForPickNightHomeScreenFile.launch(imagePickIntent())
+                startForPickNightHomeScreenFile.launch(imageChooserIntent(                        getString(
+                    R.string.wallpaper_file_chooser_title,
+                    getString(R.string.wallpaper_file_chooser_night_time),
+                    getString(R.string.wallpaper_file_chooser_home_screen)
+                )))
                 switchColorOnlyNight.isChecked = false
                 switchWallpaperReuseDay.isChecked = false
             }
