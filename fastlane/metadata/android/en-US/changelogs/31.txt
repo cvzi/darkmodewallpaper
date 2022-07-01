@@ -1,0 +1,2 @@
+Adaptions for Android 13 Tiramisu
+Known issue: Importing wallpaper fails on Android 13 on a fresh install
