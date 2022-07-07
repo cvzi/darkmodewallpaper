@@ -41,6 +41,7 @@
     <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Optimisation de %2$s\n(importé de %1$s)</string>
     <string name="button_import_wallpaper">Importer un fond d\'écran</string>
+    <string name="button_more_settings">Paramètres avancés</string>
     <string name="button_apply_wallpaper">Appliquer en tant que fond d\'écran</string>
     <string name="apply_wallpaper_unavailable">Définir manuellement le fond d\'écran à partir des paramètres Android</string>
     <string name="button_lock_screen_settings">Écran de verrouillage</string>
