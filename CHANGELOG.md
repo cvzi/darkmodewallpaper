@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.1
+*   Translations updated from crowdin
+
 ## 1.4.0
 *   Utilize the new [photo picker](https://developer.android.com/about/versions/13/features/photopicker)
 *   [Revoke permission](https://developer.android.com/about/versions/13/features?hl=en#developer-downgradable-permissions) after import of wallpaper
