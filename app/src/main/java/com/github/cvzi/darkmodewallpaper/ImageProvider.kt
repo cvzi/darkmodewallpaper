@@ -27,7 +27,7 @@ import java.io.File
  *
  * @property brightness Value from ≈-255 to 0 to ≈255
  * @property contrast Value from ≈0.1 to 1 to ≈1.5
- * @property blur Value from 0.0 to 25.0
+ * @property blur Value from 0.0 to 100.0
  */
 data class WallpaperImage(
     val imageFile: File?,

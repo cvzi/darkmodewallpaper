@@ -978,20 +978,25 @@ open class MainActivity : AppCompatActivity() {
             onBrightnessChanged(v)
         })
 
+        val labelBlur = findViewById<TextView>(R.id.labelBlur)
+
         val blurSeekBar = findViewById<SeekBar>(R.id.seekBarBlur)
         blurSeekBar.rotation = 0.5f
         blurSeekBar.max = 1000
-        // Seek bar map: 0-1 on bar maps to 0 and 1-26 on bar maps to 0-25
+        // Seek bar map: 0-1 on bar maps to 0 and 1-101 on bar maps to 0-100
         // to make it easier to select 0 i.e. no blur
         blurSeekBar.progress =
             if (initBlur <= 1f) {
                 0
             } else {
-                (1000f / 26f * (initBlur.coerceIn(0f, 25f) + 1f)).toInt()
+                (1000f / 106f * (initBlur.coerceIn(0f, 100f) + 5f)).toInt()
             }
         blurSeekBar.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
-            val v = (progress * 26f / 1000f - 1f).coerceIn(0f, 25f)
+            val v = (progress * 106f / 1000f - 5f).coerceIn(0f, 100f)
             onBlurChanged(v)
+            @SuppressLint("SetTextI18n")
+            labelBlur.text = "%.1f".format(v)
+            labelBlur.width = (resources.displayMetrics.density * 40).toInt()
         })
 
         val buttonResetAdvanced = findViewById<Button>(R.id.buttonResetAdvanced)

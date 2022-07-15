@@ -250,8 +250,18 @@ fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilte
 }
 
 
-fun blur(src: Bitmap, radius: Float): Bitmap {
-    val r = radius.coerceIn(1f, 25f)
+/**
+ * Returns new bitmap that it blurred by radius pixels.
+ * Uses RenderEffect on Android S+, and renderscript.Toolkit on lower Android
+ */
+fun blur(mSrc: Bitmap, radius: Float): Bitmap {
+    var r = max(1f, radius)
+    var src = mSrc
+
+    if (r > 25f) {
+        src = blur(mSrc, r - 25f)
+        r = 25f
+    }
     val canvas = Canvas()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && canvas.isHardwareAccelerated) {
         Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")

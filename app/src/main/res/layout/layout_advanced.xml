@@ -71,6 +71,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/labelBlur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/seek_bar_blur" />
