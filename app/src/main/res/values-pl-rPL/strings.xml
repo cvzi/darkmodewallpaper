@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
+    <string name="app_name">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">Dzienna tapeta ekranu głównego</string>
     <string name="use_as_night_home">Nocna tapeta ekranu głównego</string>
     <string name="use_as_day_lock">Dzienna tapeta ekranu blokady</string>
@@ -77,5 +78,11 @@
     <string name="night_mode_trigger_follow_system">Zgodnie z motywem systemu</string>
     <string name="night_mode_trigger_time_range">Zakres czasu</string>
     <string name="zoom_effect">Efekt powiększenia:</string>
+    <string name="zoom_effect_description">Na Androidzie 11+ animacja \"powiększenie\" ma miejsce po przeciągnięciu obszaru powiadomień lub po otwarciu ostatnio uruchomionych aplikacji.</string>
     <string name="seek_bar_blur">Rozmycie:</string>
+    <string name="scrolling_mode">Przewijanie:</string>
+    <string name="scrolling_mode_value_automatic">Automatyczne</string>
+    <string name="scrolling_mode_value_on">Wł.</string>
+    <string name="scrolling_mode_value_off">Wył.</string>
+    <string name="scrolling_mode_value_inverse">Odwrócone</string>
 </resources>
