@@ -1,0 +1,2 @@
+Option to choose whether the wallpaper should scroll on page change or not
+Known issue: Importing wallpaper fails on Android 13 on a fresh install

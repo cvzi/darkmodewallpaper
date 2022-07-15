@@ -1,11 +1,13 @@
 # Changelog
 
-## 1.4.0-alpha0
+## 1.4.0
 *   Utilize the new [photo picker](https://developer.android.com/about/versions/13/features/photopicker)
 *   [Revoke permission](https://developer.android.com/about/versions/13/features?hl=en#developer-downgradable-permissions) after import of wallpaper
 *   Add a monochrome launcher icon for ["Themed icons"](https://developer.android.com/about/versions/13/features?hl=en#themed-app-icons) in "Material You"
 *   Include necessary files for [per-app language](https://developer.android.com/about/versions/13/features/app-languages)
 *   Replace [onBackPressed()](https://developer.android.com/about/versions/13/features/predictive-back-gesture)
+*   Allow higher blur values
+*   Select scroll mode for home screen
 *   Known issue: Importing wallpaper fails on Android 13 on a fresh install
 
 ## 1.3.1
