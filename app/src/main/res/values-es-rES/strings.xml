@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
@@ -80,6 +81,7 @@
     <string name="zoom_effect_description">En Android 11+ una animación de ampliación ocurre cuando despliegas el área de notificaciones o cuando abres la vista general de aplicaciones recientes.</string>
     <string name="seek_bar_blur">Difuminar:</string>
     <string name="scrolling_mode">Desplazamiento:</string>
+    <string name="scrolling_mode_value_automatic">Auto</string>
     <string name="scrolling_mode_value_on">Activado</string>
     <string name="scrolling_mode_value_off">Desactivado</string>
     <string name="scrolling_mode_value_inverse">Inverso</string>
