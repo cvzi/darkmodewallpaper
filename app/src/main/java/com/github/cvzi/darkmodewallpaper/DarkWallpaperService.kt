@@ -229,6 +229,7 @@ class DarkWallpaperService : WallpaperService() {
         private var offsetX = 0.5f
         private var offsetY = 0.5f
         private var shouldScroll = true
+        private var reverseScroll = false
         private var offsetXBeforeLock = 0f
         private var offsetYBeforeLock = 0f
         private var waitAnimation: WaitAnimation? = null
@@ -597,6 +598,8 @@ class DarkWallpaperService : WallpaperService() {
                                     isDesired,
                                     wallpaperImage?.scrollingMode
                                 )
+                                reverseScroll =
+                                    wallpaperImage?.scrollingMode == ScrollingMode.REVERSE
                                 currentBitmap = bm
                                 isDesired = isDesiredSize
                                 if (currentBitmap != originalBitmap) {
@@ -710,9 +713,12 @@ class DarkWallpaperService : WallpaperService() {
                 }
                 shouldScroll =
                     shouldScrollingBeEnabled(isDesiredSize, wallpaperImage?.scrollingMode)
+                reverseScroll =
+                    wallpaperImage?.scrollingMode == ScrollingMode.REVERSE
             } else {
                 key = generateSolidColorKey()
                 shouldScroll = false
+                reverseScroll = false
             }
 
             // Draw on canvas
@@ -783,6 +789,7 @@ class DarkWallpaperService : WallpaperService() {
                             overlayPaint.color,
                             oX,
                             oY,
+                            reverseScroll,
                             width,
                             height
                         ) != true
@@ -798,7 +805,11 @@ class DarkWallpaperService : WallpaperService() {
                     blendBitmaps = null
                     // Store current offset, in case of blending two bitmaps we will need the last offset
                     if (shouldScroll && !isSecondaryDisplay) {
-                        blendFromOffsetXPixel = -offsetX * (bm.width - width)
+                        blendFromOffsetXPixel = if (reverseScroll) {
+                            -(1f - offsetX) * (bm.width - width)
+                        } else {
+                            -offsetX * (bm.width - width)
+                        }
                         blendFromOffsetYPixel = -offsetY * (bm.height - height)
                     } else {
                         blendFromOffsetXPixel = -0.5f * (bm.width - width)

@@ -61,7 +61,6 @@
 
     <style name="CardViewPrimary" parent="CardViewBase">
         <item name="cardBackgroundColor">@color/secondary_variant</item>
-
     </style>
 
 </resources>

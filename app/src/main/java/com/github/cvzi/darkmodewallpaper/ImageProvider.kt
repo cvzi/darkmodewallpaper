@@ -198,6 +198,22 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         return currentPreferences.useNightWallpaper
     }
 
+    fun setScrollingMode(dayOrNight: DayOrNight, scrollingMode: ScrollingMode) {
+        if (dayOrNight == NIGHT) {
+            preferencesHomeScreen.scrollingModeNight = scrollingMode
+        } else {
+            preferencesHomeScreen.scrollingModeDay = scrollingMode
+        }
+    }
+
+    fun getScrollingMode(dayOrNight: DayOrNight): ScrollingMode {
+        return if (dayOrNight == NIGHT) {
+            preferencesHomeScreen.scrollingModeNight
+        } else {
+            preferencesHomeScreen.scrollingModeDay
+        }
+    }
+
     override fun get(
         dayOrNight: DayOrNight,
         isLockScreen: Boolean,

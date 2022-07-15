@@ -89,5 +89,9 @@
     <string name="zoom_effect">Zoom effect:</string>
     <string name="zoom_effect_description">On Android 11+ a \"zoom in\" animation happens when you pull down the notifications area or when you open the recent apps overview.</string>
     <string name="seek_bar_blur">Blur:</string>
-
+    <string name="scrolling_mode">Scrolling:</string>
+    <string name="scrolling_mode_value_automatic">Auto</string>
+    <string name="scrolling_mode_value_on">On</string>
+    <string name="scrolling_mode_value_off">Off</string>
+    <string name="scrolling_mode_value_inverse">Reverse</string>
 </resources>

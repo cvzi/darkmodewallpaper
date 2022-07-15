@@ -9,6 +9,12 @@
     <string name="file_name_night_lock_wallpaper" translatable="false">lock_night.webp</string>
 
     <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
+    <string-array name="scrolling_mode_values">
+        <item>@string/scrolling_mode_value_automatic</item>
+        <item>@string/scrolling_mode_value_on</item>
+        <item>@string/scrolling_mode_value_off</item>
+        <item>@string/scrolling_mode_value_inverse</item>
+    </string-array>
 
 
     <string name="about_license" translatable="false"><![CDATA[<br>

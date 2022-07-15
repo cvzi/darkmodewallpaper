@@ -38,6 +38,7 @@ class BlendBitmaps(
         newColor: Int,
         offsetX: Float,
         offsetY: Float,
+        reverseScroll: Boolean,
         width: Int,
         height: Int
     ): Boolean {
@@ -69,9 +70,14 @@ class BlendBitmaps(
         toPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
         toPaint.alpha = blendAlpha
         toPaint.isAntiAlias = false
+        val ox = if (reverseScroll) {
+            -(1f - offsetX)
+        } else {
+            -offsetX
+        }
         canvas.drawBitmap(
             toBM,
-            -offsetX * (toBM.width - width),
+            ox * (toBM.width - width),
             -offsetY * (toBM.height - height),
             toPaint
         )

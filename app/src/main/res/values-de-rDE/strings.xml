@@ -80,4 +80,9 @@
     <string name="zoom_effect">Zoom Effekt:</string>
     <string name="zoom_effect_description">Ab Android 11+ gibt es eine Rein-Zoomen Animation, wenn man die Benachrichtigungen herunterzieht oder wenn man die Übersicht der zuletzt verwenden Apps öffnet.</string>
     <string name="seek_bar_blur">Weichzeichnen:</string>
+    <string name="scrolling_mode">Scrollen:</string>
+    <string name="scrolling_mode_value_automatic">Auto</string>
+    <string name="scrolling_mode_value_on">An</string>
+    <string name="scrolling_mode_value_off">Aus</string>
+    <string name="scrolling_mode_value_inverse">Umgekehrt</string>
 </resources>

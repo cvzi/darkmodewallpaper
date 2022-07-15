@@ -96,6 +96,11 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var tableRowTimeRangeTrigger: TableRow
     private lateinit var switchZoomEnabled: SwitchMaterial
     private lateinit var textZoomEnabled: TextView
+    private lateinit var scrollingModeSpinnerDay: Spinner
+    private lateinit var scrollingModeSpinnerNight: Spinner
+    private lateinit var scrollingModeLayoutDay: LinearLayout
+    private lateinit var scrollingModeLayoutNight: LinearLayout
+
     private var previewViewLayoutIndex = -1
     private var previewScale = 1f
 
@@ -209,6 +214,10 @@ open class MainActivity : AppCompatActivity() {
         tableRowTimeRangeTrigger = findViewById(R.id.tableRowTimeRangeTrigger)
         switchZoomEnabled = findViewById(R.id.switchZoomEnabled)
         textZoomEnabled = findViewById(R.id.textZoomEnabled)
+        scrollingModeSpinnerDay = findViewById(R.id.spinnerScrollingModeDay)
+        scrollingModeSpinnerNight = findViewById(R.id.spinnerScrollingModeNight)
+        scrollingModeLayoutDay = findViewById(R.id.linearLayoutScrollingModeDay)
+        scrollingModeLayoutNight = findViewById(R.id.linearLayoutScrollingModeNight)
 
         makeCardViewReceiveDragAndDrop(
             findViewById(R.id.cardViewDay),
@@ -489,6 +498,31 @@ open class MainActivity : AppCompatActivity() {
         switchZoomEnabled.isChecked = preferencesGlobal.zoomEnabled
         switchZoomEnabled.setOnCheckedChangeListener { _, isChecked ->
             preferencesGlobal.zoomEnabled = isChecked
+        }
+
+        if (isLockScreenActivity) {
+            scrollingModeLayoutDay.visibility = View.GONE
+            scrollingModeLayoutNight.visibility = View.GONE
+        } else {
+            scrollingModeLayoutDay.visibility = View.VISIBLE
+            scrollingModeLayoutNight.visibility = View.VISIBLE
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.scrolling_mode_values,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                scrollingModeSpinnerDay.adapter = adapter
+                scrollingModeSpinnerNight.adapter = adapter
+                scrollingModeSpinnerDay.onItemSelectedListener =
+                    ScrollingModeOnItemSelectedListener(scrollingModeSpinnerDay, imageProvider, DAY)
+                scrollingModeSpinnerNight.onItemSelectedListener =
+                    ScrollingModeOnItemSelectedListener(
+                        scrollingModeSpinnerNight,
+                        imageProvider,
+                        NIGHT
+                    )
+            }
         }
 
         if (intent != null
@@ -1120,7 +1154,11 @@ open class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.wallpaper_import_dialog_title)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            builder.setMessage("(This function may be broken on Android 13 Beta and you may see a permission error)\n\n" + getString(R.string.wallpaper_import_dialog_message))
+            builder.setMessage(
+                "(This function may be broken on Android 13 Beta and you may see a permission error)\n\n" + getString(
+                    R.string.wallpaper_import_dialog_message
+                )
+            )
         } else {
             builder.setMessage(R.string.wallpaper_import_dialog_message)
         }
@@ -1300,4 +1338,23 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+}
+
+class ScrollingModeOnItemSelectedListener(
+    spinner: Spinner,
+    private val imageProvider: StaticDayAndNightProvider,
+    private val isDayOrNight: DayOrNight
+) : AdapterView.OnItemSelectedListener {
+    init {
+        spinner.setSelection(imageProvider.getScrollingMode(isDayOrNight).ordinal)
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        imageProvider.setScrollingMode(isDayOrNight, ScrollingMode.values()[pos])
+        DarkWallpaperService.invalidate()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>) {
+        Log.v("Spinner", "onNothingSelected")
+    }
 }
