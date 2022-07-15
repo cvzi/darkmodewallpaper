@@ -35,6 +35,7 @@ data class WallpaperImage(
     val brightness: Float,
     val contrast: Float,
     val blur: Float,
+    val scrollingMode: ScrollingMode,
     val expiration: Int?
 )
 
@@ -241,9 +242,11 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         val blur =
             if (dayOrNight == NIGHT) currentPreferences.blurNight else currentPreferences.blurDay
 
+        val scrollingMode =  if (dayOrNight == NIGHT) currentPreferences.scrollingModeNight else currentPreferences.scrollingModeDay
+
         // TODO expiration via trigger
 
-        callback(WallpaperImage(imageFile, overlayColor, brightness, contrast, blur, -1))
+        callback(WallpaperImage(imageFile, overlayColor, brightness, contrast, blur, scrollingMode,-1))
     }
 
     override fun storeFileLocation(

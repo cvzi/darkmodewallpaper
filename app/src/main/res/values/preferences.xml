@@ -39,6 +39,8 @@
     <string name="pref_blur_day_default" translatable="false">0.0</string>
     <string name="pref_blur_night_key" translatable="false">blur_night</string>
     <string name="pref_blur_night_default" translatable="false">0.0</string>
+    <string name="pref_scrolling_mode_day_key" translatable="false">scrolling_mode_day</string>
+    <string name="pref_scrolling_mode_night_key" translatable="false">scrolling_mode_night</string>
     <string name="pref_use_night_wallpaper_key" translatable="false">use_night_wallpaper</string>
     <bool name="pref_use_night_wallpaper_default">false</bool>
     <string name="pref_use_day_color_key" translatable="false">use_day_color</string>

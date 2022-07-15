@@ -581,3 +581,12 @@ fun applyLiveWallpaper(activity: Activity, c: Int, onError: () -> Unit) {
         }
     }
 }
+
+
+fun shouldScrollingBeEnabled(isDesiredSize: Boolean, scrollingMode: ScrollingMode? = null): Boolean {
+    return when(scrollingMode) {
+        ScrollingMode.ON -> true
+        ScrollingMode.OFF -> false
+        else -> isDesiredSize
+    }
+}

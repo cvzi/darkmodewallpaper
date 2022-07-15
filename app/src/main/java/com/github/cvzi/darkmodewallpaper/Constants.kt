@@ -48,3 +48,7 @@ enum class NightModeTrigger {
         } ?: values()[0]
     }
 }
+
+enum class ScrollingMode {
+    AUTOMATIC, ON, OFF
+}

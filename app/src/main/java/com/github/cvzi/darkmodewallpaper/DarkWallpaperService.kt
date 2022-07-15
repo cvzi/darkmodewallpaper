@@ -186,6 +186,10 @@ class DarkWallpaperService : WallpaperService() {
                 updateDayOrNightForAll(newDayOrNight)
             }
         }
+        // Update all wallpapers after 3 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            invalidate()
+        }, 3000)
     }
 
     private fun updateDayOrNightForAll(newDayOrNight: Boolean? = null) {
@@ -571,6 +575,7 @@ class DarkWallpaperService : WallpaperService() {
                         try {
                             errorLoadingFile = null
                             var currentBitmap: Bitmap? = null
+                            var isDesired = false
                             val originalBitmap = loadImageFile(
                                 imageFile,
                                 requestWidth = maxOf(desiredWidth, width),
@@ -578,7 +583,7 @@ class DarkWallpaperService : WallpaperService() {
                             )
 
                             if (originalBitmap != null) {
-                                val (bm, isDesired) = scaleAndAdjustBitmap(
+                                val (bm, isDesiredSize) = scaleAndAdjustBitmap(
                                     originalBitmap,
                                     width,
                                     height,
@@ -588,8 +593,12 @@ class DarkWallpaperService : WallpaperService() {
                                     wallpaperImage?.contrast,
                                     wallpaperImage?.blur
                                 )
-                                shouldScroll = isDesired
+                                shouldScroll = shouldScrollingBeEnabled(
+                                    isDesired,
+                                    wallpaperImage?.scrollingMode
+                                )
                                 currentBitmap = bm
+                                isDesired = isDesiredSize
                                 if (currentBitmap != originalBitmap) {
                                     originalBitmap.recycle()
                                 }
@@ -611,7 +620,7 @@ class DarkWallpaperService : WallpaperService() {
                                 bitmaps.remove(key)
                             } else {
                                 bitmaps[key] =
-                                    SoftReference(ScaledBitmap(currentBitmap, shouldScroll))
+                                    SoftReference(ScaledBitmap(currentBitmap, isDesired))
                             }
 
                             currentBitmapFile = imageFile
@@ -620,7 +629,7 @@ class DarkWallpaperService : WallpaperService() {
                                 errorLoadingFile = "Failed to load $imageFile"
                                 invalid = false
                             }
-                            update(currentBitmap)
+                            update(currentBitmap, isDesired)
 
                         } finally {
                             loadFileThreadLock.unlock()
@@ -639,23 +648,24 @@ class DarkWallpaperService : WallpaperService() {
          * Update the wallpaper appearance.
          * Reloads all preferences and draws on the canvas
          */
-        fun update(customBitmap: Bitmap? = null) {
+        fun update(customBitmap: Bitmap? = null, isDesiredSize: Boolean = false) {
             imageProvider.get(dayOrNight, isLockScreen) {
                 wallpaperImage = it
-                updateCanvas(customBitmap)
+                updateCanvas(customBitmap, isDesiredSize)
             }
         }
 
         /**
          * Draw on the canvas
          */
-        fun updateCanvas(customBitmap: Bitmap? = null) {
+        fun updateCanvas(customBitmap: Bitmap? = null, mIsDesiredSize: Boolean = false) {
             overlayPaint.color = wallpaperImage?.color ?: 0
 
             val imageFile = wallpaperImage?.imageFile
 
             val (desiredWidth, desiredHeight) = desiredDimensions()
             var currentBitmap: Bitmap? = null
+            var isDesiredSize = false
             val key: String
             if (imageFile != null) {
                 key = generateBitmapKey(
@@ -673,8 +683,10 @@ class DarkWallpaperService : WallpaperService() {
                     val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
                     if (scaledBitmap != null) {
                         currentBitmap = scaledBitmap.bitmap
-                        shouldScroll = scaledBitmap.isDesiredSize
+                        isDesiredSize = scaledBitmap.isDesiredSize
                     }
+                } else {
+                    isDesiredSize = mIsDesiredSize
                 }
 
                 if (forceReload || (customBitmap == null && (currentBitmap == null || currentBitmap.isRecycled))) {
@@ -696,6 +708,8 @@ class DarkWallpaperService : WallpaperService() {
                         errorLoadingFile = "\uD83D\uDC81\uD83C\uDFFE\u200D♀ no image file️"
                     }
                 }
+                shouldScroll =
+                    shouldScrollingBeEnabled(isDesiredSize, wallpaperImage?.scrollingMode)
             } else {
                 key = generateSolidColorKey()
                 shouldScroll = false
@@ -797,7 +811,10 @@ class DarkWallpaperService : WallpaperService() {
 
                     if (hasZoom) {
                         canvas.save()
-                        canvas.scale(1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom)
+                        canvas.scale(
+                            1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
+                            0.5f * width, 0.5f * height
+                        )
                     }
                     try {
                         canvas.drawBitmap(
@@ -806,8 +823,12 @@ class DarkWallpaperService : WallpaperService() {
                             blendFromOffsetYPixel,
                             null
                         )
-                    } catch(e: RuntimeException) {
-                        Log.e(TAG, "canvas.drawBitmap() Bitmap: ${bm.width}x${bm.height} ${bm.byteCount}bytes", e)
+                    } catch (e: RuntimeException) {
+                        Log.e(
+                            TAG,
+                            "canvas.drawBitmap() Bitmap: ${bm.width}x${bm.height} ${bm.byteCount}bytes",
+                            e
+                        )
                     }
                     if (hasZoom) {
                         canvas.restore()
