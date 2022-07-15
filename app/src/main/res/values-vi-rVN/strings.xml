@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
@@ -79,4 +80,9 @@
     <string name="zoom_effect">Hiệu ứng phóng:</string>
     <string name="zoom_effect_description">Trên Android 11+, một hoạt ảnh \"phóng to\" xảy ra khi bạn kéo khu vực thông báo xuống hoặc khi bạn mở mục ứng dụng gần đây.</string>
     <string name="seek_bar_blur">Làm nhòe:</string>
+    <string name="scrolling_mode">Cuộn:</string>
+    <string name="scrolling_mode_value_automatic">Tự động</string>
+    <string name="scrolling_mode_value_on">Bật</string>
+    <string name="scrolling_mode_value_off">Tắt</string>
+    <string name="scrolling_mode_value_inverse">Đảo ngược</string>
 </resources>
