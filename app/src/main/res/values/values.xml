@@ -6,7 +6,7 @@
     <string name="file_name_day_wallpaper" translatable="false">day.webp</string>
     <string name="file_name_night_wallpaper" translatable="false">night.webp</string>
     <string name="file_name_day_lock_wallpaper" translatable="false">lock_day.webp</string>
-    <string name="file_name_night_lock_wallpaper" translatable="false">Lock_night.webp</string>
+    <string name="file_name_night_lock_wallpaper" translatable="false">lock_night.webp</string>
 
     <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
 
