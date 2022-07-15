@@ -1119,7 +1119,11 @@ open class MainActivity : AppCompatActivity() {
     private fun askToImport() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.wallpaper_import_dialog_title)
-        builder.setMessage(R.string.wallpaper_import_dialog_message)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            builder.setMessage("(This function may be broken on Android 13 Beta and you may see a permission error)\n\n" + getString(R.string.wallpaper_import_dialog_message))
+        } else {
+            builder.setMessage(R.string.wallpaper_import_dialog_message)
+        }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
             if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
