@@ -19,8 +19,8 @@ android {
         applicationId "com.github.cvzi.darkmodewallpaper"
         minSdkVersion 29
         targetSdkVersion 33
-        versionCode 33
-        versionName "1.4.1"
+        versionCode 34
+        versionName "1.4.2"
     }
     buildTypes {
         release {
