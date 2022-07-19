@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
@@ -7,7 +8,7 @@
     <string name="use_as_night_home">夜のホーム画面の壁紙</string>
     <string name="use_as_day_lock">昼のロック画面の壁紙</string>
     <string name="use_as_night_lock">夜のロック画面の壁紙</string>
-    <string name="wallpaper_label">ダークモード壁紙</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
     <string name="wallpaper_description">ライト/ダークテーマに合わせて壁紙を自動的に変更します</string>
     <string name="wallpaper_is_loading">読み込み中…</string>
     <string name="color_chooser_day">昼の時間のオーバーレイの色を選択</string>
@@ -70,7 +71,7 @@
 \n\nライブ壁紙を設定する際は、必ず「ホームとロック画面」を押してください。
 \n\nロック画面の画像は、画面サイズと一致させる必要があります。画面より大きい場合は、拡大縮小され、中央に配置されます。\n</string>
     <string name="about">概要</string>
-    <string name="about_issues"><![CDATA[問題を見つけたか、提案がありますか？<br> <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a> でIssue を開きます]]></string>
+    <string name="about_issues"><![CDATA[問題を見つけた場合や提案がある場合は、<br> <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a> のIssueから報告してください]]></string>
     <string name="start_time">開始時刻：</string>
     <string name="end_time">終了時刻：</string>
     <string name="night_mode_trigger">ナイトモードのトリガー：</string>
@@ -79,4 +80,9 @@
     <string name="zoom_effect">拡大効果：</string>
     <string name="zoom_effect_description">Android 11 以降では、通知領域をプルダウンしたり、最近のアプリの概要を開いたりすると、「ズームイン」アニメーションが起こります。</string>
     <string name="seek_bar_blur">ぼかし：</string>
+    <string name="scrolling_mode">スクロール：</string>
+    <string name="scrolling_mode_value_automatic">自動</string>
+    <string name="scrolling_mode_value_on">有効</string>
+    <string name="scrolling_mode_value_off">無効</string>
+    <string name="scrolling_mode_value_inverse">逆方向</string>
 </resources>
