@@ -1,0 +1,11 @@
+Android 10+ için koyu tema moduna uygun bir canlı duvar kağıdı.
+
+Bu uygulama ile açık tema modu için bir görüntü ve koyu tema için başka bir görüntü ayarlayabilirsiniz.
+Sistemin koyu teması etkinleştirildiğinde veya devre dışı bırakıldığında, duvar kağıdı
+otomatik olarak değişir.
+
+Farklı bir görüntü yerine renk, kontrast ve renk ayarlarını da yapabilirsiniz. Koyu yapmak için mevcut duvar kağıdı görüntünüzün parlaklığını ayarlayın.
+
+Ana ekran ve kilit ekranı için farklı görüntüler seçmek mümkün.
+
+Mevcut duvar kağıdı resminizi içe aktarmak istiyorsanız "depolama alanını oku" izni gereklidir. Duvar kağıdınızı içe aktardıktan sonra izni güvenle iptal edebilirsiniz. Mevcut duvar kağıdınızı içe aktarmak istemiyorsanız, bu izni onaylamanız gerekmez.
