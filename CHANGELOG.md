@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.3
+*   🇹🇷 Turkish translation by [@metezd](https://github.com/metezd)
+
 ## 1.4.2
 *   Translations updated from crowdin
 
