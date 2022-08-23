@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.4
+*   Do not `notifyColorsChanged()` in Material you preview
+
 ## 1.4.3
 *   🇹🇷 Turkish translation by [@metezd](https://github.com/metezd)
 
