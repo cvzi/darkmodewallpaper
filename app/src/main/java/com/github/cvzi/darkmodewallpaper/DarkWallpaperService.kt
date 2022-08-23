@@ -433,6 +433,15 @@ class DarkWallpaperService : WallpaperService() {
             }
         }
 
+        override fun notifyColorsChanged() {
+            if (isPreview && !isLockScreen && fixedConfig && MainActivity.originalDesiredWidth > 0) {
+                Log.v(TAG, "notifyColorsChanged() blocked because: In-app preview")
+            } else if (isPreview && (desiredMinimumWidth < width || desiredMinimumHeight < height)) {
+                Log.v(TAG, "notifyColorsChanged() blocked because: Material you preview")
+            } else {
+                super.notifyColorsChanged()
+            }
+        }
 
         fun desiredDimensions(): Point {
             val desiredWidth: Int
