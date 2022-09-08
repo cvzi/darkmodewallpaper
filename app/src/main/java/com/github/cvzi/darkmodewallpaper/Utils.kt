@@ -18,6 +18,7 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.app.WallpaperManager
@@ -36,6 +37,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.SeekBar
 import android.widget.TimePicker
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.Companion.isPhotoPickerAvailable
 import com.google.android.renderscript.Toolkit
 import java.io.File
 import java.io.FileOutputStream
@@ -208,7 +210,8 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
  * If forceGetContent is true, a file picker will be used even on Android 13 Tiramisu
  */
 fun imagePickIntent(forceGetContent: Boolean = false): Intent {
-    return if (!forceGetContent && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    return if (!forceGetContent && isPhotoPickerAvailable()) @SuppressLint("NewApi") {
+        // Use the new Photo picker
         // https://developer.android.com/about/versions/13/features/photopicker
         Intent(MediaStore.ACTION_PICK_IMAGES).apply {
             setTypeAndNormalize("image/*")
