@@ -769,53 +769,40 @@ open class MainActivity : AppCompatActivity() {
         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = false
     }
 
-    private fun openAdvancedLayoutDay() {
-        openAdvancedLayout(previewViewDay,
-            imageProvider.getColor(DAY, isLockScreenActivity),
-            imageProvider.getContrast(DAY, isLockScreenActivity),
-            imageProvider.getBrightness(DAY, isLockScreenActivity),
-            imageProvider.getBlur(DAY, isLockScreenActivity),
+    private fun openAdvancedLayoutDayOrNight(
+        previewView: PreviewView,
+        switchColor: SwitchMaterial,
+        isDayOrNight: DayOrNight
+    ) {
+        openAdvancedLayout(previewView,
+            imageProvider.getColor(isDayOrNight, isLockScreenActivity),
+            imageProvider.getContrast(isDayOrNight, isLockScreenActivity),
+            imageProvider.getBrightness(isDayOrNight, isLockScreenActivity),
+            imageProvider.getBlur(isDayOrNight, isLockScreenActivity),
             { color ->
-                imageProvider.setColor(DAY, isLockScreenActivity, color)
-                imageProvider.setUseColor(DAY, isLockScreenActivity, true)
-                switchColorDay.isChecked = true
-                previewViewDay.color = color
+                imageProvider.setColor(isDayOrNight, isLockScreenActivity, color)
+                imageProvider.setUseColor(isDayOrNight, isLockScreenActivity, true)
+                switchColor.isChecked = true
+                previewView.color = color
                 DarkWallpaperService.invalidate()
             }, { contrast ->
-                previewViewDay.contrast = contrast
-                imageProvider.setContrast(DAY, isLockScreenActivity, contrast)
+                previewView.contrast = contrast
+                imageProvider.setContrast(isDayOrNight, isLockScreenActivity, contrast)
             }, { brightness ->
-                previewViewDay.brightness = brightness
-                imageProvider.setBrightness(DAY, isLockScreenActivity, brightness)
+                previewView.brightness = brightness
+                imageProvider.setBrightness(isDayOrNight, isLockScreenActivity, brightness)
             }, { blur ->
-                previewViewDay.blur = blur / previewScale
-                imageProvider.setBlur(DAY, isLockScreenActivity, blur)
+                previewView.blur = blur / previewScale
+                imageProvider.setBlur(isDayOrNight, isLockScreenActivity, blur)
             })
     }
 
-    private fun openAdvancedLayoutNight() {
-        openAdvancedLayout(previewViewNight,
-            imageProvider.getColor(NIGHT, isLockScreenActivity),
-            imageProvider.getContrast(NIGHT, isLockScreenActivity),
-            imageProvider.getBrightness(NIGHT, isLockScreenActivity),
-            imageProvider.getBlur(DAY, isLockScreenActivity),
-            { color ->
-                imageProvider.setColor(NIGHT, isLockScreenActivity, color)
-                imageProvider.setUseColor(NIGHT, isLockScreenActivity, true)
-                switchColorNight.isChecked = true
-                previewViewNight.color = color
-                DarkWallpaperService.invalidate()
-            }, { contrast ->
-                previewViewNight.contrast = contrast
-                imageProvider.setContrast(NIGHT, isLockScreenActivity, contrast)
-            }, { brightness ->
-                previewViewNight.brightness = brightness
-                imageProvider.setBrightness(NIGHT, isLockScreenActivity, brightness)
-            }, { blur ->
+    private fun openAdvancedLayoutDay() {
+        openAdvancedLayoutDayOrNight(previewViewDay, switchColorDay, DAY)
+    }
 
-                previewViewNight.blur = blur / previewScale
-                imageProvider.setBlur(DAY, isLockScreenActivity, blur)
-            })
+    private fun openAdvancedLayoutNight() {
+        openAdvancedLayoutDayOrNight(previewViewNight, switchColorNight, NIGHT)
     }
 
     @Deprecated("Deprecated in Java")
