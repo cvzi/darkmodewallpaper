@@ -769,42 +769,6 @@ open class MainActivity : AppCompatActivity() {
         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = false
     }
 
-    private fun openAdvancedLayoutDayOrNight(
-        previewView: PreviewView,
-        switchColor: SwitchMaterial,
-        isDayOrNight: DayOrNight
-    ) {
-        openAdvancedLayout(previewView,
-            imageProvider.getColor(isDayOrNight, isLockScreenActivity),
-            imageProvider.getContrast(isDayOrNight, isLockScreenActivity),
-            imageProvider.getBrightness(isDayOrNight, isLockScreenActivity),
-            imageProvider.getBlur(isDayOrNight, isLockScreenActivity),
-            { color ->
-                imageProvider.setColor(isDayOrNight, isLockScreenActivity, color)
-                imageProvider.setUseColor(isDayOrNight, isLockScreenActivity, true)
-                switchColor.isChecked = true
-                previewView.color = color
-                DarkWallpaperService.invalidate()
-            }, { contrast ->
-                previewView.contrast = contrast
-                imageProvider.setContrast(isDayOrNight, isLockScreenActivity, contrast)
-            }, { brightness ->
-                previewView.brightness = brightness
-                imageProvider.setBrightness(isDayOrNight, isLockScreenActivity, brightness)
-            }, { blur ->
-                previewView.blur = blur / previewScale
-                imageProvider.setBlur(isDayOrNight, isLockScreenActivity, blur)
-            })
-    }
-
-    private fun openAdvancedLayoutDay() {
-        openAdvancedLayoutDayOrNight(previewViewDay, switchColorDay, DAY)
-    }
-
-    private fun openAdvancedLayoutNight() {
-        openAdvancedLayoutDayOrNight(previewViewNight, switchColorNight, NIGHT)
-    }
-
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
@@ -930,6 +894,42 @@ open class MainActivity : AppCompatActivity() {
         }
 
         alert.show()
+    }
+
+    private fun openAdvancedLayoutDayOrNight(
+        previewView: PreviewView,
+        switchColor: SwitchMaterial,
+        isDayOrNight: DayOrNight
+    ) {
+        openAdvancedLayout(previewView,
+            imageProvider.getColor(isDayOrNight, isLockScreenActivity),
+            imageProvider.getContrast(isDayOrNight, isLockScreenActivity),
+            imageProvider.getBrightness(isDayOrNight, isLockScreenActivity),
+            imageProvider.getBlur(isDayOrNight, isLockScreenActivity),
+            { color ->
+                imageProvider.setColor(isDayOrNight, isLockScreenActivity, color)
+                imageProvider.setUseColor(isDayOrNight, isLockScreenActivity, true)
+                switchColor.isChecked = true
+                previewView.color = color
+                DarkWallpaperService.invalidate()
+            }, { contrast ->
+                previewView.contrast = contrast
+                imageProvider.setContrast(isDayOrNight, isLockScreenActivity, contrast)
+            }, { brightness ->
+                previewView.brightness = brightness
+                imageProvider.setBrightness(isDayOrNight, isLockScreenActivity, brightness)
+            }, { blur ->
+                previewView.blur = blur / previewScale
+                imageProvider.setBlur(isDayOrNight, isLockScreenActivity, blur)
+            })
+    }
+
+    private fun openAdvancedLayoutDay() {
+        openAdvancedLayoutDayOrNight(previewViewDay, switchColorDay, DAY)
+    }
+
+    private fun openAdvancedLayoutNight() {
+        openAdvancedLayoutDayOrNight(previewViewNight, switchColorNight, NIGHT)
     }
 
     private fun openAdvancedLayout(
