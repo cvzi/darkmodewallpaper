@@ -1,0 +1,1 @@
+🐛 Bugfix: blurring night lockscreen does not work

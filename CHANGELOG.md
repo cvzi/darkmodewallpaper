@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.5
+*   Fix: blurring night lockscreen does not work [#79](https://github.com/cvzi/darkmodewallpaper/issues/79)
+
 ## 1.4.4
 *   Do not `notifyColorsChanged()` in Material you preview
 
