@@ -555,34 +555,6 @@
                                     android:text="@string/status_darkmode_day" />
                             </TableRow>
 
-                            <TableRow>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/status_screen_size" />
-
-                                <TextView
-                                    android:id="@+id/textStatusScreenDimensions"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="" />
-                            </TableRow>
-
-                            <TableRow>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/status_requested_image_size" />
-
-                                <TextView
-                                    android:id="@+id/textStatusDesiredDimensions"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="" />
-                            </TableRow>
-
                             <TableRow android:id="@+id/tableRowSwitchZoom">
 
                                 <TextView
@@ -663,6 +635,143 @@
                 </HorizontalScrollView>
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView style="@style/CardViewPrimary">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Debug information"
+                            android:textStyle="bold" />
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/status_screen_size" />
+
+                                <TextView
+                                    android:id="@+id/textStatusScreenDimensions"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/status_requested_image_size" />
+
+                                <TextView
+                                    android:id="@+id/textStatusDesiredDimensions"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Render area:" />
+
+                                <TextView
+                                    android:id="@+id/textStatusCanvasDimensions"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="undefined" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Bitmap size:" />
+
+                                <TextView
+                                    android:id="@+id/textStatusBitmapSize"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="undefined" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Requested size:" />
+
+                                <TextView
+                                    android:id="@+id/textStatusRequestedSize"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="undefined" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Scrolling status:" />
+
+                                <TextView
+                                    android:id="@+id/textStatusScrolling"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="undefined" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Zoom status:" />
+
+                                <TextView
+                                    android:id="@+id/textStatusZoom"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:text="undefined" />
+                            </TableRow>
+
+
+                        </TableLayout>
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
 

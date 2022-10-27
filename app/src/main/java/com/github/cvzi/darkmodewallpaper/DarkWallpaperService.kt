@@ -57,6 +57,12 @@ class DarkWallpaperService : WallpaperService() {
         private var loadFileThreadLock = ReentrantLock(false)
         private var loadFileThread = WeakReference<Thread>(null)
 
+        val statusCanvasSize = Point(0, 0)
+        val statusBitmapSize = Point(0, 0)
+        val statusRequestedSize = Point(0, 0)
+        var statusScolling = false
+        var statusZoom = 0f
+
         /**
          * Redraw or schedule redraw for all wallpapers that are currently running
          * forceReload=true reloads all bitmaps from disk
@@ -586,10 +592,13 @@ class DarkWallpaperService : WallpaperService() {
                             errorLoadingFile = null
                             var currentBitmap: Bitmap? = null
                             var isDesired = false
+                            val requestWidth = maxOf(desiredWidth, width)
+                            val requestHeight = maxOf(desiredHeight, height)
+                            statusRequestedSize.set(requestWidth, requestHeight)
                             val originalBitmap = loadImageFile(
                                 imageFile,
-                                requestWidth = maxOf(desiredWidth, width),
-                                requestHeight = maxOf(desiredHeight, height)
+                                requestWidth,
+                                requestHeight
                             )
 
                             if (originalBitmap != null) {
@@ -603,6 +612,7 @@ class DarkWallpaperService : WallpaperService() {
                                     wallpaperImage?.contrast,
                                     wallpaperImage?.blur
                                 )
+                                isDesired = isDesiredSize
                                 shouldScroll = shouldScrollingBeEnabled(
                                     isDesired,
                                     wallpaperImage?.scrollingMode
@@ -610,7 +620,6 @@ class DarkWallpaperService : WallpaperService() {
                                 reverseScroll =
                                     wallpaperImage?.scrollingMode == ScrollingMode.REVERSE
                                 currentBitmap = bm
-                                isDesired = isDesiredSize
                                 if (currentBitmap != originalBitmap) {
                                     originalBitmap.recycle()
                                 }
@@ -738,6 +747,7 @@ class DarkWallpaperService : WallpaperService() {
                     canvas = surfaceHolder?.lockHardwareCanvas()
                 }
                 if (canvas != null) {
+                    statusCanvasSize.set(canvas.width, canvas.height)
                     status = drawOnCanvas(canvas, currentBitmap, imageFile)
                 }
             } catch (e: IllegalArgumentException) {
@@ -780,6 +790,8 @@ class DarkWallpaperService : WallpaperService() {
             imageFile: File?
         ): WallpaperStatus {
             if (imageFile != null && bm != null && !bm.isRecycled) {
+                statusBitmapSize.set(bm.width, bm.height)
+                statusScolling = shouldScroll
                 waitAnimation = null
                 if (blendBitmaps != null) {
                     // Blend from lock screen to home screen
@@ -829,12 +841,15 @@ class DarkWallpaperService : WallpaperService() {
                         blendFromOffsetYPixel = -0.5f * (bm.height - height)
                     }
 
-                    if (hasZoom) {
+                    statusZoom = if (hasZoom) {
                         canvas.save()
                         canvas.scale(
                             1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
                             0.5f * width, 0.5f * height
                         )
+                        zoom
+                    } else {
+                        0f
                     }
                     try {
                         canvas.drawBitmap(

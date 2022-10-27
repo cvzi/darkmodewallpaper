@@ -29,6 +29,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Point
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -228,28 +229,6 @@ open class MainActivity : AppCompatActivity() {
             imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
         )
 
-        textStatusDayOrNight.text =
-            getString(
-                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                    R.string.status_darkmode_night
-                } else {
-                    R.string.status_darkmode_day
-                }
-            )
-
-        findViewById<TextView>(R.id.textStatusDesiredDimensions).text = getString(
-            R.string.resolution_width_x_height,
-            wallpaperManager.desiredMinimumWidth,
-            wallpaperManager.desiredMinimumHeight
-        )
-
-
-        val screenSize = getScreenSize()
-        findViewById<TextView>(R.id.textStatusScreenDimensions).text = getString(
-            R.string.resolution_width_x_height,
-            screenSize.x,
-            screenSize.y
-        )
 
         setPreviewDimension(previewViewDay)
         setPreviewDimension(previewViewNight)
@@ -367,23 +346,11 @@ open class MainActivity : AppCompatActivity() {
         buttonSelectFileNight.setOnClickListener {
             if (isLockScreenActivity) {
                 startForPickNightLockScreenFile.launch(
-                    imageChooserIntent(
-                        getString(
-                            R.string.wallpaper_file_chooser_title,
-                            getString(R.string.wallpaper_file_chooser_night_time),
-                            getString(R.string.wallpaper_file_chooser_lock_screen)
-                        )
-                    )
+                    imagePickIntent()
                 )
             } else {
                 startForPickNightHomeScreenFile.launch(
-                    imageChooserIntent(
-                        getString(
-                            R.string.wallpaper_file_chooser_title,
-                            getString(R.string.wallpaper_file_chooser_night_time),
-                            getString(R.string.wallpaper_file_chooser_home_screen)
-                        )
-                    )
+                    imagePickIntent()
                 )
             }
             switchColorOnlyNight.isChecked = false
@@ -1095,6 +1062,8 @@ open class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
 
         DarkWallpaperService.invalidate()
+
+        updateStatusValues()
     }
 
     override fun onPause() {
@@ -1117,6 +1086,52 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateStatusValues() {
+        val wallpaperManager = WallpaperManager.getInstance(this)
+        val screenSize = getScreenSize()
+        fun Point.toSizeString() = "${x}x${y}"
+
+        textStatusDayOrNight.text =
+            getString(
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                    R.string.status_darkmode_night
+                } else {
+                    R.string.status_darkmode_day
+                }
+            )
+
+        findViewById<TextView>(R.id.textStatusDesiredDimensions).text = getString(
+            R.string.resolution_width_x_height,
+            wallpaperManager.desiredMinimumWidth,
+            wallpaperManager.desiredMinimumHeight
+        )
+
+        findViewById<TextView>(R.id.textStatusScreenDimensions).text = getString(
+            R.string.resolution_width_x_height,
+            screenSize.x,
+            screenSize.y
+        )
+
+        findViewById<TextView>(R.id.textStatusCanvasDimensions).text =
+            DarkWallpaperService.statusCanvasSize.toSizeString()
+
+        findViewById<TextView>(R.id.textStatusBitmapSize).text =
+            DarkWallpaperService.statusBitmapSize.toSizeString()
+
+
+        findViewById<TextView>(R.id.textStatusRequestedSize).text =
+            DarkWallpaperService.statusRequestedSize.toSizeString()
+
+        findViewById<TextView>(R.id.textStatusScrolling).text =
+            DarkWallpaperService.statusScolling.toString()
+
+        findViewById<TextView>(R.id.textStatusZoom).text =
+            DarkWallpaperService.statusZoom.toString()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            updateStatusValues()
+        }, 1000)
+    }
 
     private fun currentDayFile(): File? {
         return if (imageProvider.getUseColorOnly(DAY, isLockScreenActivity)) {
