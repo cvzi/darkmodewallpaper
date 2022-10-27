@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.6
+*   Fix photo picker [#86](https://github.com/cvzi/darkmodewallpaper/issues/86)
+*   Add more debug information
+
 ## 1.4.5
 *   Fix: blurring night lockscreen does not work [#79](https://github.com/cvzi/darkmodewallpaper/issues/79)
 

@@ -1,0 +1,1 @@
+🐛 Bugfix: night time wallpaper file picker
