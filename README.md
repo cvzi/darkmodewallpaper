@@ -25,6 +25,13 @@ your image.
 This app requires Android 10 or a later version. If you are using an earlier version of Android, you may be able to
 achieve a comparable experience by using MacroDroid, Tasker or a similar automation tool.
 
+## Selecting images
+
+There are three ways to load an image as a wallpaper:
+*  the "Select Image" button in the app opens the new [Android photo picker](https://developer.android.com/training/data-storage/shared/photopicker), its access is limited to the phone's gallery
+*  tap on the preview image on the right and select the  "Select another image" to open the old photo picker
+*  share the image from another app: open the image in the gallery or any file manager app and press "Share". There are four entries in the share menu: day / night / lockscreen day / lockscreen night
+
 ## Contributors
 
 [![Contributors](https://contrib.rocks/image?repo=cvzi/darkmodewallpaper)](https://github.com/cvzi/darkmodewallpaper/graphs/contributors)
