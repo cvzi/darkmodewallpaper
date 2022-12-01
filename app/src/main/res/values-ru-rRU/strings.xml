@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
@@ -12,7 +13,7 @@
     <string name="wallpaper_is_loading">загрузка…</string>
     <string name="color_chooser_day">Выбор цвета наложения на обои в дневное время</string>
     <string name="color_chooser_night">Выбор цвета наложения на обои в ночное время</string>
-    <string name="status_darkmode">Состояние темного режима:</string>
+    <string name="status_darkmode">Статус Темного режима:</string>
     <string name="status_darkmode_day">Дневное время / Светлая тема</string>
     <string name="status_darkmode_night">Ночное время / Тёмная тема</string>
     <string name="status_requested_image_size">Рекомендованный размер изображения:</string>
@@ -79,4 +80,9 @@
     <string name="zoom_effect">Эффект увеличения:</string>
     <string name="zoom_effect_description">В Android 11 и выше анимация увеличения происходит в момент, когда вы открываете область уведомлений или открываете список недавних приложений.</string>
     <string name="seek_bar_blur">Размывание:</string>
+    <string name="scrolling_mode">Прокрутка (Скроллинг)</string>
+    <string name="scrolling_mode_value_automatic">Авто</string>
+    <string name="scrolling_mode_value_on">Вкл</string>
+    <string name="scrolling_mode_value_off">Выкл.</string>
+    <string name="scrolling_mode_value_inverse">Перевернутый</string>
 </resources>
