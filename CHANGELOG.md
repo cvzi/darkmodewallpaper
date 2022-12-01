@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.7
+*   Russian translation improved
+*   Fix color of some buttons
+
 ## 1.4.6
 *   Fix photo picker [#86](https://github.com/cvzi/darkmodewallpaper/issues/86)
 *   Add more debug information
