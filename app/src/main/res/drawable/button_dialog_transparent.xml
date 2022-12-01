@@ -18,7 +18,7 @@
     along with DarkModeLiveWallpaper.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="#30000000" android:state_checked="true" />
-    <item android:color="#30000000" android:state_pressed="true" />
-    <item android:color="@android:color/transparent" />
+    <item android:drawable="@color/transparent_30" android:state_checked="true" />
+    <item android:drawable="@color/transparent_30" android:state_pressed="true" />
+    <item android:drawable="@android:color/transparent" />
 </selector>

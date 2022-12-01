@@ -587,7 +587,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="bottom"
-                                    android:background="@color/button_dialog_transparent"
+                                    android:background="@drawable/button_dialog_transparent"
                                     android:contentDescription="@string/about"
                                     android:src="@android:drawable/ic_menu_info_details" />
 

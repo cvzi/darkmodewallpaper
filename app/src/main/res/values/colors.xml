@@ -13,4 +13,5 @@
     <color name="day_red">#F44336</color>
     <color name="night_red">#B81E13</color>
     <color name="switch_green">#13AF3A</color>
+    <color name="transparent_30">#30000000</color>
 </resources>
