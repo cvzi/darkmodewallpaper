@@ -232,15 +232,6 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
                 dayFileLocation(isLockScreen)
             }
 
-        imageFile?.let {
-            if (it.name.startsWith("lock_") && !it.exists()) {
-                val old = File(it.parent, "L" + it.name.substring(1))
-                if (old.exists()) {
-                    old.renameTo(imageFile)
-                }
-            }
-        }
-
         val overlayColor = if (dayOrNight == NIGHT && currentPreferences.useNightColor) {
             currentPreferences.colorNight
         } else if (dayOrNight == DAY && currentPreferences.useDayColor) {
