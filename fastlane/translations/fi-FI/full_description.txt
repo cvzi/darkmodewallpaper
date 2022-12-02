@@ -1,0 +1,16 @@
+live taustakuva Android 10+ joka kunnioittaa tumma teema tila.
+
+Tämän sovelluksen avulla voit asettaa kuvan valoteeman tilalle ja toisen kuvan
+tummalle teemalle.
+Kun järjestelmän tumma teema on käytössä tai poistettu käytöstä, taustakuva muuttuu
+automaattisesti.
+
+Eri kuvan sijaan voit myös säätää väriä, kontrastia ja
+kirkkautta nykyisen taustakuvan tehdä siitä tummemman.
+
+On mahdollista valita eri kuvia aloitusnäytön ja lukitusnäytön.
+
+Käyttöoikeus "Lue tallennus" vaaditaan, jos haluat tuoda nykyisen
+taustakuvan taustakuvaksi. Kun olet tuonut taustakuvan voit turvallisesti peruuttaa
+luvan. Jos et halua tuoda nykyistä taustakuvaa, sinun ei tarvitse
+myöntää tätä oikeutta.
