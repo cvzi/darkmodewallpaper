@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Bakgrund för hemskärmen</string>
+    <string name="use_as_night_home">Bakgrund på hemskärmen</string>
+    <string name="use_as_day_lock">Bakgrund för daglåsskärmen</string>
+    <string name="use_as_night_lock">Bakgrund för nattlåsskärmen</string>
+    <string name="wallpaper_label">Mörkläge: Bakgrund</string>
+    <string name="wallpaper_description">Ändra automatiskt bakgrundsbild för att passa Ljus/Mörkt tema</string>
+    <string name="wallpaper_is_loading">laddar…</string>
+    <string name="color_chooser_day">Välj färg på överlagrad dagtid</string>
+    <string name="color_chooser_night">Välj färg på nattetid</string>
+    <string name="status_darkmode">Mörkt läge status:</string>
+    <string name="status_darkmode_day">Dag tid/ljus tema</string>
+    <string name="status_darkmode_night">Natt/mörkt tema</string>
+    <string name="status_requested_image_size">Rekommenderad bildstorlek:</string>
+    <string name="status_screen_size">Skärmens storlek:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Välj bild (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Dag tid</string>
+    <string name="wallpaper_file_chooser_night_time">Natt tid</string>
+    <string name="wallpaper_file_chooser_home_screen">Startskärmen</string>
+    <string name="wallpaper_file_chooser_lock_screen">Låsskärm</string>
+    <string name="wallpaper_import_dialog_title">Importera nuvarande bakgrund</string>
+    <string name="wallpaper_import_dialog_message">Vill du importera din nuvarande bakgrundsbild?
+\n\n(fungerar kanske inte för live wallpapers)
+\n\nFrågar efter lagringsbehörighet i nästa steg.
+\nDu kan säkert återkalla behörigheten när bakgrunden importerades.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Bakgrundsbild importerad\n%1$s</string>
+    <string name="wallpaper_import_failed">Kunde inte hämta bild</string>
+    <string name="wallpaper_import_permission_missing">Förvaringstillstånd behövs för att importera en tapet!</string>
+    <string name="image_file_import_error">Kunde inte importera bild</string>
+    <string name="image_file_import_loading_title">Importerar bildfil</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Bild lagrad i %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Optimerar %2$s\n(importeras från %1$s)</string>
+    <string name="button_import_wallpaper">Importera bakgrundsbild</string>
+    <string name="button_more_settings">Avancerade inställningar</string>
+    <string name="button_apply_wallpaper">Använd som bakgrundsbild</string>
+    <string name="apply_wallpaper_unavailable">Ställ in bakgrunden manuellt från Android-inställningarna</string>
+    <string name="button_lock_screen_settings">Låsskärm</string>
+    <string name="switch_only_use_color">Endast färg</string>
+    <string name="switch_use_color_overlay">Färg överlagrad</string>
+    <string name="color">Färg</string>
+    <string name="button_select_image">Välj bild</string>
+    <string name="heading_day_time_settings">Dag tid</string>
+    <string name="heading_night_time_settings">Natt tid</string>
+    <string name="dialog_advanced_title">Åtgärder:</string>
+    <string name="dialog_button_preview">Förhandsgranska bakgrundsbild</string>
+    <string name="dialog_button_advanced">Kontrast &amp; ljusstyrka</string>
+    <string name="dialog_button_select_image">Välj en annan bild</string>
+    <string name="dialog_button_delete_image">Ta bort bild</string>
+    <string name="switch_separate_lock_screen_settings">Separata låsskärminställningar</string>
+    <string name="switch_separate_lock_screen_settings_description">Aktivera för att använda separata låsskärminställningar</string>
+    <string name="switch_animate_from_lock_screen">Animera övergången till bakgrundsbild på startskärmen efter upplåsning</string>
+    <string name="switch_animate_from_lock_screen_description">Aktivera för att använda en animation från låsskärmen till bakgrundsbild på startskärmen efter upplåsning</string>
+    <string name="lock_symbol_description">Lås skärmsymbol</string>
+    <string name="sun_symbol_description">Sol/Dag</string>
+    <string name="moon_symbol_description">Mån/Natt</string>
+    <string name="button_select_color_description">Välj färg</string>
+    <string name="switch_reuse_day_image_for_night">Använd dagtid bild</string>
+    <string name="switch_reuse_day_image_for_night_description">Använd separat nattetid tapet eller återanvänd dagtid tapet</string>
+    <string name="text_lock_screen_explanation">Om du aktiverar växeln på toppen, kan du ställa in olika bakgrunder och olika färger för låsskärmen.
+\nTyvärr, detta fungerar inte på alla telefoner eftersom vissa telefontillverkare ställa in sin egen låsskärm bakgrundsbild och inte låter dig ändra det.
+\n\nSe till att trycka på \"Startskärmen och låsskärmen\", när du ställer in levande bakgrundsbild.
+\n\nLåsskärmsbilden ska matcha skärmstorleken. Om den är större än skärmen kommer den att skalas och centreras.\n</string>
+    <string name="about">Om</string>
+    <string name="about_issues"><![CDATA[Du hittade ett problem eller har du ett förslag?<br>Öppna ett problem på <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Starttid:</string>
+    <string name="end_time">Sluttid:</string>
+    <string name="night_mode_trigger">Nattläge utlösare:</string>
+    <string name="night_mode_trigger_follow_system">Följ systemet</string>
+    <string name="night_mode_trigger_time_range">Tidsintervall</string>
+    <string name="zoom_effect">Zoom effekt:</string>
+    <string name="zoom_effect_description">På Android 11+ händer en \"zooma in\" animation när du drar ner meddelandefältet eller när du öppnar den senaste appöversikten.</string>
+    <string name="seek_bar_blur">Blur:</string>
+    <string name="scrolling_mode">Rullning:</string>
+    <string name="scrolling_mode_value_automatic">Automatiskt</string>
+    <string name="scrolling_mode_value_on">På</string>
+    <string name="scrolling_mode_value_off">Av</string>
+    <string name="scrolling_mode_value_inverse">Omvänd</string>
+</resources>
