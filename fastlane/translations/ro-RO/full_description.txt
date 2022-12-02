@@ -1,0 +1,16 @@
+Un fundal live pentru Android 10+ care respectă modul temă întunecată.
+
+Cu această aplicație puteți seta o imagine pentru modul temă deschisă și o altă imagine
+pentru tema întunecată.
+Când tema întunecată a sistemului este activată sau dezactivată, imaginea de fundal va fi
+schimbată automat.
+
+În loc de o imagine diferită, poți regla culoarea, contrastul și
+luminozitatea imaginii tale existente de fundal pentru a o face mai întunecată.
+
+Este posibil să selectați diferite imagini pentru ecranul de pornire și ecranul de blocare.
+
+Permisiunea "Stocare citită" este necesară dacă doriţi să importaţi imaginea de fundal
+curentă. Odată ce ai importat imaginea de fundal poți revoca în siguranță permisiunea
+. Dacă nu doriți să importați imaginea de fundal curentă, nu aveți nevoie
+pentru a acorda această permisiune.
