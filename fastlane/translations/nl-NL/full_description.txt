@@ -1,0 +1,16 @@
+Een live achtergrond voor Android 10+ die donkere thema modus respecteert.
+
+Met deze app kunt u een afbeelding instellen voor lichtthema modus en een andere afbeelding
+voor het donkere thema.
+Wanneer het donkere thema van het systeem is ingeschakeld of uitgeschakeld, zal de achtergrond automatisch worden
+gewijzigd.
+
+In plaats van een andere afbeelding kun je ook de kleur, contrast en
+helderheid van je bestaande achtergrondafbeelding aanpassen om deze donkerder te maken.
+
+Het is mogelijk om verschillende afbeeldingen te selecteren voor het startscherm en het vergrendelingsscherm.
+
+De machtiging "lees opslag" is vereist als u uw huidige
+achtergrondafbeelding wilt importeren. Nadat je je achtergrond hebt geïmporteerd, kan je de
+toestemming veilig intrekken. Als je je huidige achtergrond niet wilt importeren, hoef je
+deze toestemming niet te geven.
