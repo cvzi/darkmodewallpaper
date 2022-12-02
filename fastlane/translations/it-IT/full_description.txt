@@ -1,0 +1,16 @@
+Una carta da parati live per Android 10+ che rispetta la modalità tema scuro.
+
+Con questa app è possibile impostare un'immagine per la modalità tema luce e un'altra immagine
+per il tema scuro.
+Quando il tema scuro del sistema è abilitato o disabilitato, lo sfondo sarà
+cambiato automaticamente.
+
+Invece di un'altra immagine è anche possibile regolare il colore, il contrasto e la luminosità
+dell'immagine di carta da parati esistente per renderla più scura.
+
+È possibile selezionare diverse immagini per la schermata iniziale e la schermata di blocco.
+
+Il permesso "read storage" è richiesto se si desidera importare l'immagine corrente
+dello sfondo. Una volta importato il tuo wallpaper puoi tranquillamente revocare il permesso
+. Se non vuoi importare lo sfondo corrente, non hai bisogno di
+per concedere questo permesso.
