@@ -1,0 +1,16 @@
+Et levende bakgrunn for Android 10 + som respekterer mørk temamodus.
+
+Med denne appen kan du angi et bilde for lys temamodus og et annet bilde
+for mørkt tema.
+Når det mørke temaet til systemet er aktivert eller deaktivert, endres bakgrunnsbildet
+automatisk.
+
+I stedet for et annet bilde kan du også justere fargen, kontrasten og
+lysstyrken til det eksisterende bakgrunnsbildet ditt for å gjøre det mørkere.
+
+Det er mulig å velge forskjellige bilder for startskjermen og låseskjermen.
+
+Tillatelsen til å lese lagring er nødvendig hvis du vil importere det nåværende
+bakgrunnsbildet ditt. Når du importerte bakgrunnsbildet ditt, kan du trygt tilbakekalle
+-tillatelsen. Hvis du ikke vil importere deg gjeldende bakgrunnsbilde, trenger du ikke
+for å gi denne tillatelsen.
