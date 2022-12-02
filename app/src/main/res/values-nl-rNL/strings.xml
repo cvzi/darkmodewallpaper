@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Dag thuisscherm achtergrond</string>
+    <string name="use_as_night_home">Nacht startscherm achtergrond</string>
+    <string name="use_as_day_lock">Dag Vergrendelscherm achtergrond</string>
+    <string name="use_as_night_lock">Nacht vergrendelscherm achtergrond</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Wijzig achtergrond automatisch naar een liight/Dark thema</string>
+    <string name="wallpaper_is_loading">laden…</string>
+    <string name="color_chooser_day">Kies dag tijd overlay kleur</string>
+    <string name="color_chooser_night">Kies overlay kleur voor nacht</string>
+    <string name="status_darkmode">Status van de donkere modus:</string>
+    <string name="status_darkmode_day">Dag tijd/licht thema</string>
+    <string name="status_darkmode_night">Nacht tijd/donker thema</string>
+    <string name="status_requested_image_size">Aanbevolen afbeeldingsgrootte:</string>
+    <string name="status_screen_size">Schermgrootte:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Selecteer afbeelding (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Dag tijd</string>
+    <string name="wallpaper_file_chooser_night_time">Nacht tijd</string>
+    <string name="wallpaper_file_chooser_home_screen">Startscherm</string>
+    <string name="wallpaper_file_chooser_lock_screen">Vergrendel scherm</string>
+    <string name="wallpaper_import_dialog_title">Importeer huidige achtergrond</string>
+    <string name="wallpaper_import_dialog_message">Wil je je huidige achtergrond importeren?
+\n\n(werkt mogelijk niet voor live achtergrond)
+\n\nVraagt toestemming voor opslag in de volgende stap.
+\nU kunt de machtiging veilig intrekken wanneer de achtergrond werd geïmporteerd.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Achtergrond geïmporteerd\n%1$s</string>
+    <string name="wallpaper_import_failed">Kan afbeelding niet ophalen</string>
+    <string name="wallpaper_import_permission_missing">De opslagmachtiging is nodig om een achtergrond te importeren!</string>
+    <string name="image_file_import_error">Kan afbeelding niet importeren</string>
+    <string name="image_file_import_loading_title">Afbeelding importeren</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Afbeelding opgeslagen in %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Optimaliseren van %2$s\n(geïmporteerd van %1$s)</string>
+    <string name="button_import_wallpaper">Achtergrond importeren</string>
+    <string name="button_more_settings">Geavanceerde instellingen</string>
+    <string name="button_apply_wallpaper">Toepassen als achtergrond</string>
+    <string name="apply_wallpaper_unavailable">Stel de achtergrond handmatig in vanuit de Android-instellingen</string>
+    <string name="button_lock_screen_settings">Vergrendel scherm</string>
+    <string name="switch_only_use_color">Alleen kleur</string>
+    <string name="switch_use_color_overlay">Kleur overlay</string>
+    <string name="color">Kleur</string>
+    <string name="button_select_image">Selecteer afbeelding</string>
+    <string name="heading_day_time_settings">Dag tijd</string>
+    <string name="heading_night_time_settings">Nacht tijd</string>
+    <string name="dialog_advanced_title">Acties:</string>
+    <string name="dialog_button_preview">Voorvertoning achtergrond</string>
+    <string name="dialog_button_advanced">Contrast &amp; Helderheid</string>
+    <string name="dialog_button_select_image">Selecteer een andere afbeelding</string>
+    <string name="dialog_button_delete_image">Afbeelding verwijderen</string>
+    <string name="switch_separate_lock_screen_settings">Scheidt vergrendelscherm instellingen</string>
+    <string name="switch_separate_lock_screen_settings_description">Inschakelen om aparte vergrendelscherm instellingen te gebruiken</string>
+    <string name="switch_animate_from_lock_screen">Overgang naar thuisscherm achtergrond na ontgrendelen animeren</string>
+    <string name="switch_animate_from_lock_screen_description">Inschakelen om een animatie te gebruiken van vergrendelscherm naar startscherm achtergrond na ontgrendelen</string>
+    <string name="lock_symbol_description">Symbool van vergrendelingsscherm</string>
+    <string name="sun_symbol_description">Zon/Dag</string>
+    <string name="moon_symbol_description">Maan/Nacht</string>
+    <string name="button_select_color_description">Kies een kleur</string>
+    <string name="switch_reuse_day_image_for_night">Dagafbeelding voor tijd gebruiken</string>
+    <string name="switch_reuse_day_image_for_night_description">Gebruik aparte nachtachtergrond of hergebruik dag achtergrond</string>
+    <string name="text_lock_screen_explanation">Als je de schakelaar bovenaan inschakelt, kun je verschillende achtergronden en verschillende kleuren instellen voor het vergrendelingsscherm.
+\nHelaas, dit werkt niet op alle telefoons omdat sommige telefoonfabrikanten hun eigen vergrendelscherm achtergrond instellen en je het niet kunt wijzigen.
+\n\nZorg ervoor dat je op \"Startscherm en vergrendel scherm\" drukt als je de live achtergrond instelt.
+\n\nDe vergrendelingsafbeelding moet overeenkomen met de schermgrootte. Als het groter is dan het scherm, zal het worden ingeschaald en gecentreerd.\n</string>
+    <string name="about">Over</string>
+    <string name="about_issues"><![CDATA[Heb je een probleem gevonden of heb je een suggestie?<br>Open een issue op <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Start tijd:</string>
+    <string name="end_time">Einde tijd:</string>
+    <string name="night_mode_trigger">Nachtmodus trigger:</string>
+    <string name="night_mode_trigger_follow_system">Volg systeem</string>
+    <string name="night_mode_trigger_time_range">Tijdsbereik</string>
+    <string name="zoom_effect">Zoom effect:</string>
+    <string name="zoom_effect_description">Op Android 11+ vindt een \"zoom in\" animatie plaats wanneer je het notificatie gebied naar beneden haalt of wanneer je het recente apps overzicht opent.</string>
+    <string name="seek_bar_blur">Blur:</string>
+    <string name="scrolling_mode">Scrollen:</string>
+    <string name="scrolling_mode_value_automatic">Automatisch</string>
+    <string name="scrolling_mode_value_on">op</string>
+    <string name="scrolling_mode_value_off">UIT</string>
+    <string name="scrolling_mode_value_inverse">Achterstevoren</string>
+</resources>
