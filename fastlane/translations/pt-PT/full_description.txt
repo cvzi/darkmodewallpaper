@@ -1,0 +1,16 @@
+Um papel de parede ao vivo para Android 10 + que respeita o modo de tema escuro.
+
+Com este aplicativo você pode definir uma imagem para o modo de tema claro e outra imagem
+para o tema escuro.
+Quando o tema escuro do sistema é ativado ou desativado, o papel de parede será
+alterado automaticamente.
+
+Ao invés de uma imagem diferente você também pode ajustar a cor, contraste e o brilho
+de sua imagem de papel de parede existente para escurecê-la.
+
+É possível selecionar imagens diferentes para a tela inicial e para a tela de bloqueio.
+
+A permissão "ler armazenamento" é necessária se você deseja importar sua imagem atual de papel de parede
+. Depois de importar seu papel de parede, você pode revogar com segurança a permissão de
+ Se você não quiser importar seu papel de parede atual, você não precisa
+para conceder esta permissão.
