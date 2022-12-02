@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name" maxLength="30">DarkModeLiveWallpaper</string>
+    <string name="app_name">DarkModeLiveWallpaper</string>
     <string name="use_as_day_home">Denní tapeta domovské obrazovky</string>
     <string name="use_as_night_home">Noční tapeta domovské obrazovky</string>
     <string name="use_as_day_lock">Denní tapeta zamykací obrazovky</string>
@@ -40,6 +41,7 @@
     <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Optimalizace %2$s\n(importováno z %1$s)</string>
     <string name="button_import_wallpaper">Importovat tapetu</string>
+    <string name="button_more_settings">Pokročilé nastavení</string>
     <string name="button_apply_wallpaper">Nastavit jako tapetu</string>
     <string name="apply_wallpaper_unavailable">Prosím nastavte tapetu ručně z nastavení Androidu</string>
     <string name="button_lock_screen_settings">Zamykací obrazovka</string>
@@ -78,4 +80,9 @@
     <string name="zoom_effect">Efekt přiblížení:</string>
     <string name="zoom_effect_description">Na Androidu 11+ se použije animace přiblížení když stáhnete panel oznámení nebo otevřete přehled nedávných aplikací.</string>
     <string name="seek_bar_blur">Rozmycie:</string>
+    <string name="scrolling_mode">Posuvování:</string>
+    <string name="scrolling_mode_value_automatic">Automaticky</string>
+    <string name="scrolling_mode_value_on">Zapnuto</string>
+    <string name="scrolling_mode_value_off">Vypnuto</string>
+    <string name="scrolling_mode_value_inverse">Reverzní</string>
 </resources>
