@@ -1,0 +1,16 @@
+En live tapet til Android 10+, der respekterer mørkt tema tilstand.
+
+Med denne app kan du indstille et billede til lys tema tilstand og et andet billede
+for det mørke tema.
+Når systemets mørke tema er aktiveret eller deaktiveret, vil tapetet blive
+ændret automatisk.
+
+I stedet for et andet billede kan du også justere farven, kontrast og
+lysstyrken på dit eksisterende tapetbillede for at gøre det mørkere.
+
+Det er muligt at vælge forskellige billeder til startskærmen og låseskærmen.
+
+Tilladelsen "read storage" er påkrævet, hvis du ønsker at importere dit nuværende
+baggrundsbillede. Når du har importeret din tapet, kan du trygt tilbagekalde
+tilladelsen. Hvis du ikke ønsker at importere dit aktuelle baggrund, behøver du ikke
+for at give denne tilladelse.
