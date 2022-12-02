@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Ταπετσαρία αρχικής οθόνης ημέρας</string>
+    <string name="use_as_night_home">Νυχτερινή ταπετσαρία αρχικής οθόνης</string>
+    <string name="use_as_day_lock">Ταπετσαρία οθόνης κλειδώματος ημέρας</string>
+    <string name="use_as_night_lock">Ταπετσαρία οθόνης κλειδώματος νύχτας</string>
+    <string name="wallpaper_label">Σκούρο ModeΤαπετσαρία</string>
+    <string name="wallpaper_description">Αυτόματη αλλαγή ταπετσαρίας για να χωρέσει το θέμα Φωτός/Σκοτεινό</string>
+    <string name="wallpaper_is_loading">φόρτωση…</string>
+    <string name="color_chooser_day">Επιλέξτε χρώμα επικάλυψης ημέρας</string>
+    <string name="color_chooser_night">Επιλέξτε νύχτα χρώμα επικάλυψης χρόνου</string>
+    <string name="status_darkmode">Κατάσταση σκοτεινής λειτουργίας:</string>
+    <string name="status_darkmode_day">Ώρα ημέρας/φωτεινό θέμα</string>
+    <string name="status_darkmode_night">Νυχτερινή ώρα/σκοτεινό θέμα</string>
+    <string name="status_requested_image_size">Συνιστώμενο μέγεθος εικόνας:</string>
+    <string name="status_screen_size">Μέγεθος οθόνης:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Επιλογή εικόνας (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Ώρα ημέρας</string>
+    <string name="wallpaper_file_chooser_night_time">Ώρα νύχτας</string>
+    <string name="wallpaper_file_chooser_home_screen">Αρχική οθόνη</string>
+    <string name="wallpaper_file_chooser_lock_screen">Οθόνη κλειδώματος</string>
+    <string name="wallpaper_import_dialog_title">Εισαγωγή τρέχουσας ταπετσαρίας</string>
+    <string name="wallpaper_import_dialog_message">Θέλετε να εισαγάγετε την τρέχουσα ταπετσαρία σας?
+\n\n(δεν μπορεί να λειτουργήσει για ζωντανές ταπετσαρίες)
+\n\nΖητήματα για άδεια αποθήκευσης στο επόμενο βήμα.
+\nΜπορείτε να ανακαλέσετε με ασφάλεια το δικαίωμα κατά την εισαγωγή της ταπετσαρίας.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Η ταπετσαρία εισήχθη\n%1$s</string>
+    <string name="wallpaper_import_failed">Αδυναμία ανάκτησης εικόνας</string>
+    <string name="wallpaper_import_permission_missing">Η άδεια αποθήκευσης είναι απαραίτητη για την εισαγωγή μιας ταπετσαρίας!</string>
+    <string name="image_file_import_error">Αδυναμία εισαγωγής εικόνας</string>
+    <string name="image_file_import_loading_title">Εισαγωγή αρχείου εικόνας</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Η εικόνα αποθηκεύεται στο %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Βελτιστοποίηση %2$s\n(εισαγωγή από %1$s)</string>
+    <string name="button_import_wallpaper">Εισαγωγή ταπετσαρίας</string>
+    <string name="button_more_settings">Ρυθμίσεις για προχωρημένους</string>
+    <string name="button_apply_wallpaper">Εφαρμογή ως ταπετσαρία</string>
+    <string name="apply_wallpaper_unavailable">Παρακαλώ ορίστε την ταπετσαρία χειροκίνητα από τις ρυθμίσεις του Android</string>
+    <string name="button_lock_screen_settings">Οθόνη κλειδώματος</string>
+    <string name="switch_only_use_color">Μόνο χρώμα</string>
+    <string name="switch_use_color_overlay">Επικάλυψη χρωμάτων</string>
+    <string name="color">Χρώμα</string>
+    <string name="button_select_image">Επιλέξτε εικόνα</string>
+    <string name="heading_day_time_settings">Ώρα ημέρας</string>
+    <string name="heading_night_time_settings">Ώρα νύχτας</string>
+    <string name="dialog_advanced_title">Ενέργειες:</string>
+    <string name="dialog_button_preview">Προεπισκόπηση ταπετσαρίας</string>
+    <string name="dialog_button_advanced">Αντίθεση &amp; Φωτεινότητα</string>
+    <string name="dialog_button_select_image">Επιλέξτε μια άλλη εικόνα</string>
+    <string name="dialog_button_delete_image">Διαγραφή εικόνας</string>
+    <string name="switch_separate_lock_screen_settings">Ρυθμίσεις ξεχωριστής οθόνης κλειδώματος</string>
+    <string name="switch_separate_lock_screen_settings_description">Ενεργοποιήστε τη χρήση ξεχωριστών ρυθμίσεων οθόνης κλειδώματος</string>
+    <string name="switch_animate_from_lock_screen">Κίνηση μετάβασης στην αρχική οθόνη ταπετσαρία μετά το ξεκλείδωμα</string>
+    <string name="switch_animate_from_lock_screen_description">Ενεργοποίηση για χρήση εφέ κίνησης από το κλείδωμα οθόνης στην αρχική οθόνη ταπετσαρία μετά το ξεκλείδωμα</string>
+    <string name="lock_symbol_description">Σύμβολο οθόνης κλειδώματος</string>
+    <string name="sun_symbol_description">Ήλιος/Ημέρα</string>
+    <string name="moon_symbol_description">Σελήνη/Νύχτα</string>
+    <string name="button_select_color_description">Επιλογή χρώματος</string>
+    <string name="switch_reuse_day_image_for_night">Χρήση εικόνας ώρας ημέρας</string>
+    <string name="switch_reuse_day_image_for_night_description">Χρησιμοποιήστε ξεχωριστή ταπετσαρία ώρας νύχτας ή ταπετσαρία ημέρας επαναχρησιμοποίησης</string>
+    <string name="text_lock_screen_explanation">Εάν ενεργοποιήσετε το διακόπτη στην κορυφή, μπορείτε να ορίσετε διαφορετικές ταπετσαρίες και διαφορετικά χρώματα για την οθόνη κλειδώματος.
+\nΔυστυχώς, αυτό δεν λειτουργεί σε όλα τα τηλέφωνα, επειδή ορισμένοι κατασκευαστές τηλεφώνου ορίζουν τη δική τους ταπετσαρία οθόνης κλειδώματος και δεν θα σας αφήσει να το αλλάξετε.
+\n\nΣιγουρευτείτε να πατήσετε \"Αρχική οθόνη και οθόνη κλειδώματος\", όταν ρυθμίσετε τη ζωντανή ταπετσαρία.
+\n\nΗ εικόνα οθόνης κλειδώματος πρέπει να ταιριάζει με το μέγεθος της οθόνης. Αν είναι μεγαλύτερο από την οθόνη, θα κλιμακωθεί και θα κεντραρισθεί.\n</string>
+    <string name="about">Περί</string>
+    <string name="about_issues"><![CDATA[Βρήκατε ένα πρόβλημα ή έχετε μια πρόταση?<br>Ανοίξτε ένα ζήτημα στο <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Ώρα έναρξης:</string>
+    <string name="end_time">Ώρα λήξης:</string>
+    <string name="night_mode_trigger">Ενεργοποίηση νυχτερινής λειτουργίας:</string>
+    <string name="night_mode_trigger_follow_system">Ακολουθήστε το σύστημα</string>
+    <string name="night_mode_trigger_time_range">Χρονικό εύρος</string>
+    <string name="zoom_effect">Εφέ εστίασης:</string>
+    <string name="zoom_effect_description">Στο Android 11+ ένα εφέ \"zoom in\" συμβαίνει όταν τραβάτε την περιοχή ειδοποιήσεων ή όταν ανοίγετε την επισκόπηση των πρόσφατων εφαρμογών.</string>
+    <string name="seek_bar_blur">Blur:</string>
+    <string name="scrolling_mode">Κύλιση:</string>
+    <string name="scrolling_mode_value_automatic">Αυτόματο</string>
+    <string name="scrolling_mode_value_on">Ενεργό</string>
+    <string name="scrolling_mode_value_off">Ανενεργό</string>
+    <string name="scrolling_mode_value_inverse">Αντίστροφη</string>
+</resources>
