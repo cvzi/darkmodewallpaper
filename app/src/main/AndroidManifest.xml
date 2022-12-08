@@ -40,6 +40,15 @@
         <intent>
             <action android:name="android.service.wallpaper.CHANGE_LIVE_WALLPAPER" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="f-droid.org"
+                android:path="com.github.cvzi.wallpaperexport/"
+                android:scheme="https" />
+        </intent>
+
+        <package android:name="com.github.cvzi.wallpaperexport" />
     </queries>
 
     <application
@@ -52,7 +61,7 @@
         android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.DarkModeWallpaper"
-        tools:targetApi="s">
+        tools:targetApi="tiramisu">
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"

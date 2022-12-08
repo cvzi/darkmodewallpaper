@@ -27,6 +27,8 @@ import android.content.ClipData
 import android.content.ComponentName
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Point
@@ -70,6 +72,9 @@ open class MainActivity : AppCompatActivity() {
         var originalDesiredWidth = -1
         var originalDesiredHeight = -1
         const val READ_WALLPAPER_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
+        const val WALLPAPER_EXPORT_PACKAGE = "com.github.cvzi.wallpaperexport"
+        const val WALLPAPER_EXPORT_FDROID =
+            "https://f-droid.org/packages/com.github.cvzi.wallpaperexport/"
     }
 
     protected lateinit var preferencesGlobal: Preferences
@@ -165,6 +170,9 @@ open class MainActivity : AppCompatActivity() {
                     R.string.wallpaper_import_permission_missing,
                     Toast.LENGTH_LONG
                 ).show()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    showWallpaperExportHint()
+                }
             }
         }
 
@@ -1157,7 +1165,7 @@ open class MainActivity : AppCompatActivity() {
         builder.setTitle(R.string.wallpaper_import_dialog_title)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             builder.setMessage(
-                "(This function may be broken on Android 13 Beta and you may see a permission error)\n\n" + getString(
+                "(This function may be broken on Android 13 Tiramisu and you may see a permission error)\n\n" + getString(
                     R.string.wallpaper_import_dialog_message
                 )
             )
@@ -1340,6 +1348,31 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun showWallpaperExportHint() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.wallpaper_import_dialog_title)
+        builder.setMessage("Permission to import wallpaper was denied. If you did not see a permission dialog to allow the permission, Android 13 has denied the permission automatically.\n\nHowever you can export the current wallpaper with a separate app and then import the image to this app.\n\nGo to separate app?\n\nhttps://f-droid.org/packages/com.github.cvzi.wallpaperexport/")
+        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+            dialog.safeDismiss()
+
+            val intent = packageManager.getLaunchIntentForPackage(WALLPAPER_EXPORT_PACKAGE)
+            if (intent?.resolveActivity(packageManager) != null) {
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            } else {
+                Intent(ACTION_VIEW, Uri.parse(WALLPAPER_EXPORT_FDROID)).apply {
+                    if (resolveActivity(packageManager) != null) {
+                        startActivity(Intent.createChooser(this, WALLPAPER_EXPORT_FDROID))
+                    } else {
+                        Log.e(TAG, "showWallpaperExportHint: No browser installed")
+                    }
+                }
+            }
+        }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.show()
+    }
 }
 
 class ScrollingModeOnItemSelectedListener(
