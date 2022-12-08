@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.8
+*   Translations updated from crowdin
+*   Offer to open WallpaperExport on Android 13 Tiramisu
+
 ## 1.4.7
 *   Russian translation improved
 *   Fix color of some buttons
