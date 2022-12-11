@@ -14,8 +14,8 @@
     <string name="color_chooser_day">Выбор цвета наложения на обои в дневное время</string>
     <string name="color_chooser_night">Выбор цвета наложения на обои в ночное время</string>
     <string name="status_darkmode">Статус Темного режима:</string>
-    <string name="status_darkmode_day">Дневное время / Светлая тема</string>
-    <string name="status_darkmode_night">Ночное время / Тёмная тема</string>
+    <string name="status_darkmode_day">Дневное время/Светлая тема</string>
+    <string name="status_darkmode_night">Ночное время/Тёмная тема</string>
     <string name="status_requested_image_size">Рекомендованный размер изображения:</string>
     <string name="status_screen_size">Размер экрана:</string>
     <!-- For example: 720x1080 -->
