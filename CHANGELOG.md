@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.9
+*   Russian translation improved
+*   Fix dropdown color in dark mode [#96](https://github.com/cvzi/darkmodewallpaper/issues/96)
+
 ## 1.4.8
 *   Translations updated from crowdin
 *   Offer to open WallpaperExport on Android 13 Tiramisu
