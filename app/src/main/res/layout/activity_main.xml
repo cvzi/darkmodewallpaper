@@ -243,7 +243,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
                                 android:contentDescription="@string/scrolling_mode"
-                                android:popupBackground="@color/secondary_variant" />
+                                android:popupBackground="?attr/colorSecondaryVariant" />
 
                         </LinearLayout>
 
@@ -438,7 +438,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
                                 android:contentDescription="@string/scrolling_mode"
-                                android:popupBackground="@color/secondary_variant" />
+                                android:popupBackground="?attr/colorSecondaryVariant" />
 
                         </LinearLayout>
 
@@ -496,9 +496,9 @@
                                         android:id="@+id/textViewStartTime"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@android:color/white"
+                                        android:background="?attr/colorSurface"
                                         android:ems="5"
-                                        android:textColor="@android:color/black" />
+                                        android:textColor="?attr/colorOnSurface" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -516,9 +516,9 @@
                                         android:id="@+id/textViewEndTime"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@android:color/white"
+                                        android:background="?attr/colorSurface"
                                         android:ems="5"
-                                        android:textColor="@android:color/black" />
+                                        android:textColor="?attr/colorOnSurface" />
                                 </LinearLayout>
                             </TableRow>
 
