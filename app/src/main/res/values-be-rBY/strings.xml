@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Шпалеры галоўнага экрана днём</string>
+    <string name="use_as_night_home">Шпалеры галоўнага экрана ноччу</string>
+    <string name="use_as_day_lock">Шпалеры экрана блакавання днём</string>
+    <string name="use_as_night_lock">Шпалеры экрана блакавання ноччу</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Аўтаматычна мяняе шпалеры ў адпаведнасці са светлай/цёмнай тэмай</string>
+    <string name="wallpaper_is_loading">Загрузка…</string>
+    <string name="color_chooser_day">Абярыце колер накладання днём</string>
+    <string name="color_chooser_night">Абярыце колер накладання ноччу</string>
+    <string name="status_darkmode">Статус цёмнага рэжыму:</string>
+    <string name="status_darkmode_day">Дзённы час/Светлая тэма</string>
+    <string name="status_darkmode_night">Начны час/Цёмная тэма</string>
+    <string name="status_requested_image_size">Рэкамендаваны памер выявы:</string>
+    <string name="status_screen_size">Памер экрана:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Абярыце малюнак (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Дзённы час</string>
+    <string name="wallpaper_file_chooser_night_time">Начны час</string>
+    <string name="wallpaper_file_chooser_home_screen">Галоўны экран</string>
+    <string name="wallpaper_file_chooser_lock_screen">Экран блакіроўкі</string>
+    <string name="wallpaper_import_dialog_title">Імпартаваць бягучыя шпалеры</string>
+    <string name="wallpaper_import_dialog_message">Жадаеце імпартаваць бягучыя шпалеры? 
+\n\n(можа не працаваць для жывых шпалер)
+\n\nНаступны крок запытвае дазвол на доступ да сховішча.
+\nВы можаце бяспечна адклікаць дазвол пасля імпарту шпалер.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Шпалеры імпартаваныя\n%1$s</string>
+    <string name="wallpaper_import_failed">Не ўдалося атрымаць выяву</string>
+    <string name="wallpaper_import_permission_missing">Дазвол на доступ да сховішча неабходна для імпарту шпалер!</string>
+    <string name="image_file_import_error">Не атрымалася імпартаваць выяву</string>
+    <string name="image_file_import_loading_title">Імпарт файла выявы</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Відарыс захаваны ў %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Аптымізацыя %2$s\n(імпартавана з %1$s)</string>
+    <string name="button_import_wallpaper">Імпарт шпалер</string>
+    <string name="button_more_settings">Пашыраныя налады</string>
+    <string name="button_apply_wallpaper">Усталяваць як шпалеры</string>
+    <string name="apply_wallpaper_unavailable">Усталюйце шпалеры ўручную з налад Android</string>
+    <string name="button_lock_screen_settings">Экран блакіроўкі</string>
+    <string name="switch_only_use_color">Толькі колер</string>
+    <string name="switch_use_color_overlay">Колер накладання</string>
+    <string name="color">Колер</string>
+    <string name="button_select_image">Абярыце малюнак</string>
+    <string name="heading_day_time_settings">Дзённы час</string>
+    <string name="heading_night_time_settings">Начны час</string>
+    <string name="dialog_advanced_title">Дзеянні:</string>
+    <string name="dialog_button_preview">Прадпрагляд выявы</string>
+    <string name="dialog_button_advanced">Кантраст &amp; Яркасць</string>
+    <string name="dialog_button_select_image">Абярыце іншы малюнак</string>
+    <string name="dialog_button_delete_image">Выдаліць малюнак</string>
+    <string name="switch_separate_lock_screen_settings">Асобныя налады экрана блакіроўкі</string>
+    <string name="switch_separate_lock_screen_settings_description">Уключыце, каб выкарыстоўваць асобныя налады экрана блакіроўкі</string>
+    <string name="switch_animate_from_lock_screen">Аніміраваны пераход да шпалер галоўнага экрана пасля разблакіроўкі</string>
+    <string name="switch_animate_from_lock_screen_description">Дазволіць выкарыстанне аніміраванага пераходу да галоўнага экрана пасля разблакіроўкі</string>
+    <string name="lock_symbol_description">Сімвал экрана блакіроўкі</string>
+    <string name="sun_symbol_description">Сонца/Дзень</string>
+    <string name="moon_symbol_description">Месяц/Ноч</string>
+    <string name="button_select_color_description">Абярыце колер</string>
+    <string name="switch_reuse_day_image_for_night">Выкарыстоўвайце выяву дзённага часу</string>
+    <string name="switch_reuse_day_image_for_night_description">Выкарыстоўвайце асобныя начныя шпалеры або паўторна выкарыстоўвайце дзённыя шпалеры</string>
+    <string name="text_lock_screen_explanation">Калі вы ўключыце пераключальнік уверсе, вы можаце ўсталяваць розныя шпалеры і розныя колеры для экрана блакіроўкі.
+ \nНа жаль, гэта працуе не на ўсіх тэлефонах, таму што некаторыя вытворцы тэлефонаў усталёўваюць уласныя шпалеры экрана блакіроўкі і не дазваляюць іх змяняць.
+ \n\nКалі вы ўсталёўваеце жывыя шпалеры, не забудзьцеся націснуць \"Галоўны экран і экран блакіроўкі\".
+ \n\nМалюнак экрана блакіроўкі павінен адпавядаць памеру экрана. Калі ён большы за экран, ён будзе маштабаваны і адцэнтраваны.\n</string>
+    <string name="about">Аб праграме</string>
+    <string name="about_issues"><![CDATA[Вы знайшлі праблему ці ў вас ёсць прапанова?<br>Адкрыйце праблему на <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Час пачатку:</string>
+    <string name="end_time">Час заканчэння:</string>
+    <string name="night_mode_trigger">Трыгер начнога рэжыму:</string>
+    <string name="night_mode_trigger_follow_system">Прытрымлівацца налад сістэмы</string>
+    <string name="night_mode_trigger_time_range">Дыяпазон часу</string>
+    <string name="zoom_effect">Эфект павелічэння:</string>
+    <string name="zoom_effect_description">На Android 11+ анімацыя \"павялічвання\" адбываецца, калі вы перацягваеце ўніз вобласць апавяшчэнняў або калі адкрываеце агляд нядаўніх праграм.</string>
+    <string name="seek_bar_blur">Эфект размыцця:</string>
+    <string name="scrolling_mode">Эфект пракруткі:</string>
+    <string name="scrolling_mode_value_automatic">Аўтаматычна</string>
+    <string name="scrolling_mode_value_on">Укл.</string>
+    <string name="scrolling_mode_value_off">Адкл.</string>
+    <string name="scrolling_mode_value_inverse">Перавернуты</string>
+</resources>
