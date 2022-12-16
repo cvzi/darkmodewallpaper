@@ -4,15 +4,15 @@
 -->
 <resources>
     <string name="app_name">DarkModeLiveWallpaper</string>
-    <string name="use_as_day_home">Шпалеры галоўнага экрана днём</string>
-    <string name="use_as_night_home">Шпалеры галоўнага экрана ноччу</string>
-    <string name="use_as_day_lock">Шпалеры экрана блакавання днём</string>
-    <string name="use_as_night_lock">Шпалеры экрана блакавання ноччу</string>
+    <string name="use_as_day_home">Шпалеры галоўнага экрана ў дзённы час</string>
+    <string name="use_as_night_home">Шпалеры галоўнага экрана ў начны час</string>
+    <string name="use_as_day_lock">Шпалеры экрана блакоўкі ў дзённы час</string>
+    <string name="use_as_night_lock">Шпалеры экрана блакоўкі ў начны час</string>
     <string name="wallpaper_label">DarkModeWallpaper</string>
     <string name="wallpaper_description">Аўтаматычна мяняе шпалеры ў адпаведнасці са светлай/цёмнай тэмай</string>
     <string name="wallpaper_is_loading">Загрузка…</string>
-    <string name="color_chooser_day">Абярыце колер накладання днём</string>
-    <string name="color_chooser_night">Абярыце колер накладання ноччу</string>
+    <string name="color_chooser_day">Выберыце колер накладання ў дзённы час</string>
+    <string name="color_chooser_night">Выберыце колер накладання ў начны час</string>
     <string name="status_darkmode">Статус цёмнага рэжыму:</string>
     <string name="status_darkmode_day">Дзённы час/Светлая тэма</string>
     <string name="status_darkmode_night">Начны час/Цёмная тэма</string>
@@ -20,7 +20,7 @@
     <string name="status_screen_size">Памер экрана:</string>
     <!-- For example: 720x1080 -->
     <!-- For example: Select image (Day time/Home screen) -->
-    <string name="wallpaper_file_chooser_title">Абярыце малюнак (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_title">Выберыце малюнак (%1$s/%2$s)</string>
     <string name="wallpaper_file_chooser_day_time">Дзённы час</string>
     <string name="wallpaper_file_chooser_night_time">Начны час</string>
     <string name="wallpaper_file_chooser_home_screen">Галоўны экран</string>
