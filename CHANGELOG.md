@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.10
+*   🇧🇾 Belarusian translation added by [@Atrafon](https://github.com/Atrafon)
+
 ## 1.4.9
 *   Russian translation improved
 *   Fix dropdown color in dark mode [#96](https://github.com/cvzi/darkmodewallpaper/issues/96)
