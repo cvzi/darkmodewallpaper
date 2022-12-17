@@ -101,6 +101,6 @@
 Android changes the design and font colors according to the new colors.
 Depending on the wallpaper colors this can cause a flicker of the screen.
 Normally the colors are sent immediately after unlocking the phone.
-If you see flickering, set this option to "Wait" and instead the colors will be sent once you open an app.]]></string>
+If you see flickering, set this option to \"Wait\" and instead the colors will be sent once you open an app.]]></string>
 
 </resources>
