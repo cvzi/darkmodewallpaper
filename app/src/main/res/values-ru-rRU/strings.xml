@@ -85,4 +85,8 @@
     <string name="scrolling_mode_value_on">Вкл.</string>
     <string name="scrolling_mode_value_off">Откл.</string>
     <string name="scrolling_mode_value_inverse">Перевёрнутый</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Немедленно информировать Android о цветах новых обоев после разблокировки</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Подождать</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Немедленно</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Когда вы разблокируете телефон и обои экрана блокировки сменятся на обои главного экрана, приложению будет необходимо сообщить Android о цветах установленных обоев. Android адаптирует дизайн в соответствии с новыми цветами. В зависимости от цвета обоев, это может вызвать мерцание экрана. Обычно цвета отправляются сразу после разблокировки телефона. Если вы видите мерцание, установите для этого параметра значение \"Подождать\", и вместо этого, цвета будут отправлены, как только вы откроете приложение.]]></string>
 </resources>
