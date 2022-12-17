@@ -85,4 +85,8 @@
     <string name="scrolling_mode_value_on">Укл.</string>
     <string name="scrolling_mode_value_off">Адкл.</string>
     <string name="scrolling_mode_value_inverse">Перавернуты</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Неадкладна інфармаваць Android аб колерах новых шпалер пасля разблакіроўкі</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Пачакаць</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Неадкладна</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Калі вы разблакуеце тэлефон і шпалеры экрана блакіроўкі зменяцца на шпалеры галоўнага экрана, праграма павінна паведаміць Android аб новым колеры шпалер. Android адаптуе дызайн, каб ён адпавядаў новым колерам. У залежнасці ад колеру шпалер гэта можа прывесці да мігацення экрана. Колеры звычайна адпраўляюцца адразу пасля разблакіроўкі тэлефона. Калі вы бачыце мігаценне, усталюеце для гэтай опцыі значэнне \"Пачакаць\", і замест гэтага, колеры будуць адпраўленыя, як толькі вы адкрыеце праграму.]]></string>
 </resources>
