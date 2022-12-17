@@ -45,27 +45,27 @@
                         android:layout_height="wrap_content"
                         android:accessibilityHeading="true"
                         android:labelFor="@id/toggleButtonNotifyColorsImmediately"
-                        android:text="Immediately inform Android about new wallpaper colors after unlock"
+                        android:text="@string/setting_inform_new_wallpaper_colors_heading"
                         android:textStyle="bold" />
 
                     <ToggleButton
                         android:id="@+id/toggleButtonNotifyColorsImmediately"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="notifyColorsImmediately"
-                        android:textOff="Wait"
-                        android:textOn="Immediately" />
+                        android:text=""
+                        android:textOff="@string/setting_inform_new_wallpaper_colors_toggle_wait"
+                        android:textOn="@string/setting_inform_new_wallpaper_colors_toggle_immediately" />
 
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="10dp"
-                        android:text="When you unlock your phone and the lock-screen wallpaper changes into the home-screen wallpaper, the app needs to inform Android about the new colors. Android changes the design and font colors according to the new colors. This can cause a flicker of the screen with some wallpaper colors. If you enable this option, the colors are sent immediately after unlock. If you disable this option, the colors are sent once you open an app to prevent flickering." />
+                        android:text="@string/setting_inform_new_wallpaper_colors_description" />
 
                 </LinearLayout>
 
