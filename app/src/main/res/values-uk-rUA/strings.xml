@@ -3,86 +3,90 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name">DarkModeLiveШпалери</string>
-    <string name="use_as_day_home">Денні шпалери на домашній екран</string>
-    <string name="use_as_night_home">Шпалери нічного робочого столу</string>
-    <string name="use_as_day_lock">Денні шпалери екрану блокування</string>
-    <string name="use_as_night_lock">Шпалери нічного екрану блокування</string>
-    <string name="wallpaper_label">DarkModeШпалери</string>
-    <string name="wallpaper_description">Автоматично змінювати шпалери відповідно до світлу/темної теми</string>
-    <string name="wallpaper_is_loading">завантаження…</string>
-    <string name="color_chooser_day">Оберіть колір індикатора часу дня</string>
-    <string name="color_chooser_night">Виберіть колір накладання часу вночі</string>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Фонові малюнки головного екрана вдень</string>
+    <string name="use_as_night_home">Фонові малюнки головного екрана вночі</string>
+    <string name="use_as_day_lock">Фонові малюнки заблокованого екрана вдень</string>
+    <string name="use_as_night_lock">Фонові малюнки заблокованого екрана вночі</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Автоматично змінювати фонові малюнки відповідно до світлої/темної теми</string>
+    <string name="wallpaper_is_loading">Завантаження…</string>
+    <string name="color_chooser_day">Оберіть колір накладання вдень</string>
+    <string name="color_chooser_night">Оберіть колір накладання вночі</string>
     <string name="status_darkmode">Статус темного режиму:</string>
-    <string name="status_darkmode_day">Час доби/Світла тема</string>
+    <string name="status_darkmode_day">Денний час/світла тема</string>
     <string name="status_darkmode_night">Нічний час/Темна тема</string>
     <string name="status_requested_image_size">Рекомендований розмір зображення:</string>
     <string name="status_screen_size">Розмір екрана:</string>
     <!-- For example: 720x1080 -->
     <!-- For example: Select image (Day time/Home screen) -->
     <string name="wallpaper_file_chooser_title">Виберіть зображення (%1$s/%2$s)</string>
-    <string name="wallpaper_file_chooser_day_time">Удень</string>
-    <string name="wallpaper_file_chooser_night_time">Уночі</string>
-    <string name="wallpaper_file_chooser_home_screen">Домашній екран</string>
-    <string name="wallpaper_file_chooser_lock_screen">Блокування екрану</string>
-    <string name="wallpaper_import_dialog_title">Імпортувати поточні шпалери</string>
-    <string name="wallpaper_import_dialog_message">Ви хочете імпортувати ваші поточні шпалери?
-\n\n(може не працювати на живих шпалерах)
-\n\nЗапитує дозвіл на зберігання на наступному кроці.
-\nВи можете безпечно скасувати дозвіл, коли імпортується шпалера.</string>
+    <string name="wallpaper_file_chooser_day_time">Денний час</string>
+    <string name="wallpaper_file_chooser_night_time">Нічний час</string>
+    <string name="wallpaper_file_chooser_home_screen">Головний екран</string>
+    <string name="wallpaper_file_chooser_lock_screen">Заблокований екран</string>
+    <string name="wallpaper_import_dialog_title">Імпортувати поточній фоновий малюнок</string>
+    <string name="wallpaper_import_dialog_message">Ви хочете імпортувати поточний фоновий малюнок?
+\n\n(може не працювати з анімованими фоновими малюнками)
+\n\nНаступний крок: дозвольте доступ до файлів на пристрої
+\nВи можете безпечно відкликати роздільну здатність після імпорту фонового малюнка.</string>
     <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
-    <string name="wallpaper_import_success">Шпалери імпортовано\n%1$s</string>
+    <string name="wallpaper_import_success">Фоновий малюнок імпортовано\n%1$s</string>
     <string name="wallpaper_import_failed">Не вдалося отримати зображення</string>
-    <string name="wallpaper_import_permission_missing">Дозвіл на зберігання необхідно для імпортування шпалер!</string>
+    <string name="wallpaper_import_permission_missing">Доступ до файлів необхідний для імпорту фонового малюнка!</string>
     <string name="image_file_import_error">Не вдалося імпортувати зображення</string>
     <string name="image_file_import_loading_title">Імпорт файлу зображення</string>
     <!-- For example: Image stored in /sdcard/Pictures/day.png -->
     <string name="image_file_import_success">Зображення збережено в %1$s</string>
     <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
     <string name="image_file_import_loading_message">Оптимізація %2$s\n(імпортовано з %1$s)</string>
-    <string name="button_import_wallpaper">Імпортувати шпалери</string>
+    <string name="button_import_wallpaper">Імпорт фонового малюнка</string>
     <string name="button_more_settings">Додаткові налаштування</string>
-    <string name="button_apply_wallpaper">Застосувати як шпалери</string>
-    <string name="apply_wallpaper_unavailable">Будь ласка, встановіть шпалери вручну з налаштувань Android</string>
-    <string name="button_lock_screen_settings">Блокування екрану</string>
+    <string name="button_apply_wallpaper">Зробити фоновим малюнком</string>
+    <string name="apply_wallpaper_unavailable">Будь ласка, встановіть фоновий малюнок вручну в налаштуваннях Android</string>
+    <string name="button_lock_screen_settings">Заблокований екран</string>
     <string name="switch_only_use_color">Тільки колір</string>
-    <string name="switch_use_color_overlay">Накладка кольору</string>
+    <string name="switch_use_color_overlay">Колір накладання</string>
     <string name="color">Колір</string>
     <string name="button_select_image">Виберіть зображення</string>
-    <string name="heading_day_time_settings">Удень</string>
-    <string name="heading_night_time_settings">Уночі</string>
+    <string name="heading_day_time_settings">Денний час</string>
+    <string name="heading_night_time_settings">Нічний час</string>
     <string name="dialog_advanced_title">Дії:</string>
-    <string name="dialog_button_preview">Попередній перегляд шпалер</string>
+    <string name="dialog_button_preview">Попередній перегляд фонового малюнка</string>
     <string name="dialog_button_advanced">Контраст &amp; Яскравість</string>
     <string name="dialog_button_select_image">Виберіть інше зображення</string>
     <string name="dialog_button_delete_image">Видалити зображення</string>
-    <string name="switch_separate_lock_screen_settings">Окремі налаштування екрану блокування</string>
-    <string name="switch_separate_lock_screen_settings_description">Дозволяє використовувати окремі налаштування екрану блокування</string>
-    <string name="switch_animate_from_lock_screen">Анімація переходу на шпалери головного екрану після розблокування</string>
-    <string name="switch_animate_from_lock_screen_description">Увімкніть, щоб використовувати анімацію з екрану блокування на шпалери головного екрану після розблокування</string>
-    <string name="lock_symbol_description">Символ екрану блокування</string>
-    <string name="sun_symbol_description">Неділя</string>
+    <string name="switch_separate_lock_screen_settings">Окремі налаштування заблокованого екрана</string>
+    <string name="switch_separate_lock_screen_settings_description">Увімкніть, щоб використовувати окремі налаштування заблокованого екрану</string>
+    <string name="switch_animate_from_lock_screen">Анімований перехід до фонового малюнка головного екрана після розблокування</string>
+    <string name="switch_animate_from_lock_screen_description">Увімкніть, щоб використовувати анімований перехід із заблокованого екрана до фонового малюнка головного екрана після розблокування</string>
+    <string name="lock_symbol_description">Символ заблокованого екрана</string>
+    <string name="sun_symbol_description">Сонце/День</string>
     <string name="moon_symbol_description">Місяць/Ніч</string>
     <string name="button_select_color_description">Вибір кольору</string>
-    <string name="switch_reuse_day_image_for_night">Використовувати денний час</string>
-    <string name="switch_reuse_day_image_for_night_description">Використовувати індивідуальні шпалери часу вночі або використовувати шпалери часу часу</string>
-    <string name="text_lock_screen_explanation">Якщо увімкнути перемикач зверху, можна встановити різні шпалери і різні кольори для екрану блокування.
-\nна жаль, це не працює на всіх телефонах, тому що деякі виробники телефонів встановлюють власні шпалери екрану блокування, тому ви не зможете це змінити.
-\n\nНе забудьте натиснути «Домашній екран та екран блокування», коли встановите живий шпалер.
-\n\nЗображення екрану блокування має відповідати розміру екрану. Якщо він більший за екран, він буде масштабований і поцентрований.\n</string>
-    <string name="about">Про застосунок</string>
-    <string name="about_issues"><![CDATA[Ви знайшли помилку або маєте пропозицію?<br>Відкрийте проблему на <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="switch_reuse_day_image_for_night">Використати зображення денного часу</string>
+    <string name="switch_reuse_day_image_for_night_description">Використовувати окремий фоновий малюнок у нічний час або використовувати фоновий малюнок денного часу</string>
+    <string name="text_lock_screen_explanation">Якщо ви увімкнете перемикач зверху, ви зможете встановлювати різні фонові малюнки та різні кольори для заблокованого екрана.
+\nНа жаль, це не працює на всіх телефонах, тому що деякі виробники телефонів встановлюють власні фонові малюнки заблокованого екрана, тому ви не зможете це змінити.
+\n\nНе забудьте натиснути «Головной екран та заблокований екран», щоб встановити анімований фоновий малюнок.
+\n\nЗображення заблокованого екрану має відповідати розміру екрану. Якщо він більший за екран, він буде масштабований і поцентрований.\n</string>
+    <string name="about">Про програму</string>
+    <string name="about_issues"><![CDATA[Ви знайшли помилку або маєте пропозицію?<br>Відкрийте помилку на <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
     <string name="start_time">Час початку:</string>
     <string name="end_time">Час завершення:</string>
     <string name="night_mode_trigger">Тригер нічного режиму:</string>
-    <string name="night_mode_trigger_follow_system">Наслідувати систему</string>
-    <string name="night_mode_trigger_time_range">Проміжок часу</string>
-    <string name="zoom_effect">Ефект масштабування:</string>
-    <string name="zoom_effect_description">На Android 11+ анімація \"збільшення\" відбувається, коли ви тягнете панель сповіщень або відкриєте огляд нещодавніх додатків.</string>
-    <string name="seek_bar_blur">Blur:</string>
-    <string name="scrolling_mode">Прокрутка:</string>
-    <string name="scrolling_mode_value_automatic">Авто</string>
-    <string name="scrolling_mode_value_on">Увімк</string>
-    <string name="scrolling_mode_value_off">Вимкнено</string>
-    <string name="scrolling_mode_value_inverse">У зворотньому напрямку</string>
+    <string name="night_mode_trigger_follow_system">Системна тема</string>
+    <string name="night_mode_trigger_time_range">Інтервал часу</string>
+    <string name="zoom_effect">Ефект збільшення:</string>
+    <string name="zoom_effect_description">На Android 11+ анімація \"збільшення\" відбувається, коли ви тягнете панель сповіщень або відкриєте огляд нещодавніх програм.</string>
+    <string name="seek_bar_blur">Ефект розмиття:</string>
+    <string name="scrolling_mode">Ефект прокручування:</string>
+    <string name="scrolling_mode_value_automatic">Автоматично</string>
+    <string name="scrolling_mode_value_on">Увімк.</string>
+    <string name="scrolling_mode_value_off">Вимк.</string>
+    <string name="scrolling_mode_value_inverse">Перевернутий</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Одразу інформувати Android про нові кольори фонового малюнка після розблокування</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Зачекати</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Одразу</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Коли ви розблокуєте телефон і фоновий малюнок заблокованого екрану зміниться на фоновий малюнок головного екрана, програмі потрібно повідомити Android про колір фонових малюнків. Android адаптує дизайн відповідно до нових кольорів. Залежно від кольору фонового малюнка, це може спричинити мерехтіння екрана. Зазвичай кольори надсилаються відразу після розблокування телефону. Якщо ви бачите мерехтіння, встановіть для цього параметра значення \"Зачекати\", і замість цього кольори будуть відправлені, як тільки ви відкриєте програму.]]></string>
 </resources>
