@@ -85,4 +85,12 @@
     <string name="scrolling_mode_value_on">Wł.</string>
     <string name="scrolling_mode_value_off">Wył.</string>
     <string name="scrolling_mode_value_inverse">Odwrócone</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Natychmiast poinformuj Androida o nowych kolorach tapety po odblokowaniu</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Czekaj</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Natychmiast</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Kiedy odblokowujesz swój telefon i tapetę ekranu blokady zmieniają się w tapetę ekranu głównego, aplikacja musi poinformować Androida o kolorze tapety.
+Interfejs Android zmienia kolory projektu i czcionki w zależności od nowych kolorów.
+W zależności od kolorów tapety może to spowodować migotanie ekranu.
+Zazwyczaj kolory są wysyłane bezpośrednio po odblokowaniu telefonu.
+Jeśli widzisz migotanie, ustaw tę opcję na \"Czekaj\" i zamiast tego kolory zostaną wysłane po otwarciu aplikacji.]]></string>
 </resources>
