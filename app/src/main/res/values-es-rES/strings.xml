@@ -85,4 +85,12 @@
     <string name="scrolling_mode_value_on">Activado</string>
     <string name="scrolling_mode_value_off">Desactivado</string>
     <string name="scrolling_mode_value_inverse">Inverso</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Después de desbloquear inmediatamente informar Android sobre los nuevos colores del fondo de pantalla</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Esperar</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Inmediatamente</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Cuando desbloquea el teléfono y el fondo de pantalla de bloqueo cambia al fondo de pantalla de inicio, la aplicación necesita informar Android sobre el color del fondo de pantalla.
+Android cambia el diseño y colores de fuentes de acuerdo a los nuevos colores.
+Dependiendo de los colores del fondo de pantalla esto puede causar un parpadeo en la pantalla.
+Normalmente los colores se envían inmediatamente después de desbloquear el teléfono.
+Si ves parpadeo, establece esta opción en \"Espera\" y los colores se enviarán una vez que abras una aplicación.]]></string>
 </resources>
