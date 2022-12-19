@@ -85,4 +85,12 @@
     <string name="scrolling_mode_value_on">An</string>
     <string name="scrolling_mode_value_off">Aus</string>
     <string name="scrolling_mode_value_inverse">Umgekehrt</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Android sofort nach Entsperren über neue Hintergrundfarben informieren</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Warten</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Sofort</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Wenn du dein Handy entsperrst und der Sperrbildschirm zum Startbildschirmhintergrund wechselt, muss die App Android über die Farbe des Hintergrundbildes informieren.
+Android ändert die Design- und Schriftfarben entsprechend den neuen Farben.
+Abhängig von den Hintergrundfarben kann das zu einem Flackern des Bildschirms führen.
+Normalerweise werden die Farben sofort nach Entsperren des Handys gesendet.
+Wenn das Flackern auftritt, stell diese Option auf \"Warten\" und stattdessen werden die Farben erst gesendet, wenn du eine App öffnest.]]></string>
 </resources>
