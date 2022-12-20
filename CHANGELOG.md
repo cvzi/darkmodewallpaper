@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.11
+*   Translations updated from crowdin
+
 ## 1.4.10
 *   🇧🇾 Belarusian translation added by [@Atrafon](https://github.com/Atrafon)
 
