@@ -85,4 +85,12 @@
     <string name="scrolling_mode_value_on">有効</string>
     <string name="scrolling_mode_value_off">無効</string>
     <string name="scrolling_mode_value_inverse">逆方向</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">ロック解除後の新しい壁紙の色をすぐにAndroidに送信する</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">待機</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">即時</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[スマートフォンのロックを解除したときにロックスクリーンの壁紙がホームスクリーンの壁紙に変わる場合、アプリからAndroidに壁紙の色を通知する必要があります。
+Androidは、新しい色に応じてデザインとフォントの色を変更します。
+壁紙の色によっては、画面がちらつくことがあります。
+通常、色はスマートフォンのロックを解除した直後に送信されます。
+ちらつきが発生した場合は、このオプションを\"待機\"に設定してください。代わりに、アプリを開くと色が送信されます。]]></string>
 </resources>
