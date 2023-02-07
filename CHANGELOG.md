@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.13
+*   Add current wallpaper colors to debug information
+*   Use viewBinding
+
 ## 1.4.12
 *   Translations updated from crowdin
 *   Fix link in copyright statement [#106](https://github.com/cvzi/darkmodewallpaper/issues/106)
