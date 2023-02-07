@@ -21,6 +21,7 @@ package com.github.cvzi.darkmodewallpaper
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.TimePickerDialog
+import android.app.WallpaperColors
 import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Context
@@ -595,4 +596,34 @@ fun shouldScrollingBeEnabled(
         ScrollingMode.OFF -> false
         else -> isDesiredSize
     }
+}
+
+fun Point.toSizeString() = "${x}x${y}"
+fun Color?.toPrettyString() = this?.let {
+    String.format("#%06X", 0xFFFFFF and toArgb())
+} ?: ""
+
+fun WallpaperColors.toPrettyString() =
+    "${primaryColor.toPrettyString()} ${secondaryColor.toPrettyString()} ${tertiaryColor.toPrettyString()} ${
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            "\n" + prettyColorHints(
+                this.colorHints
+            )
+        } else ""
+    }"
+
+fun prettyColorHints(colorHints: Int): String {
+    var s = "Dark text supported: "
+    s += if (colorHints and WallpaperColors.HINT_SUPPORTS_DARK_TEXT != 0) {
+        "yes"
+    } else {
+        "no"
+    }
+    s += "\nDark theme supported: "
+    s += if (colorHints and WallpaperColors.HINT_SUPPORTS_DARK_THEME != 0) {
+        "yes"
+    } else {
+        "no"
+    }
+    return s
 }

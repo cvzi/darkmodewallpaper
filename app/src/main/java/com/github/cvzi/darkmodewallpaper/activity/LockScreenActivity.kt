@@ -45,12 +45,12 @@ open class LockScreenActivity : MainActivity() {
         nightImageFile =
             imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
-        findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).setOnCheckedChangeListener { _, isChecked ->
+        binding.switchSeparateLockScreen.setOnCheckedChangeListener { _, isChecked ->
             preferencesGlobal.separateLockScreen = isChecked
             DarkWallpaperService.lockScreenSettingsChanged()
         }
 
-        findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).setOnCheckedChangeListener { _, isChecked ->
+        binding.switchAnimateFromLockScreen.setOnCheckedChangeListener { _, isChecked ->
             preferencesGlobal.animateFromLockScreen = isChecked
         }
     }
@@ -63,17 +63,17 @@ open class LockScreenActivity : MainActivity() {
         nightImageFile =
             imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
-        findViewById<ViewGroup>(R.id.tableRowButtonLockScreenSettings).removeAllViews()
-        findViewById<ViewGroup>(R.id.tableRowButtonApplyWallpaper).removeAllViews()
-        findViewById<View>(R.id.textViewLockScreenDescription).visibility = View.VISIBLE
-        findViewById<View>(R.id.cardViewLockScreenSwitch).visibility = View.VISIBLE
-        findViewById<View>(R.id.imageViewLockSymbolDay).visibility = View.VISIBLE
-        findViewById<View>(R.id.imageViewLockSymbolNight).visibility = View.VISIBLE
-        findViewById<View>(R.id.tableRowSwitchZoom).visibility = View.GONE
+        binding.tableRowButtonLockScreenSettings.removeAllViews()
+        binding.tableRowButtonApplyWallpaper.removeAllViews()
+        binding.textViewLockScreenDescription.visibility = View.VISIBLE
+        binding.cardViewLockScreenSwitch.visibility = View.VISIBLE
+        binding.imageViewLockSymbolDay.visibility = View.VISIBLE
+        binding.imageViewLockSymbolNight.visibility = View.VISIBLE
+        binding.tableRowSwitchZoom.visibility = View.GONE
 
-        findViewById<SwitchMaterial>(R.id.switchAnimateFromLockScreen).isChecked =
+        binding.switchAnimateFromLockScreen.isChecked =
             preferencesGlobal.animateFromLockScreen
-        findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).isChecked =
+        binding.switchSeparateLockScreen.isChecked =
             preferencesGlobal.separateLockScreen
     }
 
@@ -81,7 +81,7 @@ open class LockScreenActivity : MainActivity() {
         super.onPause()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            findViewById<View>(R.id.layoutRoot).visibility = View.INVISIBLE
+            binding.layoutRoot.visibility = View.INVISIBLE
         }, 500)
     }
 

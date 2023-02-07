@@ -31,7 +31,7 @@ import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Point
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -40,7 +40,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.DragEvent
 import android.view.DragEvent.ACTION_DROP
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -55,9 +54,12 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.github.cvzi.darkmodewallpaper.*
+import com.github.cvzi.darkmodewallpaper.databinding.ActivityMainBinding
+import com.github.cvzi.darkmodewallpaper.databinding.DialogAdvancedBinding
+import com.github.cvzi.darkmodewallpaper.databinding.DialogColorBinding
+import com.github.cvzi.darkmodewallpaper.databinding.LayoutAdvancedBinding
 import com.github.cvzi.darkmodewallpaper.view.PreviewView
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.rarepebble.colorpicker.ColorPickerView
 import java.io.File
 import kotlin.math.exp
 import kotlin.math.log
@@ -83,25 +85,9 @@ open class MainActivity : AppCompatActivity() {
     protected var dayImageFile: File? = null
     protected var nightImageFile: File? = null
 
+    protected lateinit var binding: ActivityMainBinding
     private lateinit var previewViewDay: PreviewView
     private lateinit var previewViewNight: PreviewView
-    private lateinit var imageButtonColorDay: ImageButton
-    private lateinit var imageButtonColorNight: ImageButton
-    private lateinit var switchColorDay: SwitchMaterial
-    private lateinit var switchColorNight: SwitchMaterial
-    private lateinit var switchWallpaperReuseDay: SwitchMaterial
-    private lateinit var switchColorOnlyNight: SwitchMaterial
-    private lateinit var switchColorOnlyDay: SwitchMaterial
-    private lateinit var buttonImportWallpaper: Button
-    private lateinit var buttonMoreSettings: Button
-    private lateinit var buttonApplyWallpaper: Button
-    private lateinit var textStatusDayOrNight: TextView
-    private lateinit var switchTriggerSystem: SwitchMaterial
-    private lateinit var textViewStartTime: TextView
-    private lateinit var textViewEndTime: TextView
-    private lateinit var tableRowTimeRangeTrigger: TableRow
-    private lateinit var switchZoomEnabled: SwitchMaterial
-    private lateinit var textZoomEnabled: TextView
     private lateinit var scrollingModeSpinnerDay: Spinner
     private lateinit var scrollingModeSpinnerNight: Spinner
     private lateinit var scrollingModeLayoutDay: LinearLayout
@@ -131,7 +117,9 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
 
         imageProvider = StaticDayAndNightProvider(this)
 
@@ -202,38 +190,19 @@ open class MainActivity : AppCompatActivity() {
         originalDesiredWidth = wallpaperManager.desiredMinimumWidth
         originalDesiredHeight = wallpaperManager.desiredMinimumHeight
 
-        textStatusDayOrNight = findViewById(R.id.textStatusDayOrNight)
-        previewViewDay = findViewById(R.id.viewColorDay)
-        previewViewNight = findViewById(R.id.viewColorNight)
-        buttonImportWallpaper = findViewById(R.id.buttonImportWallpaper)
-        buttonMoreSettings = findViewById(R.id.buttonMoreSettings)
-        buttonApplyWallpaper = findViewById(R.id.buttonApplyWallpaper)
-        val buttonSelectFileDay = findViewById<Button>(R.id.buttonSelectFileDay)
-        val buttonSelectFileNight = findViewById<Button>(R.id.buttonSelectFileNight)
-        switchWallpaperReuseDay = findViewById(R.id.switchWallpaperReuseDay)
-        switchColorDay = findViewById(R.id.switchColorDay)
-        switchColorNight = findViewById(R.id.switchColorNight)
-        switchColorOnlyDay = findViewById(R.id.switchColorOnlyDay)
-        switchColorOnlyNight = findViewById(R.id.switchColorOnlyNight)
-        imageButtonColorDay = findViewById(R.id.imageButtonColorDay)
-        imageButtonColorNight = findViewById(R.id.imageButtonColorNight)
-        switchTriggerSystem = findViewById(R.id.switchTriggerSystem)
-        textViewStartTime = findViewById(R.id.textViewStartTime)
-        textViewEndTime = findViewById(R.id.textViewEndTime)
-        tableRowTimeRangeTrigger = findViewById(R.id.tableRowTimeRangeTrigger)
-        switchZoomEnabled = findViewById(R.id.switchZoomEnabled)
-        textZoomEnabled = findViewById(R.id.textZoomEnabled)
-        scrollingModeSpinnerDay = findViewById(R.id.spinnerScrollingModeDay)
-        scrollingModeSpinnerNight = findViewById(R.id.spinnerScrollingModeNight)
-        scrollingModeLayoutDay = findViewById(R.id.linearLayoutScrollingModeDay)
-        scrollingModeLayoutNight = findViewById(R.id.linearLayoutScrollingModeNight)
+        previewViewDay = binding.viewColorDay
+        previewViewNight = binding.viewColorNight
+        scrollingModeSpinnerDay = binding.spinnerScrollingModeDay
+        scrollingModeSpinnerNight = binding.spinnerScrollingModeNight
+        scrollingModeLayoutDay = binding.linearLayoutScrollingModeDay
+        scrollingModeLayoutNight = binding.linearLayoutScrollingModeNight
 
         makeCardViewReceiveDragAndDrop(
-            findViewById(R.id.cardViewDay),
+            binding.cardViewDay,
             imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
         )
         makeCardViewReceiveDragAndDrop(
-            findViewById(R.id.cardViewNight),
+            binding.cardViewNight,
             imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
         )
 
@@ -241,23 +210,23 @@ open class MainActivity : AppCompatActivity() {
         setPreviewDimension(previewViewDay)
         setPreviewDimension(previewViewNight)
 
-        findViewById<Button>(R.id.buttonLockScreenSettings).setOnClickListener {
+        binding.buttonLockScreenSettings.setOnClickListener {
             Handler(Looper.getMainLooper()).postDelayed({
-                findViewById<View>(R.id.layoutRoot).visibility = View.INVISIBLE
+                binding.layoutRoot.visibility = View.INVISIBLE
             }, 200)
 
             startActivity(Intent(this, LockScreenActivity::class.java))
         }
 
-        buttonImportWallpaper.setOnClickListener {
+        binding.buttonImportWallpaper.setOnClickListener {
             askToImport()
         }
 
-        buttonMoreSettings.setOnClickListener {
+        binding.buttonMoreSettings.setOnClickListener {
             startActivity(Intent(this, MoreSettingsActivity::class.java))
         }
 
-        buttonApplyWallpaper.setOnClickListener {
+        binding.buttonApplyWallpaper.setOnClickListener {
             var c = 1
             // Always preview Home Screen
             if (isDayOrNightMode() == NIGHT) {
@@ -270,7 +239,7 @@ open class MainActivity : AppCompatActivity() {
                     R.string.apply_wallpaper_unavailable,
                     Toast.LENGTH_LONG
                 ).show()
-                buttonApplyWallpaper.isEnabled = false
+                binding.buttonApplyWallpaper.isEnabled = false
             }
         }
         Intent(
@@ -281,63 +250,65 @@ open class MainActivity : AppCompatActivity() {
                 ComponentName(this@MainActivity, DarkWallpaperService::class.java)
             )
             if (resolveActivity(packageManager) == null) {
-                buttonApplyWallpaper.isEnabled = false
+                binding.buttonApplyWallpaper.isEnabled = false
             }
         }
 
-        findViewById<View>(R.id.imageButtonAbout).setOnClickListener {
+        binding.imageButtonAbout.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        switchColorDay.isChecked = imageProvider.getUseColor(DAY, isLockScreenActivity)
-        switchColorDay.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchColorDay.isChecked = imageProvider.getUseColor(DAY, isLockScreenActivity)
+        binding.switchColorDay.setOnCheckedChangeListener { _, isChecked ->
             imageProvider.setUseColor(DAY, isLockScreenActivity, isChecked)
             previewViewDay.color =
                 if (isChecked) imageProvider.getColor(DAY, isLockScreenActivity) else 0
             if (!isChecked) {
                 imageProvider.setUseColorOnly(DAY, isLockScreenActivity, false)
-                switchColorOnlyDay.isChecked = false
+                binding.switchColorOnlyDay.isChecked = false
             }
             DarkWallpaperService.invalidate()
         }
 
-        switchColorNight.isChecked = imageProvider.getUseColor(NIGHT, isLockScreenActivity)
-        switchColorNight.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchColorNight.isChecked = imageProvider.getUseColor(NIGHT, isLockScreenActivity)
+        binding.switchColorNight.setOnCheckedChangeListener { _, isChecked ->
             imageProvider.setUseColor(NIGHT, isLockScreenActivity, isChecked)
             previewViewNight.color =
                 if (isChecked) imageProvider.getColor(NIGHT, isLockScreenActivity) else 0
             if (!isChecked) {
                 imageProvider.setUseColorOnly(NIGHT, isLockScreenActivity, false)
-                switchColorOnlyNight.isChecked = false
+                binding.switchColorOnlyNight.isChecked = false
             }
             DarkWallpaperService.invalidate()
         }
 
-        switchColorOnlyDay.isChecked = imageProvider.getUseColorOnly(DAY, isLockScreenActivity)
-        switchColorOnlyDay.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchColorOnlyDay.isChecked =
+            imageProvider.getUseColorOnly(DAY, isLockScreenActivity)
+        binding.switchColorOnlyDay.setOnCheckedChangeListener { _, isChecked ->
             imageProvider.setUseColorOnly(DAY, isLockScreenActivity, isChecked)
             if (isChecked) {
                 imageProvider.setUseColor(DAY, isLockScreenActivity, true)
-                switchColorDay.isChecked = true
+                binding.switchColorDay.isChecked = true
             }
             previewViewDay.file = currentDayFile()
             previewViewDay.invalidate()
             DarkWallpaperService.invalidate()
         }
 
-        switchColorOnlyNight.isChecked = imageProvider.getUseColorOnly(NIGHT, isLockScreenActivity)
-        switchColorOnlyNight.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchColorOnlyNight.isChecked =
+            imageProvider.getUseColorOnly(NIGHT, isLockScreenActivity)
+        binding.switchColorOnlyNight.setOnCheckedChangeListener { _, isChecked ->
             imageProvider.setUseColorOnly(NIGHT, isLockScreenActivity, isChecked)
             if (isChecked) {
                 imageProvider.setUseColor(NIGHT, isLockScreenActivity, true)
-                switchColorNight.isChecked = true
+                binding.switchColorNight.isChecked = true
             }
             previewViewNight.file = currentNightFile()
             previewViewNight.invalidate()
             DarkWallpaperService.invalidate()
         }
 
-        buttonSelectFileDay.setOnClickListener {
+        binding.buttonSelectFileDay.setOnClickListener {
             if (isLockScreenActivity) {
                 startForPickDayLockScreenFile.launch(
                     imagePickIntent()
@@ -347,11 +318,12 @@ open class MainActivity : AppCompatActivity() {
                     imagePickIntent()
                 )
             }
-            switchColorOnlyDay.isChecked = false
+            binding.switchColorOnlyDay.isChecked = false
         }
 
-        buttonSelectFileNight.isEnabled = imageProvider.getUseNightWallpaper(isLockScreenActivity)
-        buttonSelectFileNight.setOnClickListener {
+        binding.buttonSelectFileNight.isEnabled =
+            imageProvider.getUseNightWallpaper(isLockScreenActivity)
+        binding.buttonSelectFileNight.setOnClickListener {
             if (isLockScreenActivity) {
                 startForPickNightLockScreenFile.launch(
                     imagePickIntent()
@@ -361,117 +333,129 @@ open class MainActivity : AppCompatActivity() {
                     imagePickIntent()
                 )
             }
-            switchColorOnlyNight.isChecked = false
-            switchWallpaperReuseDay.isChecked = false
+            binding.switchColorOnlyNight.isChecked = false
+            binding.switchWallpaperReuseDay.isChecked = false
         }
 
-        switchWallpaperReuseDay.isChecked =
+        binding.switchWallpaperReuseDay.isChecked =
             !imageProvider.getUseNightWallpaper(isLockScreenActivity)
-        switchWallpaperReuseDay.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchWallpaperReuseDay.setOnCheckedChangeListener { _, isChecked ->
             imageProvider.setUseNightWallpaper(isLockScreenActivity, !isChecked)
             previewViewNight.file = currentNightFile()
-            buttonSelectFileNight.isEnabled = !isChecked
+            binding.buttonSelectFileNight.isEnabled = !isChecked
             DarkWallpaperService.invalidate()
         }
 
 
-        imageButtonColorDay.setColorFilter(imageProvider.getColor(DAY, isLockScreenActivity))
-        imageButtonColorDay.setOnClickListener {
+        binding.imageButtonColorDay.setColorFilter(
+            imageProvider.getColor(
+                DAY,
+                isLockScreenActivity
+            )
+        )
+        binding.imageButtonColorDay.setOnClickListener {
             colorChooserDialog(
                 R.string.color_chooser_day, {
                     imageProvider.getColor(DAY, isLockScreenActivity)
                 }, { color ->
                     imageProvider.setColor(DAY, isLockScreenActivity, color)
                     imageProvider.setUseColor(DAY, isLockScreenActivity, true)
-                    switchColorDay.isChecked = true
-                    imageButtonColorDay.setColorFilter(color)
+                    binding.switchColorDay.isChecked = true
+                    binding.imageButtonColorDay.setColorFilter(color)
                     previewViewDay.color = color
-                    imageButtonColorDay.setColorFilter(color)
+                    binding.imageButtonColorDay.setColorFilter(color)
                     DarkWallpaperService.invalidate()
                 })
         }
 
-        imageButtonColorNight.setColorFilter(imageProvider.getColor(NIGHT, isLockScreenActivity))
-        imageButtonColorNight.setOnClickListener {
+        binding.imageButtonColorNight.setColorFilter(
+            imageProvider.getColor(
+                NIGHT,
+                isLockScreenActivity
+            )
+        )
+        binding.imageButtonColorNight.setOnClickListener {
             colorChooserDialog(
                 R.string.color_chooser_night, {
                     imageProvider.getColor(NIGHT, isLockScreenActivity)
                 }, { color ->
                     imageProvider.setColor(NIGHT, isLockScreenActivity, color)
                     imageProvider.setUseColor(NIGHT, isLockScreenActivity, true)
-                    switchColorNight.isChecked = true
-                    imageButtonColorNight.setColorFilter(color)
+                    binding.switchColorNight.isChecked = true
+                    binding.imageButtonColorNight.setColorFilter(color)
                     previewViewNight.color = color
-                    imageButtonColorNight.setColorFilter(color)
+                    binding.imageButtonColorNight.setColorFilter(color)
                     DarkWallpaperService.invalidate()
                 })
         }
 
 
-        previewViewDay.color =
-            if (imageProvider.getUseColor(DAY, isLockScreenActivity)) imageProvider.getColor(
-                DAY,
-                isLockScreenActivity
-            ) else 0
-        previewViewDay.brightness = imageProvider.getBrightness(DAY, isLockScreenActivity)
-        previewViewDay.contrast = imageProvider.getContrast(DAY, isLockScreenActivity)
-        previewViewDay.blur = imageProvider.getBlur(DAY, isLockScreenActivity) / previewScale
-        previewViewDay.file = currentDayFile()
-        previewViewDay.setOnClickListener {
-            openAdvancedDialog(DAY)
+        previewViewDay.apply {
+            color =
+                if (imageProvider.getUseColor(DAY, isLockScreenActivity)) imageProvider.getColor(
+                    DAY,
+                    isLockScreenActivity
+                ) else 0
+            brightness = imageProvider.getBrightness(DAY, isLockScreenActivity)
+            contrast = imageProvider.getContrast(DAY, isLockScreenActivity)
+            blur = imageProvider.getBlur(DAY, isLockScreenActivity) / previewScale
+            file = currentDayFile()
+            setOnClickListener {
+                openAdvancedDialog(DAY)
+            }
+        }
+        previewViewNight.apply {
+            color = if (imageProvider.getUseColor(
+                    NIGHT,
+                    isLockScreenActivity
+                )
+            ) imageProvider.getColor(NIGHT, isLockScreenActivity) else 0
+            brightness = imageProvider.getBrightness(NIGHT, isLockScreenActivity)
+            contrast = imageProvider.getContrast(NIGHT, isLockScreenActivity)
+            blur = imageProvider.getBlur(NIGHT, isLockScreenActivity) / previewScale
+            file = currentNightFile()
+            setOnClickListener {
+                openAdvancedDialog(NIGHT)
+            }
         }
 
-        previewViewNight.color = if (imageProvider.getUseColor(
-                NIGHT,
-                isLockScreenActivity
-            )
-        ) imageProvider.getColor(NIGHT, isLockScreenActivity) else 0
-        previewViewNight.brightness = imageProvider.getBrightness(NIGHT, isLockScreenActivity)
-        previewViewNight.contrast = imageProvider.getContrast(NIGHT, isLockScreenActivity)
-        previewViewNight.blur = imageProvider.getBlur(NIGHT, isLockScreenActivity) / previewScale
-        previewViewNight.file = currentNightFile()
-        previewViewNight.setOnClickListener {
-            openAdvancedDialog(NIGHT)
-        }
-
-
-        switchTriggerSystem.isChecked =
+        binding.switchTriggerSystem.isChecked =
             preferencesGlobal.nightModeTrigger == NightModeTrigger.SYSTEM
-        switchTriggerSystem.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchTriggerSystem.setOnCheckedChangeListener { _, isChecked ->
             onTriggerModeChanged(isChecked)
         }
-        onTriggerModeChanged(switchTriggerSystem.isChecked)
+        onTriggerModeChanged(binding.switchTriggerSystem.isChecked)
 
-        textViewStartTime.setOnClickListener {
+        binding.textViewStartTime.setOnClickListener {
             createTimePicker(
                 this,
-                load = { textViewStartTime.text.toString() },
+                load = { binding.textViewStartTime.text.toString() },
                 save = { v ->
-                    textViewStartTime.text = v
+                    binding.textViewStartTime.text = v
                     saveTimeRange()
                 }).show()
         }
-        textViewEndTime.setOnClickListener {
+        binding.textViewEndTime.setOnClickListener {
             createTimePicker(
                 this,
-                load = { textViewEndTime.text.toString() },
+                load = { binding.textViewEndTime.text.toString() },
                 save = { v ->
-                    textViewEndTime.text = v
+                    binding.textViewEndTime.text = v
                     saveTimeRange()
                 }).show()
         }
         loadTimeRange()
 
         @SuppressLint("SetTextI18n")
-        textZoomEnabled.text = "${textZoomEnabled.text} ❓"
-        textZoomEnabled.setOnClickListener {
+        binding.textZoomEnabled.text = "${binding.textZoomEnabled.text} ❓"
+        binding.textZoomEnabled.setOnClickListener {
             AlertDialog.Builder(this).create().apply {
                 title = getString(R.string.zoom_effect)
                 setMessage(getString(R.string.zoom_effect_description))
             }.show()
         }
-        switchZoomEnabled.isChecked = preferencesGlobal.zoomEnabled
-        switchZoomEnabled.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchZoomEnabled.isChecked = preferencesGlobal.zoomEnabled
+        binding.switchZoomEnabled.setOnCheckedChangeListener { _, isChecked ->
             preferencesGlobal.zoomEnabled = isChecked
         }
 
@@ -550,19 +534,20 @@ open class MainActivity : AppCompatActivity() {
 
     private fun onTriggerModeChanged(isChecked: Boolean) {
         if (isChecked) {
-            tableRowTimeRangeTrigger.visibility = View.GONE
+            binding.tableRowTimeRangeTrigger.visibility = View.GONE
             preferencesGlobal.nightModeTrigger = NightModeTrigger.SYSTEM
-            switchTriggerSystem.setText(R.string.night_mode_trigger_follow_system)
+            binding.switchTriggerSystem.setText(R.string.night_mode_trigger_follow_system)
         } else {
-            tableRowTimeRangeTrigger.visibility = View.VISIBLE
+            binding.tableRowTimeRangeTrigger.visibility = View.VISIBLE
             preferencesGlobal.nightModeTrigger = NightModeTrigger.TIMERANGE
-            switchTriggerSystem.setText(R.string.night_mode_trigger_time_range)
+            binding.switchTriggerSystem.setText(R.string.night_mode_trigger_time_range)
         }
         DarkWallpaperService.updateNightMode()
     }
 
     private fun saveTimeRange() {
-        preferencesGlobal.nightModeTimeRange = "${textViewStartTime.text}-${textViewEndTime.text}"
+        preferencesGlobal.nightModeTimeRange =
+            "${binding.textViewStartTime.text}-${binding.textViewEndTime.text}"
         DarkWallpaperService.updateNightMode()
     }
 
@@ -570,11 +555,11 @@ open class MainActivity : AppCompatActivity() {
     private fun loadTimeRange() {
         val parts = preferencesGlobal.nightModeTimeRange.split("-")
         if (parts.size > 1) {
-            textViewStartTime.text = parts[0]
-            textViewEndTime.text = parts[1]
+            binding.textViewStartTime.text = parts[0]
+            binding.textViewEndTime.text = parts[1]
         } else {
-            textViewStartTime.text = "20:00"
-            textViewEndTime.text = "08:00"
+            binding.textViewStartTime.text = "20:00"
+            binding.textViewEndTime.text = "08:00"
         }
     }
 
@@ -667,7 +652,7 @@ open class MainActivity : AppCompatActivity() {
         callback: ((success: Boolean) -> Unit)? = null
     ) {
         if (isLockScreenActivity) {
-            findViewById<SwitchMaterial>(R.id.switchSeparateLockScreen).isChecked = true
+            binding.switchSeparateLockScreen.isChecked = true
         }
         val wallpaperManager = WallpaperManager.getInstance(this)
         val desiredMax =
@@ -765,10 +750,10 @@ open class MainActivity : AppCompatActivity() {
         }
 
         val alert = AlertDialog.Builder(this).setTitle(R.string.dialog_advanced_title).create()
-        val linearLayout =
-            LayoutInflater.from(this).inflate(R.layout.dialog_advanced, alert.listView)
-        alert.setView(linearLayout)
-        linearLayout.findViewById<Button>(R.id.buttonPreview).setOnClickListener {
+        val dialogBinding = DialogAdvancedBinding.inflate(this@MainActivity.layoutInflater)
+        alert.setView(dialogBinding.root)
+
+        dialogBinding.buttonPreview.setOnClickListener {
             alert.safeDismiss()
 
             var c = 1
@@ -799,7 +784,7 @@ open class MainActivity : AppCompatActivity() {
             }
 
         }
-        linearLayout.findViewById<Button>(R.id.buttonAdvanced).setOnClickListener {
+        dialogBinding.buttonAdvanced.setOnClickListener {
             alert.safeDismiss()
             if (dayOrNight == NIGHT) {
                 openAdvancedLayoutNight()
@@ -807,7 +792,7 @@ open class MainActivity : AppCompatActivity() {
                 openAdvancedLayoutDay()
             }
         }
-        linearLayout.findViewById<Button>(R.id.buttonNewImage).setOnClickListener {
+        dialogBinding.buttonNewImage.setOnClickListener {
             alert.safeDismiss()
             if (isLockScreenActivity && dayOrNight == DAY) {
                 startForPickDayLockScreenFile.launch(
@@ -819,7 +804,7 @@ open class MainActivity : AppCompatActivity() {
                         )
                     )
                 )
-                switchColorOnlyDay.isChecked = false
+                binding.switchColorOnlyDay.isChecked = false
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
                 startForPickNightLockScreenFile.launch(
                     imageChooserIntent(
@@ -830,8 +815,8 @@ open class MainActivity : AppCompatActivity() {
                         )
                     )
                 )
-                switchColorOnlyNight.isChecked = false
-                switchWallpaperReuseDay.isChecked = false
+                binding.switchColorOnlyNight.isChecked = false
+                binding.switchWallpaperReuseDay.isChecked = false
             } else if (dayOrNight == DAY) {
                 startForPickDayHomeScreenFile.launch(
                     imageChooserIntent(
@@ -842,7 +827,7 @@ open class MainActivity : AppCompatActivity() {
                         )
                     )
                 )
-                switchColorOnlyDay.isChecked = false
+                binding.switchColorOnlyDay.isChecked = false
             } else {
                 startForPickNightHomeScreenFile.launch(
                     imageChooserIntent(
@@ -853,11 +838,11 @@ open class MainActivity : AppCompatActivity() {
                         )
                     )
                 )
-                switchColorOnlyNight.isChecked = false
-                switchWallpaperReuseDay.isChecked = false
+                binding.switchColorOnlyNight.isChecked = false
+                binding.switchWallpaperReuseDay.isChecked = false
             }
         }
-        linearLayout.findViewById<Button>(R.id.buttonDeleteImage).setOnClickListener {
+        dialogBinding.buttonDeleteImage.setOnClickListener {
             alert.safeDismiss()
             imageProvider.storeFileLocation(
                 dayOrNight = dayOrNight,
@@ -900,11 +885,11 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun openAdvancedLayoutDay() {
-        openAdvancedLayoutDayOrNight(previewViewDay, switchColorDay, DAY)
+        openAdvancedLayoutDayOrNight(previewViewDay, binding.switchColorDay, DAY)
     }
 
     private fun openAdvancedLayoutNight() {
-        openAdvancedLayoutDayOrNight(previewViewNight, switchColorNight, NIGHT)
+        openAdvancedLayoutDayOrNight(previewViewNight, binding.switchColorNight, NIGHT)
     }
 
     private fun openAdvancedLayout(
@@ -932,12 +917,13 @@ open class MainActivity : AppCompatActivity() {
             }
         }
         if (isLockScreenActivity) {
-            findViewById<View>(R.id.cardViewLockScreenSwitch).visibility = View.GONE
+            binding.cardViewLockScreenSwitch.visibility = View.GONE
         }
 
-        LayoutInflater.from(this).inflate(R.layout.layout_advanced, linearLayout)
+        val layoutAdvancedBinding =
+            LayoutAdvancedBinding.inflate(layoutInflater, linearLayout, true)
 
-        val tmp = linearLayout.findViewById<View>(R.id.placeHolderForPreviewView)
+        val tmp = layoutAdvancedBinding.placeHolderForPreviewView
         val parent = tmp.parent as LinearLayout
         val index = parent.indexOfChild(tmp)
         parent.removeView(tmp)
@@ -946,60 +932,60 @@ open class MainActivity : AppCompatActivity() {
         parent.addView(previewView, index)
         previewView.tag = "previewView"
 
-
-        val colorPickerView =
-            linearLayout.findViewById<ColorPickerView>(R.id.colorPickerAdvanced)
-        colorPickerView.color = initColor
-        colorPickerView.showAlpha(true)
-        colorPickerView.showHex(false)
-        colorPickerView.addColorObserver {
-            onColorPick(it.color)
+        layoutAdvancedBinding.colorPickerAdvanced.apply {
+            color = initColor
+            showAlpha(true)
+            showHex(false)
+            addColorObserver {
+                onColorPick(it.color)
+            }
         }
 
-        val contrastSeekBar = findViewById<SeekBar>(R.id.seekBarContrast)
-        contrastSeekBar.rotation = 0.5f
-        contrastSeekBar.max = 1000
-        contrastSeekBar.progress = (342.0 * (exp(initContrast - 0.1) - 1.0)).toInt()
-        contrastSeekBar.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
-            val v = 0.1f + log(1.0 + progress / 342.0, Math.E).toFloat()
-            onContrastChanged(v)
-        })
+        layoutAdvancedBinding.seekBarContrast.apply {
+            rotation = 0.5f
+            max = 1000
+            progress = (342.0 * (exp(initContrast - 0.1) - 1.0)).toInt()
+            setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
+                val v = 0.1f + log(1.0 + progress / 342.0, Math.E).toFloat()
+                onContrastChanged(v)
+            })
+        }
 
-        val brightnessSeekBar = findViewById<SeekBar>(R.id.seekBarBrightness)
-        brightnessSeekBar.rotation = 0.5f
-        brightnessSeekBar.max = 1000
-        brightnessSeekBar.progress = (1.97 * initBrightness + 500).toInt()
-        brightnessSeekBar.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
-            val v = (progress - 500f) / 1.97f
-            onBrightnessChanged(v)
-        })
+        layoutAdvancedBinding.seekBarBrightness.apply {
+            rotation = 0.5f
+            max = 1000
+            progress = (1.97 * initBrightness + 500).toInt()
+            setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
+                val v = (progress - 500f) / 1.97f
+                onBrightnessChanged(v)
+            })
+        }
 
-        val labelBlur = findViewById<TextView>(R.id.labelBlur)
 
-        val blurSeekBar = findViewById<SeekBar>(R.id.seekBarBlur)
-        blurSeekBar.rotation = 0.5f
-        blurSeekBar.max = 1000
+        layoutAdvancedBinding.seekBarBlur.rotation = 0.5f
+        layoutAdvancedBinding.seekBarBlur.max = 1000
         // Seek bar map: 0-1 on bar maps to 0 and 1-101 on bar maps to 0-100
         // to make it easier to select 0 i.e. no blur
-        blurSeekBar.progress =
+        layoutAdvancedBinding.seekBarBlur.progress =
             if (initBlur <= 1f) {
                 0
             } else {
                 (1000f / 106f * (initBlur.coerceIn(0f, 100f) + 5f)).toInt()
             }
-        blurSeekBar.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
+        layoutAdvancedBinding.seekBarBlur.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
             val v = (progress * 106f / 1000f - 5f).coerceIn(0f, 100f)
             onBlurChanged(v)
-            @SuppressLint("SetTextI18n")
-            labelBlur.text = "%.1f".format(v)
-            labelBlur.width = (resources.displayMetrics.density * 40).toInt()
+            layoutAdvancedBinding.labelBlur.apply {
+                @SuppressLint("SetTextI18n")
+                text = "%.1f".format(v)
+                width = (resources.displayMetrics.density * 40).toInt()
+            }
         })
 
-        val buttonResetAdvanced = findViewById<Button>(R.id.buttonResetAdvanced)
-        buttonResetAdvanced.setOnClickListener {
-            brightnessSeekBar.progress = 500
-            contrastSeekBar.progress = 500
-            blurSeekBar.progress = 0
+        layoutAdvancedBinding.buttonResetAdvanced.setOnClickListener {
+            layoutAdvancedBinding.seekBarBrightness.progress = 500
+            layoutAdvancedBinding.seekBarContrast.progress = 500
+            layoutAdvancedBinding.seekBarBlur.progress = 0
         }
 
         setPreviewDimension(previewView, 3, 1, 2)
@@ -1028,7 +1014,7 @@ open class MainActivity : AppCompatActivity() {
 
         // Restore lock screen switch
         if (isLockScreenActivity) {
-            findViewById<View>(R.id.cardViewLockScreenSwitch).visibility = View.VISIBLE
+            binding.cardViewLockScreenSwitch.visibility = View.VISIBLE
         }
 
         // Resize color view
@@ -1050,8 +1036,13 @@ open class MainActivity : AppCompatActivity() {
         val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
         revertAdvancedLayout(layoutAdvanced)
         // Apply changes from advanced layout
-        imageButtonColorDay.setColorFilter(imageProvider.getColor(DAY, isLockScreenActivity))
-        imageButtonColorNight.setColorFilter(
+        binding.imageButtonColorDay.setColorFilter(
+            imageProvider.getColor(
+                DAY,
+                isLockScreenActivity
+            )
+        )
+        binding.imageButtonColorNight.setColorFilter(
             imageProvider.getColor(
                 NIGHT,
                 isLockScreenActivity
@@ -1063,11 +1054,11 @@ open class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
+        binding.layoutRoot.visibility = View.VISIBLE
 
-        buttonImportWallpaper.isVisible = !DarkWallpaperService.isRunning()
+        binding.buttonImportWallpaper.isVisible = !DarkWallpaperService.isRunning()
 
-        findViewById<View>(R.id.layoutRoot).visibility = View.VISIBLE
+        binding.layoutRoot.visibility = View.VISIBLE
 
         DarkWallpaperService.invalidate()
 
@@ -1078,7 +1069,7 @@ open class MainActivity : AppCompatActivity() {
         super.onPause()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            findViewById<View>(R.id.layoutRoot).visibility = View.INVISIBLE
+            binding.layoutRoot.visibility = View.INVISIBLE
         }, 500)
     }
 
@@ -1086,10 +1077,10 @@ open class MainActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
         when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
-                textStatusDayOrNight.text = getString(R.string.status_darkmode_day)
+                binding.textStatusDayOrNight.text = getString(R.string.status_darkmode_day)
             }
             Configuration.UI_MODE_NIGHT_YES -> {
-                textStatusDayOrNight.text = getString(R.string.status_darkmode_night)
+                binding.textStatusDayOrNight.text = getString(R.string.status_darkmode_night)
             }
         }
     }
@@ -1097,48 +1088,70 @@ open class MainActivity : AppCompatActivity() {
     private fun updateStatusValues() {
         val wallpaperManager = WallpaperManager.getInstance(this)
         val screenSize = getScreenSize()
-        fun Point.toSizeString() = "${x}x${y}"
 
-        textStatusDayOrNight.text =
-            getString(
-                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                    R.string.status_darkmode_night
-                } else {
-                    R.string.status_darkmode_day
-                }
+        binding.apply {
+
+            textStatusDayOrNight.text =
+                getString(
+                    if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                        R.string.status_darkmode_night
+                    } else {
+                        R.string.status_darkmode_day
+                    }
+                )
+
+            textStatusDesiredDimensions.text = getString(
+                R.string.resolution_width_x_height,
+                wallpaperManager.desiredMinimumWidth,
+                wallpaperManager.desiredMinimumHeight
             )
 
-        findViewById<TextView>(R.id.textStatusDesiredDimensions).text = getString(
-            R.string.resolution_width_x_height,
-            wallpaperManager.desiredMinimumWidth,
-            wallpaperManager.desiredMinimumHeight
+            textStatusScreenDimensions.text = getString(
+                R.string.resolution_width_x_height,
+                screenSize.x,
+                screenSize.y
+            )
+
+            textStatusCanvasDimensions.text =
+                DarkWallpaperService.statusCanvasSize.toSizeString()
+
+            textStatusBitmapSize.text =
+                DarkWallpaperService.statusBitmapSize.toSizeString()
+
+            textStatusRequestedSize.text =
+                DarkWallpaperService.statusRequestedSize.toSizeString()
+
+            textStatusScrolling.text =
+                DarkWallpaperService.statusScrolling.toString()
+
+            textStatusZoom.text =
+                DarkWallpaperService.statusZoom.toString()
+
+            val colors = DarkWallpaperService.statusWallpaperColors
+            textWallpaperColors.text =
+                colors?.toPrettyString() ?: "Not requested yet"
+
+            colors?.let {
+                viewColorPrimary.setBackgroundColor(colors.primaryColor.toArgb())
+                viewColorSeconday.setBackgroundColor(
+                    colors.secondaryColor?.toArgb()
+                        ?: Color.TRANSPARENT
+                )
+                viewColorTertiary.setBackgroundColor(
+                    colors.tertiaryColor?.toArgb()
+                        ?: Color.TRANSPARENT
+                )
+
+            } ?: viewColorPrimary.setBackgroundColor(Color.TRANSPARENT)
+
+        }
+        // TODO decode colorHints https://developer.android.com/reference/android/app/WallpaperColors#getColorHints()
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                updateStatusValues()
+            }, 1500
         )
-
-        findViewById<TextView>(R.id.textStatusScreenDimensions).text = getString(
-            R.string.resolution_width_x_height,
-            screenSize.x,
-            screenSize.y
-        )
-
-        findViewById<TextView>(R.id.textStatusCanvasDimensions).text =
-            DarkWallpaperService.statusCanvasSize.toSizeString()
-
-        findViewById<TextView>(R.id.textStatusBitmapSize).text =
-            DarkWallpaperService.statusBitmapSize.toSizeString()
-
-
-        findViewById<TextView>(R.id.textStatusRequestedSize).text =
-            DarkWallpaperService.statusRequestedSize.toSizeString()
-
-        findViewById<TextView>(R.id.textStatusScrolling).text =
-            DarkWallpaperService.statusScolling.toString()
-
-        findViewById<TextView>(R.id.textStatusZoom).text =
-            DarkWallpaperService.statusZoom.toString()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            updateStatusValues()
-        }, 1000)
     }
 
     private fun currentDayFile(): File? {
@@ -1319,22 +1332,23 @@ open class MainActivity : AppCompatActivity() {
         getColor: (() -> Int),
         storeColor: ((color: Int) -> Unit)
     ) {
-        val inflater = layoutInflater
-        val dialogLayout: View = inflater.inflate(R.layout.dialog_color, null)
+        val dialogBinding = DialogColorBinding.inflate(layoutInflater)
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle(title)
-        builder.setView(dialogLayout)
+        builder.setView(dialogBinding.root)
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
-            val color = dialogLayout.findViewById<ColorPickerView>(R.id.colorPicker).color
+            val color = dialogBinding.colorPicker.color
             storeColor(color)
             dialog.safeDismiss()
         }
         builder.setNegativeButton(android.R.string.cancel, null)
-        val dialog = builder.show()
-        val colorPickerView = dialog.findViewById(R.id.colorPicker) as ColorPickerView
-        colorPickerView.color = getColor()
-        colorPickerView.showAlpha(true)
-        colorPickerView.showHex(true)
+        builder.show()
+        dialogBinding.colorPicker.apply {
+            color = getColor()
+            showAlpha(true)
+            showHex(true)
+        }
     }
 
     private fun isDayOrNightMode(): DayOrNight {

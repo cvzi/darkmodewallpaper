@@ -43,6 +43,9 @@ android {
     kotlinOptions {
         jvmTarget = 11
     }
+    buildFeatures {
+        viewBinding true
+    }
     lint {
         disable 'MissingTranslation'
     }

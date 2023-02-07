@@ -764,6 +764,49 @@
                                     android:text="undefined" />
                             </TableRow>
 
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Wallpaper colors for launcher:" />
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/textWallpaperColors"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="monospace"
+                                        android:text="undefined" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:id="@+id/viewColorPrimary"
+                                            android:layout_width="10pt"
+                                            android:layout_height="10pt" />
+
+                                        <View
+                                            android:id="@+id/viewColorSeconday"
+                                            android:layout_width="10pt"
+                                            android:layout_height="10pt" />
+
+                                        <View
+                                            android:id="@+id/viewColorTertiary"
+                                            android:layout_width="10pt"
+                                            android:layout_height="10pt" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </TableRow>
 
                         </TableLayout>
                     </LinearLayout>

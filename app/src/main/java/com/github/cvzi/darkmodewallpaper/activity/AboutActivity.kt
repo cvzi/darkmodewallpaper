@@ -26,16 +26,20 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.cvzi.darkmodewallpaper.*
+import com.github.cvzi.darkmodewallpaper.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAboutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
 
-        setHtmlText(R.id.textViewAboutLicense, R.string.about_license)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setHtmlText(binding.textViewAboutLicense, R.string.about_license)
 
         val buttonAboutOpenSourceLicenses =
-            findViewById<TextView>(R.id.buttonAboutOpenSourceLicenses)
+            binding.buttonAboutOpenSourceLicenses
         buttonAboutOpenSourceLicenses.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about_open_source_licenses))
@@ -49,28 +53,28 @@ class AboutActivity : AppCompatActivity() {
         }
 
         setHtmlText(
-            R.id.textViewAppVersion,
+            binding.textViewAppVersion,
             R.string.about_version,
             BuildConfig.VERSION_NAME,
             BuildConfig.VERSION_CODE,
             BuildConfig.BUILD_TYPE
         )
 
-        setHtmlText(R.id.textViewIssues, R.string.about_issues)
+        setHtmlText(binding.textViewIssues, R.string.about_issues)
 
-        setHtmlText(R.id.textViewTranslate, R.string.about_translate)
+        setHtmlText(binding.textViewTranslate, R.string.about_translate)
     }
 
     private fun setHtmlText(
-        viewId: IdRes,
+        textView: TextView,
         stringRes: StringRes,
         vararg formatArgs: Any?
     ): TextView {
-        return setHtmlText(viewId, getString(stringRes, *formatArgs))
+        return setHtmlText(textView, getString(stringRes, *formatArgs))
     }
 
-    private fun setHtmlText(viewId: IdRes, htmlString: String): TextView {
-        return findViewById<TextView>(viewId).apply {
+    private fun setHtmlText(textView: TextView, htmlString: String): TextView {
+        return textView.apply {
             movementMethod = LinkMovementMethod()
             text = Html.fromHtml(
                 htmlString,

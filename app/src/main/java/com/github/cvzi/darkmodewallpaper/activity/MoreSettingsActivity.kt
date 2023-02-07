@@ -23,21 +23,23 @@ import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.github.cvzi.darkmodewallpaper.Preferences
 import com.github.cvzi.darkmodewallpaper.R
+import com.github.cvzi.darkmodewallpaper.databinding.ActivityMoreSettingsBinding
 
 /**
  * Advanced/More settings
  */
 class MoreSettingsActivity : AppCompatActivity() {
     private lateinit var preferencesGlobal: Preferences
-    private lateinit var toggleButtonNotifyColorsImmediately: ToggleButton
-
+    private lateinit var binding: ActivityMoreSettingsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preferencesGlobal = Preferences(this, R.string.pref_file)
-        setContentView(R.layout.activity_more_settings)
 
-        toggleButtonNotifyColorsImmediately = findViewById(R.id.toggleButtonNotifyColorsImmediately)
-        toggleButtonNotifyColorsImmediately.setOnCheckedChangeListener { _, isChecked ->
+        binding = ActivityMoreSettingsBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+
+        binding.toggleButtonNotifyColorsImmediately.setOnCheckedChangeListener { _, isChecked ->
             preferencesGlobal.notifyColorsImmediatelyAfterUnlock = isChecked
         }
     }
@@ -45,7 +47,7 @@ class MoreSettingsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        toggleButtonNotifyColorsImmediately.isChecked =
+        binding.toggleButtonNotifyColorsImmediately.isChecked =
             preferencesGlobal.notifyColorsImmediatelyAfterUnlock
     }
 }
