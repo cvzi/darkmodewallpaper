@@ -60,8 +60,9 @@ class DarkWallpaperService : WallpaperService() {
         val statusCanvasSize = Point(0, 0)
         val statusBitmapSize = Point(0, 0)
         val statusRequestedSize = Point(0, 0)
-        var statusScolling = false
+        var statusScrolling = false
         var statusZoom = 0f
+        var statusWallpaperColors: WallpaperColors? = null
 
         /**
          * Redraw or schedule redraw for all wallpapers that are currently running
@@ -522,6 +523,7 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onComputeColors(): WallpaperColors? {
+            statusWallpaperColors = wallpaperColors
             return wallpaperColors
         }
 
@@ -791,7 +793,7 @@ class DarkWallpaperService : WallpaperService() {
         ): WallpaperStatus {
             if (imageFile != null && bm != null && !bm.isRecycled) {
                 statusBitmapSize.set(bm.width, bm.height)
-                statusScolling = shouldScroll
+                statusScrolling = shouldScroll
                 waitAnimation = null
                 if (blendBitmaps != null) {
                     // Blend from lock screen to home screen
