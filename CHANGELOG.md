@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.14
+*   Refactor wallpaper colors calculation
+
 ## 1.4.13
 *   Add current wallpaper colors to debug information
 *   Use viewBinding
