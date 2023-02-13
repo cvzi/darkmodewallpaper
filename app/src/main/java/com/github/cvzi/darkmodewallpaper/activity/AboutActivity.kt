@@ -25,8 +25,11 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.github.cvzi.darkmodewallpaper.*
+import com.github.cvzi.darkmodewallpaper.BuildConfig
+import com.github.cvzi.darkmodewallpaper.R
+import com.github.cvzi.darkmodewallpaper.StringRes
 import com.github.cvzi.darkmodewallpaper.databinding.ActivityAboutBinding
+import com.github.cvzi.darkmodewallpaper.safeDismiss
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAboutBinding

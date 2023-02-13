@@ -19,7 +19,6 @@
 package com.github.cvzi.darkmodewallpaper.activity
 
 import android.os.Bundle
-import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.github.cvzi.darkmodewallpaper.Preferences
 import com.github.cvzi.darkmodewallpaper.R
