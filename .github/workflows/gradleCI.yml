@@ -21,9 +21,8 @@ jobs:
     - name: JDK
       uses: actions/setup-java@v3
       with:
-        distribution: 'adopt'
-        java-version: '15'
-        check-latest: true
+        distribution: 'temurin'
+        java-version: '16'
     - name: Add exec permission
       run: chmod +x gradlew
     - name: Validate Gradle Wrapper
