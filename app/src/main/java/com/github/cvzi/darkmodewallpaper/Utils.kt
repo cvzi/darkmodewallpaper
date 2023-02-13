@@ -627,3 +627,12 @@ fun prettyColorHints(colorHints: Int): String {
     }
     return s
 }
+
+class WallpaperColorsHelper(var bitmap: Bitmap?, val key: String?, val file: File?) {
+    private var isRecycled = false
+     fun use(): Boolean {
+         val t = isRecycled
+         isRecycled = true
+         return !t
+     }
+}

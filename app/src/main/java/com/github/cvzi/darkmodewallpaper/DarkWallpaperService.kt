@@ -247,11 +247,8 @@ class DarkWallpaperService : WallpaperService() {
         private var onUnLockBroadcastReceiver: OnUnLockBroadcastReceiver? = null
         private var wallpaperColors: WallpaperColors? = lastWallpaperColors
         private var calculateWallpaperColorsLastKey: String? = null
-        private var calculateWallpaperColors = false
-        private var calculateWallpaperColorsBitmap: Bitmap? = null
-        private var calculateWallpaperColorsKey: String? = null
-        private var calculateWallpaperColorsFile: File? = null
-        private var calculateWallpaperColorsTime: Long = 0L
+        private var calculateWallpaperColorsLastTime: Long = 0L
+        private var calculateWallpaperColorsHelper: WallpaperColorsHelper? = null
         private var notifyColorsOnVisibilityChange = false
         fun invalidate() {
             invalid = true
@@ -547,28 +544,29 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         private fun wallpaperColorsKey(key: String): String {
-            return "$key ${overlayPaint.color} ${wallpaperImage?.brightness} {wallpaperImage?.contrast}"
+            return "$key $currentBitmapFile ${overlayPaint.color} ${wallpaperImage?.brightness} ${wallpaperImage?.contrast} ${wallpaperImage?.blur}"
         }
 
-        private fun wallpaperColorsShouldCalculate(key: String): Boolean {
-            return wallpaperColors == null || wallpaperColorsKey(key) != calculateWallpaperColorsLastKey
+        private fun wallpaperColorsShouldCalculate(wallpaperColorsKey: String): Boolean {
+            return wallpaperColors == null || wallpaperColorsKey != calculateWallpaperColorsLastKey
         }
 
+        val runnableComputeWallpaperColors = Runnable {
+            computeWallpaperColors()
+        }
         private fun computeWallpaperColors() {
-            if (System.nanoTime() - calculateWallpaperColorsTime > 1000000000L) {
+            val helper = calculateWallpaperColorsHelper ?: return
+            if (System.nanoTime() - calculateWallpaperColorsLastTime > 1000000000L) {
+                if (!helper.use()) return
                 // notifyColorsChanged() should only be called every 1 second
                 val bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bm)
-                drawOnCanvas(canvas, calculateWallpaperColorsBitmap, calculateWallpaperColorsFile)
+                drawOnCanvas(canvas, helper.bitmap, helper.file)
                 wallpaperColors = WallpaperColors.fromBitmap(bm)
-                bm.recycle()
                 lastWallpaperColors = wallpaperColors
-                calculateWallpaperColorsTime = System.nanoTime()
-                calculateWallpaperColorsLastKey = calculateWallpaperColorsKey
-                calculateWallpaperColors = false
-                calculateWallpaperColorsBitmap = null
-                calculateWallpaperColorsKey = null
-                calculateWallpaperColorsFile = null
+                calculateWallpaperColorsLastTime = System.nanoTime()
+                calculateWallpaperColorsLastKey = helper.key
+                helper.bitmap = null
                 if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
                     notifyColorsChanged()
                 } else {
@@ -579,6 +577,9 @@ class DarkWallpaperService : WallpaperService() {
                 }
             } else {
                 Log.d(TAG, "computeWallpaperColors() deferred")
+                Handler(Looper.getMainLooper()).postDelayed ({
+                    update()
+                }, 1000)
             }
         }
 
@@ -769,18 +770,16 @@ class DarkWallpaperService : WallpaperService() {
             }
 
             // Calculate the wallpaper colors and notify Android system about new colors
+            val colorKey = wallpaperColorsKey(key)
             if (status is WallpaperStatusLoaded
                 && status !is WallpaperStatusLoadedBlending
-                && wallpaperColorsShouldCalculate(key)
+                && wallpaperColorsShouldCalculate(colorKey)
             ) {
-                calculateWallpaperColorsBitmap = currentBitmap
-                calculateWallpaperColorsKey = wallpaperColorsKey(key)
-                calculateWallpaperColorsFile = imageFile
-                if (!calculateWallpaperColors) {
-                    calculateWallpaperColors = true
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        computeWallpaperColors()
-                    }, 200)
+
+                calculateWallpaperColorsHelper = WallpaperColorsHelper(currentBitmap, colorKey, imageFile)
+                Handler(Looper.getMainLooper()).apply {
+                    removeCallbacks(runnableComputeWallpaperColors)
+                    postDelayed(runnableComputeWallpaperColors, 200)
                 }
             }
 
