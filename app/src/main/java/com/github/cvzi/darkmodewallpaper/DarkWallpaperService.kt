@@ -26,6 +26,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.*
+import android.graphics.drawable.AnimatedImageDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -36,7 +38,7 @@ import android.view.SurfaceHolder
 import androidx.core.graphics.component1
 import androidx.core.graphics.component2
 import com.github.cvzi.darkmodewallpaper.activity.MainActivity
-import com.github.cvzi.darkmodewallpaper.animation.BlendBitmaps
+import com.github.cvzi.darkmodewallpaper.animation.BlendImages
 import com.github.cvzi.darkmodewallpaper.animation.WaitAnimation
 import java.io.File
 import java.lang.ref.SoftReference
@@ -52,13 +54,14 @@ class DarkWallpaperService : WallpaperService() {
         private const val TAG = "DarkWallpaperService"
         private var forceReload = false
         private val SERVICES: ArrayList<WeakReference<DarkWallpaperService>> = ArrayList()
-        private val bitmaps: ConcurrentHashMap<String, SoftReference<ScaledBitmap>?> =
+        private val imageCache: ConcurrentHashMap<String, SoftReference<ScaledBitmapOrDrawable>?> =
             ConcurrentHashMap()
         private var loadFileThreadLock = ReentrantLock(false)
         private var loadFileThread = WeakReference<Thread>(null)
 
         val statusCanvasSize = Point(0, 0)
-        val statusBitmapSize = Point(0, 0)
+        val statusImageSize = Point(0, 0)
+        val statusScaledImageSize = Point(0, 0)
         val statusRequestedSize = Point(0, 0)
         var statusScrolling = false
         var statusZoom = 0f
@@ -66,12 +69,12 @@ class DarkWallpaperService : WallpaperService() {
 
         /**
          * Redraw or schedule redraw for all wallpapers that are currently running
-         * forceReload=true reloads all bitmaps from disk
+         * forceReload=true reloads all images from disk
          */
         fun invalidate(forceReload: Boolean = false) {
             if (forceReload) {
-                // Remove all bitmaps from memory
-                bitmaps.clear()
+                // Remove all images from memory
+                imageCache.clear()
                 this.forceReload = true
             }
             synchronized(SERVICES) {
@@ -223,14 +226,12 @@ class DarkWallpaperService : WallpaperService() {
             StaticDayAndNightProvider(this@DarkWallpaperService)
         private val self = WeakReference(this)
 
-        //private lateinit var dayImageLocation: File
-        //private lateinit var nightImageLocation: File
         private var wallpaperImage: WallpaperImage? = null
         private var isSecondaryDisplay = false
         private var width = 0
         private var height = 0
         private var visible = true
-        private var currentBitmapFile: File? = null
+        private var currentImageFile: File? = null
         private var zoom = 0f
         private var hasZoom = true
         private var offsetX = 0.5f
@@ -240,7 +241,7 @@ class DarkWallpaperService : WallpaperService() {
         private var offsetXBeforeLock = 0f
         private var offsetYBeforeLock = 0f
         private var waitAnimation: WaitAnimation? = null
-        private var blendBitmaps: BlendBitmaps? = null
+        private var blendImages: BlendImages? = null
         private var blendFromOffsetXPixel = 0f
         private var blendFromOffsetYPixel = 0f
         private var errorLoadingFile: String? = null
@@ -375,11 +376,11 @@ class DarkWallpaperService : WallpaperService() {
                     registerOnUnLock()
                 } else {
                     unRegisterOnUnLock()
-                    blendBitmaps = null
+                    blendImages = null
                     if (preferencesGlobal.animateFromLockScreen) {
-                        currentBitmapFile?.let {
+                        currentImageFile?.let {
                             val (desiredWidth, desiredHeight) = desiredDimensions()
-                            val key = generateBitmapKey(
+                            val key = generateCacheKey(
                                 width,
                                 height,
                                 desiredWidth,
@@ -389,11 +390,10 @@ class DarkWallpaperService : WallpaperService() {
                                 wallpaperImage?.blur,
                                 it.absolutePath
                             )
-                            val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
-                            if (scaledBitmap != null) {
-                                val (blendFromBitmap, _) = scaledBitmap
-                                blendBitmaps = BlendBitmaps(
-                                    blendFromBitmap,
+                            val scaledBitmapOrDrawable = imageCache.getOrDefault(key, null)?.get()
+                            if (scaledBitmapOrDrawable?.isValid() == true) {
+                                blendImages = BlendImages(
+                                    scaledBitmapOrDrawable.getBitmapOrDrawable(),
                                     overlayPaint.color,
                                     blendFromOffsetXPixel,
                                     blendFromOffsetYPixel
@@ -509,7 +509,7 @@ class DarkWallpaperService : WallpaperService() {
                 offsetY = yOffset
                 return onLockScreenStatusChanged()
             }
-            // Scrolling detected -> redraw bitmap
+            // Scrolling detected -> redraw image
             if (offsetX != xOffset || offsetY != yOffset) {
                 offsetX = if (isLockScreen) 0.5f else xOffset
                 offsetY = yOffset
@@ -544,16 +544,17 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         private fun wallpaperColorsKey(key: String): String {
-            return "$key $currentBitmapFile ${overlayPaint.color} ${wallpaperImage?.brightness} ${wallpaperImage?.contrast} ${wallpaperImage?.blur}"
+            return "$key $currentImageFile ${overlayPaint.color} ${wallpaperImage?.brightness} ${wallpaperImage?.contrast} ${wallpaperImage?.blur}"
         }
 
         private fun wallpaperColorsShouldCalculate(wallpaperColorsKey: String): Boolean {
             return wallpaperColors == null || wallpaperColorsKey != calculateWallpaperColorsLastKey
         }
 
-        val runnableComputeWallpaperColors = Runnable {
+        private val runnableComputeWallpaperColors = Runnable {
             computeWallpaperColors()
         }
+
         private fun computeWallpaperColors() {
             val helper = calculateWallpaperColorsHelper ?: return
             if (System.nanoTime() - calculateWallpaperColorsLastTime > 1000000000L) {
@@ -561,12 +562,12 @@ class DarkWallpaperService : WallpaperService() {
                 // notifyColorsChanged() should only be called every 1 second
                 val bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bm)
-                drawOnCanvas(canvas, helper.bitmap, helper.file)
+                drawOnCanvas(canvas, helper.bitmapOrDrawable, helper.file)
                 wallpaperColors = WallpaperColors.fromBitmap(bm)
                 lastWallpaperColors = wallpaperColors
                 calculateWallpaperColorsLastTime = System.nanoTime()
                 calculateWallpaperColorsLastKey = helper.key
-                helper.bitmap = null
+                helper.recycle()
                 if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
                     notifyColorsChanged()
                 } else {
@@ -577,13 +578,18 @@ class DarkWallpaperService : WallpaperService() {
                 }
             } else {
                 Log.d(TAG, "computeWallpaperColors() deferred")
-                Handler(Looper.getMainLooper()).postDelayed ({
+                Handler(Looper.getMainLooper()).postDelayed({
                     update()
                 }, 1000)
             }
         }
 
-        private fun loadFile(imageFile: File, desiredWidth: Int, desiredHeight: Int) {
+        private fun loadFile(
+            imageFile: File,
+            desiredWidth: Int,
+            desiredHeight: Int,
+            loadAnimated: Boolean
+        ) {
             if (loadFileThread.get()?.isAlive == true) {
                 // A thread is already running, no use spawning another one
                 return
@@ -592,69 +598,11 @@ class DarkWallpaperService : WallpaperService() {
                 override fun run() {
                     if (loadFileThreadLock.tryLock(50, TimeUnit.MILLISECONDS)) {
                         try {
-                            errorLoadingFile = null
-                            var currentBitmap: Bitmap? = null
-                            var isDesired = false
-                            val requestWidth = maxOf(desiredWidth, width)
-                            val requestHeight = maxOf(desiredHeight, height)
-                            statusRequestedSize.set(requestWidth, requestHeight)
-                            val originalBitmap = loadImageFile(
-                                imageFile,
-                                requestWidth,
-                                requestHeight
-                            )
-
-                            if (originalBitmap != null) {
-                                val (bm, isDesiredSize) = scaleAndAdjustBitmap(
-                                    originalBitmap,
-                                    width,
-                                    height,
-                                    desiredWidth,
-                                    desiredHeight,
-                                    wallpaperImage?.brightness,
-                                    wallpaperImage?.contrast,
-                                    wallpaperImage?.blur
-                                )
-                                isDesired = isDesiredSize
-                                shouldScroll = shouldScrollingBeEnabled(
-                                    isDesired,
-                                    wallpaperImage?.scrollingMode
-                                )
-                                reverseScroll =
-                                    wallpaperImage?.scrollingMode == ScrollingMode.REVERSE
-                                currentBitmap = bm
-                                if (currentBitmap != originalBitmap) {
-                                    originalBitmap.recycle()
-                                }
-
+                            if (loadAnimated) {
+                                loadFileAnimated(imageFile, desiredWidth, desiredHeight)
                             } else {
-                                Log.e(TAG, "Failed to read image from file $imageFile")
+                                loadFileBitmap(imageFile, desiredWidth, desiredHeight)
                             }
-                            val key = generateBitmapKey(
-                                width,
-                                height,
-                                desiredWidth,
-                                desiredHeight,
-                                wallpaperImage?.brightness,
-                                wallpaperImage?.contrast,
-                                wallpaperImage?.blur,
-                                imageFile.absolutePath
-                            )
-                            if (currentBitmap == null) {
-                                bitmaps.remove(key)
-                            } else {
-                                bitmaps[key] =
-                                    SoftReference(ScaledBitmap(currentBitmap, isDesired))
-                            }
-
-                            currentBitmapFile = imageFile
-
-                            if (currentBitmap == null) {
-                                errorLoadingFile = "Failed to load $imageFile"
-                                invalid = false
-                            }
-                            update(currentBitmap, isDesired)
-
                         } finally {
                             loadFileThreadLock.unlock()
                         }
@@ -667,32 +615,160 @@ class DarkWallpaperService : WallpaperService() {
 
         }
 
+        private fun loadFileBitmap(imageFile: File, desiredWidth: Int, desiredHeight: Int) {
+            errorLoadingFile = null
+            var currentBitmap: Bitmap? = null
+            var isDesired = false
+            val requestWidth = maxOf(desiredWidth, width)
+            val requestHeight = maxOf(desiredHeight, height)
+            statusRequestedSize.set(requestWidth, requestHeight)
+            val originalBitmap = loadImageFile(
+                imageFile,
+                requestWidth,
+                requestHeight
+            )
+
+            if (originalBitmap != null) {
+                val (bm, isDesiredSize) = scaleAndAdjustBitmap(
+                    originalBitmap,
+                    width,
+                    height,
+                    desiredWidth,
+                    desiredHeight,
+                    wallpaperImage?.brightness,
+                    wallpaperImage?.contrast,
+                    wallpaperImage?.blur
+                )
+                isDesired = isDesiredSize
+                shouldScroll = shouldScrollingBeEnabled(
+                    isDesired,
+                    wallpaperImage?.scrollingMode
+                )
+                reverseScroll =
+                    wallpaperImage?.scrollingMode == ScrollingMode.REVERSE
+                currentBitmap = bm
+                if (currentBitmap != originalBitmap) {
+                    originalBitmap.recycle()
+                }
+
+            } else {
+                Log.e(TAG, "Failed to read image from file $imageFile")
+            }
+            val key = generateCacheKey(
+                width,
+                height,
+                desiredWidth,
+                desiredHeight,
+                wallpaperImage?.brightness,
+                wallpaperImage?.contrast,
+                wallpaperImage?.blur,
+                imageFile.absolutePath
+            )
+
+            if (currentBitmap == null) {
+                imageCache.remove(key)
+            } else {
+                imageCache[key] =
+                    SoftReference(ScaledBitmapOrDrawable(ScaledBitmap(currentBitmap, isDesired)))
+            }
+
+            currentImageFile = imageFile
+
+            if (currentBitmap == null) {
+                errorLoadingFile = "Failed to load $imageFile"
+                invalid = false
+            }
+            update(BitmapOrDrawable(currentBitmap), isDesired)
+        }
+
+        private fun loadFileAnimated(imageFile: File, desiredWidth: Int, desiredHeight: Int) {
+            errorLoadingFile = null
+            val requestWidth = maxOf(desiredWidth, width)
+            val requestHeight = maxOf(desiredHeight, height)
+            statusRequestedSize.set(requestWidth, requestHeight)
+            val drawable = loadImageFile(imageFile)
+
+            // Apply contrast and brightness
+            val contrast = wallpaperImage?.contrast ?: 1f
+            val brightness = wallpaperImage?.brightness ?: 0f
+            if (abs(brightness) > 3f || abs(contrast - 1f) > 0.01f) {
+                drawable?.colorFilter = createColorMatrix(brightness, contrast)
+            } else {
+                drawable?.clearColorFilter()
+            }
+
+            if (drawable is AnimatedImageDrawable) {
+                drawable.start()
+            }
+            val key = generateCacheKey(
+                width,
+                height,
+                desiredWidth,
+                desiredHeight,
+                wallpaperImage?.brightness,
+                wallpaperImage?.contrast,
+                wallpaperImage?.blur,
+                imageFile.absolutePath
+            )
+
+            val isDesired = true
+            shouldScroll = shouldScrollingBeEnabled(
+                isDesired,
+                wallpaperImage?.scrollingMode
+            )
+            reverseScroll =
+                wallpaperImage?.scrollingMode == ScrollingMode.REVERSE
+
+            if (drawable == null) {
+                imageCache.remove(key)
+            } else {
+                val scaledBitmapOrDrawable = ScaledBitmapOrDrawable(drawable = drawable)
+                scaledBitmapOrDrawable.isDesiredSize = isDesired
+                imageCache[key] =
+                    SoftReference(scaledBitmapOrDrawable)
+            }
+
+            currentImageFile = imageFile
+
+            if (drawable == null) {
+                errorLoadingFile = "Failed to load $imageFile"
+                invalid = false
+            }
+            update(BitmapOrDrawable(drawable = drawable), isDesired)
+        }
+
 
         /**
          * Update the wallpaper appearance.
          * Reloads all preferences and draws on the canvas
          */
-        fun update(customBitmap: Bitmap? = null, isDesiredSize: Boolean = false) {
+        fun update(
+            customBitmapOrDrawable: BitmapOrDrawable? = null,
+            isDesiredSize: Boolean = false
+        ) {
             imageProvider.get(dayOrNight, isLockScreen) {
                 wallpaperImage = it
-                updateCanvas(customBitmap, isDesiredSize)
+                updateCanvas(customBitmapOrDrawable, isDesiredSize)
             }
         }
 
         /**
          * Draw on the canvas
          */
-        fun updateCanvas(customBitmap: Bitmap? = null, mIsDesiredSize: Boolean = false) {
+        fun updateCanvas(
+            customBitmapOrDrawable: BitmapOrDrawable? = null,
+            mIsDesiredSize: Boolean = false
+        ) {
             overlayPaint.color = wallpaperImage?.color ?: 0
 
             val imageFile = wallpaperImage?.imageFile
 
             val (desiredWidth, desiredHeight) = desiredDimensions()
-            var currentBitmap: Bitmap? = null
+            val currentBitmapOrDrawable = BitmapOrDrawable()
             var isDesiredSize = false
             val key: String
             if (imageFile != null) {
-                key = generateBitmapKey(
+                key = generateCacheKey(
                     width,
                     height,
                     desiredWidth,
@@ -702,30 +778,36 @@ class DarkWallpaperService : WallpaperService() {
                     wallpaperImage?.blur,
                     imageFile.absolutePath
                 )
-                currentBitmap = customBitmap
-                if (currentBitmap == null) {
-                    val scaledBitmap = bitmaps.getOrDefault(key, null)?.get()
-                    if (scaledBitmap != null) {
-                        currentBitmap = scaledBitmap.bitmap
-                        isDesiredSize = scaledBitmap.isDesiredSize
+                if (customBitmapOrDrawable?.isValid() == true) {
+                    currentBitmapOrDrawable.set(customBitmapOrDrawable)
+                }
+                if (currentBitmapOrDrawable.isNull()) {
+                    val scaledBitmapOrDrawable = imageCache.getOrDefault(key, null)?.get()
+                    if (scaledBitmapOrDrawable?.isValid() == true) {
+                        currentBitmapOrDrawable.set(scaledBitmapOrDrawable)
+                        isDesiredSize = scaledBitmapOrDrawable.isDesiredSize
                     }
                 } else {
                     isDesiredSize = mIsDesiredSize
                 }
 
-                if (forceReload || (customBitmap == null && (currentBitmap == null || currentBitmap.isRecycled))) {
+                if (forceReload || !currentBitmapOrDrawable.isValid()) {
                     if (forceReload) {
                         errorLoadingFile = null
                         forceReload = false
                     }
                     if (imageFile.exists() && imageFile.canRead()) {
-                        if (!((currentBitmapFile?.name?.contains("lock") == true).xor("lock" in imageFile.name))) {
+                        if (!((currentImageFile?.name?.contains("lock") == true).xor("lock" in imageFile.name))) {
                             // Do not recycle unlocked/locked version of an image
-                            currentBitmap?.recycle()
+                            currentBitmapOrDrawable.recycle()
                         }
-                        currentBitmap = null
                         if (loadFileThread.get()?.isAlive != true && errorLoadingFile.isNullOrEmpty()) {
-                            loadFile(imageFile, desiredWidth, desiredHeight)
+                            loadFile(
+                                imageFile,
+                                desiredWidth,
+                                desiredHeight,
+                                wallpaperImage?.animated == true
+                            )
                         }
                     } else {
                         Log.e(TAG, "No image file")
@@ -751,7 +833,7 @@ class DarkWallpaperService : WallpaperService() {
                 }
                 if (canvas != null) {
                     statusCanvasSize.set(canvas.width, canvas.height)
-                    status = drawOnCanvas(canvas, currentBitmap, imageFile)
+                    status = drawOnCanvas(canvas, currentBitmapOrDrawable, imageFile)
                 }
             } catch (e: IllegalArgumentException) {
                 Log.e(TAG, "lockCanvas():", e)
@@ -775,8 +857,8 @@ class DarkWallpaperService : WallpaperService() {
                 && status !is WallpaperStatusLoadedBlending
                 && wallpaperColorsShouldCalculate(colorKey)
             ) {
-
-                calculateWallpaperColorsHelper = WallpaperColorsHelper(currentBitmap, colorKey, imageFile)
+                calculateWallpaperColorsHelper =
+                    WallpaperColorsHelper(currentBitmapOrDrawable, colorKey, imageFile)
                 Handler(Looper.getMainLooper()).apply {
                     removeCallbacks(runnableComputeWallpaperColors)
                     postDelayed(runnableComputeWallpaperColors, 200)
@@ -787,14 +869,17 @@ class DarkWallpaperService : WallpaperService() {
 
         private fun drawOnCanvas(
             canvas: Canvas,
-            bm: Bitmap?,
+            bitmapOrDrawable: BitmapOrDrawable,
             imageFile: File?
         ): WallpaperStatus {
-            if (imageFile != null && bm != null && !bm.isRecycled) {
-                statusBitmapSize.set(bm.width, bm.height)
+            val bm = bitmapOrDrawable.bitmap
+            val drawable = bitmapOrDrawable.drawable
+
+            if (imageFile != null && bitmapOrDrawable.isValid()) {
                 statusScrolling = shouldScroll
                 waitAnimation = null
-                if (blendBitmaps != null) {
+
+                if (blendImages != null) {
                     // Blend from lock screen to home screen
                     val oX: Float
                     val oY: Float
@@ -805,9 +890,9 @@ class DarkWallpaperService : WallpaperService() {
                         oX = 0.5f
                         oY = 0.5f
                     }
-                    if (blendBitmaps?.draw(
+                    if (blendImages?.draw(
                             canvas,
-                            bm,
+                            bitmapOrDrawable,
                             overlayPaint.color,
                             oX,
                             oY,
@@ -816,68 +901,16 @@ class DarkWallpaperService : WallpaperService() {
                             height
                         ) != true
                     ) {
-                        blendBitmaps = null
+                        blendImages = null
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
                         update()
                     }, 50)
                     return WallpaperStatusLoadedBlending()
-                } else {
-                    // Draw bitmap
-                    blendBitmaps = null
-                    // Store current offset, in case of blending two bitmaps we will need the last offset
-                    if (shouldScroll && !isSecondaryDisplay) {
-                        blendFromOffsetXPixel = if (reverseScroll) {
-                            -(1f - offsetX) * (bm.width - width)
-                        } else {
-                            -offsetX * (bm.width - width)
-                        }
-                        blendFromOffsetYPixel = -offsetY * (bm.height - height)
-                    } else {
-                        blendFromOffsetXPixel = -0.5f * (bm.width - width)
-                        blendFromOffsetYPixel = -0.5f * (bm.height - height)
-                    }
-                    if (isPreview) {
-                        // Preview always set it offsetY=0.0
-                        blendFromOffsetYPixel = -0.5f * (bm.height - height)
-                    }
-
-                    statusZoom = if (hasZoom) {
-                        canvas.save()
-                        canvas.scale(
-                            1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
-                            0.5f * width, 0.5f * height
-                        )
-                        zoom
-                    } else {
-                        0f
-                    }
-                    try {
-                        canvas.drawBitmap(
-                            bm,
-                            blendFromOffsetXPixel,
-                            blendFromOffsetYPixel,
-                            null
-                        )
-                    } catch (e: RuntimeException) {
-                        Log.e(
-                            TAG,
-                            "canvas.drawBitmap() Bitmap: ${bm.width}x${bm.height} ${bm.byteCount}bytes",
-                            e
-                        )
-                    }
-                    if (hasZoom) {
-                        canvas.restore()
-                        if (zoom == 0f) {
-                            hasZoom = false
-                        }
-                    }
-
-                    //  and color
-                    if (overlayPaint.color != 0) {
-                        canvas.drawPaint(overlayPaint)
-                    }
-                    return WallpaperStatusLoadedImage()
+                } else if (bm != null) {
+                    return drawOnCanvasBitmap(canvas, bm)
+                } else if (drawable != null) {
+                    return drawOnCanvasDrawable(canvas, drawable)
                 }
             } else if (imageFile == null) {
                 // Color only
@@ -887,6 +920,7 @@ class DarkWallpaperService : WallpaperService() {
                 return WallpaperStatusLoadedSolid()
             } else {
                 // No image or image is loading -> show animation
+                Log.d(TAG, "Drawing waitAnimation")
                 waitAnimation = waitAnimation ?: WaitAnimation(
                     width,
                     height,
@@ -898,6 +932,141 @@ class DarkWallpaperService : WallpaperService() {
                 }, 200)
                 return WallpaperStatusLoading()
             }
+            return WallpaperStatusLoading()
+        }
+
+        private fun drawOnCanvasBitmap(
+            canvas: Canvas,
+            bitmap: Bitmap
+        ): WallpaperStatus {
+            statusImageSize.set(bitmap.width, bitmap.height)
+            statusScaledImageSize.set(0, 0)
+            blendImages = null
+            // Store current offset, in case of blending two bitmaps we will need the last offset
+            if (shouldScroll && !isSecondaryDisplay) {
+                blendFromOffsetXPixel = if (reverseScroll) {
+                    -(1f - offsetX) * (bitmap.width - width)
+                } else {
+                    -offsetX * (bitmap.width - width)
+                }
+                blendFromOffsetYPixel = -offsetY * (bitmap.height - height)
+            } else {
+                blendFromOffsetXPixel = -0.5f * (bitmap.width - width)
+                blendFromOffsetYPixel = -0.5f * (bitmap.height - height)
+            }
+            if (isPreview) {
+                // Preview always set it offsetY=0.0
+                blendFromOffsetYPixel = -0.5f * (bitmap.height - height)
+            }
+
+            // Zoom in (e.g. in task view)
+            statusZoom = if (hasZoom) {
+                canvas.save()
+                canvas.scale(
+                    1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
+                    0.5f * width, 0.5f * height
+                )
+                zoom
+            } else {
+                0f
+            }
+
+            // Draw bitmap
+            try {
+                canvas.drawBitmap(
+                    bitmap,
+                    blendFromOffsetXPixel,
+                    blendFromOffsetYPixel,
+                    null
+                )
+            } catch (e: RuntimeException) {
+                Log.e(
+                    TAG,
+                    "canvas.drawBitmap() Bitmap: ${bitmap.width}x${bitmap.height} ${bitmap.byteCount}bytes",
+                    e
+                )
+            }
+
+            //  and color
+            if (overlayPaint.color != 0) {
+                canvas.drawPaint(overlayPaint)
+            }
+
+            // Turn of zoom if it reached zero
+            if (hasZoom) {
+                canvas.restore()
+                if (zoom == 0f) {
+                    hasZoom = false
+                }
+            }
+            return WallpaperStatusLoadedImage()
+        }
+
+        private fun drawOnCanvasDrawable(
+            canvas: Canvas,
+            drawable: Drawable
+        ): WallpaperStatus {
+            statusImageSize.set(drawable.intrinsicWidth, drawable.intrinsicHeight)
+            blendImages = null
+
+            val (scale, imageWidth, imageHeight) = scaleDrawableToCanvas(drawable, width, height)
+            statusScaledImageSize.set(imageWidth, imageHeight)
+
+            // Store current offset, in case of blending two images we will need the last offset
+            if (shouldScroll && !isSecondaryDisplay) {
+                blendFromOffsetXPixel = if (reverseScroll) {
+                    -(1f - offsetX) * (imageWidth - width)
+                } else {
+                    -offsetX * (imageWidth - width)
+                }
+                blendFromOffsetYPixel = -offsetY * (imageHeight - height)
+            } else {
+                blendFromOffsetXPixel = -0.5f * (imageWidth - width)
+                blendFromOffsetYPixel = -0.5f * (imageHeight - height)
+            }
+            if (isPreview) {
+                // Preview always set it offsetY=0.0
+                blendFromOffsetYPixel = -0.5f * (imageHeight - height)
+            }
+
+            canvas.save()
+
+            // Zoom in (e.g. in task view)
+            statusZoom = if (hasZoom) {
+                canvas.scale(
+                    1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
+                    0.5f * width, 0.5f * height
+                )
+                zoom
+            } else {
+                0f
+            }
+
+            // Apply offset/Scrolling
+            canvas.translate(blendFromOffsetXPixel, blendFromOffsetYPixel)
+
+            // Enlarge small images
+            if (scale != 1f) {
+                canvas.scale(scale, scale)
+            }
+
+            // Draw animation
+            drawable.draw(canvas)
+
+            //  and color
+            if (overlayPaint.color != 0) {
+                canvas.drawPaint(overlayPaint)
+            }
+
+            canvas.restore()
+
+            // Turn of zoom if it reached zero
+            if (hasZoom) {
+                if (zoom == 0f) {
+                    hasZoom = false
+                }
+            }
+            return WallpaperStatusLoadedImage()
         }
 
     }
@@ -906,7 +1075,7 @@ class DarkWallpaperService : WallpaperService() {
         return "solidColor"
     }
 
-    private fun generateBitmapKey(
+    private fun generateCacheKey(
         width: Int,
         height: Int,
         desiredWidth: Int,

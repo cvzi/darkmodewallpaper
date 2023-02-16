@@ -329,8 +329,7 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         val scrollingMode =
             if (dayOrNight == NIGHT) currentPreferences.scrollingModeNight else currentPreferences.scrollingModeDay
 
-        val animated =
-            if (dayOrNight == NIGHT) currentPreferences.animatedFileNight else currentPreferences.animatedFileDay
+        val animated = isAnimated(dayOrNight, isLockScreen)
 
         // TODO expiration via trigger
 
