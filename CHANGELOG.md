@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0
+*   Support for animated GIF and WebP [#113](https://github.com/cvzi/darkmodewallpaper/issues/113) [#118](https://github.com/cvzi/darkmodewallpaper/pull/118)
+*   Update to Gradle 8.0
+
 ## 1.4.14
 *   Refactor wallpaper colors calculation
 
