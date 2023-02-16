@@ -22,9 +22,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import com.github.cvzi.darkmodewallpaper.DAY
 import com.github.cvzi.darkmodewallpaper.DarkWallpaperService
-import com.github.cvzi.darkmodewallpaper.NIGHT
 
 /**
  * Separate settings for lock screen wallpaper
@@ -36,11 +34,6 @@ open class LockScreenActivity : MainActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        dayImageFile =
-            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
-        nightImageFile =
-            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
         binding.switchSeparateLockScreen.setOnCheckedChangeListener { _, isChecked ->
             preferencesGlobal.separateLockScreen = isChecked
@@ -55,23 +48,20 @@ open class LockScreenActivity : MainActivity() {
     override fun onResume() {
         super.onResume()
 
-        dayImageFile =
-            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
-        nightImageFile =
-            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
+        binding.apply {
+            tableRowButtonLockScreenSettings.removeAllViews()
+            tableRowButtonApplyWallpaper.removeAllViews()
+            textViewLockScreenDescription.visibility = View.VISIBLE
+            cardViewLockScreenSwitch.visibility = View.VISIBLE
+            imageViewLockSymbolDay.visibility = View.VISIBLE
+            imageViewLockSymbolNight.visibility = View.VISIBLE
+            tableRowSwitchZoom.visibility = View.GONE
 
-        binding.tableRowButtonLockScreenSettings.removeAllViews()
-        binding.tableRowButtonApplyWallpaper.removeAllViews()
-        binding.textViewLockScreenDescription.visibility = View.VISIBLE
-        binding.cardViewLockScreenSwitch.visibility = View.VISIBLE
-        binding.imageViewLockSymbolDay.visibility = View.VISIBLE
-        binding.imageViewLockSymbolNight.visibility = View.VISIBLE
-        binding.tableRowSwitchZoom.visibility = View.GONE
-
-        binding.switchAnimateFromLockScreen.isChecked =
-            preferencesGlobal.animateFromLockScreen
-        binding.switchSeparateLockScreen.isChecked =
-            preferencesGlobal.separateLockScreen
+            switchAnimateFromLockScreen.isChecked =
+                preferencesGlobal.animateFromLockScreen
+            switchSeparateLockScreen.isChecked =
+                preferencesGlobal.separateLockScreen
+        }
     }
 
     override fun onPause() {

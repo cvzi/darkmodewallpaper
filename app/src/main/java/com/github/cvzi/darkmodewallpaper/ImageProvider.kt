@@ -20,7 +20,9 @@ package com.github.cvzi.darkmodewallpaper
 
 import android.content.Context
 import android.os.Environment
+import android.util.Log
 import java.io.File
+import java.io.IOException
 
 /**
  * All relevant properties of a Wallpaper
@@ -36,9 +38,11 @@ data class WallpaperImage(
     val contrast: Float,
     val blur: Float,
     val scrollingMode: ScrollingMode,
-    val expiration: Int?
+    val expiration: Int?,
+    val animated: Boolean
 )
 
+const val IMAGEPROVIDERTAG = "ImageProvider"
 
 abstract class ImageProvider(val context: Context) {
     abstract fun get(
@@ -59,11 +63,43 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
     private val preferencesHomeScreen: Preferences = Preferences(context, R.string.pref_file)
 
     private fun dayFileName(isLockScreen: Boolean): String {
-        return context.getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        return dayFileName(isLockScreen, currentPreferences.animatedFileDay)
     }
 
     private fun nightFileName(isLockScreen: Boolean): String {
-        return context.getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        return nightFileName(isLockScreen, currentPreferences.animatedFileNight)
+    }
+
+    private fun dayFileName(isLockScreen: Boolean, isAnimated: Boolean): String {
+        return if (isAnimated) {
+            context.getString(if (isLockScreen) R.string.file_name_gif_day_lock_wallpaper else R.string.file_name_gif_day_wallpaper)
+        } else {
+            context.getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
+        }
+    }
+
+    private fun nightFileName(isLockScreen: Boolean, isAnimated: Boolean): String {
+        return if (isAnimated) {
+            context.getString(if (isLockScreen) R.string.file_name_gif_night_lock_wallpaper else R.string.file_name_gif_night_wallpaper)
+        } else {
+            context.getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
+        }
+    }
+
+    private fun dayFileLocation(isLockScreen: Boolean, isAnimated: Boolean): File {
+        return File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            dayFileName(isLockScreen, isAnimated)
+        )
+    }
+
+    private fun nightFileLocation(isLockScreen: Boolean, isAnimated: Boolean): File {
+        return File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            nightFileName(isLockScreen, isAnimated)
+        )
     }
 
     private fun dayFileLocation(isLockScreen: Boolean): File {
@@ -78,6 +114,38 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
             context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             nightFileName(isLockScreen)
         )
+    }
+
+    fun setNewFile(dayOrNight: DayOrNight, isLockScreen: Boolean, isAnimated: Boolean, file: File) {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        // Delete existing files
+        storeFileLocation(dayOrNight, isLockScreen, isAnimated = false).run {
+            if (exists()) {
+                try {
+                    delete()
+                } catch (e: IOException) {
+                    Log.e(IMAGEPROVIDERTAG, "Could not delete old static file: $this", e)
+                }
+            }
+        }
+        storeFileLocation(dayOrNight, isLockScreen, isAnimated = true).run {
+            if (exists()) {
+                try {
+                    delete()
+                } catch (e: IOException) {
+                    Log.e(IMAGEPROVIDERTAG, "Could not delete animated static file: $this", e)
+                }
+            }
+        }
+
+        // Rename file to name depending on whether is is animated or not
+        file.renameTo(storeFileLocation(dayOrNight, isLockScreen, isAnimated = isAnimated))
+
+        if (dayOrNight == NIGHT) {
+            currentPreferences.animatedFileNight = isAnimated
+        } else {
+            currentPreferences.animatedFileDay = isAnimated
+        }
     }
 
     fun setBrightness(dayOrNight: DayOrNight, isLockScreen: Boolean, brightness: Float) {
@@ -214,6 +282,15 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         }
     }
 
+    fun isAnimated(dayOrNight: DayOrNight, isLockScreen: Boolean): Boolean {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        return if (dayOrNight == NIGHT && currentPreferences.useNightWallpaper) {
+            currentPreferences.animatedFileNight
+        } else {
+            currentPreferences.animatedFileDay
+        }
+    }
+
     override fun get(
         dayOrNight: DayOrNight,
         isLockScreen: Boolean,
@@ -252,6 +329,9 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         val scrollingMode =
             if (dayOrNight == NIGHT) currentPreferences.scrollingModeNight else currentPreferences.scrollingModeDay
 
+        val animated =
+            if (dayOrNight == NIGHT) currentPreferences.animatedFileNight else currentPreferences.animatedFileDay
+
         // TODO expiration via trigger
 
         callback(
@@ -262,8 +342,22 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
                 contrast,
                 blur,
                 scrollingMode,
-                -1
+                -1,
+                animated
             )
+        )
+    }
+
+    fun storeFileLocation(
+        dayOrNight: DayOrNight,
+        isLockScreen: Boolean,
+        isAnimated: Boolean
+    ): File {
+        return if (dayOrNight == NIGHT) nightFileLocation(
+            isLockScreen,
+            isAnimated
+        ) else dayFileLocation(
+            isLockScreen, isAnimated
         )
     }
 
@@ -275,4 +369,5 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
             isLockScreen
         )
     }
+
 }

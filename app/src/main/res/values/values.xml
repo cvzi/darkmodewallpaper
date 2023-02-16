@@ -8,6 +8,11 @@
     <string name="file_name_day_lock_wallpaper" translatable="false">lock_day.webp</string>
     <string name="file_name_night_lock_wallpaper" translatable="false">lock_night.webp</string>
 
+    <string name="file_name_gif_day_wallpaper" translatable="false">day.gif</string>
+    <string name="file_name_gif_night_wallpaper" translatable="false">night.gif</string>
+    <string name="file_name_gif_day_lock_wallpaper" translatable="false">lock_day.gif</string>
+    <string name="file_name_gif_night_lock_wallpaper" translatable="false">lock_night.gif</string>
+
     <string name="button_reset_contrast_brightness" translatable="false">⚖️</string>
     <string-array name="scrolling_mode_values">
         <item>@string/scrolling_mode_value_automatic</item>

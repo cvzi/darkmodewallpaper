@@ -28,6 +28,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.*
+import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.provider.MediaStore
@@ -52,11 +53,20 @@ import kotlin.math.max
 
 const val UTILSTAG = "Utils.kt"
 
+/**
+ * The scale factor for a Drawable to fill a canvas and the resulting width and height
+ */
+data class DrawableScaleFactor(val scale: Float, val width: Int, val height: Int)
+
+/**
+ * Holds a Bitmap and whether the Bitmap fulfils the requested desired size
+ */
 data class ScaledBitmap(val bitmap: Bitmap, val isDesiredSize: Boolean)
 
-fun Context.getThumbnailPath(fileName: String): File {
-    return File(externalCacheDir, fileName)
-}
+/**
+ * Holds the result of storing an image to disk and whether the image is an animation
+ */
+data class StoreFileResult(val success: Boolean, val isAnimated: Boolean)
 
 /**
  * Save the drawable to image file
@@ -106,12 +116,14 @@ fun storeFile(file: File, bitmap: Bitmap): Boolean {
 }
 
 /**
- * Save the stream content to file and scale it
+ * Save the stream content to file.
+ * Optionally scale it down. Animated files are never scaled.
  */
-fun storeFile(file: File, inputStream: InputStream, maximumSize: Int): Boolean {
+fun storeFile(file: File, inputStream: InputStream, maximumSize: Int): StoreFileResult {
     var outputStream: FileOutputStream? = null
     val tmpFile = File(file.parent, "${file.name}.tmp")
     var success = false
+    var isAnimated = false
     try {
         outputStream = FileOutputStream(tmpFile)
         inputStream.use { input ->
@@ -144,23 +156,47 @@ fun storeFile(file: File, inputStream: InputStream, maximumSize: Int): Boolean {
     }
 
     if (success) {
-        if (maximumSize > 0) {
+        isAnimated = isAnimatedImage(tmpFile)
+        if (!isAnimated && maximumSize > 0) {
             // Down sample the image
             val bitmap = loadImageFile(tmpFile, maximumSize, maximumSize)
             return if (bitmap != null) {
                 storeFile(file, bitmap)
                 tmpFile.delete()
-                true
+                StoreFileResult(success = true, isAnimated = false)
             } else {
-                false
+                StoreFileResult(success = false, isAnimated = false)
             }
         } else {
             file.delete()
             tmpFile.renameTo(file)
         }
     }
-    return false
+    return StoreFileResult(success = success, isAnimated = isAnimated)
 }
+
+/**
+ * Check whether ImageDecoder can read a file as an animation or not
+ */
+fun isAnimatedImage(file: File): Boolean {
+    return loadImageFile(file) is AnimatedImageDrawable
+}
+
+/**
+ * Load an image into a Drawable
+ */
+fun loadImageFile(imageFile: File): Drawable? {
+    return try {
+        ImageDecoder.decodeDrawable(ImageDecoder.createSource(imageFile))
+    } catch (e: IOException) {
+        Log.e(UTILSTAG, "Failed to open image from file $imageFile", e)
+        null
+    } catch (e: IllegalStateException) {
+        Log.e(UTILSTAG, "Failed to decode image from file $imageFile", e)
+        null
+    }
+}
+
 
 /**
  * Load a downscaled version of file into a bitmap
@@ -586,7 +622,9 @@ fun applyLiveWallpaper(activity: Activity, c: Int, onError: () -> Unit) {
     }
 }
 
-
+/**
+ * Decide whether scrolling should be enabled
+ */
 fun shouldScrollingBeEnabled(
     isDesiredSize: Boolean,
     scrollingMode: ScrollingMode? = null
@@ -598,11 +636,21 @@ fun shouldScrollingBeEnabled(
     }
 }
 
+/**
+ * Turn Point into string "XxY"
+ */
 fun Point.toSizeString() = "${x}x${y}"
+
+/**
+ * Turn WallpaperColors to readable text
+ */
 fun Color?.toPrettyString() = this?.let {
     String.format("#%06X", 0xFFFFFF and toArgb())
 } ?: ""
 
+/**
+ * Turn WallpaperColors to readable text
+ */
 fun WallpaperColors.toPrettyString() =
     "${primaryColor.toPrettyString()} ${secondaryColor.toPrettyString()} ${tertiaryColor.toPrettyString()} ${
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -612,6 +660,9 @@ fun WallpaperColors.toPrettyString() =
         } else ""
     }"
 
+/**
+ * Turn WallpaperColors.colorHints to readable text
+ */
 fun prettyColorHints(colorHints: Int): String {
     var s = "Dark text supported: "
     s += if (colorHints and WallpaperColors.HINT_SUPPORTS_DARK_TEXT != 0) {
@@ -628,11 +679,114 @@ fun prettyColorHints(colorHints: Int): String {
     return s
 }
 
-class WallpaperColorsHelper(var bitmap: Bitmap?, val key: String?, val file: File?) {
+/**
+ * Keeps a reference to the bitmap or drawable to later generate WallpaperColors
+ */
+class WallpaperColorsHelper(
+    var bitmapOrDrawable: BitmapOrDrawable,
+    val key: String?,
+    val file: File?
+) {
     private var isRecycled = false
-     fun use(): Boolean {
-         val t = isRecycled
-         isRecycled = true
-         return !t
-     }
+
+    /**
+     * Returns true the first time it is called and then false
+     */
+    fun use(): Boolean {
+        val t = isRecycled
+        isRecycled = true
+        return !t
+    }
+
+    /**
+     * Sets reference to bitmap and drawable to null
+     */
+    fun recycle() {
+        bitmapOrDrawable.set(null, null)
+    }
+}
+
+/**
+ * Holds a Bitmap or a Drawable or both null
+ */
+class BitmapOrDrawable(var bitmap: Bitmap? = null, var drawable: Drawable? = null) {
+    fun isNull(): Boolean {
+        return bitmap == null && drawable == null
+    }
+
+    fun isValid(): Boolean {
+        return (drawable != null) || (bitmap != null && bitmap?.isRecycled == false)
+    }
+
+    fun recycle() {
+        bitmap?.recycle()
+        bitmap = null
+        drawable = null
+    }
+
+    fun set(b: Bitmap?, d: Drawable?) {
+        bitmap = b
+        drawable = d
+    }
+
+    fun set(bitmapOrDrawable: BitmapOrDrawable?) {
+        bitmap = bitmapOrDrawable?.bitmap
+        drawable = bitmapOrDrawable?.drawable
+    }
+
+    fun set(scaledBitmapOrDrawable: ScaledBitmapOrDrawable?) {
+        bitmap = scaledBitmapOrDrawable?.scaledBitmap?.bitmap
+        drawable = scaledBitmapOrDrawable?.drawable
+    }
+
+    override fun toString(): String {
+        return "${super.toString()}[${bitmap ?: drawable ?: "null,null"}]"
+    }
+}
+
+/**
+ * Holds a ScaledBitmap or a Drawable or both null
+ */
+class ScaledBitmapOrDrawable(
+    var scaledBitmap: ScaledBitmap? = null,
+    var drawable: Drawable? = null
+) {
+    var isDesiredSize: Boolean = false
+        get() = scaledBitmap?.isDesiredSize ?: field
+
+    fun isValid(): Boolean {
+        return (drawable != null) || (scaledBitmap?.bitmap != null && scaledBitmap?.bitmap?.isRecycled == false)
+    }
+
+    fun getBitmapOrDrawable() = BitmapOrDrawable(scaledBitmap?.bitmap, drawable)
+
+    override fun toString(): String {
+        return "${super.toString()}[${scaledBitmap ?: drawable ?: "null,null"}]"
+    }
+}
+
+/**
+ * Get a scale factor to scale the Drawable to fill the whole canvas
+ * Can be used with canvas.scale(factor,factor).
+ * returns the scale factor and the size of the image if the factor was applied
+ */
+fun scaleDrawableToCanvas(
+    drawable: Drawable,
+    canvasWidth: Int,
+    canvasHeight: Int
+): DrawableScaleFactor {
+    var scale = 1f
+    var drawableWidth = drawable.intrinsicWidth
+    var drawableHeight = drawable.intrinsicHeight
+
+    if (drawableWidth < canvasWidth || drawableHeight < canvasHeight || (drawableWidth > canvasWidth && drawableHeight > canvasHeight)) {
+        scale = max(
+            canvasWidth.toFloat() / drawable.intrinsicWidth,
+            canvasHeight.toFloat() / drawable.intrinsicHeight
+        )
+        drawableHeight = (scale * drawableHeight).toInt()
+        drawableWidth = (scale * drawableWidth).toInt()
+    }
+
+    return DrawableScaleFactor(scale, drawableWidth, drawableHeight)
 }

@@ -260,6 +260,26 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value
         ).apply()
 
+    var animatedFileDay: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_animated_file_day_key),
+            context.resources.getBoolean(R.bool.pref_animated_file_day_default)
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_animated_file_day_key),
+            value
+        ).apply()
+
+    var animatedFileNight: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_animated_file_night_key),
+            context.resources.getBoolean(R.bool.pref_animated_file_night_default)
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_animated_file_night_key),
+            value
+        ).apply()
+
     override fun toString(): String {
         return super.toString() + "[${context.getString(prefFile)}]"
     }

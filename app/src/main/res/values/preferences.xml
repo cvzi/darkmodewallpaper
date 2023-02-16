@@ -63,4 +63,9 @@
     <bool name="pref_zoom_enabled_default">false</bool>
     <string name="pref_notify_colors_immediately_after_unlock_key" translatable="false">notify_colors_immediately_after_unlock</string>
     <bool name="pref_notify_colors_immediately_after_unlock_default">true</bool>
+    <string name="pref_animated_file_day_key" translatable="false">animated_file_day</string>
+    <bool name="pref_animated_file_day_default">false</bool>
+    <string name="pref_animated_file_night_key" translatable="false">animated_file_night</string>
+    <bool name="pref_animated_file_night_default">false</bool>
+
 </resources>

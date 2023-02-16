@@ -8,6 +8,8 @@ changed automatically.
 Instead of a different image you can also adjust the color, contrast and
 brightness of your existing wallpaper image to make it darker.
 
+Animated GIF and WebP animations are supported.
+
 It is possible to select different images for home screen and lock screen.
 
 The "read storage" permission is required if you want to import your current

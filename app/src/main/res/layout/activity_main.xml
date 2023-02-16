@@ -709,10 +709,10 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Bitmap size:" />
+                                    android:text="Image size:" />
 
                                 <TextView
-                                    android:id="@+id/textStatusBitmapSize"
+                                    android:id="@+id/textStatusImageSize"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="monospace"
