@@ -15,6 +15,8 @@ The app automatically changes the wallpaper when the dark theme is enabled or di
 You can set a different image for dark theme or change the color/contrast/brightness of
 your image.
 
+Also supports animated GIF and WebP animations.
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/com.github.cvzi.darkmodewallpaper/)
@@ -64,29 +66,3 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 
 
 [![Say Thanks!](https://img.shields.io/badge/say-thanks-ff69b4.svg?style=for-the-badge)](https://saythanks.io/to/cvzi)
-
-
-
-TODO:
-
-* [ ] Crop/move/zoom image
-* [ ] Customize animation duration
-* [ ] Support slideshow from folder instead of a single image
-
-Implemented:
-
-* [x] Import current wallpaper
-* [x] Allow other apps to "share"/"use as" images to this app
-* [x] Color overlay
-* [x] Show a preview in the settings
-* [x] Brightness/contrast settings
-* [x] Show a "loading..." spinner when fetching an image from disk
-* [x] Only move/scroll the wallpaper on page changes if the wallpaper is wide enough
-* [x] Different wallpaper on lock-screen
-* [x] Blend animation to turn lock-screen wallpaper into home-screen wallpaper
-* [x] Show-case used open source software licenses
-* [x] Preview each of the four wallpapers
-* [x] Multi display support
-* [x] Allow drag and drop images from other apps into MainActivity
-* [x] onZoomChanged()
-* [x] Delete image again
