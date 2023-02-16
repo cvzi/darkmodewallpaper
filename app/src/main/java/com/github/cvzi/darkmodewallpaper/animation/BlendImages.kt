@@ -19,9 +19,12 @@
 package com.github.cvzi.darkmodewallpaper.animation
 
 import android.graphics.*
+import android.graphics.drawable.Drawable
+import com.github.cvzi.darkmodewallpaper.BitmapOrDrawable
+import com.github.cvzi.darkmodewallpaper.scaleDrawableToCanvas
 
-class BlendBitmaps(
-    private val blendFromBitmap: Bitmap,
+class BlendImages(
+    private val blendFromBitmapOrDrawable: BitmapOrDrawable,
     private val blendFromColor: Int,
     private val blendFromOffsetXPixel: Float,
     private val blendFromOffsetYPixel: Float,
@@ -29,12 +32,13 @@ class BlendBitmaps(
     private val step: Int = 33
 ) {
     private var blendToBitmap: Bitmap? = null
+    private var blendToDrawable: Drawable? = null
     private var overlayPaint = Paint()
     private var blendAlpha: Int = blendAlphaStart
 
     fun draw(
         canvas: Canvas,
-        toBitmap: Bitmap? = null,
+        toBitmapOrDrawable: BitmapOrDrawable? = null,
         newColor: Int,
         offsetX: Float,
         offsetY: Float,
@@ -42,22 +46,47 @@ class BlendBitmaps(
         width: Int,
         height: Int
     ): Boolean {
-        if (blendToBitmap == null) {
-            blendToBitmap = toBitmap
+        if (blendToBitmap == null && toBitmapOrDrawable != null) {
+            if (toBitmapOrDrawable.bitmap != null) {
+                blendToBitmap = toBitmapOrDrawable.bitmap
+            } else {
+                blendToDrawable = toBitmapOrDrawable.drawable
+            }
+        }
+        val blendFromBitmap = blendFromBitmapOrDrawable.bitmap
+        val blendFromDrawable = blendFromBitmapOrDrawable.drawable
+        if (blendFromBitmap == null && blendFromDrawable == null) {
+            return false
         }
 
         val toBM = blendToBitmap
-        if (toBM == null || blendFromBitmap == toBM) {
+        val toDrawable = blendToDrawable
+        if ((toBM == null || blendFromBitmap == toBM) && (toDrawable == null || blendFromDrawable == toDrawable)) {
             return false
         }
 
         // Old Bitmap
-        canvas.drawBitmap(
-            blendFromBitmap,
-            blendFromOffsetXPixel,
-            blendFromOffsetYPixel,
-            null
-        )
+        if (blendFromBitmap != null) {
+            canvas.drawBitmap(
+                blendFromBitmap,
+                blendFromOffsetXPixel,
+                blendFromOffsetYPixel,
+                null
+            )
+        } else if (blendFromDrawable != null) {
+            canvas.save()
+            // Apply offset/Scrolling
+            canvas.translate(blendFromOffsetXPixel, blendFromOffsetYPixel)
+            // Enlarge small images
+            val (scale, _, _) = scaleDrawableToCanvas(blendFromDrawable, width, height)
+            if (scale != 1f) {
+                canvas.scale(scale, scale)
+            }
+            // Draw animation
+            blendFromDrawable.draw(canvas)
+
+            canvas.restore()
+        }
 
         // Old color
         overlayPaint.color = blendFromColor
@@ -66,21 +95,44 @@ class BlendBitmaps(
         }
 
         // New Bitmap
-        val toPaint = Paint()
-        toPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
-        toPaint.alpha = blendAlpha
-        toPaint.isAntiAlias = false
         val ox = if (reverseScroll) {
             -(1f - offsetX)
         } else {
             -offsetX
         }
-        canvas.drawBitmap(
-            toBM,
-            ox * (toBM.width - width),
-            -offsetY * (toBM.height - height),
-            toPaint
-        )
+        if (toBM != null) {
+            val toPaint = Paint().apply {
+                xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
+                alpha = blendAlpha
+                isAntiAlias = false
+            }
+            canvas.drawBitmap(
+                toBM,
+                ox * (toBM.width - width),
+                -offsetY * (toBM.height - height),
+                toPaint
+            )
+        } else if (toDrawable != null) {
+            toDrawable.alpha = blendAlpha
+            toDrawable.setTintBlendMode(BlendMode.SRC_OVER)
+
+            canvas.save()
+            // Apply offset/Scrolling
+            val (scale, imageWidth, imageHeight) = scaleDrawableToCanvas(
+                toDrawable,
+                width,
+                height
+            )
+            canvas.translate(ox * (imageWidth - width), -offsetY * (imageHeight - height))
+            // Enlarge small images
+            if (scale != 1f) {
+                canvas.scale(scale, scale)
+            }
+            // Draw animation
+            toDrawable.draw(canvas)
+
+            canvas.restore()
+        }
         // New color
         overlayPaint.color = newColor
         if (overlayPaint.color != 0) {
