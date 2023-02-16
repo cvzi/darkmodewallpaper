@@ -920,7 +920,6 @@ class DarkWallpaperService : WallpaperService() {
                 return WallpaperStatusLoadedSolid()
             } else {
                 // No image or image is loading -> show animation
-                Log.d(TAG, "Drawing waitAnimation")
                 waitAnimation = waitAnimation ?: WaitAnimation(
                     width,
                     height,
