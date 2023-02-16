@@ -82,8 +82,6 @@ open class MainActivity : AppCompatActivity() {
     protected lateinit var preferencesGlobal: Preferences
     protected var isLockScreenActivity = false
     protected lateinit var imageProvider: StaticDayAndNightProvider
-    protected var dayImageFile: File? = null
-    protected var nightImageFile: File? = null
 
     protected lateinit var binding: ActivityMainBinding
     private lateinit var previewViewDay: PreviewView
@@ -124,28 +122,20 @@ open class MainActivity : AppCompatActivity() {
         imageProvider = StaticDayAndNightProvider(this)
 
         startForPickDayHomeScreenFile = registerForActivityResult(
-            imageProvider.storeFileLocation(
-                dayOrNight = DAY,
-                isLockScreen = false
-            )
+            dayOrNight = DAY,
+            isLockScreen = false
         )
         startForPickNightHomeScreenFile = registerForActivityResult(
-            imageProvider.storeFileLocation(
-                dayOrNight = NIGHT,
-                isLockScreen = false
-            )
+            dayOrNight = NIGHT,
+            isLockScreen = false
         )
         startForPickDayLockScreenFile = registerForActivityResult(
-            imageProvider.storeFileLocation(
-                dayOrNight = DAY,
-                isLockScreen = true
-            )
+            dayOrNight = DAY,
+            isLockScreen = true
         )
         startForPickNightLockScreenFile = registerForActivityResult(
-            imageProvider.storeFileLocation(
-                dayOrNight = NIGHT,
-                isLockScreen = true
-            )
+            dayOrNight = NIGHT,
+            isLockScreen = true
         )
         startForStoragePermission = registerForActivityResult(
             RequestPermission()
@@ -164,27 +154,7 @@ open class MainActivity : AppCompatActivity() {
             }
         }
 
-        /*
-        if (isLockScreenActivity) {
-            preferences = Preferences(
-                this,
-                R.string.pref_file_lock_screen
-            )
-            preferencesGlobal = Preferences(this, R.string.pref_file)
-        } else {
-            preferences = Preferences(
-                this,
-                R.string.pref_file
-            )
-            preferencesGlobal = preferences
-        }
-        */
         preferencesGlobal = Preferences(this, R.string.pref_file)
-
-        dayImageFile =
-            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
-        nightImageFile =
-            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
 
         val wallpaperManager = WallpaperManager.getInstance(this)
         originalDesiredWidth = wallpaperManager.desiredMinimumWidth
@@ -199,11 +169,11 @@ open class MainActivity : AppCompatActivity() {
 
         makeCardViewReceiveDragAndDrop(
             binding.cardViewDay,
-            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
+            dayOrNight = DAY, isLockScreen = isLockScreenActivity
         )
         makeCardViewReceiveDragAndDrop(
             binding.cardViewNight,
-            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
+            dayOrNight = NIGHT, isLockScreen = isLockScreenActivity
         )
 
 
@@ -490,7 +460,11 @@ open class MainActivity : AppCompatActivity() {
         ) {
             // "Send to" / "Use as" from another app
             handleSendToAction(intent)
-        } else if (dayImageFile?.exists() != true && !DarkWallpaperService.isRunning() && !isLockScreenActivity) {
+        } else if (!imageProvider.storeFileLocation(
+                dayOrNight = DAY,
+                isLockScreen = isLockScreenActivity
+            ).exists() && !DarkWallpaperService.isRunning() && !isLockScreenActivity
+        ) {
             // If there is no file and the services are not running (i.e. usually a new install)
             askToImport()
         }
@@ -563,7 +537,9 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeCardViewReceiveDragAndDrop(cardViewDay: CardView, file: File) {
+    private fun makeCardViewReceiveDragAndDrop(
+        cardViewDay: CardView, dayOrNight: DayOrNight, isLockScreen: Boolean
+    ) {
         val cardBackgroundColorOriginal = cardViewDay.cardBackgroundColor
         cardViewDay.setOnDragListener { v, event ->
             return@setOnDragListener when (event.action) {
@@ -622,7 +598,7 @@ open class MainActivity : AppCompatActivity() {
                 ACTION_DROP -> {
                     val imageItem: ClipData.Item = event.clipData.getItemAt(0)
                     val dropPermissions = requestDragAndDropPermissions(event)
-                    saveFileFromUri(imageItem.uri, file) {
+                    saveFileFromUri(imageItem.uri, dayOrNight, isLockScreen) {
                         dropPermissions.release()
                     }
                     return@setOnDragListener true
@@ -634,24 +610,32 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerForActivityResult(file: File): ActivityResultLauncher<Intent> {
+    private fun registerForActivityResult(
+        dayOrNight: DayOrNight,
+        isLockScreen: Boolean
+    ): ActivityResultLauncher<Intent> {
         return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                saveFileFromActivityResult(result, file)
+                saveFileFromActivityResult(result, dayOrNight, isLockScreen)
             }
         }
     }
 
-    private fun saveFileFromActivityResult(result: ActivityResult, file: File) {
-        return saveFileFromUri(result.data?.data, file)
+    private fun saveFileFromActivityResult(
+        result: ActivityResult,
+        dayOrNight: DayOrNight,
+        isLockScreen: Boolean
+    ) {
+        return saveFileFromUri(result.data?.data, dayOrNight, isLockScreen)
     }
 
     private fun saveFileFromUri(
         uri: Uri?,
-        file: File,
+        dayOrNight: DayOrNight,
+        isLockScreen: Boolean,
         callback: ((success: Boolean) -> Unit)? = null
     ) {
-        if (isLockScreenActivity) {
+        if (isLockScreen && isLockScreenActivity) {
             binding.switchSeparateLockScreen.isChecked = true
         }
         val wallpaperManager = WallpaperManager.getInstance(this)
@@ -659,14 +643,20 @@ open class MainActivity : AppCompatActivity() {
             max(wallpaperManager.desiredMinimumWidth, wallpaperManager.desiredMinimumHeight)
         var alert: AlertDialog? = null
         var progressBar: ProgressBar? = null
+        // Store file with temporary extension
+        val file =
+            imageProvider.storeFileLocation(dayOrNight, isLockScreen, isAnimated = false).run {
+                File(parent, "${nameWithoutExtension}.tmp")
+            }
+        Log.v(TAG, "file is ${file.name}")
         importFileThread = object : Thread("saveFileFromUri") {
             override fun run() {
-
+                var result: StoreFileResult? = null
                 var success = false
                 if (uri != null) {
                     contentResolver.openInputStream(uri)?.let { ifs ->
-                        storeFile(file, ifs, desiredMax)
-                        success = true
+                        result = storeFile(file, ifs, desiredMax)
+                        success = result?.success == true
                         Log.d(
                             TAG,
                             "Stored ${file.nameWithoutExtension} wallpaper in $file"
@@ -678,6 +668,14 @@ open class MainActivity : AppCompatActivity() {
                         callback(success)
                     }
                     if (success) {
+                        // Rename the file to .gif in case it is animated or .webp for static
+                        Log.v(TAG, "File: ${file.name} is animated: ${result?.isAnimated}")
+                        imageProvider.setNewFile(
+                            dayOrNight,
+                            isLockScreen,
+                            result?.isAnimated == true,
+                            file
+                        )
                         alert?.safeDismiss()
                         Toast.makeText(
                             this@MainActivity,
@@ -861,6 +859,7 @@ open class MainActivity : AppCompatActivity() {
         switchColor: SwitchMaterial,
         isDayOrNight: DayOrNight
     ) {
+        var shownHintBlurNotAvailable = false
         openAdvancedLayout(previewView,
             imageProvider.getColor(isDayOrNight, isLockScreenActivity),
             imageProvider.getContrast(isDayOrNight, isLockScreenActivity),
@@ -881,6 +880,17 @@ open class MainActivity : AppCompatActivity() {
             }, { blur ->
                 previewView.blur = blur / previewScale
                 imageProvider.setBlur(isDayOrNight, isLockScreenActivity, blur)
+                if (!shownHintBlurNotAvailable && imageProvider.isAnimated(
+                        isDayOrNight,
+                        isLockScreenActivity
+                    )
+                ) {
+                    shownHintBlurNotAvailable = true
+                    Toast.makeText(
+                        this, getString(R.string.blur_unavailable_in_animations),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             })
     }
 
@@ -1115,8 +1125,11 @@ open class MainActivity : AppCompatActivity() {
             textStatusCanvasDimensions.text =
                 DarkWallpaperService.statusCanvasSize.toSizeString()
 
-            textStatusBitmapSize.text =
-                DarkWallpaperService.statusBitmapSize.toSizeString()
+            textStatusImageSize.text = if (DarkWallpaperService.statusScaledImageSize.x > 0) {
+                "${DarkWallpaperService.statusImageSize.toSizeString()} scaled to ${DarkWallpaperService.statusScaledImageSize.toSizeString()}"
+            } else {
+                DarkWallpaperService.statusImageSize.toSizeString()
+            }
 
             textStatusRequestedSize.text =
                 DarkWallpaperService.statusRequestedSize.toSizeString()
@@ -1145,7 +1158,6 @@ open class MainActivity : AppCompatActivity() {
             } ?: viewColorPrimary.setBackgroundColor(Color.TRANSPARENT)
 
         }
-        // TODO decode colorHints https://developer.android.com/reference/android/app/WallpaperColors#getColorHints()
 
         Handler(Looper.getMainLooper()).postDelayed(
             {
@@ -1158,19 +1170,22 @@ open class MainActivity : AppCompatActivity() {
         return if (imageProvider.getUseColorOnly(DAY, isLockScreenActivity)) {
             null
         } else {
-            dayImageFile
+            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
         }
     }
 
     private fun currentNightFile(): File? {
+        val dayImageFile =
+            imageProvider.storeFileLocation(dayOrNight = DAY, isLockScreen = isLockScreenActivity)
+        val nightImageFile =
+            imageProvider.storeFileLocation(dayOrNight = NIGHT, isLockScreen = isLockScreenActivity)
         return if (imageProvider.getUseColorOnly(NIGHT, isLockScreenActivity)) {
             null
-        } else if (imageProvider.getUseNightWallpaper(isLockScreenActivity) && nightImageFile?.exists() == true) {
+        } else if (imageProvider.getUseNightWallpaper(isLockScreenActivity) && nightImageFile.exists()) {
             nightImageFile
         } else {
             dayImageFile
         }
-
     }
 
     private fun askToImport() {
@@ -1285,7 +1300,7 @@ open class MainActivity : AppCompatActivity() {
                             this@MainActivity,
                             getString(
                                 R.string.wallpaper_import_success,
-                                dayImageFile?.absolutePath
+                                fileLocation.absolutePath
                             ),
                             Toast.LENGTH_SHORT
                         ).show()
@@ -1312,13 +1327,9 @@ open class MainActivity : AppCompatActivity() {
     private fun handleSendToAction(intent: Intent) {
         val dayOrNight = sendToActionIsNight()
         Log.d(TAG, "isNightSendToAction() = $dayOrNight")
-        val file = imageProvider.storeFileLocation(
-            dayOrNight = dayOrNight,
-            isLockScreen = isLockScreenActivity
-        )
         val data = intent.data ?: intent.clipData?.getItemAt(0)?.uri
         data?.let { uri ->
-            saveFileFromUri(uri, file)
+            saveFileFromUri(uri, dayOrNight, isLockScreenActivity)
         }
     }
 
