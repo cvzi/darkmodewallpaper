@@ -93,4 +93,5 @@ Android cambia el diseño y colores de fuentes de acuerdo a los nuevos colores.
 Dependiendo de los colores del fondo de pantalla esto puede causar un parpadeo en la pantalla.
 Normalmente los colores se envían inmediatamente después de desbloquear el teléfono.
 Si ves parpadeo, establece esta opción en \"Espera\" y los colores se enviarán una vez que abras una aplicación.]]></string>
+    <string name="blur_unavailable_in_animations">No se puede difuminar imágenes animadas</string>
 </resources>
