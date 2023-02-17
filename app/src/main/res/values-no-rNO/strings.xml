@@ -85,4 +85,13 @@
     <string name="scrolling_mode_value_on">På</string>
     <string name="scrolling_mode_value_off">Av</string>
     <string name="scrolling_mode_value_inverse">Revers</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Informer Android umiddelbart om nye bakgrunnsfarger etter opplåsing av bakgrunnen</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Vent</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Umiddelbart</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Når du låser opp telefonen og låseskjermsbakgrunnen endres i hjemskjermens bakgrunnsbilde, appen må informere Android om fargen på bakgrunnsbilde.
+Android endrer design og skriftfarger i henhold til nye farger.
+Avhengig av bakgrunnsfargene kan dette forårsake flimrer på skjermen.
+Normalt sendes fargene umiddelbart etter at telefonen låses opp.
+Hvis du ser flimring, sett dette valget til \"Vent\" og i stedet vil fargene sendes når du åpner en app.]]></string>
+    <string name="blur_unavailable_in_animations">Kan ikke blur animerte bilder</string>
 </resources>
