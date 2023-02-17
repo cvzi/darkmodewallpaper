@@ -93,4 +93,5 @@ Interfejs Android zmienia kolory projektu i czcionki w zależności od nowych ko
 W zależności od kolorów tapety może to spowodować migotanie ekranu.
 Zazwyczaj kolory są wysyłane bezpośrednio po odblokowaniu telefonu.
 Jeśli widzisz migotanie, ustaw tę opcję na \"Czekaj\" i zamiast tego kolory zostaną wysłane po otwarciu aplikacji.]]></string>
+    <string name="blur_unavailable_in_animations">Nie można rozmyć animowanych obrazów</string>
 </resources>
