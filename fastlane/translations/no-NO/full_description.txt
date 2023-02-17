@@ -8,6 +8,8 @@ automatisk.
 I stedet for et annet bilde kan du også justere fargen, kontrasten og
 lysstyrken til det eksisterende bakgrunnsbildet ditt for å gjøre det mørkere.
 
+Animert GIF og WebP animasjoner støttes.
+
 Det er mulig å velge forskjellige bilder for startskjermen og låseskjermen.
 
 Tillatelsen til å lese lagring er nødvendig hvis du vil importere det nåværende
