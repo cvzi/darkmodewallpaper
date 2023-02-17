@@ -6,6 +6,8 @@ W zależności od ustawionego motywu systemowego, tapeta będzie automatycznie z
 Zamiast innego obrazu możesz również dostosować kolor, kontrast i
 jasności bieżącego obrazu tapety aby był ciemniejszy.
 
+Obsługiwane są animacje GIF i WebP.
+
 Możliwe jest wybranie różnych obrazów dla ekranu głównego i ekranu blokady.
 
 Uprawnienie do odczytu pamięci jest wymagane gdy chcesz zaimportować swoją obecną tapetę. Po zaimportowaniu tapety możesz bezpiecznie cofnąć uprawnienia. Jeśli nie chcesz importować bieżącej tapety, nie potrzebujesz udzielać tego uprawnienia.
