@@ -93,4 +93,5 @@ Android ändert die Design- und Schriftfarben entsprechend den neuen Farben.
 Abhängig von den Hintergrundfarben kann das zu einem Flackern des Bildschirms führen.
 Normalerweise werden die Farben sofort nach Entsperren des Handys gesendet.
 Wenn das Flackern auftritt, stell diese Option auf \"Warten\" und stattdessen werden die Farben erst gesendet, wenn du eine App öffnest.]]></string>
+    <string name="blur_unavailable_in_animations">Animierte Bilder können nicht weichgezeichnet werden</string>
 </resources>
