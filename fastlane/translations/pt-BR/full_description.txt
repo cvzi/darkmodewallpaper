@@ -8,6 +8,8 @@ alterado automaticamente.
 Ao invés de uma imagem diferente você também pode ajustar a cor, contraste e o brilho
 de sua imagem de papel de parede existente para escurecê-la.
 
+GIF animado e animações WebP são suportados.
+
 É possível selecionar imagens diferentes para a tela inicial e para a tela de bloqueio.
 
 A permissão "ler armazenamento" é necessária se você deseja importar sua imagem atual de papel de parede
