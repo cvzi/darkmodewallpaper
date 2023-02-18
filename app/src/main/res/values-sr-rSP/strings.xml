@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
+-->
+<resources>
+    <string name="app_name">DarkModeLiveWallpaper</string>
+    <string name="use_as_day_home">Позадина почетног екрана током дана</string>
+    <string name="use_as_night_home">Позадина почетног екрана ноћу</string>
+    <string name="use_as_day_lock">Позадина закључаног екрана током дана</string>
+    <string name="use_as_night_lock">Позадина закључаног екрана током ноћу</string>
+    <string name="wallpaper_label">DarkModeWallpaper</string>
+    <string name="wallpaper_description">Аутоматски промени позадину, у складу са темом система</string>
+    <string name="wallpaper_is_loading">Учитавање…</string>
+    <string name="color_chooser_day">Изаберите боју преклапања дана</string>
+    <string name="color_chooser_night">Изаберите боју преклапања ноћу</string>
+    <string name="status_darkmode">Статус тамног режима:</string>
+    <string name="status_darkmode_day">Дневно време/Светла тема</string>
+    <string name="status_darkmode_night">Ноћно време/Тамна тема</string>
+    <string name="status_requested_image_size">Препоручена величина слике:</string>
+    <string name="status_screen_size">Величина екрана:</string>
+    <!-- For example: 720x1080 -->
+    <!-- For example: Select image (Day time/Home screen) -->
+    <string name="wallpaper_file_chooser_title">Изаберите слику (%1$s/%2$s)</string>
+    <string name="wallpaper_file_chooser_day_time">Дневно време</string>
+    <string name="wallpaper_file_chooser_night_time">Ноћно време</string>
+    <string name="wallpaper_file_chooser_home_screen">Почетни екран</string>
+    <string name="wallpaper_file_chooser_lock_screen">Закључан екран</string>
+    <string name="wallpaper_import_dialog_title">Увезите тренутну позадину</string>
+    <string name="wallpaper_import_dialog_message">Да ли желите да увезете тренутну позадину?
+\n\n(можда неће радити за анимиране позадине)
+\n\nСледећи корак: Дозволите приступ меморији
+\nМожете безбедно да опозовете дозволу након увоза позадине.</string>
+    <!-- For example: Wallpaper imported /sdcard/Pictures/day.png -->
+    <string name="wallpaper_import_success">Позадина је увезена\n%1$s</string>
+    <string name="wallpaper_import_failed">Није могуће преузети слику</string>
+    <string name="wallpaper_import_permission_missing">За увоз позадина потребан је приступ меморији!</string>
+    <string name="image_file_import_error">Није могуће увести слику</string>
+    <string name="image_file_import_loading_title">Увоз датотеке слике</string>
+    <!-- For example: Image stored in /sdcard/Pictures/day.png -->
+    <string name="image_file_import_success">Слика је сачувана у %1$s</string>
+    <!-- For example: Optimizing /sdcard/Android/data/com.github.cvzi.darkmodewallpaper/Pictures/day.png (imported from /storage/Pictures/image.jpg) -->
+    <string name="image_file_import_loading_message">Оптимизирање %2$s\n(увезено из %1$s)</string>
+    <string name="button_import_wallpaper">Увезите позадину</string>
+    <string name="button_more_settings">Напредна подешавања</string>
+    <string name="button_apply_wallpaper">Примени као позадину</string>
+    <string name="apply_wallpaper_unavailable">Поставите позадину ручно у Android подешавањима</string>
+    <string name="button_lock_screen_settings">Закључан екран</string>
+    <string name="switch_only_use_color">Само боја</string>
+    <string name="switch_use_color_overlay">Боја преклапања</string>
+    <string name="color">Боја</string>
+    <string name="button_select_image">Изаберите слику</string>
+    <string name="heading_day_time_settings">Дневно време</string>
+    <string name="heading_night_time_settings">Ноћно време</string>
+    <string name="dialog_advanced_title">Радње:</string>
+    <string name="dialog_button_preview">Преглед позадине</string>
+    <string name="dialog_button_advanced">Контраст &amp; Осветљеност</string>
+    <string name="dialog_button_select_image">Изаберите другу слику</string>
+    <string name="dialog_button_delete_image">Обриши слику</string>
+    <string name="switch_separate_lock_screen_settings">Одвојена подешавања закључаног екрана</string>
+    <string name="switch_separate_lock_screen_settings_description">Омогућите коришћење појединачних подешавања закључаног екрана</string>
+    <string name="switch_animate_from_lock_screen">Анимирајте прелазак на позадину почетног екрана након откључавања</string>
+    <string name="switch_animate_from_lock_screen_description">Омогућите коришћење анимације са закључаног екрана на позадину почетног екрана након откључавања</string>
+    <string name="lock_symbol_description">Симбол закључаног екрана</string>
+    <string name="sun_symbol_description">Сунце/Дан</string>
+    <string name="moon_symbol_description">Месец/Ноћ</string>
+    <string name="button_select_color_description">Изаберите боју</string>
+    <string name="switch_reuse_day_image_for_night">Користите позадину дана</string>
+    <string name="switch_reuse_day_image_for_night_description">Користите одвојене ноћну позадину или дневну позадину</string>
+    <string name="text_lock_screen_explanation">Након што укључите прекидач, моћи ћете да поставите различите позадине и боје за закључани екран.
+ \nНажалост, ова функција не ради на свим уређајима, јер неки произвођачи постављају своја подешавања и не дозвољавају њихову промену.
+ \n\nНе заборавите да кликнете на „Почетни екран“ када поставите живу позадину.
+ \n\nСлика закључаног екрана мора да одговара величини екрана вашег уређаја. Ако је величина екрана већа, слика ће бити скалирана и центрирана.\n</string>
+    <string name="about">О програму</string>
+    <string name="about_issues"><![CDATA[Пронашли сте проблем или имате предлог <br>Отворите проблем на <a href="https://github.com/cvzi/darkmodewallpaper/issues">github.com/cvzi/darkmodewallpaper/issues</a>]]></string>
+    <string name="start_time">Време почетка:</string>
+    <string name="end_time">Време завршетка:</string>
+    <string name="night_mode_trigger">Окидач ноћног режима:</string>
+    <string name="night_mode_trigger_follow_system">Системска тема</string>
+    <string name="night_mode_trigger_time_range">Временски период</string>
+    <string name="zoom_effect">Ефекат зумирања:</string>
+    <string name="zoom_effect_description">На Android 11+ анимација „зумирања“ се дешава када повучете надоле област за обавештења или када отворите преглед недавних апликација.</string>
+    <string name="seek_bar_blur">Ефекат замућења:</string>
+    <string name="scrolling_mode">Ефекат скроловања:</string>
+    <string name="scrolling_mode_value_automatic">Аутоматски</string>
+    <string name="scrolling_mode_value_on">Укљ.</string>
+    <string name="scrolling_mode_value_off">Искљ.</string>
+    <string name="scrolling_mode_value_inverse">Преврнуо</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Одмах обавестите Android о новим бојама позадине након откључавања</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Чекати</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Одмах</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Када откључате телефон и позадина закључаног екрана се промени у позадину почетног екрана, апликација ће морати да обавести Android о бојама позадине коју сте поставили. Android прилагођава дизајн тако да одговара новим бојама. У зависности од боје позадине, ово може изазвати треперење екрана. Обично се боје шаљу одмах након што се телефон откључа. Ако видите треперење, подесите ово на \"Чекати\" и уместо тога, боје ће бити послате чим отворите апликацију.]]></string>
+    <string name="blur_unavailable_in_animations">Не могу замутити анимиране слике</string>
+</resources>
