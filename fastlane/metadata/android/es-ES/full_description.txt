@@ -8,6 +8,8 @@ cambiado automáticamente.
 En lugar de una imagen diferente, también puedes ajustar el color, el contraste y el brillo
 de tu imagen de fondo de pantalla existente para hacerla más oscura.
 
+Animaciones de GIF y WebP son soportadas.
+
 Es posible seleccionar diferentes imágenes para la pantalla de inicio y la pantalla de bloqueo.
 
 Se requiere el permiso "leer almacenamiento" si desea importar su imagen actual

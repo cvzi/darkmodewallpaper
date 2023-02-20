@@ -6,6 +6,8 @@ Wenn das Dunkle Design vom System aktiviert oder deaktiviert wird, ändert sich 
 
 An Stelle eines anderen Hintergrundbildes kann auch die Farbe, der Kontrast und die Helligkeit des bestehenden Hintergrundbildes geändert werden um das Bild dunkler zu machen.
 
+Animierte GIF und WebP Animationen werden unterstützt.
+
 Es könne unterschiedliche Bilder für den Startbildschirm und den Sperrbildschirm ausgewählt werden.
 
 Die "Speicher lesen" Berechtigung wird benötigt, falls du deinen aktuellen Hintergrund importieren möchtest. Wenn du dein Hintergrundbild in die App importiert hast, kannst du die Berechtigung widerrufen. Falls du dein Hintergrundbild nicht in die App importieren möchtest, brauchst du die Berechtigung nicht zu erteilen.
