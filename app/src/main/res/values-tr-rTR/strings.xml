@@ -88,6 +88,10 @@
     <string name="setting_inform_new_wallpaper_colors_heading">Kilidi açtıktan sonra hemen Android\'i yeni duvar kağıdı renkleri hakkında bilgilendirin</string>
     <string name="setting_inform_new_wallpaper_colors_toggle_wait">Bekleyin</string>
     <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Hemen</string>
-    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Telefonunuzun kilidini açtığınızda ve kilit ekranı duvar kağıdı ana ekran duvar kağıdına dönüştüğünde, uygulamanın Android'e ayarladığınız duvar kağıdının renkleri hakkında bilgi vermesi gerekir. Android, tasarımı yeni renklere uyacak şekilde uyarlıyor. Duvar kağıdının rengine bağlı olarak bu, ekranın titremesine neden olabilir. Genellikle renkler, telefonun kilidi açıldıktan hemen sonra gönderilir. Titreme görürseniz, bunu \"Bekle\" olarak ayarlayın; bunun yerine, siz uygulamayı açar açmaz renkler gönderilir.]]></string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Telefonunuzun kilidini açtığınızda ve kilit ekranı duvar kağıdı ana ekran duvar kağıdına dönüştüğünde, uygulamanın Android\'e ayarladığınız duvar kağıdının renkleri hakkında bilgi vermesi gerekir. 
+Android, tasarımı yeni renklere uyacak şekilde uyarlıyor. 
+Duvar kağıdının rengine bağlı olarak bu, ekranın titremesine neden olabilir. 
+Genellikle renkler, telefonun kilidi açıldıktan hemen sonra gönderilir. 
+Titreme görürseniz, bunu \"Bekle\" olarak ayarlayın; bunun yerine, siz uygulamayı açar açmaz renkler gönderilir.]]></string>
     <string name="blur_unavailable_in_animations">Animasyonlu resimler bulanıklaştırılamıyor</string>
 </resources>
