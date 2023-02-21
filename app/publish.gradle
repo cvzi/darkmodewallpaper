@@ -2,6 +2,14 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     archiveClassifier = 'sources'
 }
+android {
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
 afterEvaluate {
     publishing {
         repositories {
@@ -16,7 +24,7 @@ afterEvaluate {
         }
         publications {
             release(MavenPublication) {
-                from components.release_apk
+                from components.release
                 groupId = 'com.github.cvzi'
                 artifactId = 'darkmodewallpaper'
                 version = android.defaultConfig.versionName
