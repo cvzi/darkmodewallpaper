@@ -14,6 +14,7 @@ android {
         }
     }
     namespace 'com.github.cvzi.darkmodewallpaper'
+    ndkVersion '25.2.9519653'
     compileSdkVersion 33
     defaultConfig {
         applicationId "com.github.cvzi.darkmodewallpaper"
@@ -21,6 +22,7 @@ android {
         targetSdkVersion 33
         versionCode 47
         versionName "1.5.0"
+        externalNativeBuild.cmake.cppFlags "-std=c++17"
     }
     buildTypes {
         release {
@@ -44,11 +46,12 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = 11
     }
     kotlin {
         jvmToolchain(11)
     }
+    externalNativeBuild.cmake.path file('src/main/cpp/CMakeLists.txt')
     lint {
         disable 'MissingTranslation'
     }
@@ -61,12 +64,8 @@ licenseReport {
     copyHtmlReportToAssets = true
 }
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.0.1'
-    implementation 'com.github.android:renderscript-intrinsics-replacement-toolkit:344be3f'
 }
