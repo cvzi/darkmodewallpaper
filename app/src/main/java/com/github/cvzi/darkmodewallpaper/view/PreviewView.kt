@@ -200,73 +200,70 @@ class PreviewView @JvmOverloads constructor(
         bitmap = null
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         overlayPaint.color = color
 
-        canvas?.apply {
-            if (file == null) {
-                bitmap = null
-            } else if (bitmap == null && errorLoadingFile == null) {
-                w = width
-                h = height
-                loadFile()
-                drawText(
-                    "Loading",
-                    5f,
-                    height / 2f,
-                    textPaint.apply {
-                        textSize = width / 10f
-                    })
-            } else if (errorLoadingFile != null) {
-                drawText(
-                    errorLoadingFile ?: "error",
-                    5f,
-                    height / 2f,
-                    textPaint.apply {
-                        textSize = width / 10f
-                    })
-            }
+        if (file == null) {
+            bitmap = null
+        } else if (bitmap == null && errorLoadingFile == null) {
+            w = width
+            h = height
+            loadFile()
+            canvas.drawText(
+                "Loading",
+                5f,
+                height / 2f,
+                textPaint.apply {
+                    textSize = width / 10f
+                })
+        } else if (errorLoadingFile != null) {
+            canvas.drawText(
+                errorLoadingFile ?: "error",
+                5f,
+                height / 2f,
+                textPaint.apply {
+                    textSize = width / 10f
+                })
+        }
 
-            bitmap?.let {
-                val bm = if (blur > 1.0f) {
-                    blur(it, blur)
-                } else {
-                    it
-                }
-                canvas.drawBitmap(
-                    bm,
-                    -0.5f * (it.width - width),
-                    -0.5f * (it.height - height),
-                    bitmapPaint
+        bitmap?.let {
+            val bm = if (blur > 1.0f) {
+                blur(it, blur)
+            } else {
+                it
+            }
+            canvas.drawBitmap(
+                bm,
+                -0.5f * (it.width - width),
+                -0.5f * (it.height - height),
+                bitmapPaint
+            )
+        }
+        if (bitmap == null && file == null) {
+            overlayPaint.color = overlayPaint.color or 0xFF000000.toInt()
+        }
+        canvas.drawPaint(overlayPaint)
+
+        // Draw screen boundaries
+        if (!shouldScroll) {
+            val screenWidth = scaledScreenWidth?.toFloat()
+            val screenHeight = scaledScreenHeight?.toFloat()
+            if (screenWidth != null && screenHeight != null && screenWidth > 0 && screenHeight > 0) {
+                canvas.drawLine(
+                    width / 2f - screenWidth / 2f,
+                    height / 2f - screenHeight / 2f,
+                    width / 2f - screenWidth / 2f,
+                    height / 2f + screenHeight / 2f,
+                    clippingPaint
+                )
+                canvas.drawLine(
+                    width / 2f + screenWidth / 2f,
+                    height / 2f - screenHeight / 2f,
+                    width / 2f + screenWidth / 2f,
+                    height / 2f + screenHeight / 2f,
+                    clippingPaint
                 )
             }
-            if (bitmap == null && file == null) {
-                overlayPaint.color = overlayPaint.color or 0xFF000000.toInt()
-            }
-            drawPaint(overlayPaint)
-
-            // Draw screen boundaries
-            if (!shouldScroll) {
-                val screenWidth = scaledScreenWidth?.toFloat()
-                val screenHeight = scaledScreenHeight?.toFloat()
-                if (screenWidth != null && screenHeight != null && screenWidth > 0 && screenHeight > 0) {
-                    canvas.drawLine(
-                        width / 2f - screenWidth / 2f,
-                        height / 2f - screenHeight / 2f,
-                        width / 2f - screenWidth / 2f,
-                        height / 2f + screenHeight / 2f,
-                        clippingPaint
-                    )
-                    canvas.drawLine(
-                        width / 2f + screenWidth / 2f,
-                        height / 2f - screenHeight / 2f,
-                        width / 2f + screenWidth / 2f,
-                        height / 2f + screenHeight / 2f,
-                        clippingPaint
-                    )
-                }
-            }
-
         }
     }
 
