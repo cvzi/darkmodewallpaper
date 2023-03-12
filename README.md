@@ -61,8 +61,14 @@ To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]
 ## Notable libraries we use
 
 * [martin-stone/hsv-alpha-color-picker-android](https://github.com/martin-stone/hsv-alpha-color-picker-android)
-* [android/renderscript-intrinsics-replacement-toolkit](https://github.com/android/renderscript-intrinsics-replacement-toolkit)
+* [android/renderscript-intrinsics-replacement-toolkit](https://github.com/android/renderscript-intrinsics-replacement-toolkit) (We use a modified version that is limited to the blur-function)
 * [jaredsburrows/gradle-license-plugin](https://github.com/jaredsburrows/gradle-license-plugin)
+
+## License
+
+This project is licensed under the **GNU General Public License version 3** or (at your option) any **later version**.
+However individual files may have a different license. Refer to the license header of each file for detailed information.
+In particular the files related to the `renderscript-intrinsics-replacement-toolkit` - including all C++ files - are licensed under the **Apache License, Version 2.0**.
 
 
 [![Say Thanks!](https://img.shields.io/badge/say-thanks-ff69b4.svg?style=for-the-badge)](https://saythanks.io/to/cvzi)
