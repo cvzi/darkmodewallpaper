@@ -1146,7 +1146,7 @@ open class MainActivity : AppCompatActivity() {
 
             colors?.let {
                 viewColorPrimary.setBackgroundColor(colors.primaryColor.toArgb())
-                viewColorSeconday.setBackgroundColor(
+                viewColorSecondary.setBackgroundColor(
                     colors.secondaryColor?.toArgb()
                         ?: Color.TRANSPARENT
                 )
