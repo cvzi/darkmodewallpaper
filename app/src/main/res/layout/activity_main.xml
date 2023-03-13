@@ -795,7 +795,7 @@
                                             android:layout_height="10pt" />
 
                                         <View
-                                            android:id="@+id/viewColorSeconday"
+                                            android:id="@+id/viewColorSecondary"
                                             android:layout_width="10pt"
                                             android:layout_height="10pt" />
 
