@@ -63,4 +63,10 @@
         <item name="cardBackgroundColor">@color/secondary_variant</item>
     </style>
 
+    <style name="WallpaperHintToggle" parent="@android:style/Widget.Material.Light.Button.Toggle">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+
+
 </resources>
