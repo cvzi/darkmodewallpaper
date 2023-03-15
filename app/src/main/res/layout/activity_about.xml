@@ -79,6 +79,18 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/about_open_source_licenses" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/textViewDonate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="&#x1f49c; Donate &amp; Support: https://cvzi.github.io/.github/"
+                tools:ignore="HardcodedText" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
