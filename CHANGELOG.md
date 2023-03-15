@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.0
+*   Translations updated from crowdin
+*   Add donation links
+*   Allow setting the colors that the launcher receives in the advanced settings
+*   Include blur function directly instead of whole [Renderscript library](https://github.com/android/renderscript-intrinsics-replacement-toolkit) and optimize it
+
 ## 1.5.0
 *   Support for animated GIF and WebP [#113](https://github.com/cvzi/darkmodewallpaper/issues/113) [#118](https://github.com/cvzi/darkmodewallpaper/pull/118)
 *   Update to Gradle 8.0

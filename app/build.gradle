@@ -20,8 +20,8 @@ android {
         applicationId 'com.github.cvzi.darkmodewallpaper'
         minSdkVersion 29
         targetSdkVersion 33
-        versionCode 47
-        versionName '1.5.0'
+        versionCode 48
+        versionName '1.6.0'
         externalNativeBuild.cmake.cppFlags '-std=c++17'
     }
     buildTypes {
