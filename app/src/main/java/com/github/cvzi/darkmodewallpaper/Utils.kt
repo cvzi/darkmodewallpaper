@@ -292,35 +292,39 @@ fun createColorMatrix(brightness: Float, contrast: Float): ColorMatrixColorFilte
 
 /**
  * Returns new bitmap that it blurred by radius pixels.
- * Uses RenderEffect on Android S+, and renderscript.Toolkit on lower Android
+ * Uses RenderEffect.createBlurEffect() on Android S+ with
+ * hardware acceleration. Otherwise a  modified version
+ * of Renderscript.Toolkit.blur() is used.
  */
 fun blur(mSrc: Bitmap, radius: Float): Bitmap {
     var r = max(1f, radius)
-    var src = mSrc
 
-    if (r > 25f) {
-        src = blur(mSrc, r - 25f)
-        r = 25f
-    }
-    val canvas = Canvas()
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && canvas.isHardwareAccelerated) {
-        Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
-        val result = Bitmap.createBitmap(src.width, src.height, src.config)
-        canvas.setBitmap(result)
-        val bitmapEffect = RenderEffect.createBitmapEffect(src)
-        val blurEffect =
-            RenderEffect.createBlurEffect(r, r, bitmapEffect, Shader.TileMode.MIRROR)
-        val renderNode = RenderNode(null)
-        renderNode.setRenderEffect(blurEffect)
-        try {
-            canvas.drawRenderNode(renderNode)
-            return result
-        } catch (e: IllegalArgumentException) {
-            Log.v(UTILSTAG, "RenderEffect failed:", e)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val canvas = Canvas()
+        if (canvas.isHardwareAccelerated) {
+            var src = mSrc
+            if (r > 25f) {
+                src = blur(mSrc, r - 25f)
+                r = 25f
+            }
+            Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
+            val result = Bitmap.createBitmap(src.width, src.height, src.config)
+            canvas.setBitmap(result)
+            val bitmapEffect = RenderEffect.createBitmapEffect(src)
+            val blurEffect =
+                RenderEffect.createBlurEffect(r, r, bitmapEffect, Shader.TileMode.MIRROR)
+            val renderNode = RenderNode(null)
+            renderNode.setRenderEffect(blurEffect)
+            try {
+                canvas.drawRenderNode(renderNode)
+                return result
+            } catch (e: IllegalArgumentException) {
+                Log.v(UTILSTAG, "RenderEffect failed:", e)
+            }
         }
     }
     Log.d(UTILSTAG, "Using renderscript.Toolkit.blur($r)")
-    return Toolkit.blur(src, r.toInt())
+    return Toolkit.blurMulti(mSrc, radius.toInt())
 }
 
 

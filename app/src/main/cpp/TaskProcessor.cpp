@@ -156,7 +156,7 @@ void TaskProcessor::processTilesOfWork(int threadIndex, bool returnWhenNoWork) {
             break;
         }
 
-        while (mTilesNotYetStarted > 0 && !mStopThreads) {
+        while (mTilesNotYetStarted > 0) {
             // This picks the tiles in decreasing order but that does not matter.
             int myTile = --mTilesNotYetStarted;
             mTilesInProcess++;
