@@ -398,7 +398,7 @@ void BlurTask::kernelU4(void *outPtr, uint32_t xstart, uint32_t xend, uint32_t c
         // realloc only aligns to 8 bytes so we manually align to 16.
         buf = (float4 *) ((((intptr_t)mScratch[threadIndex]) + 15) & ~0xf);
     }
-    float4 *fout = (float4 *)buf;
+    auto *fout = (float4 *)buf;
     int y = currentY;
     if ((y > mIradius) && (y < ((int)mSizeY - mIradius))) {
         const uchar *pi = mIn + (y - mIradius) * stride;

@@ -28,29 +28,11 @@
 
 using namespace renderscript;
 
-class ByteArrayGuard {
-private:
-    JNIEnv *env;
-    jbyteArray array;
-    jbyte *data;
-
-public:
-    ByteArrayGuard(JNIEnv *env, jbyteArray array) : env{env}, array{array} {
-        data = env->GetByteArrayElements(array, nullptr);
-    }
-
-    ~ByteArrayGuard() {
-        env->ReleaseByteArrayElements(array, data, 0);
-    }
-
-    uint8_t *get() { return reinterpret_cast<uint8_t *>(data); }
-};
-
 class BitmapGuard {
 private:
     JNIEnv *env;
     jobject bitmap;
-    AndroidBitmapInfo info;
+    AndroidBitmapInfo info{};
     int bytesPerPixel;
     void *bytes;
     bool valid;
@@ -87,16 +69,16 @@ public:
         }
     }
 
-    uint8_t *get() const {
+    [[nodiscard]] uint8_t *get() const {
         assert(valid);
         return reinterpret_cast<uint8_t *>(bytes);
     }
 
-    int width() const { return info.width; }
+    [[nodiscard]] int width() const { return info.width; }
 
-    int height() const { return info.height; }
+    [[nodiscard]] int height() const { return info.height; }
 
-    int vectorSize() const { return bytesPerPixel; }
+    [[nodiscard]] int vectorSize() const { return bytesPerPixel; }
 };
 
 /**
@@ -105,7 +87,7 @@ public:
 class RestrictionParameter {
 private:
     bool isNull;
-    Restriction restriction;
+    Restriction restriction{};
 
 public:
     RestrictionParameter(JNIEnv *env, jobject jRestriction) : isNull{jRestriction == nullptr} {
@@ -141,25 +123,14 @@ Java_com_google_android_renderscript_Toolkit_createNative(JNIEnv * /*env*/, jobj
 
 extern "C" JNIEXPORT void JNICALL Java_com_google_android_renderscript_Toolkit_destroyNative(
         JNIEnv * /*env*/, jobject /*thiz*/, jlong native_handle) {
-    RenderScriptToolkit *toolkit = reinterpret_cast<RenderScriptToolkit *>(native_handle);
+    auto *toolkit = reinterpret_cast<RenderScriptToolkit *>(native_handle);
     delete toolkit;
-}
-
-extern "C" JNIEXPORT void JNICALL Java_com_google_android_renderscript_Toolkit_nativeBlur(
-        JNIEnv *env, jobject /*thiz*/, jlong native_handle, jbyteArray input_array, jint vectorSize,
-        jint size_x, jint size_y, jint radius, jbyteArray output_array, jobject restriction) {
-    RenderScriptToolkit *toolkit = reinterpret_cast<RenderScriptToolkit *>(native_handle);
-    RestrictionParameter restrict{env, restriction};
-    ByteArrayGuard input{env, input_array};
-    ByteArrayGuard output{env, output_array};
-
-    toolkit->blur(input.get(), output.get(), size_x, size_y, vectorSize, radius, restrict.get());
 }
 
 extern "C" JNIEXPORT void JNICALL Java_com_google_android_renderscript_Toolkit_nativeBlurBitmap(
         JNIEnv *env, jobject /*thiz*/, jlong native_handle, jobject input_bitmap,
         jobject output_bitmap, jint radius, jobject restriction) {
-    RenderScriptToolkit *toolkit = reinterpret_cast<RenderScriptToolkit *>(native_handle);
+    auto *toolkit = reinterpret_cast<RenderScriptToolkit *>(native_handle);
     RestrictionParameter restrict{env, restriction};
     BitmapGuard input{env, input_bitmap};
     BitmapGuard output{env, output_bitmap};
