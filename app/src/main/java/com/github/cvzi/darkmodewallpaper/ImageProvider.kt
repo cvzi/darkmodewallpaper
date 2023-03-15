@@ -18,6 +18,7 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
+import android.app.WallpaperColors
 import android.content.Context
 import android.os.Environment
 import android.util.Log
@@ -39,7 +40,8 @@ data class WallpaperImage(
     val blur: Float,
     val scrollingMode: ScrollingMode,
     val expiration: Int?,
-    val animated: Boolean
+    val animated: Boolean,
+    val customWallpaperColors: WallpaperColors?
 )
 
 const val IMAGEPROVIDERTAG = "ImageProvider"
@@ -331,6 +333,15 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
 
         val animated = isAnimated(dayOrNight, isLockScreen)
 
+        val customWallpaperColors =
+            if (dayOrNight == NIGHT && currentPreferences.customWallpaperColorsNight) {
+                getWallpaperColors(NIGHT, isLockScreen)
+            } else if (dayOrNight == DAY && currentPreferences.customWallpaperColorsDay) {
+                getWallpaperColors(DAY, isLockScreen)
+            } else {
+                null
+            }
+
         // TODO expiration via trigger
 
         callback(
@@ -342,7 +353,8 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
                 blur,
                 scrollingMode,
                 -1,
-                animated
+                animated,
+                customWallpaperColors
             )
         )
     }
@@ -369,4 +381,49 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
         )
     }
 
+    fun getWallpaperColors(dayOrNight: DayOrNight, isLockScreen: Boolean): WallpaperColors? {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        return if (dayOrNight == NIGHT) {
+            currentPreferences.getWallpaperColorsNight()
+
+        } else {
+            currentPreferences.getWallpaperColorsDay()
+        }
+    }
+
+    fun setWallpaperColors(
+        dayOrNight: DayOrNight,
+        isLockScreen: Boolean,
+        wallpaperColors: WallpaperColors?
+    ) {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        if (dayOrNight == NIGHT) {
+            currentPreferences.setWallpaperColorsNight(wallpaperColors)
+        } else {
+            currentPreferences.setWallpaperColorsDay(wallpaperColors)
+        }
+    }
+
+
+    fun setUseCustomWallpaperColors(
+        dayOrNight: DayOrNight,
+        isLockScreen: Boolean,
+        enabled: Boolean
+    ) {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        if (dayOrNight == NIGHT) {
+            currentPreferences.customWallpaperColorsNight = enabled
+        } else {
+            currentPreferences.customWallpaperColorsDay = enabled
+        }
+    }
+
+    fun useCustomWallpaperColors(dayOrNight: DayOrNight, isLockScreen: Boolean): Boolean {
+        val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
+        return if (dayOrNight == NIGHT) {
+            currentPreferences.customWallpaperColorsNight
+        } else {
+            currentPreferences.customWallpaperColorsDay
+        }
+    }
 }

@@ -18,8 +18,11 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
+import android.app.WallpaperColors
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.Build
 
 class Preferences(mContext: Context, private val prefFile: StringRes) {
     private val context = mContext.applicationContext
@@ -277,6 +280,165 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
         )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_animated_file_night_key),
+            value
+        ).apply()
+
+    fun getWallpaperColorsDay(): WallpaperColors? {
+        val primary =
+            pref.getString(context.getString(R.string.pref_wallpaper_colors_primary_day_key), null)
+                ?.toIntOrNull()
+                ?.takeUnless { it == Color.TRANSPARENT }
+                ?: return null
+        val secondary = pref.getString(
+            context.getString(R.string.pref_wallpaper_colors_secondary_day_key),
+            null
+        )?.toIntOrNull()
+        val tertiary =
+            pref.getString(context.getString(R.string.pref_wallpaper_colors_tertiary_day_key), null)
+                ?.toIntOrNull()
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val supportsDarkText: Boolean = pref.getString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_text_day_key),
+                null
+            ).toBoolean()
+            val supportsDarkTheme: Boolean = pref.getString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_theme_day_key),
+                null
+            ).toBoolean()
+            var colorHints = 0
+            if (supportsDarkText) {
+                colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_TEXT
+            }
+            if (supportsDarkTheme) {
+                colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_THEME
+            }
+            WallpaperColors(Color.valueOf(primary),
+                secondary?.takeUnless { it == Color.TRANSPARENT }?.let { Color.valueOf(it) },
+                tertiary?.takeUnless { it == Color.TRANSPARENT }?.let { Color.valueOf(it) },
+                colorHints
+            )
+        } else {
+            WallpaperColors(Color.valueOf(primary),
+                secondary?.takeUnless { it == Color.TRANSPARENT }?.let { Color.valueOf(it) },
+                tertiary?.takeUnless { it == Color.TRANSPARENT }?.let { Color.valueOf(it) })
+        }
+    }
+
+    fun setWallpaperColorsDay(wColors: WallpaperColors?) {
+        pref.edit()
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_primary_day_key),
+                wColors?.primaryColor?.toArgb().toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_secondary_day_key),
+                wColors?.secondaryColor?.toArgb().toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_tertiary_day_key),
+                wColors?.tertiaryColor?.toArgb().toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_text_day_key),
+                wColors?.supportsDarkText.toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_theme_day_key),
+                wColors?.supportsDarkTheme.toString()
+            )
+            .apply()
+    }
+
+    fun getWallpaperColorsNight(): WallpaperColors? {
+        val primary =
+            pref.getString(
+                context.getString(R.string.pref_wallpaper_colors_primary_night_key),
+                null
+            )
+                ?.toIntOrNull()
+                ?: return null
+        val secondary = pref.getString(
+            context.getString(R.string.pref_wallpaper_colors_secondary_night_key),
+            null
+        )?.toIntOrNull()
+        val tertiary =
+            pref.getString(
+                context.getString(R.string.pref_wallpaper_colors_tertiary_night_key),
+                null
+            )
+                ?.toIntOrNull()
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val supportsDarkText: Boolean = pref.getString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_text_night_key),
+                null
+            ).toBoolean()
+            val supportsDarkTheme: Boolean = pref.getString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_theme_night_key),
+                null
+            ).toBoolean()
+            var colorHints = 0
+            if (supportsDarkText) {
+                colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_TEXT
+            }
+            if (supportsDarkTheme) {
+                colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_THEME
+            }
+            WallpaperColors(
+                Color.valueOf(primary),
+                secondary?.let { Color.valueOf(it) },
+                tertiary?.let { Color.valueOf(it) },
+                colorHints
+            )
+        } else {
+            WallpaperColors(Color.valueOf(primary),
+                secondary?.let { Color.valueOf(it) }, tertiary?.let { Color.valueOf(it) })
+        }
+    }
+
+    fun setWallpaperColorsNight(wColors: WallpaperColors?) {
+        pref.edit()
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_primary_night_key),
+                wColors?.primaryColor?.toArgb().toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_secondary_night_key),
+                wColors?.secondaryColor?.toArgb().toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_tertiary_night_key),
+                wColors?.tertiaryColor?.toArgb().toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_text_night_key),
+                wColors?.supportsDarkText.toString()
+            )
+            .putString(
+                context.getString(R.string.pref_wallpaper_colors_hint_dark_theme_night_key),
+                wColors?.supportsDarkTheme.toString()
+            )
+            .apply()
+    }
+
+    var customWallpaperColorsDay: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_wallpaper_colors_custom_day_key),
+            false
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_wallpaper_colors_custom_day_key),
+            value
+        ).apply()
+
+    var customWallpaperColorsNight: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_wallpaper_colors_custom_night_key),
+            false
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_wallpaper_colors_custom_night_key),
             value
         ).apply()
 

@@ -65,8 +65,9 @@
 
     <style name="WallpaperHintToggle" parent="@android:style/Widget.Material.Light.Button.Toggle">
         <item name="android:textSize">10sp</item>
+        <item name="android:minWidth">24dip</item>
+        <item name="android:minHeight">24dip</item>
     </style>
-
 
 
 </resources>

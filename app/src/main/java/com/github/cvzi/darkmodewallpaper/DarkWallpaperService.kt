@@ -108,6 +108,24 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         /**
+         * Event for the "custom wallpaper colors" switches in advanced settings
+         */
+        fun notifyColorsChanged() {
+            synchronized(SERVICES) {
+                for (service in SERVICES) {
+                    service.get()?.let { mService ->
+                        synchronized(mService.engines) {
+                            for (engine in mService.engines) {
+                                engine.get()?.resetWallpaperColors()
+                                engine.get()?.notifyColorsChanged()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
          * Event for the night mode trigger settings
          */
         fun updateNightMode() {
@@ -520,6 +538,9 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onComputeColors(): WallpaperColors? {
+            if (wallpaperImage?.customWallpaperColors != null) {
+                wallpaperColors = wallpaperImage?.customWallpaperColors
+            }
             statusWallpaperColors = wallpaperColors
             return wallpaperColors
         }
@@ -551,6 +572,14 @@ class DarkWallpaperService : WallpaperService() {
             return wallpaperColors == null || wallpaperColorsKey != calculateWallpaperColorsLastKey
         }
 
+        fun resetWallpaperColors() {
+            lastWallpaperColors = null
+            calculateWallpaperColorsLastTime = 0L
+            calculateWallpaperColorsLastKey = null
+            wallpaperColors = null
+            calculateWallpaperColorsHelper = null
+        }
+
         private val runnableComputeWallpaperColors = Runnable {
             computeWallpaperColors()
         }
@@ -558,12 +587,19 @@ class DarkWallpaperService : WallpaperService() {
         private fun computeWallpaperColors() {
             val helper = calculateWallpaperColorsHelper ?: return
             if (System.nanoTime() - calculateWallpaperColorsLastTime > 1000000000L) {
-                if (!helper.use()) return
                 // notifyColorsChanged() should only be called every 1 second
-                val bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(bm)
-                drawOnCanvas(canvas, helper.bitmapOrDrawable, helper.file)
-                wallpaperColors = WallpaperColors.fromBitmap(bm)
+                if (!helper.use()) return
+                if (calculateWallpaperColorsHelper?.customWallpaperColors != null) {
+                    // Use custom wallpaper colors
+                    wallpaperColors = calculateWallpaperColorsHelper?.customWallpaperColors
+                    lastWallpaperColors = wallpaperColors
+                } else {
+                    // Calculate wallpaper colors by drawing a frame on a canvas
+                    val bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(bm)
+                    drawOnCanvas(canvas, helper.bitmapOrDrawable, helper.file)
+                    wallpaperColors = WallpaperColors.fromBitmap(bm)
+                }
                 lastWallpaperColors = wallpaperColors
                 calculateWallpaperColorsLastTime = System.nanoTime()
                 calculateWallpaperColorsLastKey = helper.key
@@ -858,7 +894,12 @@ class DarkWallpaperService : WallpaperService() {
                 && wallpaperColorsShouldCalculate(colorKey)
             ) {
                 calculateWallpaperColorsHelper =
-                    WallpaperColorsHelper(currentBitmapOrDrawable, colorKey, imageFile)
+                    WallpaperColorsHelper(
+                        currentBitmapOrDrawable,
+                        colorKey,
+                        imageFile,
+                        wallpaperImage?.customWallpaperColors
+                    )
                 Handler(Looper.getMainLooper()).apply {
                     removeCallbacks(runnableComputeWallpaperColors)
                     postDelayed(runnableComputeWallpaperColors, 200)

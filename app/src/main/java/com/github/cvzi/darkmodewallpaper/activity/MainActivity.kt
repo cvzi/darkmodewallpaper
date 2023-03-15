@@ -22,6 +22,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.WallpaperColors
 import android.app.WallpaperManager
 import android.content.ClipData
 import android.content.ComponentName
@@ -56,10 +57,12 @@ import androidx.core.view.isVisible
 import com.github.cvzi.darkmodewallpaper.*
 import com.github.cvzi.darkmodewallpaper.databinding.ActivityMainBinding
 import com.github.cvzi.darkmodewallpaper.databinding.DialogAdvancedBinding
-import com.github.cvzi.darkmodewallpaper.databinding.DialogColorBinding
 import com.github.cvzi.darkmodewallpaper.databinding.LayoutAdvancedBinding
 import com.github.cvzi.darkmodewallpaper.view.PreviewView
 import com.google.android.material.switchmaterial.SwitchMaterial
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import kotlin.math.exp
 import kotlin.math.log
@@ -1095,7 +1098,35 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun updateStatusValues() {
+        val delayMillis = 1500L
+        val colors = DarkWallpaperService.statusWallpaperColors
+        if (colors == null) {
+            // Try to load the system colors
+            CoroutineScope(Dispatchers.Default).launch {
+                val systemColors = WallpaperManager.getInstance(this@MainActivity)
+                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
+                runOnUiThread {
+                    updateStatusValues(systemColors)
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+                            updateStatusValues()
+                        }, delayMillis
+                    )
+                }
+            }
+        } else {
+            updateStatusValues(colors)
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                    updateStatusValues()
+                }, delayMillis
+            )
+        }
+    }
+
+    private fun updateStatusValues(colors: WallpaperColors?) {
         val wallpaperManager = WallpaperManager.getInstance(this)
         val screenSize = getScreenSize()
 
@@ -1140,9 +1171,7 @@ open class MainActivity : AppCompatActivity() {
             textStatusZoom.text =
                 DarkWallpaperService.statusZoom.toString()
 
-            val colors = DarkWallpaperService.statusWallpaperColors
-            textWallpaperColors.text =
-                colors?.toPrettyString() ?: "Not requested yet"
+            textWallpaperColors.text = colors?.toPrettyString() ?: "Not requested yet"
 
             colors?.let {
                 viewColorPrimary.setBackgroundColor(colors.primaryColor.toArgb())
@@ -1158,12 +1187,6 @@ open class MainActivity : AppCompatActivity() {
             } ?: viewColorPrimary.setBackgroundColor(Color.TRANSPARENT)
 
         }
-
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                updateStatusValues()
-            }, 1500
-        )
     }
 
     private fun currentDayFile(): File? {
@@ -1338,29 +1361,6 @@ open class MainActivity : AppCompatActivity() {
         return DAY
     }
 
-    private fun colorChooserDialog(
-        title: StringRes,
-        getColor: (() -> Int),
-        storeColor: ((color: Int) -> Unit)
-    ) {
-        val dialogBinding = DialogColorBinding.inflate(layoutInflater)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setView(dialogBinding.root)
-        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
-            val color = dialogBinding.colorPicker.color
-            storeColor(color)
-            dialog.safeDismiss()
-        }
-        builder.setNegativeButton(android.R.string.cancel, null)
-        builder.show()
-        dialogBinding.colorPicker.apply {
-            color = getColor()
-            showAlpha(true)
-            showHex(true)
-        }
-    }
 
     private fun isDayOrNightMode(): DayOrNight {
         return when (preferencesGlobal.nightModeTrigger) {

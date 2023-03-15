@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutColors"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -9,39 +9,56 @@
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switchUseCustomColors"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutColorViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Switch" />
+        android:orientation="horizontal">
 
-    <View
-        android:id="@+id/viewColorPrimary"
-        android:layout_width="10pt"
-        android:layout_height="10pt" />
+        <View
+            android:id="@+id/viewColorPrimary"
+            android:layout_width="20pt"
+            android:layout_height="10pt"
+            android:contentDescription="Primary color"
+            tools:ignore="HardcodedText" />
 
-    <View
-        android:id="@+id/viewColorSecondary"
-        android:layout_width="10pt"
-        android:layout_height="10pt" />
+        <View
+            android:id="@+id/viewColorSecondary"
+            android:layout_width="20pt"
+            android:layout_height="10pt"
+            android:contentDescription="Secondary color"
+            tools:ignore="HardcodedText" />
 
-    <View
-        android:id="@+id/viewColorTertiary"
-        android:layout_width="10pt"
-        android:layout_height="10pt" />
+        <View
+            android:id="@+id/viewColorTertiary"
+            android:layout_width="20pt"
+            android:layout_height="10pt"
+            android:contentDescription="Tertiary color"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
 
     <ToggleButton
         android:id="@+id/toggleButtonSupportsDarkText"
         style="@style/WallpaperHintToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="DARK_TEXT"
-        android:textOn="DARK_TEXT" />
+        android:textOff="LIGHT\nTEXT"
+        android:textOn="DARK\nTEXT"
+        tools:ignore="HardcodedText" />
 
     <ToggleButton
         android:id="@+id/toggleButtonSupportsDarkTheme"
         style="@style/WallpaperHintToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="DARK_THEME"
-        android:textOn="DARK_THEME" />
+        android:textOff="LIGHT\nTHEME"
+        android:textOn="DARK\nTHEME"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>

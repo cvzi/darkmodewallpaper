@@ -19,17 +19,14 @@
 package com.github.cvzi.darkmodewallpaper.activity
 
 import android.os.Bundle
-import android.text.Html
-import android.text.method.LinkMovementMethod
 import android.webkit.WebView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.cvzi.darkmodewallpaper.BuildConfig
 import com.github.cvzi.darkmodewallpaper.R
-import com.github.cvzi.darkmodewallpaper.StringRes
 import com.github.cvzi.darkmodewallpaper.databinding.ActivityAboutBinding
 import com.github.cvzi.darkmodewallpaper.safeDismiss
+import com.github.cvzi.darkmodewallpaper.setHtmlText
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAboutBinding
@@ -66,23 +63,10 @@ class AboutActivity : AppCompatActivity() {
         setHtmlText(binding.textViewIssues, R.string.about_issues)
 
         setHtmlText(binding.textViewTranslate, R.string.about_translate)
-    }
 
-    private fun setHtmlText(
-        textView: TextView,
-        stringRes: StringRes,
-        vararg formatArgs: Any?
-    ): TextView {
-        return setHtmlText(textView, getString(stringRes, *formatArgs))
-    }
-
-    private fun setHtmlText(textView: TextView, htmlString: String): TextView {
-        return textView.apply {
-            movementMethod = LinkMovementMethod()
-            text = Html.fromHtml(
-                htmlString,
-                Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV
-            )
-        }
+        setHtmlText(
+            binding.textViewDonate,
+            "&#x1f49c; <a href=\"https://cvzi.github.io/.github/\">Donate &amp; Support</a>"
+        )
     }
 }

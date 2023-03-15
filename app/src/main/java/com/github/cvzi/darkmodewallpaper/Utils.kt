@@ -19,10 +19,7 @@
 package com.github.cvzi.darkmodewallpaper
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.TimePickerDialog
-import android.app.WallpaperColors
-import android.app.WallpaperManager
+import android.app.*
 import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
@@ -32,14 +29,18 @@ import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.provider.MediaStore
+import android.text.Html
 import android.text.format.DateFormat
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.Companion.isPhotoPickerAvailable
+import com.github.cvzi.darkmodewallpaper.databinding.DialogColorBinding
 import com.google.android.renderscript.Toolkit
 import java.io.File
 import java.io.FileOutputStream
@@ -658,30 +659,53 @@ fun Color?.toPrettyString() = this?.let {
 fun WallpaperColors.toPrettyString() =
     "${primaryColor.toPrettyString()} ${secondaryColor.toPrettyString()} ${tertiaryColor.toPrettyString()} ${
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            "\n" + prettyColorHints(
-                this.colorHints
-            )
+            "\n" + prettyColorHints()
         } else ""
     }"
 
 /**
  * Turn WallpaperColors.colorHints to readable text
  */
-fun prettyColorHints(colorHints: Int): String {
+fun WallpaperColors.prettyColorHints(): String {
     var s = "Dark text supported: "
-    s += if (colorHints and WallpaperColors.HINT_SUPPORTS_DARK_TEXT != 0) {
-        "yes"
-    } else {
-        "no"
+    s += when (supportsDarkText) {
+        true -> "yes"
+        false -> "no"
+        else -> "undefined"
     }
     s += "\nDark theme supported: "
-    s += if (colorHints and WallpaperColors.HINT_SUPPORTS_DARK_THEME != 0) {
-        "yes"
-    } else {
-        "no"
+    s += when (supportsDarkTheme) {
+        true -> "yes"
+        false -> "no"
+        else -> "undefined"
     }
     return s
 }
+
+/**
+ * Check if flag HINT_SUPPORTS_DARK_TEXT is set
+ */
+val WallpaperColors.supportsDarkText: Boolean?
+    get() {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            colorHints and WallpaperColors.HINT_SUPPORTS_DARK_TEXT != 0
+        } else {
+            null
+        }
+    }
+
+/**
+ * Check if flag HINT_SUPPORTS_DARK_THEME is set
+ */
+val WallpaperColors.supportsDarkTheme: Boolean?
+    get() {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            colorHints and WallpaperColors.HINT_SUPPORTS_DARK_THEME != 0
+        } else {
+            null
+        }
+    }
+
 
 /**
  * Keeps a reference to the bitmap or drawable to later generate WallpaperColors
@@ -689,7 +713,8 @@ fun prettyColorHints(colorHints: Int): String {
 class WallpaperColorsHelper(
     var bitmapOrDrawable: BitmapOrDrawable,
     val key: String?,
-    val file: File?
+    val file: File?,
+    val customWallpaperColors: WallpaperColors?
 ) {
     private var isRecycled = false
 
@@ -793,4 +818,130 @@ fun scaleDrawableToCanvas(
     }
 
     return DrawableScaleFactor(scale, drawableWidth, drawableHeight)
+}
+
+
+/**
+ * Generate the usual checkered background to highlight transparency
+ */
+fun checkeredBackground(): Bitmap {
+    return Bitmap.createBitmap(19, 19, Bitmap.Config.ARGB_8888).apply {
+        Canvas(this).apply {
+            val dark = Paint().apply {
+                color = 0xffCDCDCD.toInt()
+            }
+            val light = Paint().apply {
+                color = 0xffF1F1F1.toInt()
+            }
+            drawRect(0f, 0f, 19f, 19f, dark)
+            drawRect(9f, 0f, 19f, 9f, light)
+            drawRect(0f, 9f, 9f, 19f, light)
+        }
+    }
+}
+
+fun Activity.colorChooserDialog(
+    title: String,
+    getColor: (() -> Int),
+    storeColor: ((color: Int) -> Unit)
+) {
+    val dialogBinding = DialogColorBinding.inflate(layoutInflater)
+
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle(title)
+    builder.setView(dialogBinding.root)
+    builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+        val color = dialogBinding.colorPicker.color
+        storeColor(color)
+        dialog.safeDismiss()
+    }
+    builder.setNegativeButton(android.R.string.cancel, null)
+    builder.show()
+    dialogBinding.colorPicker.apply {
+        color = getColor()
+        showAlpha(true)
+        showHex(true)
+    }
+}
+
+fun Activity.colorChooserDialog(
+    title: StringRes,
+    getColor: (() -> Int),
+    storeColor: ((color: Int) -> Unit)
+) = colorChooserDialog(getString(title), getColor, storeColor)
+
+class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
+    var primaryColor = wallpaperColors?.primaryColor ?: Color.valueOf(Color.WHITE)
+    var secondaryColor = wallpaperColors?.secondaryColor
+    var tertiaryColor = wallpaperColors?.tertiaryColor
+    var darkText = wallpaperColors?.supportsDarkText
+    var darkTheme = wallpaperColors?.supportsDarkTheme
+    fun setPrimaryColor(color: Int): WallpaperColorsEditor {
+        primaryColor = Color.valueOf(color)
+        return this
+    }
+
+    fun setSecondaryColor(color: Int): WallpaperColorsEditor {
+        secondaryColor = Color.valueOf(color)
+        return this
+    }
+
+    fun setTertiaryColor(color: Int): WallpaperColorsEditor {
+        tertiaryColor = Color.valueOf(color)
+        return this
+    }
+
+    fun setDarkText(enabled: Boolean): WallpaperColorsEditor {
+        darkText = enabled
+        return this
+    }
+
+    fun setDarkTheme(enabled: Boolean): WallpaperColorsEditor {
+        darkTheme = enabled
+        return this
+    }
+
+    /**
+     * Creates new WallpaperColors, missing values are filled with default values
+     */
+    fun build(): WallpaperColors {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            var colorHints = 0
+            if (darkText == true) {
+                colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_TEXT
+            }
+            if (darkTheme == true) {
+                colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_THEME
+            }
+            WallpaperColors(primaryColor, secondaryColor, tertiaryColor, colorHints)
+        } else {
+            WallpaperColors(primaryColor, secondaryColor, tertiaryColor)
+        }
+
+    }
+
+}
+
+/**
+ * Return a WallpaperColorsEditor to edit the colors
+ * Use .build() to get a new WallpaperColors object
+ */
+fun WallpaperColors?.edit() = WallpaperColorsEditor(this)
+
+fun Context.setHtmlText(
+    textView: TextView,
+    stringRes: StringRes,
+    vararg formatArgs: Any?
+): TextView {
+    return setHtmlText(textView, getString(stringRes, *formatArgs))
+}
+
+fun setHtmlText(textView: TextView, htmlString: String): TextView {
+    return textView.apply {
+        movementMethod = LinkMovementMethod()
+        text = Html.fromHtml(
+            htmlString,
+            Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV
+        )
+    }
 }
