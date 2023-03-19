@@ -58,7 +58,7 @@
     <string name="dialog_button_delete_image">画像を削除</string>
     <string name="switch_separate_lock_screen_settings">ロック画面の設定を分割する</string>
     <string name="switch_separate_lock_screen_settings_description">ロック画面の設定の分割を有効にする</string>
-    <string name="switch_animate_from_lock_screen">ロック解除後にホーム画面の壁紙への遷移をアニメーション化します</string>
+    <string name="switch_animate_from_lock_screen">ロック解除後にホーム画面の壁紙への遷移をアニメーションにする</string>
     <string name="switch_animate_from_lock_screen_description">ロック解除後にロック画面の壁紙からホーム画面の壁紙への遷移のアニメーションを有効にします</string>
     <string name="lock_symbol_description">ロック画面のシンボル</string>
     <string name="sun_symbol_description">太陽/昼</string>
