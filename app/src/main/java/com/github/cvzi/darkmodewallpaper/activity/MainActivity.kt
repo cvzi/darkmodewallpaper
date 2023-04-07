@@ -1348,7 +1348,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun handleSendToAction(intent: Intent) {
-        val dayOrNight = sendToActionIsNight()
+        val dayOrNight = sendToActionIsDayOrNight()
         Log.d(TAG, "isNightSendToAction() = $dayOrNight")
         val data = intent.data ?: intent.clipData?.getItemAt(0)?.uri
         data?.let { uri ->
@@ -1356,7 +1356,8 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    protected open fun sendToActionIsNight(): DayOrNight {
+    @Suppress("SameReturnValue")
+    protected open fun sendToActionIsDayOrNight(): DayOrNight {
         imageProvider.setUseColorOnly(DAY, isLockScreenActivity, false)
         return DAY
     }

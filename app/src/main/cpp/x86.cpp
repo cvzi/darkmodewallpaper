@@ -35,52 +35,6 @@ static inline __m128i cvtepu8_epi32(__m128i x) {
 #endif
 }
 
-static inline __m128i packus_epi32(__m128i lo, __m128i hi) {
-#if defined(__SSE4_1__)
-    return _mm_packus_epi32(lo, hi);
-#elif defined(__SSSE3__)
-    const __m128i C0 = _mm_set_epi32(0x0000, 0x0000, 0x0000, 0x0000);
-    const __m128i C1 = _mm_set_epi32(0xffff, 0xffff, 0xffff, 0xffff);
-    const __m128i M32to16L = _mm_set_epi32(0xffffffff, 0xffffffff, 0x0d0c0908, 0x05040100);
-    const __m128i M32to16H = _mm_set_epi32(0x0d0c0908, 0x05040100, 0xffffffff, 0xffffffff);
-    lo = _mm_and_si128(lo, _mm_cmpgt_epi32(lo, C0));
-    lo = _mm_or_si128(lo, _mm_cmpgt_epi32(lo, C1));
-    hi = _mm_and_si128(hi, _mm_cmpgt_epi32(hi, C0));
-    hi = _mm_or_si128(hi, _mm_cmpgt_epi32(hi, C1));
-    return _mm_or_si128(_mm_shuffle_epi8(lo, M32to16L),
-                        _mm_shuffle_epi8(hi, M32to16H));
-#else
-#   error "Require at least SSSE3"
-#endif
-}
-
-static inline __m128i mullo_epi32(__m128i x, __m128i y) {
-#if defined(__SSE4_1__)
-    return _mm_mullo_epi32(x, y);
-#elif defined(__SSSE3__)
-    const __m128i Meven = _mm_set_epi32(0x00000000, 0xffffffff, 0x00000000, 0xffffffff);
-    __m128i even = _mm_mul_epu32(x, y);
-    __m128i odd = _mm_mul_epu32(_mm_srli_si128(x, 4),
-                                _mm_srli_si128(y, 4));
-    even = _mm_and_si128(even, Meven);
-    odd = _mm_and_si128(odd, Meven);
-    return _mm_or_si128(even, _mm_slli_si128(odd, 4));
-#else
-#   error "Require at least SSSE3"
-#endif
-}
-
-/* 'mask' must packed 8-bit of 0x00 or 0xff */
-static inline __m128i blendv_epi8(__m128i x, __m128i y, __m128i mask) {
-#if defined(__SSE4_1__)
-    return _mm_blendv_epi8(x, y, mask);
-#elif defined(__SSSE3__)
-    return _mm_or_si128(_mm_andnot_si128(mask, x), _mm_and_si128(y, mask));
-#else
-#   error "Require at least SSSE3"
-#endif
-}
-
 extern "C"
 
     void rsdIntrinsicBlurVFU4_K(void *dst,

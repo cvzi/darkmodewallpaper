@@ -871,11 +871,11 @@ fun Activity.colorChooserDialog(
 ) = colorChooserDialog(getString(title), getColor, storeColor)
 
 class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
-    var primaryColor = wallpaperColors?.primaryColor ?: Color.valueOf(Color.WHITE)
-    var secondaryColor = wallpaperColors?.secondaryColor
-    var tertiaryColor = wallpaperColors?.tertiaryColor
-    var darkText = wallpaperColors?.supportsDarkText
-    var darkTheme = wallpaperColors?.supportsDarkTheme
+    private var primaryColor = wallpaperColors?.primaryColor ?: Color.valueOf(Color.WHITE)
+    private var secondaryColor = wallpaperColors?.secondaryColor
+    private var tertiaryColor = wallpaperColors?.tertiaryColor
+    private var darkText = wallpaperColors?.supportsDarkText
+    private var darkTheme = wallpaperColors?.supportsDarkTheme
     fun setPrimaryColor(color: Int): WallpaperColorsEditor {
         primaryColor = Color.valueOf(color)
         return this

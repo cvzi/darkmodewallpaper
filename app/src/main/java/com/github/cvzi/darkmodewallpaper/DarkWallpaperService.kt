@@ -1111,6 +1111,7 @@ class DarkWallpaperService : WallpaperService() {
 
     }
 
+    @Suppress("SameReturnValue")
     private fun generateSolidColorKey(): String {
         return "solidColor"
     }

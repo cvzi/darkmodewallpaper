@@ -25,7 +25,8 @@ import com.github.cvzi.darkmodewallpaper.NIGHT
  * Activity to set night lock-screen wallpaper through "send to"/"share"/"use as" from other apps
  */
 class SetLockScreenNightActivity : LockScreenActivity() {
-    override fun sendToActionIsNight(): DayOrNight {
+    @Suppress("SameReturnValue")
+    override fun sendToActionIsDayOrNight(): DayOrNight {
         imageProvider.setUseNightWallpaper(isLockScreenActivity, true)
         imageProvider.setUseColorOnly(NIGHT, isLockScreenActivity, false)
         return NIGHT
