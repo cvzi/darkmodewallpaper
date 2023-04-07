@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.1
+*   Fix language list for Android 13
+
 ## 1.6.0
 *   Translations updated from crowdin
 *   Add donation links
