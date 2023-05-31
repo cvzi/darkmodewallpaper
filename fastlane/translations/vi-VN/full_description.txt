@@ -6,6 +6,8 @@ Khi chủ đề tối của hệ thống được bật hoặc tắt, hình nề
 Thay vì một hình ảnh khác, bạn cũng có thể điều chỉnh màu sắc, độ tương phản và
 độ sáng của hình ảnh hình nền hiện có của bạn để làm cho nó tối hơn.
 
+Ứng dụng có hỗ trợ hoạt ảnh GIF và WebP.
+
 Bạn có thể chọn các hình ảnh khác nhau cho màn hình chính và màn hình khoá.
 
 Quyền "đọc bộ nhớ" là bắt buộc nếu bạn muốn
