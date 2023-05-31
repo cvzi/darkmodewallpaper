@@ -85,4 +85,13 @@
     <string name="scrolling_mode_value_on">Bật</string>
     <string name="scrolling_mode_value_off">Tắt</string>
     <string name="scrolling_mode_value_inverse">Đảo ngược</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Ngay lập tức nói cho Android biết về màu hình nền mới sau khi mở khóa</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Đợi</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Ngay lập tức</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[Khi bạn mở khóa điện thoại và hình nền màn hình khóa đổi thành hình nền màn hình chính, ứng dụng cần phải nói cho Android biết về màu của hình nền.
+Android sẽ thay đổi thiết kế và màu chữ theo màu mới.
+Tùy vào màu hình nền, việc này có thể gây ra màn hình bị nhấp nháy.
+Bình thường thì màu được gửi ngay lập tức sau khi mở khóa điện thoại.
+Nếu bạn thấy nhấp nháy, hãy đặt tùy chọn này là \"Đợi\" và màu sẽ được gửi khi bạn mở ứng dụng.]]></string>
+    <string name="blur_unavailable_in_animations">Không thể làm mờ ảnh động</string>
 </resources>
