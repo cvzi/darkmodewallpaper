@@ -871,7 +871,7 @@ fun Activity.colorChooserDialog(
 ) = colorChooserDialog(getString(title), getColor, storeColor)
 
 class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
-    private var primaryColor = wallpaperColors?.primaryColor ?: Color.valueOf(Color.WHITE)
+    private var primaryColor: Color = wallpaperColors?.primaryColor ?: Color.valueOf(Color.WHITE)
     private var secondaryColor = wallpaperColors?.secondaryColor
     private var tertiaryColor = wallpaperColors?.tertiaryColor
     private var darkText = wallpaperColors?.supportsDarkText
@@ -905,6 +905,16 @@ class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
      * Creates new WallpaperColors, missing values are filled with default values
      */
     fun build(): WallpaperColors {
+        val second: Color?
+        val tertiary: Color?
+        if (secondaryColor == null && tertiaryColor != null) {
+            // tertiaryColor can't be specified when secondaryColor is null -> swap them
+            second = tertiaryColor
+            tertiary = null
+        } else {
+            second = secondaryColor
+            tertiary = tertiaryColor
+        }
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             var colorHints = 0
             if (darkText == true) {
@@ -913,9 +923,9 @@ class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
             if (darkTheme == true) {
                 colorHints = colorHints or WallpaperColors.HINT_SUPPORTS_DARK_THEME
             }
-            WallpaperColors(primaryColor, secondaryColor, tertiaryColor, colorHints)
+            WallpaperColors(primaryColor, second, tertiary, colorHints)
         } else {
-            WallpaperColors(primaryColor, secondaryColor, tertiaryColor)
+            WallpaperColors(primaryColor, second, tertiary)
         }
 
     }
