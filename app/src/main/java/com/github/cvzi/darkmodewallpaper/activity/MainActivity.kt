@@ -125,20 +125,16 @@ open class MainActivity : AppCompatActivity() {
         imageProvider = StaticDayAndNightProvider(this)
 
         startForPickDayHomeScreenFile = registerForActivityResult(
-            dayOrNight = DAY,
-            isLockScreen = false
+            dayOrNight = DAY, isLockScreen = false
         )
         startForPickNightHomeScreenFile = registerForActivityResult(
-            dayOrNight = NIGHT,
-            isLockScreen = false
+            dayOrNight = NIGHT, isLockScreen = false
         )
         startForPickDayLockScreenFile = registerForActivityResult(
-            dayOrNight = DAY,
-            isLockScreen = true
+            dayOrNight = DAY, isLockScreen = true
         )
         startForPickNightLockScreenFile = registerForActivityResult(
-            dayOrNight = NIGHT,
-            isLockScreen = true
+            dayOrNight = NIGHT, isLockScreen = true
         )
         startForStoragePermission = registerForActivityResult(
             RequestPermission()
@@ -147,9 +143,7 @@ open class MainActivity : AppCompatActivity() {
                 askImportWhichWallpaper()
             } else {
                 Toast.makeText(
-                    this,
-                    R.string.wallpaper_import_permission_missing,
-                    Toast.LENGTH_LONG
+                    this, R.string.wallpaper_import_permission_missing, Toast.LENGTH_LONG
                 ).show()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     showWallpaperExportHint()
@@ -171,12 +165,10 @@ open class MainActivity : AppCompatActivity() {
         scrollingModeLayoutNight = binding.linearLayoutScrollingModeNight
 
         makeCardViewReceiveDragAndDrop(
-            binding.cardViewDay,
-            dayOrNight = DAY, isLockScreen = isLockScreenActivity
+            binding.cardViewDay, dayOrNight = DAY, isLockScreen = isLockScreenActivity
         )
         makeCardViewReceiveDragAndDrop(
-            binding.cardViewNight,
-            dayOrNight = NIGHT, isLockScreen = isLockScreenActivity
+            binding.cardViewNight, dayOrNight = NIGHT, isLockScreen = isLockScreenActivity
         )
 
 
@@ -208,9 +200,7 @@ open class MainActivity : AppCompatActivity() {
 
             applyLiveWallpaper(this@MainActivity, c) {
                 Toast.makeText(
-                    this@MainActivity,
-                    R.string.apply_wallpaper_unavailable,
-                    Toast.LENGTH_LONG
+                    this@MainActivity, R.string.apply_wallpaper_unavailable, Toast.LENGTH_LONG
                 ).show()
                 binding.buttonApplyWallpaper.isEnabled = false
             }
@@ -322,52 +312,47 @@ open class MainActivity : AppCompatActivity() {
 
         binding.imageButtonColorDay.setColorFilter(
             imageProvider.getColor(
-                DAY,
-                isLockScreenActivity
+                DAY, isLockScreenActivity
             )
         )
         binding.imageButtonColorDay.setOnClickListener {
-            colorChooserDialog(
-                R.string.color_chooser_day, {
-                    imageProvider.getColor(DAY, isLockScreenActivity)
-                }, { color ->
-                    imageProvider.setColor(DAY, isLockScreenActivity, color)
-                    imageProvider.setUseColor(DAY, isLockScreenActivity, true)
-                    binding.switchColorDay.isChecked = true
-                    binding.imageButtonColorDay.setColorFilter(color)
-                    previewViewDay.color = color
-                    binding.imageButtonColorDay.setColorFilter(color)
-                    DarkWallpaperService.invalidate()
-                })
+            colorChooserDialog(R.string.color_chooser_day, {
+                imageProvider.getColor(DAY, isLockScreenActivity)
+            }, { color ->
+                imageProvider.setColor(DAY, isLockScreenActivity, color)
+                imageProvider.setUseColor(DAY, isLockScreenActivity, true)
+                binding.switchColorDay.isChecked = true
+                binding.imageButtonColorDay.setColorFilter(color)
+                previewViewDay.color = color
+                binding.imageButtonColorDay.setColorFilter(color)
+                DarkWallpaperService.invalidate()
+            })
         }
 
         binding.imageButtonColorNight.setColorFilter(
             imageProvider.getColor(
-                NIGHT,
-                isLockScreenActivity
+                NIGHT, isLockScreenActivity
             )
         )
         binding.imageButtonColorNight.setOnClickListener {
-            colorChooserDialog(
-                R.string.color_chooser_night, {
-                    imageProvider.getColor(NIGHT, isLockScreenActivity)
-                }, { color ->
-                    imageProvider.setColor(NIGHT, isLockScreenActivity, color)
-                    imageProvider.setUseColor(NIGHT, isLockScreenActivity, true)
-                    binding.switchColorNight.isChecked = true
-                    binding.imageButtonColorNight.setColorFilter(color)
-                    previewViewNight.color = color
-                    binding.imageButtonColorNight.setColorFilter(color)
-                    DarkWallpaperService.invalidate()
-                })
+            colorChooserDialog(R.string.color_chooser_night, {
+                imageProvider.getColor(NIGHT, isLockScreenActivity)
+            }, { color ->
+                imageProvider.setColor(NIGHT, isLockScreenActivity, color)
+                imageProvider.setUseColor(NIGHT, isLockScreenActivity, true)
+                binding.switchColorNight.isChecked = true
+                binding.imageButtonColorNight.setColorFilter(color)
+                previewViewNight.color = color
+                binding.imageButtonColorNight.setColorFilter(color)
+                DarkWallpaperService.invalidate()
+            })
         }
 
 
         previewViewDay.apply {
             color =
                 if (imageProvider.getUseColor(DAY, isLockScreenActivity)) imageProvider.getColor(
-                    DAY,
-                    isLockScreenActivity
+                    DAY, isLockScreenActivity
                 ) else 0
             brightness = imageProvider.getBrightness(DAY, isLockScreenActivity)
             contrast = imageProvider.getContrast(DAY, isLockScreenActivity)
@@ -379,8 +364,7 @@ open class MainActivity : AppCompatActivity() {
         }
         previewViewNight.apply {
             color = if (imageProvider.getUseColor(
-                    NIGHT,
-                    isLockScreenActivity
+                    NIGHT, isLockScreenActivity
                 )
             ) imageProvider.getColor(NIGHT, isLockScreenActivity) else 0
             brightness = imageProvider.getBrightness(NIGHT, isLockScreenActivity)
@@ -400,8 +384,7 @@ open class MainActivity : AppCompatActivity() {
         onTriggerModeChanged(binding.switchTriggerSystem.isChecked)
 
         binding.textViewStartTime.setOnClickListener {
-            createTimePicker(
-                this,
+            createTimePicker(this,
                 load = { binding.textViewStartTime.text.toString() },
                 save = { v ->
                     binding.textViewStartTime.text = v
@@ -409,13 +392,10 @@ open class MainActivity : AppCompatActivity() {
                 }).show()
         }
         binding.textViewEndTime.setOnClickListener {
-            createTimePicker(
-                this,
-                load = { binding.textViewEndTime.text.toString() },
-                save = { v ->
-                    binding.textViewEndTime.text = v
-                    saveTimeRange()
-                }).show()
+            createTimePicker(this, load = { binding.textViewEndTime.text.toString() }, save = { v ->
+                binding.textViewEndTime.text = v
+                saveTimeRange()
+            }).show()
         }
         loadTimeRange()
 
@@ -439,9 +419,7 @@ open class MainActivity : AppCompatActivity() {
             scrollingModeLayoutDay.visibility = View.VISIBLE
             scrollingModeLayoutNight.visibility = View.VISIBLE
             ArrayAdapter.createFromResource(
-                this,
-                R.array.scrolling_mode_values,
-                android.R.layout.simple_spinner_item
+                this, R.array.scrolling_mode_values, android.R.layout.simple_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 scrollingModeSpinnerDay.adapter = adapter
@@ -450,23 +428,21 @@ open class MainActivity : AppCompatActivity() {
                     ScrollingModeOnItemSelectedListener(scrollingModeSpinnerDay, imageProvider, DAY)
                 scrollingModeSpinnerNight.onItemSelectedListener =
                     ScrollingModeOnItemSelectedListener(
-                        scrollingModeSpinnerNight,
-                        imageProvider,
-                        NIGHT
+                        scrollingModeSpinnerNight, imageProvider, NIGHT
                     )
             }
         }
 
-        if (intent != null
-            && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_ATTACH_DATA)
-            && intent.type?.startsWith("image/") == true
+        if (intent != null && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_ATTACH_DATA) && intent.type?.startsWith(
+                "image/"
+            ) == true
         ) {
             // "Send to" / "Use as" from another app
             handleSendToAction(intent)
         } else if (!imageProvider.storeFileLocation(
-                dayOrNight = DAY,
-                isLockScreen = isLockScreenActivity
-            ).exists() && !DarkWallpaperService.isRunning() && !isLockScreenActivity
+                dayOrNight = DAY, isLockScreen = isLockScreenActivity
+            )
+                .exists() && !DarkWallpaperService.isRunning() && !isLockScreenActivity && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
         ) {
             // If there is no file and the services are not running (i.e. usually a new install)
             askToImport()
@@ -554,8 +530,7 @@ open class MainActivity : AppCompatActivity() {
                         // Blue color
                         (v as? CardView)?.setCardBackgroundColor(
                             resources.getColor(
-                                R.color.day_background,
-                                null
+                                R.color.day_background, null
                             )
                         )
                         true
@@ -563,12 +538,12 @@ open class MainActivity : AppCompatActivity() {
                         false
                     }
                 }
+
                 DragEvent.ACTION_DRAG_ENTERED -> {
                     // Over the view -> green color
                     (v as? CardView)?.setCardBackgroundColor(
                         resources.getColor(
-                            R.color.switch_green,
-                            null
+                            R.color.switch_green, null
                         )
                     )
                     v.invalidate()
@@ -579,12 +554,12 @@ open class MainActivity : AppCompatActivity() {
                     // Ignore
                     true
                 }
+
                 DragEvent.ACTION_DRAG_EXITED -> {
                     // Blue color
                     (v as? CardView)?.setCardBackgroundColor(
                         resources.getColor(
-                            R.color.day_background,
-                            null
+                            R.color.day_background, null
                         )
                     )
                     v.invalidate()
@@ -606,6 +581,7 @@ open class MainActivity : AppCompatActivity() {
                     }
                     return@setOnDragListener true
                 }
+
                 else -> {
                     false
                 }
@@ -614,8 +590,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun registerForActivityResult(
-        dayOrNight: DayOrNight,
-        isLockScreen: Boolean
+        dayOrNight: DayOrNight, isLockScreen: Boolean
     ): ActivityResultLauncher<Intent> {
         return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -625,9 +600,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun saveFileFromActivityResult(
-        result: ActivityResult,
-        dayOrNight: DayOrNight,
-        isLockScreen: Boolean
+        result: ActivityResult, dayOrNight: DayOrNight, isLockScreen: Boolean
     ) {
         return saveFileFromUri(result.data?.data, dayOrNight, isLockScreen)
     }
@@ -661,8 +634,7 @@ open class MainActivity : AppCompatActivity() {
                         result = storeFile(file, ifs, desiredMax)
                         success = result?.success == true
                         Log.d(
-                            TAG,
-                            "Stored ${file.nameWithoutExtension} wallpaper in $file"
+                            TAG, "Stored ${file.nameWithoutExtension} wallpaper in $file"
                         )
                     }
                 }
@@ -674,19 +646,13 @@ open class MainActivity : AppCompatActivity() {
                         // Rename the file to .gif in case it is animated or .webp for static
                         Log.v(TAG, "File: ${file.name} is animated: ${result?.isAnimated}")
                         imageProvider.setNewFile(
-                            dayOrNight,
-                            isLockScreen,
-                            result?.isAnimated == true,
-                            file
+                            dayOrNight, isLockScreen, result?.isAnimated == true, file
                         )
                         alert?.safeDismiss()
                         Toast.makeText(
-                            this@MainActivity,
-                            getString(
-                                R.string.image_file_import_success,
-                                file.absolutePath
-                            ),
-                            Toast.LENGTH_SHORT
+                            this@MainActivity, getString(
+                                R.string.image_file_import_success, file.absolutePath
+                            ), Toast.LENGTH_SHORT
                         ).show()
                         previewViewDay.file = currentDayFile()
                         previewViewNight.file = currentNightFile()
@@ -697,9 +663,7 @@ open class MainActivity : AppCompatActivity() {
                         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = true
                         alert?.setMessage(getString(R.string.image_file_import_error))
                         Toast.makeText(
-                            this@MainActivity,
-                            R.string.image_file_import_error,
-                            Toast.LENGTH_LONG
+                            this@MainActivity, R.string.image_file_import_error, Toast.LENGTH_LONG
                         ).show()
                     }
                 }
@@ -707,26 +671,23 @@ open class MainActivity : AppCompatActivity() {
         }
         importFileThread?.start()
         progressBar = ProgressBar(this)
-        alert = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.image_file_import_loading_title))
-            .setMessage(
-                getString(
-                    R.string.image_file_import_loading_message,
-                    uri?.toString(),
-                    file.absolutePath
-                )
-            )
-            .setView(progressBar)
-            .setPositiveButton(android.R.string.ok) { dialog, _ ->
-                importFileThread?.join()
-                dialog.safeDismiss()
-                file.delete()
-                File(file.parent, "${file.name}.tmp").delete()
-                previewViewDay.file = currentDayFile()
-                previewViewNight.file = currentNightFile()
-                DarkWallpaperService.invalidate(forceReload = true)
-            }
-            .show()
+        alert =
+            AlertDialog.Builder(this).setTitle(getString(R.string.image_file_import_loading_title))
+                .setMessage(
+                    getString(
+                        R.string.image_file_import_loading_message,
+                        uri?.toString(),
+                        file.absolutePath
+                    )
+                ).setView(progressBar).setPositiveButton(android.R.string.ok) { dialog, _ ->
+                    importFileThread?.join()
+                    dialog.safeDismiss()
+                    file.delete()
+                    File(file.parent, "${file.name}.tmp").delete()
+                    previewViewDay.file = currentDayFile()
+                    previewViewNight.file = currentNightFile()
+                    DarkWallpaperService.invalidate(forceReload = true)
+                }.show()
         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = false
     }
 
@@ -777,9 +738,7 @@ open class MainActivity : AppCompatActivity() {
                     startActivity(this)
                 } else {
                     Toast.makeText(
-                        this@MainActivity,
-                        R.string.apply_wallpaper_unavailable,
-                        Toast.LENGTH_LONG
+                        this@MainActivity, R.string.apply_wallpaper_unavailable, Toast.LENGTH_LONG
                     ).show()
                 }
             }
@@ -846,8 +805,7 @@ open class MainActivity : AppCompatActivity() {
         dialogBinding.buttonDeleteImage.setOnClickListener {
             alert.safeDismiss()
             imageProvider.storeFileLocation(
-                dayOrNight = dayOrNight,
-                isLockScreen = isLockScreenActivity
+                dayOrNight = dayOrNight, isLockScreen = isLockScreenActivity
             ).delete()
             previewViewDay.file = currentDayFile()
             previewViewNight.file = currentNightFile()
@@ -858,9 +816,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun openAdvancedLayoutDayOrNight(
-        previewView: PreviewView,
-        switchColor: SwitchMaterial,
-        isDayOrNight: DayOrNight
+        previewView: PreviewView, switchColor: SwitchMaterial, isDayOrNight: DayOrNight
     ) {
         var shownHintBlurNotAvailable = false
         openAdvancedLayout(previewView,
@@ -874,24 +830,25 @@ open class MainActivity : AppCompatActivity() {
                 switchColor.isChecked = true
                 previewView.color = color
                 DarkWallpaperService.invalidate()
-            }, { contrast ->
+            },
+            { contrast ->
                 previewView.contrast = contrast
                 imageProvider.setContrast(isDayOrNight, isLockScreenActivity, contrast)
-            }, { brightness ->
+            },
+            { brightness ->
                 previewView.brightness = brightness
                 imageProvider.setBrightness(isDayOrNight, isLockScreenActivity, brightness)
-            }, { blur ->
+            },
+            { blur ->
                 previewView.blur = blur / previewScale
                 imageProvider.setBlur(isDayOrNight, isLockScreenActivity, blur)
                 if (!shownHintBlurNotAvailable && imageProvider.isAnimated(
-                        isDayOrNight,
-                        isLockScreenActivity
+                        isDayOrNight, isLockScreenActivity
                     )
                 ) {
                     shownHintBlurNotAvailable = true
                     Toast.makeText(
-                        this, getString(R.string.blur_unavailable_in_animations),
-                        Toast.LENGTH_LONG
+                        this, getString(R.string.blur_unavailable_in_animations), Toast.LENGTH_LONG
                     ).show()
                 }
             })
@@ -979,12 +936,11 @@ open class MainActivity : AppCompatActivity() {
         layoutAdvancedBinding.seekBarBlur.max = 1000
         // Seek bar map: 0-1 on bar maps to 0 and 1-101 on bar maps to 0-100
         // to make it easier to select 0 i.e. no blur
-        layoutAdvancedBinding.seekBarBlur.progress =
-            if (initBlur <= 1f) {
-                0
-            } else {
-                (1000f / 106f * (initBlur.coerceIn(0f, 100f) + 5f)).toInt()
-            }
+        layoutAdvancedBinding.seekBarBlur.progress = if (initBlur <= 1f) {
+            0
+        } else {
+            (1000f / 106f * (initBlur.coerceIn(0f, 100f) + 5f)).toInt()
+        }
         layoutAdvancedBinding.seekBarBlur.setOnSeekBarChangeListener(OnSeekBarProgress { progress ->
             val v = (progress * 106f / 1000f - 5f).coerceIn(0f, 100f)
             onBlurChanged(v)
@@ -1051,14 +1007,12 @@ open class MainActivity : AppCompatActivity() {
         // Apply changes from advanced layout
         binding.imageButtonColorDay.setColorFilter(
             imageProvider.getColor(
-                DAY,
-                isLockScreenActivity
+                DAY, isLockScreenActivity
             )
         )
         binding.imageButtonColorNight.setColorFilter(
             imageProvider.getColor(
-                NIGHT,
-                isLockScreenActivity
+                NIGHT, isLockScreenActivity
             )
         )
         DarkWallpaperService.invalidate()
@@ -1092,6 +1046,7 @@ open class MainActivity : AppCompatActivity() {
             Configuration.UI_MODE_NIGHT_NO -> {
                 binding.textStatusDayOrNight.text = getString(R.string.status_darkmode_day)
             }
+
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.textStatusDayOrNight.text = getString(R.string.status_darkmode_night)
             }
@@ -1132,14 +1087,13 @@ open class MainActivity : AppCompatActivity() {
 
         binding.apply {
 
-            textStatusDayOrNight.text =
-                getString(
-                    if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                        R.string.status_darkmode_night
-                    } else {
-                        R.string.status_darkmode_day
-                    }
-                )
+            textStatusDayOrNight.text = getString(
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                    R.string.status_darkmode_night
+                } else {
+                    R.string.status_darkmode_day
+                }
+            )
 
             textStatusDesiredDimensions.text = getString(
                 R.string.resolution_width_x_height,
@@ -1148,13 +1102,10 @@ open class MainActivity : AppCompatActivity() {
             )
 
             textStatusScreenDimensions.text = getString(
-                R.string.resolution_width_x_height,
-                screenSize.x,
-                screenSize.y
+                R.string.resolution_width_x_height, screenSize.x, screenSize.y
             )
 
-            textStatusCanvasDimensions.text =
-                DarkWallpaperService.statusCanvasSize.toSizeString()
+            textStatusCanvasDimensions.text = DarkWallpaperService.statusCanvasSize.toSizeString()
 
             textStatusImageSize.text = if (DarkWallpaperService.statusScaledImageSize.x > 0) {
                 "${DarkWallpaperService.statusImageSize.toSizeString()} scaled to ${DarkWallpaperService.statusScaledImageSize.toSizeString()}"
@@ -1162,26 +1113,21 @@ open class MainActivity : AppCompatActivity() {
                 DarkWallpaperService.statusImageSize.toSizeString()
             }
 
-            textStatusRequestedSize.text =
-                DarkWallpaperService.statusRequestedSize.toSizeString()
+            textStatusRequestedSize.text = DarkWallpaperService.statusRequestedSize.toSizeString()
 
-            textStatusScrolling.text =
-                DarkWallpaperService.statusScrolling.toString()
+            textStatusScrolling.text = DarkWallpaperService.statusScrolling.toString()
 
-            textStatusZoom.text =
-                DarkWallpaperService.statusZoom.toString()
+            textStatusZoom.text = DarkWallpaperService.statusZoom.toString()
 
             textWallpaperColors.text = colors?.toPrettyString() ?: "Not requested yet"
 
             colors?.let {
                 viewColorPrimary.setBackgroundColor(colors.primaryColor.toArgb())
                 viewColorSecondary.setBackgroundColor(
-                    colors.secondaryColor?.toArgb()
-                        ?: Color.TRANSPARENT
+                    colors.secondaryColor?.toArgb() ?: Color.TRANSPARENT
                 )
                 viewColorTertiary.setBackgroundColor(
-                    colors.tertiaryColor?.toArgb()
-                        ?: Color.TRANSPARENT
+                    colors.tertiaryColor?.toArgb() ?: Color.TRANSPARENT
                 )
 
             } ?: viewColorPrimary.setBackgroundColor(Color.TRANSPARENT)
@@ -1225,9 +1171,7 @@ open class MainActivity : AppCompatActivity() {
         }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-            if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
+            if (checkSelfPermission(READ_WALLPAPER_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
                 startForStoragePermission.launch(READ_WALLPAPER_PERMISSION)
             } else {
                 askImportWhichWallpaper()
@@ -1248,36 +1192,32 @@ open class MainActivity : AppCompatActivity() {
         )
         val selection = arrayOf(true, false, false, false)
         builder.setMultiChoiceItems(
-            choices,
-            selection.toBooleanArray()
+            choices, selection.toBooleanArray()
         ) { _: DialogInterface, which: Int, checked: Boolean ->
             selection[which] = checked
         }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-            if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
+            if (checkSelfPermission(READ_WALLPAPER_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
                 startForStoragePermission.launch(READ_WALLPAPER_PERMISSION)
             } else {
                 selection.forEachIndexed { index, checked ->
                     if (checked) {
                         val file = when (index) {
                             0 -> imageProvider.storeFileLocation(
-                                dayOrNight = DAY,
-                                isLockScreen = false
+                                dayOrNight = DAY, isLockScreen = false
                             )
+
                             1 -> imageProvider.storeFileLocation(
-                                dayOrNight = NIGHT,
-                                isLockScreen = false
+                                dayOrNight = NIGHT, isLockScreen = false
                             )
+
                             2 -> imageProvider.storeFileLocation(
-                                dayOrNight = DAY,
-                                isLockScreen = true
+                                dayOrNight = DAY, isLockScreen = true
                             )
+
                             else -> imageProvider.storeFileLocation(
-                                dayOrNight = NIGHT,
-                                isLockScreen = true
+                                dayOrNight = NIGHT, isLockScreen = true
                             )
                         }
                         importWallpaper(file)
@@ -1292,26 +1232,21 @@ open class MainActivity : AppCompatActivity() {
     private fun importWallpaper(file: File? = null) {
         val wallpaperManager = WallpaperManager.getInstance(this)
         val fileLocation = file ?: imageProvider.storeFileLocation(
-            dayOrNight = DAY,
-            isLockScreen = isLockScreenActivity
+            dayOrNight = DAY, isLockScreen = isLockScreenActivity
         )
-        val alert: AlertDialog = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.image_file_import_loading_title))
-            .setMessage(
-                getString(
-                    R.string.image_file_import_loading_message,
-                    "WallpaperManager.getDrawable()",
-                    fileLocation.toString()
-                )
-            )
-            .setView(ProgressBar(this))
-            .show()
+        val alert: AlertDialog =
+            AlertDialog.Builder(this).setTitle(getString(R.string.image_file_import_loading_title))
+                .setMessage(
+                    getString(
+                        R.string.image_file_import_loading_message,
+                        "WallpaperManager.getDrawable()",
+                        fileLocation.toString()
+                    )
+                ).setView(ProgressBar(this)).show()
         object : Thread("saveFileFromUri") {
             override fun run() {
                 var success = false
-                if (checkSelfPermission(READ_WALLPAPER_PERMISSION)
-                    == PackageManager.PERMISSION_GRANTED
-                ) {
+                if (checkSelfPermission(READ_WALLPAPER_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
                     wallpaperManager.drawable?.let {
                         success = storeFile(fileLocation, it)
                     }
@@ -1320,12 +1255,9 @@ open class MainActivity : AppCompatActivity() {
                     alert.safeDismiss()
                     if (success) {
                         Toast.makeText(
-                            this@MainActivity,
-                            getString(
-                                R.string.wallpaper_import_success,
-                                fileLocation.absolutePath
-                            ),
-                            Toast.LENGTH_SHORT
+                            this@MainActivity, getString(
+                                R.string.wallpaper_import_success, fileLocation.absolutePath
+                            ), Toast.LENGTH_SHORT
                         ).show()
                         Log.d(TAG, "Wallpaper imported to $fileLocation")
 
@@ -1334,9 +1266,7 @@ open class MainActivity : AppCompatActivity() {
                         DarkWallpaperService.invalidate(forceReload = true)
                     } else {
                         Toast.makeText(
-                            this@MainActivity,
-                            R.string.wallpaper_import_failed,
-                            Toast.LENGTH_LONG
+                            this@MainActivity, R.string.wallpaper_import_failed, Toast.LENGTH_LONG
                         ).show()
                     }
                     if (Build.VERSION.SDK_INT >= 33) {
@@ -1368,6 +1298,7 @@ open class MainActivity : AppCompatActivity() {
             NightModeTrigger.TIMERANGE -> {
                 timeIsInTimeRange(preferencesGlobal.nightModeTimeRange)
             }
+
             else -> {
                 resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
             }
