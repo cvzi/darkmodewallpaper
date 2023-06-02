@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.2
+*   Translations updated from crowdin
+*   Don't ask to [import wallpaper on Android Tiramisu](https://issuetracker.google.com/issues/237124750#comment60)
+
 ## 1.6.1
 *   Fix language list for Android 13
 

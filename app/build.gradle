@@ -20,8 +20,8 @@ android {
         applicationId 'com.github.cvzi.darkmodewallpaper'
         minSdkVersion 29
         targetSdkVersion 33
-        versionCode 49
-        versionName '1.6.1'
+        versionCode 50
+        versionName '1.6.2'
         externalNativeBuild.cmake.cppFlags '-std=c++17'
     }
     buildTypes {
@@ -43,11 +43,11 @@ android {
         buildConfig true
     }
     compileOptions {
-        sourceCompatibility 11
-        targetCompatibility 11
+        sourceCompatibility 17
+        targetCompatibility 17
     }
     kotlinOptions {
-        jvmTarget = 11
+        jvmTarget = 17
     }
     externalNativeBuild.cmake.path file('src/main/cpp/CMakeLists.txt')
     lint {
