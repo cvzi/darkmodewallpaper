@@ -79,10 +79,19 @@
     <string name="night_mode_trigger_time_range">Tidsintervall</string>
     <string name="zoom_effect">Zoom effekt:</string>
     <string name="zoom_effect_description">På Android 11+ händer en \"zooma in\" animation när du drar ner meddelandefältet eller när du öppnar den senaste appöversikten.</string>
-    <string name="seek_bar_blur">Blur:</string>
+    <string name="seek_bar_blur">Oskärpa:</string>
     <string name="scrolling_mode">Rullning:</string>
     <string name="scrolling_mode_value_automatic">Automatiskt</string>
     <string name="scrolling_mode_value_on">På</string>
     <string name="scrolling_mode_value_off">Av</string>
     <string name="scrolling_mode_value_inverse">Omvänd</string>
+    <string name="setting_inform_new_wallpaper_colors_heading">Informera Android om nya bakgrundsfärger genast efter upplåsning</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_wait">Vänta</string>
+    <string name="setting_inform_new_wallpaper_colors_toggle_immediately">Genast</string>
+    <string name="setting_inform_new_wallpaper_colors_description"><![CDATA[När du låser upp din telefon och låsskärmens bakgrund ändras till hemskärmens bakgrund, måste appen informera Android om färgen på den nya bakgrunden.
+Android ändrar designen och teckensnittsfärger utgående ifrån de nya färgerna.
+Beroende på bakgrundsfärgerna kan det här skapa flimmer på skärmen.
+Normalt sett sänds färgerna genast efter att du låser upp telefonen.
+Ändra den här inställningen till \"Vänta\" om du ser flimmer, och färgerna kommer istället att sändas när du öppnar appen.]]></string>
+    <string name="blur_unavailable_in_animations">Kan inte göra animerade bilder oskarpa</string>
 </resources>
