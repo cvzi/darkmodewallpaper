@@ -4,18 +4,18 @@
 -->
 <resources>
     <string name="app_name">DarkModeLiveWallpaper</string>
-    <string name="use_as_day_home">Bakgrund för hemskärmen</string>
-    <string name="use_as_night_home">Bakgrund på hemskärmen</string>
-    <string name="use_as_day_lock">Bakgrund för daglåsskärmen</string>
-    <string name="use_as_night_lock">Bakgrund för nattlåsskärmen</string>
-    <string name="wallpaper_label">Mörkläge: Bakgrund</string>
-    <string name="wallpaper_description">Ändra automatiskt bakgrundsbild för att passa Ljus/Mörkt tema</string>
+    <string name="use_as_day_home">Dagbakgrund för startskärmen</string>
+    <string name="use_as_night_home">Nattbakgrund för startskärmen</string>
+    <string name="use_as_day_lock">Dagbakgrund för låsskärmen</string>
+    <string name="use_as_night_lock">Nattbakgrund för låsskärmen</string>
+    <string name="wallpaper_label">MörktLägeBakgrund</string>
+    <string name="wallpaper_description">Ändrar automatiskt bakgrundsbild för att passa ljust/mörkt tema</string>
     <string name="wallpaper_is_loading">laddar…</string>
-    <string name="color_chooser_day">Välj färg på överlagrad dagtid</string>
-    <string name="color_chooser_night">Välj färg på nattetid</string>
-    <string name="status_darkmode">Mörkt läge status:</string>
-    <string name="status_darkmode_day">Dag tid/ljus tema</string>
-    <string name="status_darkmode_night">Natt/mörkt tema</string>
+    <string name="color_chooser_day">Välj färg på överlagringen dagtid</string>
+    <string name="color_chooser_night">Välj färg på överlagringen nattetid</string>
+    <string name="status_darkmode">Status för mörkt läge:</string>
+    <string name="status_darkmode_day">Dagtid/ljust tema</string>
+    <string name="status_darkmode_night">Nattetid/mörkt tema</string>
     <string name="status_requested_image_size">Rekommenderad bildstorlek:</string>
     <string name="status_screen_size">Skärmens storlek:</string>
     <!-- For example: 720x1080 -->
