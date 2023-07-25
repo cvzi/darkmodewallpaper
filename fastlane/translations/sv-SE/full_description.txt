@@ -1,4 +1,4 @@
-En levande bakgrund för Android 10+ som respekterar läge med mörkt tema.
+En levande bakgrundsbild för Android 10+ som respekterar läge med mörkt tema.
 
 Med denna app kan du ställa in en bild för läge med ljust tema och en annan bild
 för det mörka temat.
@@ -11,7 +11,6 @@ Animerade GIF- och WebP-animationer stöds.
 
 Det är möjligt att välja olika bilder för startskärmen och låsskärmen.
 
-Behörigheten "read storage" krävs om du vill importera din nuvarande
-bakgrundsbild. När du har importerat din bakgrundsbild kan du säkert återkalla behörigheten
-. Om du inte vill importera din nuvarande bakgrund, behöver du inte
-för att bevilja denna behörighet.
+Behörighet till lagringsutrymme krävs om du vill importera din nuvarande
+bakgrundsbild. När du har importerat din bakgrund kan du tryggt återkalla behörigheten. Om du inte vill importera din nuvarande bakgrund, behöver du inte
+bevilja denna behörighet.
