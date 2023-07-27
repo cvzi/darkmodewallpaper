@@ -1,0 +1,16 @@
+En levande bakgrundsbild för Android 10+ som respekterar läge med mörkt tema.
+
+Med denna app kan du ställa in en bild för läge med ljust tema och en annan bild
+för det mörka temat.
+När systemets mörka tema aktiveras eller inaktiveras kommer bakgrunden att bytas automatiskt.
+
+Istället för en annan bild kan du också justera färg, kontrast och
+ljusstyrka i din befintliga bakgrundsbild för att göra den mörkare.
+
+Animerade GIF- och WebP-animationer stöds.
+
+Det är möjligt att välja olika bilder för startskärmen och låsskärmen.
+
+Behörighet till lagringsutrymme krävs om du vill importera din nuvarande
+bakgrundsbild. När du har importerat din bakgrund kan du tryggt återkalla behörigheten. Om du inte vill importera din nuvarande bakgrund, behöver du inte
+bevilja denna behörighet.
