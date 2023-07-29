@@ -15,11 +15,11 @@ android {
     }
     namespace 'com.github.cvzi.darkmodewallpaper'
     ndkVersion '25.2.9519653'
-    compileSdkVersion 33
     defaultConfig {
         applicationId 'com.github.cvzi.darkmodewallpaper'
-        minSdkVersion 29
-        targetSdkVersion 33
+        minSdk 29
+        compileSdk 34
+        targetSdk 34
         versionCode 50
         versionName '1.6.2'
         externalNativeBuild.cmake.cppFlags '-std=c++17'

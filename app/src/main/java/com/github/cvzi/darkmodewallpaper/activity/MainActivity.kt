@@ -1162,7 +1162,7 @@ open class MainActivity : AppCompatActivity() {
         builder.setTitle(R.string.wallpaper_import_dialog_title)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             builder.setMessage(
-                "(This function may be broken on Android 13 Tiramisu and you may see a permission error)\n\n" + getString(
+                "(This function may be broken on Android 13 Tiramisu and higher and you may see a permission error)\n\n" + getString(
                     R.string.wallpaper_import_dialog_message
                 )
             )
@@ -1229,6 +1229,7 @@ open class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+    @SuppressLint("MissingPermission")
     private fun importWallpaper(file: File? = null) {
         val wallpaperManager = WallpaperManager.getInstance(this)
         val fileLocation = file ?: imageProvider.storeFileLocation(
@@ -1309,7 +1310,7 @@ open class MainActivity : AppCompatActivity() {
     private fun showWallpaperExportHint() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.wallpaper_import_dialog_title)
-        builder.setMessage("Permission to import wallpaper was denied. If you did not see a permission dialog to allow the permission, Android 13 has denied the permission automatically.\n\nHowever you can export the current wallpaper with a separate app and then import the image to this app.\n\nGo to separate app?\n\nhttps://f-droid.org/packages/com.github.cvzi.wallpaperexport/")
+        builder.setMessage("Permission to import wallpaper was denied. If you did not see a permission dialog to allow the permission, Android 13+ has denied the permission automatically.\n\nHowever you can export the current wallpaper with a separate app and then import the image to this app.\n\nGo to separate app?\n\nhttps://f-droid.org/packages/com.github.cvzi.wallpaperexport/")
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
 
