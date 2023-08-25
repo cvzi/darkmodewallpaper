@@ -1,0 +1,4 @@
+* 🎞️ Added support for animated GIF and animated WebP
+* Set the colors that the launcher receives (in the advanced settings)
+* Bugfix: List of supported languages on Android 13 was incomplete
+* Translations updated
