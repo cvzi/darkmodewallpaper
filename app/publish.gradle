@@ -1,4 +1,4 @@
-task sourcesJar(type: Jar) {
+tasks.register('sourcesJar', Jar) {
     from android.sourceSets.main.java.srcDirs
     archiveClassifier = 'sources'
 }

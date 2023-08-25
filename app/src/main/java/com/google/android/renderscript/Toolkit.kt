@@ -23,7 +23,7 @@ import android.graphics.Bitmap
 import kotlin.math.min
 
 // This string is used for error messages.
-private const val externalName = "RenderScript Toolkit"
+private const val EXTERNAL_NAME = "RenderScript Toolkit"
 
 /**
  * A collection of high-performance graphic utility functions like blur and blend.
@@ -80,7 +80,7 @@ object Toolkit {
     fun blur(inputBitmap: Bitmap, radius: Int = 5, restriction: Range2d? = null): Bitmap {
         validateBitmap("blur", inputBitmap)
         require(radius in 1..25) {
-            "$externalName blur. The radius should be between 1 and 25. $radius provided."
+            "$EXTERNAL_NAME blur. The radius should be between 1 and 25. $radius provided."
         }
         validateRestriction("blur", inputBitmap.width, inputBitmap.height, restriction)
 
@@ -106,7 +106,7 @@ object Toolkit {
         }
         validateBitmap("blur", inputBitmap)
         require(radius > 0) {
-            "$externalName blur. The radius should be greater than 0. $radius provided."
+            "$EXTERNAL_NAME blur. The radius should be greater than 0. $radius provided."
         }
         validateRestriction("blur", inputBitmap.width, inputBitmap.height, restriction)
 
@@ -166,17 +166,17 @@ internal fun validateBitmap(
             inputBitmap.config == Bitmap.Config.ARGB_8888 ||
                     inputBitmap.config == Bitmap.Config.ALPHA_8
         ) {
-            "$externalName. $function supports only ARGB_8888 and ALPHA_8 bitmaps. " +
+            "$EXTERNAL_NAME. $function supports only ARGB_8888 and ALPHA_8 bitmaps. " +
                     "${inputBitmap.config} provided."
         }
     } else {
         require(inputBitmap.config == Bitmap.Config.ARGB_8888) {
-            "$externalName. $function supports only ARGB_8888. " +
+            "$EXTERNAL_NAME. $function supports only ARGB_8888. " +
                     "${inputBitmap.config} provided."
         }
     }
     require(inputBitmap.width * vectorSize(inputBitmap) == inputBitmap.rowBytes) {
-        "$externalName $function. Only bitmaps with rowSize equal to the width * vectorSize are " +
+        "$EXTERNAL_NAME $function. Only bitmaps with rowSize equal to the width * vectorSize are " +
                 "currently supported. Provided were rowBytes=${inputBitmap.rowBytes}, " +
                 "width={${inputBitmap.width}, and vectorSize=${vectorSize(inputBitmap)}."
     }
@@ -193,21 +193,21 @@ internal fun validateRestriction(
 ) {
     if (restriction == null) return
     require(restriction.startX < sizeX && restriction.endX <= sizeX) {
-        "$externalName $tag. sizeX should be greater than restriction.startX and greater " +
+        "$EXTERNAL_NAME $tag. sizeX should be greater than restriction.startX and greater " +
                 "or equal to restriction.endX. $sizeX, ${restriction.startX}, " +
                 "and ${restriction.endX} were provided respectively."
     }
     require(restriction.startY < sizeY && restriction.endY <= sizeY) {
-        "$externalName $tag. sizeY should be greater than restriction.startY and greater " +
+        "$EXTERNAL_NAME $tag. sizeY should be greater than restriction.startY and greater " +
                 "or equal to restriction.endY. $sizeY, ${restriction.startY}, " +
                 "and ${restriction.endY} were provided respectively."
     }
     require(restriction.startX < restriction.endX) {
-        "$externalName $tag. Restriction startX should be less than endX. " +
+        "$EXTERNAL_NAME $tag. Restriction startX should be less than endX. " +
                 "${restriction.startX} and ${restriction.endX} were provided respectively."
     }
     require(restriction.startY < restriction.endY) {
-        "$externalName $tag. Restriction startY should be less than endY. " +
+        "$EXTERNAL_NAME $tag. Restriction startY should be less than endY. " +
                 "${restriction.startY} and ${restriction.endY} were provided respectively."
     }
 }
@@ -217,7 +217,7 @@ internal fun vectorSize(bitmap: Bitmap): Int {
         Bitmap.Config.ARGB_8888 -> 4
         Bitmap.Config.ALPHA_8 -> 1
         else -> throw IllegalArgumentException(
-            "$externalName. Only ARGB_8888 and ALPHA_8 Bitmap are supported."
+            "$EXTERNAL_NAME. Only ARGB_8888 and ALPHA_8 Bitmap are supported."
         )
     }
 }
