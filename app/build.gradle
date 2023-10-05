@@ -64,6 +64,6 @@ licenseReport {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
 }
