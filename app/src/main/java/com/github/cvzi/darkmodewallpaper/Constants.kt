@@ -20,6 +20,8 @@ package com.github.cvzi.darkmodewallpaper
 
 const val MAX_BITMAP_BYTES = 100 * 1024 * 1024
 
+const val DONATE_HTML = "&#x1f49c; <a href=\"https://cvzi.github.io/.github/\">Donate &amp; Support</a>"
+
 const val DAY = false
 const val NIGHT = true
 

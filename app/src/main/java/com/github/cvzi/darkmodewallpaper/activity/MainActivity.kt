@@ -433,6 +433,8 @@ open class MainActivity : AppCompatActivity() {
             }
         }
 
+        setHtmlText(binding.textViewDonate, DONATE_HTML)
+
         if (intent != null && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_ATTACH_DATA) && intent.type?.startsWith(
                 "image/"
             ) == true
