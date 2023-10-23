@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.4
+*   Translations updated
+*   Dependency updates
+*   Ndk 26.1
+
 ## 1.6.3
 *   Swedish translation updated by [@opExe](https://github.com/opExe)
 *   Sdk 34
