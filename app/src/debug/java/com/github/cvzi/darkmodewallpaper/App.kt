@@ -24,20 +24,20 @@ import android.os.StrictMode.VmPolicy
 
 class App : Application() {
     init {
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectNetwork()
-                    .detectCustomSlowCalls()
-                    .detectResourceMismatches()
-                    .detectUnbufferedIo()
-                    .penaltyLog()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
-            )
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder()
+                .detectNetwork()
+                .detectCustomSlowCalls()
+                .detectResourceMismatches()
+                .detectUnbufferedIo()
+                .penaltyLog()
+                .build()
+        )
+        StrictMode.setVmPolicy(
+            VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .build()
+        )
     }
 }
