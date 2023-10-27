@@ -24,7 +24,6 @@ import android.os.StrictMode.VmPolicy
 
 class App : Application() {
     init {
-        if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectNetwork()
@@ -40,6 +39,5 @@ class App : Application() {
                     .penaltyLog()
                     .build()
             )
-        }
     }
 }
