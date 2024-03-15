@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.5
+*   Dependency updates
+
 ## 1.6.4
 *   Translations updated
 *   Dependency updates
