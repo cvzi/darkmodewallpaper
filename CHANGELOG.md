@@ -1,7 +1,10 @@
 # Changelog
 
+## 1.6.6
+*   Fix a memory leak
+
 ## 1.6.5
-*   Dependency updates
+*   Dependency updates**
 
 ## 1.6.4
 *   Translations updated
