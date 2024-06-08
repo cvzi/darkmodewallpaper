@@ -27,6 +27,8 @@ jobs:
       run: chmod +x gradlew
     - name: Validate Gradle Wrapper
       uses: gradle/actions/wrapper-validation@v3
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
     - name: 🔨 Build
       run: ./gradlew build
     - name: 💬 Upload Lint report
