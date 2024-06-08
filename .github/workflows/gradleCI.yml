@@ -29,6 +29,8 @@ jobs:
       uses: gradle/actions/wrapper-validation@v3
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+      with:
+        log-accepted-android-sdk-licenses: false
     - name: 🔨 Build
       run: ./gradlew build
     - name: 💬 Upload Lint report
