@@ -10,6 +10,9 @@
 # Java class files
 *.class
 
+# Kotlin session files
+.kotlin/
+
 # Generated files
 bin/
 gen/
@@ -39,6 +42,7 @@ captures/
 # IntelliJ
 *.iml
 .idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
