@@ -25,7 +25,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Point
 import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -213,6 +217,7 @@ class DarkWallpaperService : WallpaperService() {
                 Configuration.UI_MODE_NIGHT_NO -> {
                     newDayOrNight = DAY
                 }
+
                 Configuration.UI_MODE_NIGHT_YES -> {
                     newDayOrNight = NIGHT
                 }
@@ -331,6 +336,7 @@ class DarkWallpaperService : WallpaperService() {
                 NightModeTrigger.TIMERANGE -> {
                     timeIsInTimeRange(preferencesGlobal.nightModeTimeRange)
                 }
+
                 else -> {
                     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
                 }

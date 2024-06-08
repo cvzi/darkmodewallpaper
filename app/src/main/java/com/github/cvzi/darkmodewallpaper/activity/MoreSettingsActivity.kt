@@ -32,9 +32,23 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.github.cvzi.darkmodewallpaper.*
+import com.github.cvzi.darkmodewallpaper.DAY
+import com.github.cvzi.darkmodewallpaper.DarkWallpaperService
+import com.github.cvzi.darkmodewallpaper.DayOrNight
+import com.github.cvzi.darkmodewallpaper.NIGHT
+import com.github.cvzi.darkmodewallpaper.Preferences
+import com.github.cvzi.darkmodewallpaper.R
+import com.github.cvzi.darkmodewallpaper.StaticDayAndNightProvider
+import com.github.cvzi.darkmodewallpaper.WallpaperColorsEditor
+import com.github.cvzi.darkmodewallpaper.checkeredBackground
+import com.github.cvzi.darkmodewallpaper.colorChooserDialog
 import com.github.cvzi.darkmodewallpaper.databinding.ActivityMoreSettingsBinding
 import com.github.cvzi.darkmodewallpaper.databinding.LayoutWallpaperColorsBinding
+import com.github.cvzi.darkmodewallpaper.edit
+import com.github.cvzi.darkmodewallpaper.safeDismiss
+import com.github.cvzi.darkmodewallpaper.setHtmlText
+import com.github.cvzi.darkmodewallpaper.supportsDarkText
+import com.github.cvzi.darkmodewallpaper.supportsDarkTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -416,16 +430,19 @@ class MoreSettingsActivity : AppCompatActivity() {
                             isLockScreen = false,
                             colors
                         )
+
                         1 -> imageProvider.setWallpaperColors(
                             dayOrNight = NIGHT,
                             isLockScreen = false,
                             colors
                         )
+
                         2 -> imageProvider.setWallpaperColors(
                             dayOrNight = DAY,
                             isLockScreen = true,
                             colors
                         )
+
                         else -> imageProvider.setWallpaperColors(
                             dayOrNight = NIGHT,
                             isLockScreen = true,

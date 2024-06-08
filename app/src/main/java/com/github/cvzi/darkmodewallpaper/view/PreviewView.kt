@@ -19,7 +19,12 @@
 package com.github.cvzi.darkmodewallpaper.view
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BlendMode
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View

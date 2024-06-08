@@ -63,7 +63,8 @@ abstract class ImageProvider(val weakContext: WeakReference<Context>) {
 class StaticDayAndNightProvider(context: WeakReference<Context>) : ImageProvider(context) {
     private val preferencesLockScreen: Preferences =
         Preferences(context.get()!!, R.string.pref_file_lock_screen)
-    private val preferencesHomeScreen: Preferences = Preferences(context.get()!!, R.string.pref_file)
+    private val preferencesHomeScreen: Preferences =
+        Preferences(context.get()!!, R.string.pref_file)
 
     private fun dayFileName(isLockScreen: Boolean): String {
         val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
@@ -77,17 +78,21 @@ class StaticDayAndNightProvider(context: WeakReference<Context>) : ImageProvider
 
     private fun dayFileName(isLockScreen: Boolean, isAnimated: Boolean): String {
         return if (isAnimated) {
-            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_gif_day_lock_wallpaper else R.string.file_name_gif_day_wallpaper)
+            weakContext.get()!!
+                .getString(if (isLockScreen) R.string.file_name_gif_day_lock_wallpaper else R.string.file_name_gif_day_wallpaper)
         } else {
-            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
+            weakContext.get()!!
+                .getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
         }
     }
 
     private fun nightFileName(isLockScreen: Boolean, isAnimated: Boolean): String {
         return if (isAnimated) {
-            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_gif_night_lock_wallpaper else R.string.file_name_gif_night_wallpaper)
+            weakContext.get()!!
+                .getString(if (isLockScreen) R.string.file_name_gif_night_lock_wallpaper else R.string.file_name_gif_night_wallpaper)
         } else {
-            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
+            weakContext.get()!!
+                .getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
         }
     }
 

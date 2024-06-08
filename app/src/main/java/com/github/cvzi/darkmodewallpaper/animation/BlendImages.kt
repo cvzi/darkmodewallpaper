@@ -18,7 +18,12 @@
 */
 package com.github.cvzi.darkmodewallpaper.animation
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BlendMode
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.Drawable
 import com.github.cvzi.darkmodewallpaper.BitmapOrDrawable
 import com.github.cvzi.darkmodewallpaper.scaleDrawableToCanvas
