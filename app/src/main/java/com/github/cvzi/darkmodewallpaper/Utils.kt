@@ -19,12 +19,26 @@
 package com.github.cvzi.darkmodewallpaper
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Activity
+import android.app.AlertDialog
+import android.app.TimePickerDialog
+import android.app.WallpaperColors
+import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.ImageDecoder
+import android.graphics.Paint
+import android.graphics.Point
+import android.graphics.RenderEffect
+import android.graphics.RenderNode
+import android.graphics.Shader
 import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -47,7 +61,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.time.LocalTime
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -247,8 +262,8 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
  * Let user choose an image file
  * If forceGetContent is true, a file picker will be used even on Android 13 Tiramisu
  */
-fun imagePickIntent(forceGetContent: Boolean = false): Intent {
-    return if (!forceGetContent && isPhotoPickerAvailable()) @SuppressLint("NewApi") {
+fun imagePickIntent(context: Context, forceGetContent: Boolean = false): Intent {
+    return if (!forceGetContent && isPhotoPickerAvailable(context)) @SuppressLint("NewApi") {
         // Use the new Photo picker
         // https://developer.android.com/about/versions/13/features/photopicker
         Intent(MediaStore.ACTION_PICK_IMAGES).apply {
@@ -270,8 +285,8 @@ fun imagePickIntent(forceGetContent: Boolean = false): Intent {
  * The given label is only shown until Android 11 R / SDK 30
  * For later Android versions there is no label at all.
  */
-fun imageChooserIntent(label: String): Intent {
-    return Intent.createChooser(imagePickIntent(forceGetContent = true), label)
+fun imageChooserIntent(context: Context, label: String): Intent {
+    return Intent.createChooser(imagePickIntent(context, forceGetContent = true), label)
 }
 
 

@@ -43,7 +43,12 @@ import android.view.DragEvent
 import android.view.DragEvent.ACTION_DROP
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.Spinner
+import android.widget.Toast
 import android.window.OnBackInvokedCallback
 import android.window.OnBackInvokedDispatcher
 import androidx.activity.result.ActivityResult
@@ -54,10 +59,35 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import com.github.cvzi.darkmodewallpaper.*
+import com.github.cvzi.darkmodewallpaper.DAY
+import com.github.cvzi.darkmodewallpaper.DONATE_HTML
+import com.github.cvzi.darkmodewallpaper.DarkWallpaperService
+import com.github.cvzi.darkmodewallpaper.DayOrNight
+import com.github.cvzi.darkmodewallpaper.NIGHT
+import com.github.cvzi.darkmodewallpaper.NightModeTrigger
+import com.github.cvzi.darkmodewallpaper.OnSeekBarProgress
+import com.github.cvzi.darkmodewallpaper.Preferences
+import com.github.cvzi.darkmodewallpaper.R
+import com.github.cvzi.darkmodewallpaper.ScrollingMode
+import com.github.cvzi.darkmodewallpaper.StaticDayAndNightProvider
+import com.github.cvzi.darkmodewallpaper.StoreFileResult
+import com.github.cvzi.darkmodewallpaper.applyLiveWallpaper
+import com.github.cvzi.darkmodewallpaper.colorChooserDialog
+import com.github.cvzi.darkmodewallpaper.createTimePicker
 import com.github.cvzi.darkmodewallpaper.databinding.ActivityMainBinding
 import com.github.cvzi.darkmodewallpaper.databinding.DialogAdvancedBinding
 import com.github.cvzi.darkmodewallpaper.databinding.LayoutAdvancedBinding
+import com.github.cvzi.darkmodewallpaper.disableFullScreen
+import com.github.cvzi.darkmodewallpaper.enableFullScreen
+import com.github.cvzi.darkmodewallpaper.getScreenSize
+import com.github.cvzi.darkmodewallpaper.imageChooserIntent
+import com.github.cvzi.darkmodewallpaper.imagePickIntent
+import com.github.cvzi.darkmodewallpaper.safeDismiss
+import com.github.cvzi.darkmodewallpaper.setHtmlText
+import com.github.cvzi.darkmodewallpaper.storeFile
+import com.github.cvzi.darkmodewallpaper.timeIsInTimeRange
+import com.github.cvzi.darkmodewallpaper.toPrettyString
+import com.github.cvzi.darkmodewallpaper.toSizeString
 import com.github.cvzi.darkmodewallpaper.view.PreviewView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.CoroutineScope
@@ -276,11 +306,11 @@ open class MainActivity : AppCompatActivity() {
         binding.buttonSelectFileDay.setOnClickListener {
             if (isLockScreenActivity) {
                 startForPickDayLockScreenFile.launch(
-                    imagePickIntent()
+                    imagePickIntent(this@MainActivity)
                 )
             } else {
                 startForPickDayHomeScreenFile.launch(
-                    imagePickIntent()
+                    imagePickIntent(this@MainActivity)
                 )
             }
             binding.switchColorOnlyDay.isChecked = false
@@ -291,11 +321,11 @@ open class MainActivity : AppCompatActivity() {
         binding.buttonSelectFileNight.setOnClickListener {
             if (isLockScreenActivity) {
                 startForPickNightLockScreenFile.launch(
-                    imagePickIntent()
+                    imagePickIntent(this@MainActivity)
                 )
             } else {
                 startForPickNightHomeScreenFile.launch(
-                    imagePickIntent()
+                    imagePickIntent(this@MainActivity)
                 )
             }
             binding.switchColorOnlyNight.isChecked = false
@@ -769,6 +799,7 @@ open class MainActivity : AppCompatActivity() {
             if (isLockScreenActivity && dayOrNight == DAY) {
                 startForPickDayLockScreenFile.launch(
                     imageChooserIntent(
+                        this@MainActivity,
                         getString(
                             R.string.wallpaper_file_chooser_title,
                             getString(R.string.wallpaper_file_chooser_day_time),
@@ -780,6 +811,7 @@ open class MainActivity : AppCompatActivity() {
             } else if (isLockScreenActivity && dayOrNight == NIGHT) {
                 startForPickNightLockScreenFile.launch(
                     imageChooserIntent(
+                        this@MainActivity,
                         getString(
                             R.string.wallpaper_file_chooser_title,
                             getString(R.string.wallpaper_file_chooser_night_time),
@@ -792,6 +824,7 @@ open class MainActivity : AppCompatActivity() {
             } else if (dayOrNight == DAY) {
                 startForPickDayHomeScreenFile.launch(
                     imageChooserIntent(
+                        this@MainActivity,
                         getString(
                             R.string.wallpaper_file_chooser_title,
                             getString(R.string.wallpaper_file_chooser_day_time),
@@ -803,6 +836,7 @@ open class MainActivity : AppCompatActivity() {
             } else {
                 startForPickNightHomeScreenFile.launch(
                     imageChooserIntent(
+                        this@MainActivity,
                         getString(
                             R.string.wallpaper_file_chooser_title,
                             getString(R.string.wallpaper_file_chooser_night_time),
