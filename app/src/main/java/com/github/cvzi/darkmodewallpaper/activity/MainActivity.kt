@@ -64,6 +64,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
+import java.lang.ref.WeakReference
 import kotlin.math.exp
 import kotlin.math.log
 import kotlin.math.max
@@ -94,6 +95,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var scrollingModeLayoutDay: LinearLayout
     private lateinit var scrollingModeLayoutNight: LinearLayout
 
+    private var isPaused = false
     private var previewViewLayoutIndex = -1
     private var previewScale = 1f
 
@@ -122,7 +124,7 @@ open class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        imageProvider = StaticDayAndNightProvider(this)
+        imageProvider = StaticDayAndNightProvider(WeakReference(this))
 
         startForPickDayHomeScreenFile = registerForActivityResult(
             dayOrNight = DAY, isLockScreen = false
@@ -632,12 +634,16 @@ open class MainActivity : AppCompatActivity() {
                 var result: StoreFileResult? = null
                 var success = false
                 if (uri != null) {
-                    contentResolver.openInputStream(uri)?.let { ifs ->
-                        result = storeFile(file, ifs, desiredMax)
-                        success = result?.success == true
-                        Log.d(
-                            TAG, "Stored ${file.nameWithoutExtension} wallpaper in $file"
-                        )
+                    try {
+                        contentResolver.openInputStream(uri)?.let { ifs ->
+                            result = storeFile(file, ifs, desiredMax)
+                            success = result?.success == true
+                            Log.d(
+                                TAG, "Stored ${file.nameWithoutExtension} wallpaper in $file"
+                            )
+                        }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error storing file", e)
                     }
                 }
                 runOnUiThread {
@@ -682,7 +688,11 @@ open class MainActivity : AppCompatActivity() {
                         file.absolutePath
                     )
                 ).setView(progressBar).setPositiveButton(android.R.string.ok) { dialog, _ ->
-                    importFileThread?.join()
+                    try {
+                        importFileThread?.join()
+                    } catch (e: InterruptedException) {
+                        Log.e(TAG, "Error joining thread", e)
+                    }
                     dialog.safeDismiss()
                     file.delete()
                     File(file.parent, "${file.name}.tmp").delete()
@@ -701,6 +711,7 @@ open class MainActivity : AppCompatActivity() {
         if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
             goBackFromAdvancedLayout()
         } else {
+            @Suppress("DEPRECATION")
             super.onBackPressed()
         }
     }
@@ -1021,6 +1032,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        isPaused = false
 
         binding.layoutRoot.visibility = View.VISIBLE
 
@@ -1035,6 +1047,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        isPaused = true
 
         Handler(Looper.getMainLooper()).postDelayed({
             binding.layoutRoot.visibility = View.INVISIBLE
@@ -1056,6 +1069,9 @@ open class MainActivity : AppCompatActivity() {
 
 
     private fun updateStatusValues() {
+        if (isDestroyed || isFinishing || isPaused) {
+            return
+        }
         val delayMillis = 1500L
         val colors = DarkWallpaperService.statusWallpaperColors
         if (colors == null) {
@@ -1344,7 +1360,7 @@ class ScrollingModeOnItemSelectedListener(
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-        imageProvider.setScrollingMode(isDayOrNight, ScrollingMode.values()[pos])
+        imageProvider.setScrollingMode(isDayOrNight, ScrollingMode.entries[pos])
         DarkWallpaperService.invalidate()
     }
 

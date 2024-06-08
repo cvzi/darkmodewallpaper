@@ -188,10 +188,17 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        synchronized(engines) {
+            for (engine in engines) {
+                engine.clear()
+            }
+            engines.clear()
+        }
         synchronized(SERVICES) {
             SERVICES.remove(self)
+            self.clear()
         }
+        super.onDestroy()
     }
 
     override fun onCreateEngine(): Engine {
@@ -240,9 +247,9 @@ class DarkWallpaperService : WallpaperService() {
         var fixedConfig = false
 
         private var invalid = true
-        private var imageProvider: ImageProvider =
-            StaticDayAndNightProvider(this@DarkWallpaperService)
         private val self = WeakReference(this)
+        private var imageProvider: ImageProvider =
+            StaticDayAndNightProvider(WeakReference(this@DarkWallpaperService))
 
         private var wallpaperImage: WallpaperImage? = null
         private var isSecondaryDisplay = false
@@ -311,11 +318,12 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onDestroy() {
-            super.onDestroy()
+            imageProvider.weakContext.clear()
             synchronized(engines) {
                 engines.remove(self)
             }
             unRegisterOnUnLock()
+            super.onDestroy()
         }
 
         fun isDayOrNightMode(): DayOrNight {
@@ -632,16 +640,20 @@ class DarkWallpaperService : WallpaperService() {
             }
             object : Thread("loadFile") {
                 override fun run() {
-                    if (loadFileThreadLock.tryLock(50, TimeUnit.MILLISECONDS)) {
-                        try {
-                            if (loadAnimated) {
-                                loadFileAnimated(imageFile, desiredWidth, desiredHeight)
-                            } else {
-                                loadFileBitmap(imageFile, desiredWidth, desiredHeight)
+                    try {
+                        if (loadFileThreadLock.tryLock(50, TimeUnit.MILLISECONDS)) {
+                            try {
+                                if (loadAnimated) {
+                                    loadFileAnimated(imageFile, desiredWidth, desiredHeight)
+                                } else {
+                                    loadFileBitmap(imageFile, desiredWidth, desiredHeight)
+                                }
+                            } finally {
+                                loadFileThreadLock.unlock()
                             }
-                        } finally {
-                            loadFileThreadLock.unlock()
                         }
+                    } catch (e: InterruptedException) {
+                        Log.e(TAG, "loadFile() interrupted", e)
                     }
                 }
             }.apply {

@@ -24,6 +24,7 @@ import android.os.Environment
 import android.util.Log
 import java.io.File
 import java.io.IOException
+import java.lang.ref.WeakReference
 
 /**
  * All relevant properties of a Wallpaper
@@ -46,7 +47,7 @@ data class WallpaperImage(
 
 const val IMAGEPROVIDERTAG = "ImageProvider"
 
-abstract class ImageProvider(val context: Context) {
+abstract class ImageProvider(val weakContext: WeakReference<Context>) {
     abstract fun get(
         dayOrNight: DayOrNight,
         isLockScreen: Boolean,
@@ -59,10 +60,10 @@ abstract class ImageProvider(val context: Context) {
     ): File
 }
 
-class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
+class StaticDayAndNightProvider(context: WeakReference<Context>) : ImageProvider(context) {
     private val preferencesLockScreen: Preferences =
-        Preferences(context, R.string.pref_file_lock_screen)
-    private val preferencesHomeScreen: Preferences = Preferences(context, R.string.pref_file)
+        Preferences(context.get()!!, R.string.pref_file_lock_screen)
+    private val preferencesHomeScreen: Preferences = Preferences(context.get()!!, R.string.pref_file)
 
     private fun dayFileName(isLockScreen: Boolean): String {
         val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
@@ -76,44 +77,44 @@ class StaticDayAndNightProvider(context: Context) : ImageProvider(context) {
 
     private fun dayFileName(isLockScreen: Boolean, isAnimated: Boolean): String {
         return if (isAnimated) {
-            context.getString(if (isLockScreen) R.string.file_name_gif_day_lock_wallpaper else R.string.file_name_gif_day_wallpaper)
+            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_gif_day_lock_wallpaper else R.string.file_name_gif_day_wallpaper)
         } else {
-            context.getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
+            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_day_lock_wallpaper else R.string.file_name_day_wallpaper)
         }
     }
 
     private fun nightFileName(isLockScreen: Boolean, isAnimated: Boolean): String {
         return if (isAnimated) {
-            context.getString(if (isLockScreen) R.string.file_name_gif_night_lock_wallpaper else R.string.file_name_gif_night_wallpaper)
+            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_gif_night_lock_wallpaper else R.string.file_name_gif_night_wallpaper)
         } else {
-            context.getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
+            weakContext.get()!!.getString(if (isLockScreen) R.string.file_name_night_lock_wallpaper else R.string.file_name_night_wallpaper)
         }
     }
 
     private fun dayFileLocation(isLockScreen: Boolean, isAnimated: Boolean): File {
         return File(
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            weakContext.get()!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             dayFileName(isLockScreen, isAnimated)
         )
     }
 
     private fun nightFileLocation(isLockScreen: Boolean, isAnimated: Boolean): File {
         return File(
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            weakContext.get()!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             nightFileName(isLockScreen, isAnimated)
         )
     }
 
     private fun dayFileLocation(isLockScreen: Boolean): File {
         return File(
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            weakContext.get()!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             dayFileName(isLockScreen)
         )
     }
 
     private fun nightFileLocation(isLockScreen: Boolean): File {
         return File(
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            weakContext.get()!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             nightFileName(isLockScreen)
         )
     }
