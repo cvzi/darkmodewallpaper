@@ -20,8 +20,8 @@ android {
         minSdk 29
         compileSdk 34
         targetSdk 34
-        versionCode 53
-        versionName '1.6.6'
+        versionCode 55
+        versionName '1.6.7'
         externalNativeBuild.cmake.cppFlags '-std=c++17'
     }
     buildTypes {

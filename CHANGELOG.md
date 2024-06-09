@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.6.6
+## 1.6.7
 *   Fix a memory leak
 
 ## 1.6.5
