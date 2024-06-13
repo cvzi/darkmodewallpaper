@@ -18,7 +18,6 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.TimePickerDialog
@@ -42,6 +41,7 @@ import android.graphics.Shader
 import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.ext.SdkExtensions
 import android.provider.MediaStore
 import android.text.Html
 import android.text.format.DateFormat
@@ -263,21 +263,29 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
  * If forceGetContent is true, a file picker will be used even on Android 13 Tiramisu
  */
 fun imagePickIntent(context: Context, forceGetContent: Boolean = false): Intent {
-    return if (!forceGetContent && isPhotoPickerAvailable(context)) @SuppressLint("NewApi") {
-        // Use the new Photo picker
-        // https://developer.android.com/about/versions/13/features/photopicker
-        Intent(MediaStore.ACTION_PICK_IMAGES).apply {
+    if (!forceGetContent && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && SdkExtensions.getExtensionVersion(
+            Build.VERSION_CODES.R
+        ) >= 2
+    ) {
+        val pickImagesIntent = Intent(MediaStore.ACTION_PICK_IMAGES).apply {
             setTypeAndNormalize("image/*")
         }
-    } else {
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            setDataAndTypeAndNormalize(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                "image/*"
-            )
+        val resolvedActivity = pickImagesIntent.resolveActivity(context.packageManager)
+        if (resolvedActivity != null && isPhotoPickerAvailable(context)) {
+            // Use the new Photo picker
+            // https://developer.android.com/about/versions/13/features/photopicker
+            return pickImagesIntent
         }
     }
+
+    return Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        setDataAndTypeAndNormalize(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            "image/*"
+        )
+    }
+
 }
 
 /**
