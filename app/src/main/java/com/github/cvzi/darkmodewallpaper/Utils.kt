@@ -343,11 +343,11 @@ fun blur(mSrc: Bitmap, radius: Float): Bitmap {
                 canvas.drawRenderNode(renderNode)
                 return result
             } catch (e: IllegalArgumentException) {
-                Log.v(UTILSTAG, "RenderEffect failed:", e)
+                Log.d(UTILSTAG, "RenderEffect failed:", e)
             }
         }
     }
-    Log.d(UTILSTAG, "Using renderscript.Toolkit.blur($r)")
+    Log.v(UTILSTAG, "Using renderscript.Toolkit.blur($r)")
     return Toolkit.blurMulti(mSrc, radius.toInt())
 }
 

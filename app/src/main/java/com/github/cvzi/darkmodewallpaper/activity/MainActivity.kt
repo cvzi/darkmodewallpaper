@@ -658,7 +658,6 @@ open class MainActivity : AppCompatActivity() {
             imageProvider.storeFileLocation(dayOrNight, isLockScreen, isAnimated = false).run {
                 File(parent, "${nameWithoutExtension}.tmp")
             }
-        Log.v(TAG, "file is ${file.name}")
         importFileThread = object : Thread("saveFileFromUri") {
             override fun run() {
                 var result: StoreFileResult? = null
@@ -682,7 +681,7 @@ open class MainActivity : AppCompatActivity() {
                     }
                     if (success) {
                         // Rename the file to .gif in case it is animated or .webp for static
-                        Log.v(TAG, "File: ${file.name} is animated: ${result?.isAnimated}")
+                        Log.d(TAG, "File: ${file.name} is animated: ${result?.isAnimated}")
                         imageProvider.setNewFile(
                             dayOrNight, isLockScreen, result?.isAnimated == true, file
                         )
@@ -1399,6 +1398,6 @@ class ScrollingModeOnItemSelectedListener(
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
-        Log.v("Spinner", "onNothingSelected")
+        Log.d("Spinner", "onNothingSelected")
     }
 }
