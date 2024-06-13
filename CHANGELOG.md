@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.8
+*   Fix bug in Android 11 when trying to select an image from the gallery
+
 ## 1.6.7
 *   Fix a memory leak
 
