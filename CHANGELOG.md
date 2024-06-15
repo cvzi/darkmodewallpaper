@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.9
+*   Reduce memory usage
+
 ## 1.6.8
 *   Fix bug in Android 11 when trying to select an image from the gallery
 

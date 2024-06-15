@@ -20,8 +20,8 @@ android {
         minSdk 29
         compileSdk 34
         targetSdk 34
-        versionCode 56
-        versionName '1.6.8'
+        versionCode 57
+        versionName '1.6.9'
         externalNativeBuild.cmake.cppFlags '-std=c++17'
     }
     buildTypes {
@@ -62,7 +62,6 @@ licenseReport {
     copyHtmlReportToAssets = true
 }
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
