@@ -205,6 +205,13 @@ class DarkWallpaperService : WallpaperService() {
         super.onDestroy()
     }
 
+    override fun onTrimMemory(level: Int) {
+        if (level >= TRIM_MEMORY_RUNNING_LOW) {
+            imageCache.clear()
+        }
+        super.onTrimMemory(level)
+    }
+
     override fun onCreateEngine(): Engine {
         return WallpaperEngine()
     }
