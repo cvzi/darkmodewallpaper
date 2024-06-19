@@ -18,7 +18,7 @@
 */
 package com.github.cvzi.darkmodewallpaper.activity
 
-import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -94,7 +94,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.ref.WeakReference
 import kotlin.math.exp
 import kotlin.math.log
 import kotlin.math.max
@@ -107,10 +106,6 @@ open class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         var originalDesiredWidth = -1
         var originalDesiredHeight = -1
-        const val READ_WALLPAPER_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
-        const val WALLPAPER_EXPORT_PACKAGE = "com.github.cvzi.wallpaperexport"
-        const val WALLPAPER_EXPORT_FDROID =
-            "https://f-droid.org/packages/com.github.cvzi.wallpaperexport/"
     }
 
     protected lateinit var preferencesGlobal: Preferences
@@ -154,7 +149,7 @@ open class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        imageProvider = StaticDayAndNightProvider(WeakReference(this))
+        imageProvider = StaticDayAndNightProvider(this)
 
         startForPickDayHomeScreenFile = registerForActivityResult(
             dayOrNight = DAY, isLockScreen = false
@@ -1087,6 +1082,11 @@ open class MainActivity : AppCompatActivity() {
         }, 500)
     }
 
+    override fun onDestroy() {
+        Handler(Looper.getMainLooper()).removeCallbacksAndMessages(null)
+        super.onDestroy()
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -1221,8 +1221,8 @@ open class MainActivity : AppCompatActivity() {
         }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-            if (checkSelfPermission(READ_WALLPAPER_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-                startForStoragePermission.launch(READ_WALLPAPER_PERMISSION)
+            if (checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                startForStoragePermission.launch(READ_EXTERNAL_STORAGE)
             } else {
                 askImportWhichWallpaper()
             }
@@ -1248,8 +1248,8 @@ open class MainActivity : AppCompatActivity() {
         }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-            if (checkSelfPermission(READ_WALLPAPER_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-                startForStoragePermission.launch(READ_WALLPAPER_PERMISSION)
+            if (checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                startForStoragePermission.launch(READ_EXTERNAL_STORAGE)
             } else {
                 selection.forEachIndexed { index, checked ->
                     if (checked) {
@@ -1297,7 +1297,7 @@ open class MainActivity : AppCompatActivity() {
         object : Thread("saveFileFromUri") {
             override fun run() {
                 var success = false
-                if (checkSelfPermission(READ_WALLPAPER_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+                if (checkSelfPermission(READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     wallpaperManager.drawable?.let {
                         success = storeFile(fileLocation, it)
                     }
@@ -1321,7 +1321,7 @@ open class MainActivity : AppCompatActivity() {
                         ).show()
                     }
                     if (Build.VERSION.SDK_INT >= 33) {
-                        revokeSelfPermissionOnKill(READ_WALLPAPER_PERMISSION)
+                        revokeSelfPermissionOnKill(READ_EXTERNAL_STORAGE)
                     }
                 }
             }
@@ -1360,18 +1360,19 @@ open class MainActivity : AppCompatActivity() {
     private fun showWallpaperExportHint() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.wallpaper_import_dialog_title)
-        builder.setMessage("Permission to import wallpaper was denied. If you did not see a permission dialog to allow the permission, Android 13+ has denied the permission automatically.\n\nHowever you can export the current wallpaper with a separate app and then import the image to this app.\n\nGo to separate app?\n\nhttps://f-droid.org/packages/com.github.cvzi.wallpaperexport/")
+        builder.setMessage(R.string.wallpaper_import_denied)
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             dialog.safeDismiss()
-
-            val intent = packageManager.getLaunchIntentForPackage(WALLPAPER_EXPORT_PACKAGE)
+            val wallpaperExportPackageName = getString(R.string.wallpaper_export_package_name)
+            val wallpaperExportFDroidUrl = getString(R.string.wallpaper_export_fdroid_url)
+            val intent = packageManager.getLaunchIntentForPackage(wallpaperExportPackageName)
             if (intent?.resolveActivity(packageManager) != null) {
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             } else {
-                Intent(ACTION_VIEW, Uri.parse(WALLPAPER_EXPORT_FDROID)).apply {
+                Intent(ACTION_VIEW, Uri.parse(wallpaperExportFDroidUrl)).apply {
                     if (resolveActivity(packageManager) != null) {
-                        startActivity(Intent.createChooser(this, WALLPAPER_EXPORT_FDROID))
+                        startActivity(Intent.createChooser(this, wallpaperExportFDroidUrl))
                     } else {
                         Log.e(TAG, "showWallpaperExportHint: No browser installed")
                     }
@@ -1381,23 +1382,23 @@ open class MainActivity : AppCompatActivity() {
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
     }
-}
 
-class ScrollingModeOnItemSelectedListener(
-    spinner: Spinner,
-    private val imageProvider: StaticDayAndNightProvider,
-    private val isDayOrNight: DayOrNight
-) : AdapterView.OnItemSelectedListener {
-    init {
-        spinner.setSelection(imageProvider.getScrollingMode(isDayOrNight).ordinal)
-    }
+    inner class ScrollingModeOnItemSelectedListener(
+        spinner: Spinner,
+        private val imageProvider: StaticDayAndNightProvider,
+        private val isDayOrNight: DayOrNight
+    ) : AdapterView.OnItemSelectedListener {
+        init {
+            spinner.setSelection(imageProvider.getScrollingMode(isDayOrNight).ordinal)
+        }
 
-    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-        imageProvider.setScrollingMode(isDayOrNight, ScrollingMode.entries[pos])
-        DarkWallpaperService.invalidate()
-    }
+        override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+            imageProvider.setScrollingMode(isDayOrNight, ScrollingMode.entries[pos])
+            DarkWallpaperService.invalidate()
+        }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {
-        Log.d("Spinner", "onNothingSelected")
+        override fun onNothingSelected(parent: AdapterView<*>) {
+            Log.d("Spinner", "onNothingSelected")
+        }
     }
 }

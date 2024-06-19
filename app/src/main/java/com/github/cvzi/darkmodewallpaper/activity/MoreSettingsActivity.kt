@@ -52,7 +52,6 @@ import com.github.cvzi.darkmodewallpaper.supportsDarkTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 
 /**
  * Advanced/More settings
@@ -67,7 +66,7 @@ class MoreSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preferencesGlobal = Preferences(this, R.string.pref_file)
-        imageProvider = StaticDayAndNightProvider(WeakReference(this))
+        imageProvider = StaticDayAndNightProvider(this)
 
         binding = ActivityMoreSettingsBinding.inflate(layoutInflater)
 
@@ -78,7 +77,6 @@ class MoreSettingsActivity : AppCompatActivity() {
                 setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
                 setTargetDensity(resources.displayMetrics.densityDpi * 2)
             }
-
 
         binding.apply {
 
@@ -280,7 +278,6 @@ class MoreSettingsActivity : AppCompatActivity() {
             }
 
         }
-
     }
 
     private fun toggleButtonChangeListener(
