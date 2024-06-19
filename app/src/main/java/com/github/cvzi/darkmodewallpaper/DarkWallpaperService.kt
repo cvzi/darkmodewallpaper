@@ -163,7 +163,6 @@ class DarkWallpaperService : WallpaperService() {
 
     private val self = WeakReference(this)
     private lateinit var preferencesGlobal: Preferences
-    private lateinit var handler: Handler
 
     private var engines: ArrayList<WeakReference<DarkWallpaperService.WallpaperEngine>> =
         ArrayList()
@@ -190,7 +189,6 @@ class DarkWallpaperService : WallpaperService() {
         keyguardService = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
         preferencesGlobal = Preferences(this, R.string.pref_file)
-        handler = Handler(Looper.getMainLooper())
     }
 
     override fun onDestroy() {
@@ -204,7 +202,7 @@ class DarkWallpaperService : WallpaperService() {
             SERVICES.remove(self)
             self.clear()
         }
-        handler.removeCallbacksAndMessages(null)
+        Handler(Looper.getMainLooper()).removeCallbacksAndMessages(null)
         super.onDestroy()
     }
 
@@ -237,7 +235,7 @@ class DarkWallpaperService : WallpaperService() {
             }
         }
         // Update all wallpapers after 3 seconds
-        handler.postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             invalidate()
         }, 3000)
     }
@@ -382,7 +380,7 @@ class DarkWallpaperService : WallpaperService() {
                 onUnLockBroadcastReceiver = OnUnLockBroadcastReceiver()
             }
             onUnLockBroadcastReceiver?.register()
-            handler.postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 // Check if the device was already unlocked before the broadcast receiver was ready
                 if (isLockScreen && !keyguardService.isDeviceLocked) {
                     // Device was already unlocked
@@ -526,7 +524,7 @@ class DarkWallpaperService : WallpaperService() {
             }
             hasZoom = true
             if (visible && (abs(zoom - newZoom) > 0.04f || newZoom == 0f || newZoom == 1f)) {
-                handler.post {
+                Handler(Looper.getMainLooper()).post {
                     updateCanvas()
                 }
             }
@@ -640,7 +638,7 @@ class DarkWallpaperService : WallpaperService() {
                 }
             } else {
                 Log.d(TAG, "computeWallpaperColors() deferred")
-                handler.apply {
+                Handler(Looper.getMainLooper()).apply {
                     removeCallbacks(runnableUpdate)
                     postDelayed(runnableUpdate, 1000)
                 }
@@ -930,7 +928,7 @@ class DarkWallpaperService : WallpaperService() {
                         imageFile,
                         wallpaperImage?.customWallpaperColors
                     )
-                handler.apply {
+                Handler(Looper.getMainLooper()).apply {
                     removeCallbacks(runnableComputeWallpaperColors)
                     postDelayed(runnableComputeWallpaperColors, 200)
                 }
@@ -974,7 +972,7 @@ class DarkWallpaperService : WallpaperService() {
                     ) {
                         blendImages = null
                     }
-                    handler.apply {
+                    Handler(Looper.getMainLooper()).apply {
                         removeCallbacks(runnableUpdate)
                         postDelayed(runnableUpdate, 50)
                     }
@@ -998,7 +996,7 @@ class DarkWallpaperService : WallpaperService() {
                     getString(R.string.wallpaper_is_loading)
                 )
                 waitAnimation?.draw(canvas, errorLoadingFile)
-                handler.apply {
+                Handler(Looper.getMainLooper()).apply {
                     removeCallbacks(runnableUpdate)
                     postDelayed(runnableUpdate, 200)
                 }
