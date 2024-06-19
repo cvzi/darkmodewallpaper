@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.10
+*   Fix a crash after applying the wallpaper
+
 ## 1.6.9
 *   Reduce memory usage
 
