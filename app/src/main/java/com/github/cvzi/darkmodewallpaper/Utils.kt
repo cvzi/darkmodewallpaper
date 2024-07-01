@@ -752,9 +752,7 @@ class WallpaperColorsHelper(
     /**
      * Sets reference to bitmap and drawable to null
      */
-    fun recycle() {
-        bitmapOrDrawable.set(null, null)
-    }
+    fun recycle() = bitmapOrDrawable.recycle()
 }
 
 /**

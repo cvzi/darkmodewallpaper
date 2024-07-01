@@ -174,6 +174,7 @@ class DarkWallpaperService : WallpaperService() {
 
     // Keeps the last calculated value, so a new engine doesn't start with null
     private var lastWallpaperColors: WallpaperColors? = null
+    private val lastWallpaperColorsMap: HashMap<String, WallpaperColors> = HashMap()
 
     init {
         overlayPaint.color = Color.argb(120, 0, 0, 0)
@@ -207,9 +208,7 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     override fun onTrimMemory(level: Int) {
-        if (level >= TRIM_MEMORY_RUNNING_LOW) {
-            imageCache.clear()
-        }
+        imageCache.clear()
         super.onTrimMemory(level)
     }
 
@@ -623,11 +622,21 @@ class DarkWallpaperService : WallpaperService() {
                     val canvas = Canvas(bm)
                     drawOnCanvas(canvas, helper.bitmapOrDrawable, helper.file)
                     wallpaperColors = WallpaperColors.fromBitmap(bm)
+                    bm.recycle()
                 }
                 lastWallpaperColors = wallpaperColors
+                helper.key?.let {
+                    wallpaperColors?.let {
+                        if (lastWallpaperColorsMap.size > 3) {
+                            lastWallpaperColorsMap.clear()
+                        }
+                        lastWallpaperColorsMap[helper.key] = it
+                    }
+                }
                 calculateWallpaperColorsLastTime = System.nanoTime()
                 calculateWallpaperColorsLastKey = helper.key
                 helper.recycle()
+                calculateWallpaperColorsHelper = null
                 if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
                     notifyColorsChanged()
                 } else {
@@ -921,19 +930,27 @@ class DarkWallpaperService : WallpaperService() {
                 && status !is WallpaperStatusLoadedBlending
                 && wallpaperColorsShouldCalculate(colorKey)
             ) {
-                calculateWallpaperColorsHelper =
-                    WallpaperColorsHelper(
-                        currentBitmapOrDrawable,
-                        colorKey,
-                        imageFile,
-                        wallpaperImage?.customWallpaperColors
-                    )
-                Handler(Looper.getMainLooper()).apply {
-                    removeCallbacks(runnableComputeWallpaperColors)
-                    postDelayed(runnableComputeWallpaperColors, 200)
+                if (colorKey in lastWallpaperColorsMap) {
+                    wallpaperColors = lastWallpaperColorsMap[colorKey]
+                    if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
+                        notifyColorsChanged()
+                    } else {
+                        notifyColorsOnVisibilityChange = true
+                    }
+                } else {
+                    calculateWallpaperColorsHelper =
+                        WallpaperColorsHelper(
+                            currentBitmapOrDrawable,
+                            colorKey,
+                            imageFile,
+                            wallpaperImage?.customWallpaperColors
+                        )
+                    Handler(Looper.getMainLooper()).apply {
+                        removeCallbacks(runnableComputeWallpaperColors)
+                        postDelayed(runnableComputeWallpaperColors, 200)
+                    }
                 }
             }
-
         }
 
         private fun drawOnCanvas(
