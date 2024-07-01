@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.11
+*   SDK 35
+*   Reduce memory usage
+
 ## 1.6.10
 *   Fix a crash after applying the wallpaper
 

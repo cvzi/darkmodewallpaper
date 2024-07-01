@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'maven-publish'
     id 'com.jaredsburrows.license'
 }
 android {
@@ -18,10 +17,10 @@ android {
     defaultConfig {
         applicationId 'com.github.cvzi.darkmodewallpaper'
         minSdk 29
-        compileSdk 34
-        targetSdk 34
-        versionCode 58
-        versionName '1.6.10'
+        compileSdk 35
+        targetSdk 35
+        versionCode 59
+        versionName '1.6.11'
         externalNativeBuild.cmake.cppFlags '-std=c++17'
     }
     buildTypes {
