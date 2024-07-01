@@ -118,11 +118,11 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             ScrollingMode.valueOf(
                 pref.getString(
                     context.getString(R.string.pref_scrolling_mode_day_key),
-                    ScrollingMode.values()[0].name
-                ) ?: ScrollingMode.values()[0].name
+                    ScrollingMode.entries[0].name
+                ) ?: ScrollingMode.entries[0].name
             )
         } catch (e: IllegalArgumentException) {
-            ScrollingMode.values()[0]
+            ScrollingMode.entries[0]
         }
         set(value) = pref.edit().putString(
             context.getString(R.string.pref_scrolling_mode_day_key),
@@ -133,11 +133,11 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             ScrollingMode.valueOf(
                 pref.getString(
                     context.getString(R.string.pref_scrolling_mode_night_key),
-                    ScrollingMode.values()[0].name
-                ) ?: ScrollingMode.values()[0].name
+                    ScrollingMode.entries[0].name
+                ) ?: ScrollingMode.entries[0].name
             )
         } catch (e: IllegalArgumentException) {
-            ScrollingMode.values()[0]
+            ScrollingMode.entries[0]
         }
         set(value) = pref.edit().putString(
             context.getString(R.string.pref_scrolling_mode_night_key),

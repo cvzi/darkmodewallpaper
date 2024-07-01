@@ -47,7 +47,7 @@ enum class NightModeTrigger {
             } catch (e: IllegalArgumentException) {
                 null
             }
-        } ?: values()[0]
+        } ?: entries[0]
     }
 }
 
