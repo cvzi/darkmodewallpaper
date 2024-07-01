@@ -38,12 +38,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewLockScreenSwitch"
                 style="@style/CardViewPrimary"
+                android:layout_marginTop="30dp"
                 android:visibility="gone">
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20dp"
                     android:paddingBottom="10dp">
 
                     <TableRow
@@ -91,6 +92,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewDay"
+                android:layout_marginTop="30dp"
                 style="@style/CardViewPrimary">
 
                 <LinearLayout

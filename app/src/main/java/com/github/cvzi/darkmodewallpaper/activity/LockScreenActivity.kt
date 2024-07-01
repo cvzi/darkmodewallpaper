@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import com.github.cvzi.darkmodewallpaper.DarkWallpaperService
 
 /**
@@ -53,6 +54,9 @@ open class LockScreenActivity : MainActivity() {
             tableRowButtonApplyWallpaper.removeAllViews()
             textViewLockScreenDescription.visibility = View.VISIBLE
             cardViewLockScreenSwitch.visibility = View.VISIBLE
+            cardViewDay.layoutParams = (cardViewDay.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                topMargin = 8
+            }
             imageViewLockSymbolDay.visibility = View.VISIBLE
             imageViewLockSymbolNight.visibility = View.VISIBLE
             tableRowSwitchZoom.visibility = View.GONE
