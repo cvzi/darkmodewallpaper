@@ -98,8 +98,6 @@ class MoreSettingsActivity : AppCompatActivity() {
             toggleButtonClearMemory.setOnCheckedChangeListener { _, isChecked ->
                 preferencesGlobal.autoClearMemory = isChecked
                 DarkWallpaperService.enableSoftReferencesCache(isChecked)
-                System.gc()
-                textViewCurrentMemory.text = DarkWallpaperService.memorySize()
             }
 
             buttonInsertCurrent.setOnClickListener {
@@ -343,7 +341,6 @@ class MoreSettingsActivity : AppCompatActivity() {
                 preferencesGlobal.notifyColorsImmediatelyAfterUnlock
             toggleButtonNotifyColors.isChecked = preferencesGlobal.notifyColors
             toggleButtonClearMemory.isChecked = preferencesGlobal.autoClearMemory
-            textViewCurrentMemory.text = DarkWallpaperService.memorySize()
 
             homeDayColors.switchUseCustomColors.isChecked =
                 imageProvider.useCustomWallpaperColors(DAY, isLockScreen = false)

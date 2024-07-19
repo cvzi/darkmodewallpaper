@@ -39,7 +39,6 @@ import android.graphics.RenderEffect
 import android.graphics.RenderNode
 import android.graphics.Shader
 import android.graphics.drawable.AnimatedImageDrawable
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.ext.SdkExtensions
@@ -758,11 +757,6 @@ class WallpaperColorsHelper(
         isRecycled = true
         return !t
     }
-
-    /**
-     * Sets reference to bitmap and drawable to null
-     */
-    fun recycle() = bitmapOrDrawable.recycle()
 }
 
 /**
@@ -822,10 +816,6 @@ class ScaledBitmapOrDrawable(
     override fun toString(): String {
         return "${super.toString()}[${scaledBitmap ?: drawable ?: "null,null"}]"
     }
-
-    fun allocationBytes(): Long = scaledBitmap?.bitmap?.allocationByteCount?.toLong()
-        ?: ((drawable as? BitmapDrawable)?.bitmap?.allocationByteCount?.toLong() ?: 0L)
-
 }
 
 /**
@@ -1007,15 +997,14 @@ class ImageCache {
     private val hardImageCache: ConcurrentHashMap<String, ScaledBitmapOrDrawable?> =
         ConcurrentHashMap()
 
-    fun getOrDefault(
-        key: String,
-        default: ScaledBitmapOrDrawable? = null
+    operator fun get(
+        key: String
     ): ScaledBitmapOrDrawable? =
         hardImageCache.getOrElse(key) {
-            return softImageCache.getOrDefault(key, null)?.get()
+            return softImageCache[key]?.get()
         }
 
-    fun store(key: String, value: ScaledBitmapOrDrawable?) {
+    operator fun set(key: String, value: ScaledBitmapOrDrawable?) {
         if (useSoftReferences) {
             softImageCache[key] = SoftReference(value)
         } else {
@@ -1039,26 +1028,6 @@ class ImageCache {
     fun remove(key: String) {
         softImageCache.remove(key)
         hardImageCache.remove(key)
-    }
-
-    fun memorySize(): String {
-        val imageCache: HashSet<ScaledBitmapOrDrawable> = HashSet()
-
-        softImageCache.values.forEach { value ->
-            value?.get()?.let { scaledBitmapOrDrawable ->
-                imageCache.add(scaledBitmapOrDrawable)
-            }
-        }
-        hardImageCache.values.forEach { value ->
-            value?.let {
-                imageCache.add(it)
-            }
-        }
-        val size: Long = imageCache.sumOf {
-            it.allocationBytes()
-        }
-
-        return "Currently ${imageCache.size} images with a total of ${size / (1024 * 1024)} MB"
     }
 
 }

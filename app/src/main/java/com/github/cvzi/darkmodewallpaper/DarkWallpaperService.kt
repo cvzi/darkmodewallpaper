@@ -162,11 +162,6 @@ class DarkWallpaperService : WallpaperService() {
          */
         fun enableSoftReferencesCache(useSoftReferences: Boolean) =
             imageCache.enableSoftReferences(useSoftReferences)
-
-        /**
-         * Get the current size of the image cache
-         */
-        fun memorySize(): String = imageCache.memorySize()
     }
 
     private val self = WeakReference(this)
@@ -451,7 +446,7 @@ class DarkWallpaperService : WallpaperService() {
                                 wallpaperImage?.blur,
                                 it.absolutePath
                             )
-                            val scaledBitmapOrDrawable = imageCache.getOrDefault(key, null)
+                            val scaledBitmapOrDrawable = imageCache[key]
                             if (scaledBitmapOrDrawable?.isValid() == true) {
                                 blendImages = BlendImages(
                                     scaledBitmapOrDrawable.getBitmapOrDrawable(),
@@ -504,6 +499,7 @@ class DarkWallpaperService : WallpaperService() {
             } else if (isPreview && (desiredMinimumWidth < width || desiredMinimumHeight < height)) {
                 Log.d(TAG, "notifyColorsChanged() blocked because: Material you preview")
             } else if (preferencesGlobal.notifyColors || !isLockScreen) {
+                Log.v(TAG, "notifyColorsChanged()")
                 super.notifyColorsChanged()
             }
         }
@@ -658,7 +654,6 @@ class DarkWallpaperService : WallpaperService() {
                 }
                 calculateWallpaperColorsLastTime = System.nanoTime()
                 calculateWallpaperColorsLastKey = helper.key
-                helper.recycle()
                 calculateWallpaperColorsHelper = null
                 if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
                     notifyColorsChanged()
@@ -765,10 +760,7 @@ class DarkWallpaperService : WallpaperService() {
             if (currentBitmap == null) {
                 imageCache.remove(key)
             } else {
-                imageCache.store(
-                    key,
-                    ScaledBitmapOrDrawable(ScaledBitmap(currentBitmap, isDesired))
-                )
+                imageCache[key] = ScaledBitmapOrDrawable(ScaledBitmap(currentBitmap, isDesired))
             }
 
             currentImageFile = imageFile
@@ -824,7 +816,7 @@ class DarkWallpaperService : WallpaperService() {
             } else {
                 val scaledBitmapOrDrawable = ScaledBitmapOrDrawable(drawable = drawable)
                 scaledBitmapOrDrawable.isDesiredSize = isDesired
-                imageCache.store(key, scaledBitmapOrDrawable)
+                imageCache[key] = scaledBitmapOrDrawable
             }
 
             currentImageFile = imageFile
@@ -882,7 +874,7 @@ class DarkWallpaperService : WallpaperService() {
                     currentBitmapOrDrawable.set(customBitmapOrDrawable)
                 }
                 if (currentBitmapOrDrawable.isNull()) {
-                    val scaledBitmapOrDrawable = imageCache.getOrDefault(key, null)
+                    val scaledBitmapOrDrawable = imageCache[key]
                     if (scaledBitmapOrDrawable?.isValid() == true) {
                         currentBitmapOrDrawable.set(scaledBitmapOrDrawable)
                         isDesiredSize = scaledBitmapOrDrawable.isDesiredSize
