@@ -103,5 +103,13 @@ Depending on the wallpaper colors this can cause a flicker of the screen.
 Normally the colors are sent immediately after unlocking the phone.
 If you see flickering, set this option to \"Wait\" and instead the colors will be sent once you open an app.]]></string>
     <string name="blur_unavailable_in_animations">Can\'t blur animated images</string>
+    <string name="setting_inform_wallpaper_colors_heading">Inform Android about lockscreen wallpaper colors</string>
+    <string name="setting_inform_wallpaper_colors_description">If you still see flickering, you can try to disable informing Android about lockscreen colors.</string>
+    <string name="setting_clear_memory_heading">Automatically remove wallpaper images from memory</string>
+    <string name="setting_clear_memory_description">If your device is running low on memory, Android can ask apps to release memory. If this switch is enabled, the app will release the wallpaper images from memory.</string>
+    <string name="setting_manual_colors_heading">Set the colors that Android and the launcher receive</string>
+    <string name="setting_manual_colors_description">The colors may be used by the launcher to modify text color, drawer color, etc.\nNormally the colors are generated from the wallpaper image. Enable the switches to choose up to three different colors:</string>
+    <string name="setting_button_insert_current_values">Insert current values</string>
+    <string name="setting_button_apply">Apply</string>
 
 </resources>

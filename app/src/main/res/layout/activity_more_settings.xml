@@ -36,7 +36,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
@@ -59,17 +59,43 @@
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="10dp"
                         android:text="@string/setting_inform_new_wallpaper_colors_description" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:accessibilityHeading="true"
+                        android:labelFor="@id/toggleButtonNotifyColors"
+                        android:text="@string/setting_inform_wallpaper_colors_heading"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleButtonNotifyColors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textOff="@string/scrolling_mode_value_off"
+                        android:textOn="@string/scrolling_mode_value_on" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/setting_inform_wallpaper_colors_description" />
+
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
 
             <androidx.cardview.widget.CardView
                 style="@style/CardViewPrimary"
@@ -78,14 +104,60 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:accessibilityHeading="true"
-                        android:text="Set the colors that Android and the launcher receive"
+                        android:labelFor="@id/toggleButtonClearMemory"
+                        android:text="@string/setting_clear_memory_heading"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleButtonClearMemory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textOff="@string/scrolling_mode_value_off"
+                        android:textOn="@string/scrolling_mode_value_on" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/setting_clear_memory_description" />
+
+                    <TextView
+                        android:id="@+id/textViewCurrentMemory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                style="@style/CardViewPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:accessibilityHeading="true"
+                        android:text="@string/setting_manual_colors_heading"
                         android:textStyle="bold" />
 
                     <TextView
@@ -95,21 +167,13 @@
                         android:paddingTop="10dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="10dp"
-                        android:text="The colors may be used by the launcher to modify text color, drawer color, etc.\nNormally the colors are generated from the wallpaper image. Enable the switches to choose up to three different colors:" />
-
-                    <!--
-                    <Button
-                        android:id="@+id/buttonInsertDefault"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Insert default values" />
-                        -->
+                        android:text="@string/setting_manual_colors_description" />
 
                     <Button
                         android:id="@+id/buttonInsertCurrent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Insert current values" />
+                        android:text="@string/setting_button_insert_current_values" />
 
                     <include
                         android:id="@+id/home_day_colors"
@@ -139,7 +203,7 @@
                         android:id="@+id/buttonNotifyColorsChanged"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Apply" />
+                        android:text="@string/setting_button_apply" />
 
                     <TextView
                         android:id="@+id/textViewAndroid31"

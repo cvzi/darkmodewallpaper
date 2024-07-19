@@ -39,6 +39,7 @@ import android.graphics.RenderEffect
 import android.graphics.RenderNode
 import android.graphics.Shader
 import android.graphics.drawable.AnimatedImageDrawable
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.ext.SdkExtensions
@@ -60,9 +61,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.lang.ref.SoftReference
 import java.time.LocalTime
 import java.util.Calendar
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -819,6 +822,10 @@ class ScaledBitmapOrDrawable(
     override fun toString(): String {
         return "${super.toString()}[${scaledBitmap ?: drawable ?: "null,null"}]"
     }
+
+    fun allocationBytes(): Long = scaledBitmap?.bitmap?.allocationByteCount?.toLong()
+        ?: ((drawable as? BitmapDrawable)?.bitmap?.allocationByteCount?.toLong() ?: 0L)
+
 }
 
 /**
@@ -981,4 +988,77 @@ fun setHtmlText(textView: TextView, htmlString: String): TextView {
             Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV
         )
     }
+}
+
+class ImageCache {
+    val size: Int
+        get() = softImageCache.size + hardImageCache.size
+    private var useSoftReferences = true
+
+
+    fun clear() {
+        softImageCache.clear()
+        hardImageCache.clear()
+    }
+
+    private val softImageCache: ConcurrentHashMap<String, SoftReference<ScaledBitmapOrDrawable>?> =
+        ConcurrentHashMap()
+
+    private val hardImageCache: ConcurrentHashMap<String, ScaledBitmapOrDrawable?> =
+        ConcurrentHashMap()
+
+    fun getOrDefault(
+        key: String,
+        default: ScaledBitmapOrDrawable? = null
+    ): ScaledBitmapOrDrawable? =
+        hardImageCache.getOrElse(key) {
+            return softImageCache.getOrDefault(key, null)?.get()
+        }
+
+    fun store(key: String, value: ScaledBitmapOrDrawable?) {
+        if (useSoftReferences) {
+            softImageCache[key] = SoftReference(value)
+        } else {
+            hardImageCache[key] = value
+        }
+    }
+
+    fun enableSoftReferences(useSoftReferences: Boolean) {
+        this.useSoftReferences = useSoftReferences
+        if (useSoftReferences) {
+            hardImageCache.clear()
+        } else {
+            softImageCache.forEach { (key, softRef) ->
+                softRef?.get()?.let {
+                    hardImageCache[key] = it
+                }
+            }
+        }
+    }
+
+    fun remove(key: String) {
+        softImageCache.remove(key)
+        hardImageCache.remove(key)
+    }
+
+    fun memorySize(): String {
+        val imageCache: HashSet<ScaledBitmapOrDrawable> = HashSet()
+
+        softImageCache.values.forEach { value ->
+            value?.get()?.let { scaledBitmapOrDrawable ->
+                imageCache.add(scaledBitmapOrDrawable)
+            }
+        }
+        hardImageCache.values.forEach { value ->
+            value?.let {
+                imageCache.add(it)
+            }
+        }
+        val size: Long = imageCache.sumOf {
+            it.allocationBytes()
+        }
+
+        return "Currently ${imageCache.size} images with a total of ${size / (1024 * 1024)} MB"
+    }
+
 }

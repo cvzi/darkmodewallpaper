@@ -274,6 +274,16 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             value
         ).apply()
 
+    var notifyColors: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_notify_colors_key),
+            context.resources.getBoolean(R.bool.pref_notify_colors_default)
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_notify_colors_key),
+            value
+        ).apply()
+
     var notifyColorsImmediatelyAfterUnlock: Boolean
         get() = pref.getBoolean(
             context.getString(R.string.pref_notify_colors_immediately_after_unlock_key),
@@ -281,6 +291,16 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
         )
         set(value) = pref.edit().putBoolean(
             context.getString(R.string.pref_notify_colors_immediately_after_unlock_key),
+            value
+        ).apply()
+
+    var autoClearMemory: Boolean
+        get() = pref.getBoolean(
+            context.getString(R.string.pref_auto_clear_memory_key),
+            context.resources.getBoolean(R.bool.pref_auto_clear_memory_default)
+        )
+        set(value) = pref.edit().putBoolean(
+            context.getString(R.string.pref_auto_clear_memory_key),
             value
         ).apply()
 

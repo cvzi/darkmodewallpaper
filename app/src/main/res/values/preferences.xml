@@ -61,8 +61,12 @@
     <string name="pref_night_mode_time_range_default" translatable="false">20:00-08:00</string>
     <string name="pref_zoom_enabled_key" translatable="false">zoom_enabled</string>
     <bool name="pref_zoom_enabled_default">false</bool>
+    <string name="pref_notify_colors_key" translatable="false">notify_colors</string>
+    <bool name="pref_notify_colors_default">true</bool>
     <string name="pref_notify_colors_immediately_after_unlock_key" translatable="false">notify_colors_immediately_after_unlock</string>
     <bool name="pref_notify_colors_immediately_after_unlock_default">true</bool>
+    <string name="pref_auto_clear_memory_key" translatable="false">auto_clear_memory</string>
+    <bool name="pref_auto_clear_memory_default">true</bool>
     <string name="pref_animated_file_day_key" translatable="false">animated_file_day</string>
     <bool name="pref_animated_file_day_default">false</bool>
     <string name="pref_animated_file_night_key" translatable="false">animated_file_night</string>
