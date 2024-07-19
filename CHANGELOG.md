@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.0
+*   Lockscreen wallpaper works after reboot
+*   Option to disable notifying the launcher of the lockscreen colors
+*   Option to disable automatic memory cleanup of images
+
 ## 1.6.11
 *   SDK 35
 *   Reduce memory usage
