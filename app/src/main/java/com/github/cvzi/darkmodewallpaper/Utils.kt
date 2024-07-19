@@ -332,7 +332,8 @@ fun blur(mSrc: Bitmap, radius: Float): Bitmap {
                 r = 25f
             }
             Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
-            val result = Bitmap.createBitmap(src.width, src.height, src.config ?: Bitmap.Config.ARGB_8888)
+            val result =
+                Bitmap.createBitmap(src.width, src.height, src.config ?: Bitmap.Config.ARGB_8888)
             canvas.setBitmap(result)
             val bitmapEffect = RenderEffect.createBitmapEffect(src)
             val blurEffect =
