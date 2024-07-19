@@ -250,7 +250,7 @@ open class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.imageButtonAbout.setOnClickListener {
+        binding.buttonAbout.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
