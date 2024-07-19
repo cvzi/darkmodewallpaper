@@ -162,11 +162,15 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
             deviceContext.filesDir,
             dayFileName(isLockScreen = false, preferencesHomeScreen.animatedFileDay)
         )
-
         if (oldHomeDayFile.exists() && !newHomeDayFile.exists()) {
-            oldHomeDayFile.copyTo(newHomeDayFile)
-            oldHomeDayFile.delete()
-            Log.v(IMAGEPROVIDERTAG, "Moved $oldHomeDayFile to $newHomeDayFile")
+            oldHomeDayFile.copyTo(newHomeDayFile).let {
+                if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldHomeDayFile.length()) {
+                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldHomeDayFile to $newHomeDayFile")
+                    oldHomeDayFile.delete()
+                } else {
+                    Log.e(IMAGEPROVIDERTAG, "Could not copy $oldHomeDayFile to $newHomeDayFile")
+                }
+            }
         }
 
         val oldHomeNightFile = File(
@@ -177,11 +181,15 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
             deviceContext.filesDir,
             nightFileName(isLockScreen = false, preferencesHomeScreen.animatedFileDay)
         )
-
         if (oldHomeNightFile.exists() && !newHomeNightFile.exists()) {
-            oldHomeNightFile.copyTo(newHomeNightFile)
-            oldHomeNightFile.delete()
-            Log.v(IMAGEPROVIDERTAG, "Moved $oldHomeNightFile to $newHomeNightFile")
+            oldHomeNightFile.copyTo(newHomeNightFile).let {
+                if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldHomeNightFile.length()) {
+                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldHomeNightFile to $newHomeNightFile")
+                    oldHomeNightFile.delete()
+                } else {
+                    Log.e(IMAGEPROVIDERTAG, "Could not copy $oldHomeNightFile to $newHomeNightFile")
+                }
+            }
         }
 
         val oldLockDayFile = File(
@@ -192,11 +200,15 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
             deviceContext.filesDir,
             dayFileName(isLockScreen = true, preferencesLockScreen.animatedFileDay)
         )
-
         if (oldLockDayFile.exists() && !newLockDayFile.exists()) {
-            oldLockDayFile.copyTo(newLockDayFile)
-            oldLockDayFile.delete()
-            Log.v(IMAGEPROVIDERTAG, "Moved $oldLockDayFile to $newLockDayFile")
+            oldLockDayFile.copyTo(newLockDayFile).let {
+                if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldLockDayFile.length()) {
+                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldLockDayFile to $newLockDayFile")
+                    oldLockDayFile.delete()
+                } else {
+                    Log.e(IMAGEPROVIDERTAG, "Could not copy $oldLockDayFile to $newLockDayFile")
+                }
+            }
         }
 
         val oldLockNightFile = File(
@@ -207,11 +219,15 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
             deviceContext.filesDir,
             nightFileName(isLockScreen = true, preferencesLockScreen.animatedFileDay)
         )
-
         if (oldLockNightFile.exists() && !newLockNightFile.exists()) {
-            oldLockNightFile.copyTo(newLockNightFile)
-            oldLockNightFile.delete()
-            Log.v(IMAGEPROVIDERTAG, "Moved $oldLockNightFile to $newLockNightFile")
+            oldLockNightFile.copyTo(newLockNightFile).let {
+                if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldLockNightFile.length()) {
+                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldLockNightFile to $newLockNightFile")
+                    oldLockNightFile.delete()
+                } else {
+                    Log.e(IMAGEPROVIDERTAG, "Could not copy $oldLockNightFile to $newLockNightFile")
+                }
+            }
         }
     }
 
