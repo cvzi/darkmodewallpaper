@@ -554,7 +554,10 @@ class OnSeekBarProgress(val onProgress: (progress: Int) -> Unit) : SeekBar.OnSee
  */
 fun Activity.enableFullScreen() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        window.setDecorFitsSystemWindows(false)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            @Suppress("DEPRECATION")
+            window.setDecorFitsSystemWindows(false)
+        }
         window.insetsController?.let {
             it.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
             it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -575,7 +578,10 @@ fun Activity.enableFullScreen() {
  */
 fun Activity.disableFullScreen() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        window.setDecorFitsSystemWindows(true)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            @Suppress("DEPRECATION")
+            window.setDecorFitsSystemWindows(true)
+        }
         window.insetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         window.insetsController?.systemBarsBehavior =
             WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
