@@ -37,10 +37,10 @@ class WaitAnimation(val width: Int, val height: Int, private val loadingMessage:
     private var animationColorDir = 1
     private var animationIndex = 0
     private var textPositionX = width / 4f
-    private var textPositionY = height / 2f
+    private var textPositionY = height / 12f
     private var paint = Paint().apply {
         color = Color.BLACK
-        textSize = width / 12f
+        textSize = width / 16f
         isAntiAlias = true
     }
 
