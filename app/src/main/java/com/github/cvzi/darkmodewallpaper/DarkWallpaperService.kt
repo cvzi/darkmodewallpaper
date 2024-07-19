@@ -221,7 +221,10 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     override fun onTrimMemory(level: Int) {
-        imageCache.clear()
+        Log.d(TAG, "onTrimMemory(level=$level)")
+        if (level > TRIM_MEMORY_BACKGROUND && imageCache.size > 4) {
+            imageCache.clear()
+        }
         super.onTrimMemory(level)
     }
 
