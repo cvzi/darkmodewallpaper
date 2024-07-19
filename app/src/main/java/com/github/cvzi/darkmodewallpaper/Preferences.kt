@@ -23,9 +23,30 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 
 class Preferences(mContext: Context, private val prefFile: StringRes) {
-    private val context = mContext.applicationContext
+    companion object {
+        fun movePreferencesToDeviceProtectedStorage(
+            mContext: Context,
+            prefFileName: String
+        ): Boolean {
+            try {
+                val deviceContext = mContext.createDeviceProtectedStorageContext()
+                if (deviceContext.moveSharedPreferencesFrom(mContext, prefFileName)) {
+                    Log.d("Preferences", "Migrated shared preferences!")
+                    return true
+                } else {
+                    Log.w("Preferences", "Failed to migrate shared preferences")
+                }
+            } catch (e: Exception) {
+                Log.e("Preferences", "Error when migrating shared preferences", e)
+            }
+            return false
+        }
+    }
+
+    private var context = mContext.createDeviceProtectedStorageContext()
     private val pref: SharedPreferences =
         context.getSharedPreferences(context.getString(prefFile), Context.MODE_PRIVATE)
     var colorDay: Int

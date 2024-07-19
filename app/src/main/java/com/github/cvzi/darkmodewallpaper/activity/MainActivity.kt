@@ -149,6 +149,12 @@ open class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        // Try moving preferences to device protected storage
+        Preferences.movePreferencesToDeviceProtectedStorage(this, getString(R.string.pref_file))
+        Preferences.movePreferencesToDeviceProtectedStorage(this, getString(R.string.pref_file_lock_screen))
+        // Move lock screen images to device protected storage
+        StaticDayAndNightProvider(this).moveFilesToDeviceProtectedStorage()
+
         imageProvider = StaticDayAndNightProvider(this)
 
         startForPickDayHomeScreenFile = registerForActivityResult(

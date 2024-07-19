@@ -176,6 +176,7 @@
 
         <service
             android:name=".DarkWallpaperService"
+            android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
             android:label="@string/wallpaper_label"

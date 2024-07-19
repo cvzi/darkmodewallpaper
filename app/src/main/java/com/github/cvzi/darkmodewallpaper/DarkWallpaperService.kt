@@ -190,6 +190,19 @@ class DarkWallpaperService : WallpaperService() {
         keyguardService = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
         preferencesGlobal = Preferences(this, R.string.pref_file)
+
+        // Try moving preferences to device protected storage
+        Preferences.movePreferencesToDeviceProtectedStorage(
+            this,
+            getString(R.string.pref_file)
+        )
+        Preferences.movePreferencesToDeviceProtectedStorage(
+            this,
+            getString(R.string.pref_file_lock_screen)
+        )
+        // Move lock screen images to device protected storage
+        StaticDayAndNightProvider(this).moveFilesToDeviceProtectedStorage()
+
     }
 
     override fun onDestroy() {
@@ -282,6 +295,7 @@ class DarkWallpaperService : WallpaperService() {
         private var blendFromOffsetXPixel = 0f
         private var blendFromOffsetYPixel = 0f
         private var errorLoadingFile: String? = null
+        private var errorLoadingFileTime: Long = 0L
         private var onUnLockBroadcastReceiver: OnUnLockBroadcastReceiver? = null
         private var wallpaperColors: WallpaperColors? = lastWallpaperColors
         private var calculateWallpaperColorsLastKey: String? = null
@@ -307,7 +321,6 @@ class DarkWallpaperService : WallpaperService() {
             }
 
             hasSeparateLockScreenSettings = preferencesGlobal.separateLockScreen
-
             var c = preferencesGlobal.previewMode
             if (isPreview && c > 0) {
                 preferencesGlobal.previewMode = 0
@@ -322,8 +335,6 @@ class DarkWallpaperService : WallpaperService() {
             } else {
                 dayOrNight = isDayOrNightMode()
             }
-            //dayImageLocation = dayFileLocation(isLockScreen)
-            //nightImageLocation = nightFileLocation(isLockScreen)
             imageProvider.get(dayOrNight, isLockScreen) {
                 wallpaperImage = it
             }
@@ -750,6 +761,7 @@ class DarkWallpaperService : WallpaperService() {
 
             if (currentBitmap == null) {
                 errorLoadingFile = "Failed to load $imageFile"
+                errorLoadingFileTime = System.currentTimeMillis()
                 invalid = false
             }
             update(BitmapOrDrawable(currentBitmap), isDesired)
@@ -806,6 +818,7 @@ class DarkWallpaperService : WallpaperService() {
 
             if (drawable == null) {
                 errorLoadingFile = "Failed to load $imageFile"
+                errorLoadingFileTime = System.currentTimeMillis()
                 invalid = false
             }
             update(BitmapOrDrawable(drawable = drawable), isDesired)
@@ -874,6 +887,10 @@ class DarkWallpaperService : WallpaperService() {
                         if (!((currentImageFile?.name?.contains("lock") == true).xor("lock" in imageFile.name))) {
                             // Do not recycle unlocked/locked version of an image
                             currentBitmapOrDrawable.recycle()
+                        }
+                        if (!errorLoadingFile.isNullOrEmpty() && System.currentTimeMillis() - errorLoadingFileTime > 5000L) {
+                            // Try to reload image every 5 seconds. This happens after reboot, if the sd card is not accessible yet
+                            errorLoadingFile = null
                         }
                         if (loadFileThread.get()?.isAlive != true && errorLoadingFile.isNullOrEmpty()) {
                             loadFile(

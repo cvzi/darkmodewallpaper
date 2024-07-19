@@ -92,32 +92,129 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
     }
 
     private fun dayFileLocation(isLockScreen: Boolean, isAnimated: Boolean): File {
-        return File(
+        val oldFile = File(
             context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             dayFileName(isLockScreen, isAnimated)
         )
+        val newFile = File(
+            context.createDeviceProtectedStorageContext().filesDir,
+            dayFileName(isLockScreen, isAnimated)
+        )
+        if (newFile.exists() || !oldFile.exists()) {
+            return newFile
+        }
+        return oldFile
     }
 
     private fun nightFileLocation(isLockScreen: Boolean, isAnimated: Boolean): File {
-        return File(
+        val oldFile = File(
             context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             nightFileName(isLockScreen, isAnimated)
         )
+        val newFile = File(
+            context.createDeviceProtectedStorageContext().filesDir,
+            nightFileName(isLockScreen, isAnimated)
+        )
+        if (newFile.exists() || !oldFile.exists()) {
+            return newFile
+        }
+        return oldFile
     }
 
     private fun dayFileLocation(isLockScreen: Boolean): File {
-        return File(
+        val oldFile = File(
             context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             dayFileName(isLockScreen)
         )
+        val newFile = File(
+            context.createDeviceProtectedStorageContext().filesDir,
+            dayFileName(isLockScreen)
+        )
+        if (newFile.exists() || !oldFile.exists()) {
+            return newFile
+        }
+        return oldFile
     }
 
     private fun nightFileLocation(isLockScreen: Boolean): File {
-        return File(
+        val oldFile = File(
             context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             nightFileName(isLockScreen)
         )
+        val newFile = File(
+            context.createDeviceProtectedStorageContext().filesDir,
+            nightFileName(isLockScreen)
+        )
+        if (newFile.exists() || !oldFile.exists()) {
+            return newFile
+        }
+        return oldFile
     }
+
+    fun moveFilesToDeviceProtectedStorage() {
+        val deviceContext = context.createDeviceProtectedStorageContext()
+        Log.d(IMAGEPROVIDERTAG, "Moving files to device protected storage")
+        val oldHomeDayFile = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            dayFileName(isLockScreen = false, preferencesHomeScreen.animatedFileDay)
+        )
+        val newHomeDayFile = File(
+            deviceContext.filesDir,
+            dayFileName(isLockScreen = false, preferencesHomeScreen.animatedFileDay)
+        )
+
+        if (oldHomeDayFile.exists() && !newHomeDayFile.exists()) {
+            oldHomeDayFile.copyTo(newHomeDayFile)
+            oldHomeDayFile.delete()
+            Log.v(IMAGEPROVIDERTAG, "Moved $oldHomeDayFile to $newHomeDayFile")
+        }
+
+        val oldHomeNightFile = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            nightFileName(isLockScreen = false, preferencesHomeScreen.animatedFileDay)
+        )
+        val newHomeNightFile = File(
+            deviceContext.filesDir,
+            nightFileName(isLockScreen = false, preferencesHomeScreen.animatedFileDay)
+        )
+
+        if (oldHomeNightFile.exists() && !newHomeNightFile.exists()) {
+            oldHomeNightFile.copyTo(newHomeNightFile)
+            oldHomeNightFile.delete()
+            Log.v(IMAGEPROVIDERTAG, "Moved $oldHomeNightFile to $newHomeNightFile")
+        }
+
+        val oldLockDayFile = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            dayFileName(isLockScreen = true, preferencesLockScreen.animatedFileDay)
+        )
+        val newLockDayFile = File(
+            deviceContext.filesDir,
+            dayFileName(isLockScreen = true, preferencesLockScreen.animatedFileDay)
+        )
+
+        if (oldLockDayFile.exists() && !newLockDayFile.exists()) {
+            oldLockDayFile.copyTo(newLockDayFile)
+            oldLockDayFile.delete()
+            Log.v(IMAGEPROVIDERTAG, "Moved $oldLockDayFile to $newLockDayFile")
+        }
+
+        val oldLockNightFile = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            nightFileName(isLockScreen = true, preferencesLockScreen.animatedFileDay)
+        )
+        val newLockNightFile = File(
+            deviceContext.filesDir,
+            nightFileName(isLockScreen = true, preferencesLockScreen.animatedFileDay)
+        )
+
+        if (oldLockNightFile.exists() && !newLockNightFile.exists()) {
+            oldLockNightFile.copyTo(newLockNightFile)
+            oldLockNightFile.delete()
+            Log.v(IMAGEPROVIDERTAG, "Moved $oldLockNightFile to $newLockNightFile")
+        }
+    }
+
 
     fun setNewFile(dayOrNight: DayOrNight, isLockScreen: Boolean, isAnimated: Boolean, file: File) {
         val currentPreferences = if (isLockScreen) preferencesLockScreen else preferencesHomeScreen
@@ -342,8 +439,6 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
             } else {
                 null
             }
-
-        // TODO expiration via trigger
 
         callback(
             WallpaperImage(
