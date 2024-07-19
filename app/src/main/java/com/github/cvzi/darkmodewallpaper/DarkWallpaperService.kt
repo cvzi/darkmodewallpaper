@@ -952,9 +952,7 @@ class DarkWallpaperService : WallpaperService() {
                 && status !is WallpaperStatusLoadedBlending
                 && wallpaperColorsShouldCalculate(colorKey)
             ) {
-
-                val lastColors = lastWallpaperColorsMap.getOrDefault(colorKey, null)
-                if (lastColors != null && lastColors != wallpaperColors) {
+                if (colorKey in lastWallpaperColorsMap) {
                     wallpaperColors = lastWallpaperColorsMap[colorKey]
                     if (isLockScreen || preferencesGlobal.notifyColorsImmediatelyAfterUnlock) {
                         notifyColorsChanged()
