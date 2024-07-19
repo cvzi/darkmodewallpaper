@@ -13,7 +13,7 @@ android {
         }
     }
     namespace 'com.github.cvzi.darkmodewallpaper'
-    ndkVersion '27.0.11902837'
+    ndkVersion '27.0.12077973'
     defaultConfig {
         applicationId 'com.github.cvzi.darkmodewallpaper'
         minSdk 29
@@ -64,4 +64,5 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }
