@@ -94,4 +94,12 @@ W zależności od kolorów tapety może to spowodować migotanie ekranu.
 Zazwyczaj kolory są wysyłane bezpośrednio po odblokowaniu telefonu.
 Jeśli widzisz migotanie, ustaw tę opcję na \"Czekaj\" i zamiast tego kolory zostaną wysłane po otwarciu aplikacji.]]></string>
     <string name="blur_unavailable_in_animations">Nie można rozmyć animowanych obrazów</string>
+    <string name="setting_inform_wallpaper_colors_heading">Informuj Androida o kolorach tapety ekranu blokady</string>
+    <string name="setting_inform_wallpaper_colors_description">Jeśli nadal widzisz migotanie, możesz spróbować wyłączyć informowanie Androida o kolorach ekranu blokady.</string>
+    <string name="setting_clear_memory_heading">Automatycznie usuwaj tapetę z pamięci</string>
+    <string name="setting_clear_memory_description">Jeśli urządzenie ma mało pamięci, Android może poprosić aplikacje o wydanie pamięci. Jeśli ten przełącznik jest włączony, aplikacja wyda tapetę z pamięci.</string>
+    <string name="setting_manual_colors_heading">Ustaw kolory otrzymywane przez Androida i launcher</string>
+    <string name="setting_manual_colors_description">Kolory mogą być używane przez launcher do modyfikowania koloru tekstu, koloru szuflady itp.\nZazwyczaj kolory są generowane z tapety. Włącz, aby wybrać do trzech różnych kolorów:</string>
+    <string name="setting_button_insert_current_values">Wstaw bieżące wartości</string>
+    <string name="setting_button_apply">Zastosuj</string>
 </resources>
