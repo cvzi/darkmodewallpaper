@@ -1,0 +1,31 @@
+[versions]
+sdk-target= "35"
+sdk-compile = "35"
+sdk-min = "29"
+ndk = "27.0.12077973"
+jvm = "17"
+
+agp = "8.5.1"
+kotlin = "2.0.0"
+licensereport = "0.9.8"
+
+cardview = "1.0.0"
+material = "1.12.0"
+colorPicker = "3.1.0"
+
+[libraries]
+cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+color-picker = { module = "com.github.martin-stone:hsv-alpha-color-picker-android", version.ref = "colorPicker" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+[bundles]
+implementation-app = [
+    "cardview",
+    "material",
+    "color-picker"]
+
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+license-report = { id = "com.jaredsburrows.license", version.ref = "licensereport" }
