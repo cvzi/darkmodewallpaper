@@ -12,11 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url 'https://jitpack.io' }
     }
-    versionCatalogs {
-        create("app") {
-            from(files("app.versions.toml"))
-        }
-    }
 }
 include ':app'
 rootProject.name = "DarkModeLiveWallpaper"
