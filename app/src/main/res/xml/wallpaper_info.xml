@@ -21,4 +21,5 @@
     android:description="@string/wallpaper_description"
     android:settingsActivity="com.github.cvzi.darkmodewallpaper.activity.MainActivity"
     android:showMetadataInPreview="true"
+    android:thumbnail="@android:color/transparent"
     android:supportsMultipleDisplays="true" />

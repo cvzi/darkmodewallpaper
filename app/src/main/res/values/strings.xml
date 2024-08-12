@@ -2,14 +2,14 @@
     This file is part of DarkModeLiveWallpaper (github.com/cvzi/darkmodewallpaper).
 -->
 <resources>
-    <string name="app_name">DarkModeLiveWallpaper No thumbnail</string>
+    <string name="app_name">DarkModeLiveWallpaper Transparent</string>
 
     <string name="use_as_day_home">Day home screen wallpaper</string>
     <string name="use_as_night_home">Night home screen wallpaper</string>
     <string name="use_as_day_lock">Day lock screen wallpaper</string>
     <string name="use_as_night_lock">Night lock screen wallpaper</string>
 
-    <string name="wallpaper_label">DarkModeWallpaper No thumbnail</string>
+    <string name="wallpaper_label">DarkModeWallpaper Transparent</string>
     <string name="wallpaper_description">Automatically changes wallpaper to fit Light/Dark theme</string>
     <string name="wallpaper_is_loading">loading…</string>
 
