@@ -16,7 +16,7 @@ android {
     defaultConfig {
         versionName '1.7.0'
         versionCode 60
-        applicationId 'com.github.cvzi.darkmodewallpaper'
+        applicationId 'com.github.cvzi.darkmodewallpaper.nothumb'
         minSdk libs.versions.sdk.min.get().toInteger()
         compileSdk libs.versions.sdk.compile.get().toInteger()
         targetSdk libs.versions.sdk.target.get().toInteger()
