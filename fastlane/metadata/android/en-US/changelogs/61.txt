@@ -1,0 +1,2 @@
+* Lockscreen wallpaper works after reboot
+* Fix for "Recent apps" screen

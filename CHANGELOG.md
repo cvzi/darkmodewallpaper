@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.1
+*   Remove thumbnail from wallpaper to avoid a bug with the "Recent apps"-screen [#185](https://github.com/cvzi/darkmodewallpaper/issues/185)
+
 ## 1.7.0
 *   Lockscreen wallpaper works after reboot
 *   Option to disable notifying the launcher of the lockscreen colors
