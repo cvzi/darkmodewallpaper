@@ -21,5 +21,9 @@
     android:description="@string/wallpaper_description"
     android:settingsActivity="com.github.cvzi.darkmodewallpaper.activity.MainActivity"
     android:showMetadataInPreview="true"
-    android:supportsMultipleDisplays="true"
-    android:thumbnail="@drawable/ic_launcher_foreground" />
+    android:supportsMultipleDisplays="true" />
+
+    <!--
+        Do not use android:thumbnail="...", there is a bug in some launchers
+        https://github.com/cvzi/darkmodewallpaper/issues/185
+    -->
