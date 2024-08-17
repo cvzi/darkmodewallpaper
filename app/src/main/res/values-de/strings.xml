@@ -94,4 +94,12 @@ Abhängig von den Hintergrundfarben kann das zu einem Flackern des Bildschirms f
 Normalerweise werden die Farben sofort nach Entsperren des Handys gesendet.
 Wenn das Flackern auftritt, stell diese Option auf \"Warten\" und stattdessen werden die Farben erst gesendet, wenn du eine App öffnest.]]></string>
     <string name="blur_unavailable_in_animations">Animierte Bilder können nicht weichgezeichnet werden</string>
+    <string name="setting_inform_wallpaper_colors_heading">Android über Sperrbildschirm-Farben informieren</string>
+    <string name="setting_inform_wallpaper_colors_description">Wenn es weiterhin flickert, kannst du deaktivieren, dass Android über die Sperrbildschirm-Farben informiert wird.</string>
+    <string name="setting_clear_memory_heading">Hintergrundbilder automatisch aus Arbeitsspeicher entfernen</string>
+    <string name="setting_clear_memory_description">Wenn auf Ihrem Gerät wenig Arbeitsspeicher vorhanden ist, kann Android Apps bitten, Speicher freizugeben. Wenn diese Option aktiviert ist, wird die App dann die Hintergrundbilder aus dem Arbeitsspeicher entfernen.</string>
+    <string name="setting_manual_colors_heading">Wähle die Farben, die Android und der Launcher erhalten</string>
+    <string name="setting_manual_colors_description">Die Farben können vom Launcher verwendet werden, um Textfarbe, Drawer usw. zu ändern.\nNormalerweise werden die Farben aus dem Hintergrundbild generiert. Aktiviere die Optionen um bis zu drei verschiedene Farben auszuwählen:</string>
+    <string name="setting_button_insert_current_values">Aktuelle Werte einfügen</string>
+    <string name="setting_button_apply">Anwenden</string>
 </resources>
