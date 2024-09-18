@@ -2,7 +2,7 @@
 sdk-target= "35"
 sdk-compile = "35"
 sdk-min = "29"
-ndk = "27.0.12077973"
+ndk = "27.1.12297006"
 jvm = "17"
 
 agp = "8.6.1"

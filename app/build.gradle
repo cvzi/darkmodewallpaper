@@ -14,14 +14,17 @@ android {
     }
     namespace 'com.github.cvzi.darkmodewallpaper'
     defaultConfig {
-        versionName '1.7.1'
-        versionCode 61
+        versionName '1.7.2'
+        versionCode 62
         applicationId 'com.github.cvzi.darkmodewallpaper'
         minSdk libs.versions.sdk.min.get().toInteger()
         compileSdk libs.versions.sdk.compile.get().toInteger()
         targetSdk libs.versions.sdk.target.get().toInteger()
         ndkVersion libs.versions.ndk.get()
-        externalNativeBuild.cmake.cppFlags '-std=c++17'
+        externalNativeBuild.cmake {
+            cppFlags '-std=c++17'
+            arguments '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
+        }
     }
     buildTypes {
         release {

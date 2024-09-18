@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.2
+*   Fix crash on OS with [16k page size](https://developer.android.com/guide/practices/page-sizes) and software rendering
+
 ## 1.7.1
 *   Remove thumbnail from wallpaper to avoid a bug with the "Recent apps"-screen [#185](https://github.com/cvzi/darkmodewallpaper/issues/185)
 
