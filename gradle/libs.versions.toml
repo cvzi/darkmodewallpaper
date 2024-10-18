@@ -7,7 +7,7 @@ jvm = "17"
 cmake = "3.30.5"
 
 agp = "8.7.1"
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 licensereport = "0.9.8"
 
 cardview = "1.0.0"
