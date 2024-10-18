@@ -51,7 +51,10 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.jvm.get().toInteger()
     }
-    externalNativeBuild.cmake.path file('src/main/cpp/CMakeLists.txt')
+    externalNativeBuild.cmake {
+        version libs.versions.cmake.get()
+        path file('src/main/cpp/CMakeLists.txt')
+    }
     lint {
         disable 'MissingTranslation'
     }
