@@ -19,7 +19,7 @@
 
 # Sets the minimum version of CMake required to build the native library.
 
-cmake_minimum_required(VERSION 3.30.5)
+cmake_minimum_required(VERSION 3.22.0)
 
 # Declares and names the project.
 

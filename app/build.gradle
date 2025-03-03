@@ -52,7 +52,6 @@ android {
         jvmTarget = libs.versions.jvm.get().toInteger()
     }
     externalNativeBuild.cmake {
-        version libs.versions.cmake.get()
         path file('src/main/cpp/CMakeLists.txt')
     }
     lint {
