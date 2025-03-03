@@ -44,7 +44,7 @@ enum class NightModeTrigger {
         fun valueOfOrFirst(value: String?) = value?.run {
             try {
                 valueOf(value)
-            } catch (e: IllegalArgumentException) {
+            } catch (_: IllegalArgumentException) {
                 null
             }
         } ?: entries[0]

@@ -142,7 +142,7 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
                     ScrollingMode.entries[0].name
                 ) ?: ScrollingMode.entries[0].name
             )
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             ScrollingMode.entries[0]
         }
         set(value) = pref.edit().putString(
@@ -157,7 +157,7 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
                     ScrollingMode.entries[0].name
                 ) ?: ScrollingMode.entries[0].name
             )
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             ScrollingMode.entries[0]
         }
         set(value) = pref.edit().putString(

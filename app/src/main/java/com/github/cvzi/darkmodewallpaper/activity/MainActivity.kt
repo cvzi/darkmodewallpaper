@@ -20,7 +20,6 @@ package com.github.cvzi.darkmodewallpaper.activity
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.WallpaperColors
 import android.app.WallpaperManager
@@ -94,6 +93,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
+import java.util.Locale
 import kotlin.math.exp
 import kotlin.math.log
 import kotlin.math.max
@@ -628,7 +628,7 @@ open class MainActivity : AppCompatActivity() {
         dayOrNight: DayOrNight, isLockScreen: Boolean
     ): ActivityResultLauncher<Intent> {
         return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
+            if (result.resultCode == RESULT_OK) {
                 saveFileFromActivityResult(result, dayOrNight, isLockScreen)
             }
         }
@@ -667,7 +667,7 @@ open class MainActivity : AppCompatActivity() {
                     try {
                         contentResolver.openInputStream(uri)?.let { ifs ->
                             result = storeFile(file, ifs, desiredMax)
-                            success = result?.success == true
+                            success = result.success == true
                             Log.d(
                                 TAG, "Stored ${file.nameWithoutExtension} wallpaper in $file"
                             )
@@ -796,6 +796,7 @@ open class MainActivity : AppCompatActivity() {
         }
         dialogBinding.buttonNewImage.setOnClickListener {
             alert.safeDismiss()
+            @Suppress("KotlinConstantConditions")
             if (isLockScreenActivity && dayOrNight == DAY) {
                 startForPickDayLockScreenFile.launch(
                     imageChooserIntent(
@@ -1173,7 +1174,7 @@ open class MainActivity : AppCompatActivity() {
 
             textStatusScrolling.text = DarkWallpaperService.statusScrolling.toString()
 
-            textStatusZoom.text = DarkWallpaperService.statusZoom.toString()
+            textStatusZoom.text = String.format(Locale.getDefault(), "%.2f", DarkWallpaperService.statusZoom)
 
             textWallpaperColors.text = colors?.toPrettyString() ?: "Not requested yet"
 

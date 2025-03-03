@@ -167,7 +167,7 @@ class DarkWallpaperService : WallpaperService() {
     private val self = WeakReference(this)
     private lateinit var preferencesGlobal: Preferences
 
-    private var engines: ArrayList<WeakReference<DarkWallpaperService.WallpaperEngine>> =
+    private var engines: ArrayList<WeakReference<WallpaperEngine>> =
         ArrayList()
     private lateinit var keyguardService: KeyguardManager
 
@@ -190,7 +190,7 @@ class DarkWallpaperService : WallpaperService() {
             SERVICES.add(self)
         }
 
-        keyguardService = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        keyguardService = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
 
         preferencesGlobal = Preferences(this, R.string.pref_file)
 
@@ -272,7 +272,7 @@ class DarkWallpaperService : WallpaperService() {
         }
     }
 
-    private inner class WallpaperEngine : WallpaperService.Engine() {
+    private inner class WallpaperEngine : Engine() {
         var dayOrNight: DayOrNight = DAY
         var hasSeparateLockScreenSettings = false
         var isLockScreen = false

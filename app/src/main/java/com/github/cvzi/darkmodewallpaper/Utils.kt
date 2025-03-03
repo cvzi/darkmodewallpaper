@@ -601,7 +601,7 @@ fun Activity.disableFullScreen() {
 fun DialogInterface.safeDismiss() {
     try {
         this.dismiss()
-    } catch (e: IllegalArgumentException) {
+    } catch (_: IllegalArgumentException) {
         // no-op
     }
 }
