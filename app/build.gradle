@@ -14,8 +14,8 @@ android {
     }
     namespace 'com.github.cvzi.darkmodewallpaper'
     defaultConfig {
-        versionName '1.7.2'
-        versionCode 62
+        versionName '1.8.0'
+        versionCode 63
         applicationId 'com.github.cvzi.darkmodewallpaper'
         minSdk libs.versions.sdk.min.get().toInteger()
         compileSdk libs.versions.sdk.compile.get().toInteger()
