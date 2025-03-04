@@ -448,6 +448,7 @@ class DarkWallpaperService : WallpaperService() {
                             )
                             val scaledBitmapOrDrawable = imageCache[key]
                             if (scaledBitmapOrDrawable?.isValid() == true) {
+                                // Blend from bitmap/drawable
                                 blendImages = BlendImages(
                                     scaledBitmapOrDrawable.getBitmapOrDrawable(),
                                     overlayPaint.color,
@@ -456,6 +457,17 @@ class DarkWallpaperService : WallpaperService() {
                                 )
                             }
                         }
+
+                        if (blendImages == null) {
+                            // Blend from color-only
+                            blendImages = BlendImages(
+                                null,
+                                overlayPaint.color,
+                                blendFromOffsetXPixel,
+                                blendFromOffsetYPixel
+                            )
+                        }
+
                     }
                     // Restore offsets from before lock
                     offsetX = offsetXBeforeLock
@@ -1023,10 +1035,42 @@ class DarkWallpaperService : WallpaperService() {
                 }
             } else if (imageFile == null) {
                 // Color only
-                overlayPaint.color =
-                    overlayPaint.color or 0xFF000000.toInt() // make the color fully opaque
-                canvas.drawPaint(overlayPaint)
-                return WallpaperStatusLoadedSolid()
+                if (blendImages != null) {
+                    // Blend from lock screen to home screen
+                    val oX: Float
+                    val oY: Float
+                    if (shouldScroll) {
+                        oX = offsetX
+                        oY = offsetY
+                    } else {
+                        oX = 0.5f
+                        oY = 0.5f
+                    }
+                    if (blendImages?.draw(
+                            canvas,
+                            null,
+                            overlayPaint.color or 0xFF000000.toInt(), // make the color fully opaque
+                            oX,
+                            oY,
+                            reverseScroll,
+                            width,
+                            height
+                        ) != true
+                    ) {
+                        blendImages = null
+                    }
+                    Handler(Looper.getMainLooper()).apply {
+                        removeCallbacks(runnableUpdate)
+                        postDelayed(runnableUpdate, 50)
+                    }
+                    return WallpaperStatusLoadedBlending()
+                } else {
+                    // No animation, just color
+                    overlayPaint.color =
+                        overlayPaint.color or 0xFF000000.toInt() // make the color fully opaque
+                    canvas.drawPaint(overlayPaint)
+                    return WallpaperStatusLoadedSolid()
+                }
             } else {
                 // No image or image is loading -> show animation
                 waitAnimation = waitAnimation ?: WaitAnimation(

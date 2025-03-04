@@ -1,0 +1,1 @@
+Animate transition from lock-screen to home-screen when opaque colors are selected

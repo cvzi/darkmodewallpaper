@@ -29,7 +29,7 @@ import com.github.cvzi.darkmodewallpaper.BitmapOrDrawable
 import com.github.cvzi.darkmodewallpaper.scaleDrawableToCanvas
 
 class BlendImages(
-    private val blendFromBitmapOrDrawable: BitmapOrDrawable,
+    private val blendFromBitmapOrDrawable: BitmapOrDrawable?,
     private val blendFromColor: Int,
     private val blendFromOffsetXPixel: Float,
     private val blendFromOffsetYPixel: Float,
@@ -58,16 +58,16 @@ class BlendImages(
                 blendToDrawable = toBitmapOrDrawable.drawable
             }
         }
-        val blendFromBitmap = blendFromBitmapOrDrawable.bitmap
-        val blendFromDrawable = blendFromBitmapOrDrawable.drawable
+        var blendFromBitmap = blendFromBitmapOrDrawable?.bitmap
+        val blendFromDrawable = blendFromBitmapOrDrawable?.drawable
         if (blendFromBitmap == null && blendFromDrawable == null) {
-            return false
+            blendFromBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
         }
 
-        val toBM = blendToBitmap
+        var toBM = blendToBitmap
         val toDrawable = blendToDrawable
         if ((toBM == null || blendFromBitmap == toBM) && (toDrawable == null || blendFromDrawable == toDrawable)) {
-            return false
+            toBM = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
         }
 
         // Old Bitmap

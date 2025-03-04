@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.0
+*   Allow animation from lock-screen to home-screen without images i.ie "only color"-mode
+
 ## 1.7.2
 *   Fix crash on OS with [16k page size](https://developer.android.com/guide/practices/page-sizes) and software rendering
 
