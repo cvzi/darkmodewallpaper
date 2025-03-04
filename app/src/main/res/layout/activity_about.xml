@@ -65,6 +65,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
 
+            <Button
+                android:id="@+id/buttonAboutUpdates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/about_button_check_for_updates" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
             <TextView
                 android:id="@+id/textViewAboutLicense"
                 android:layout_width="match_parent"

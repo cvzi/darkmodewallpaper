@@ -18,6 +18,9 @@
 */
 package com.github.cvzi.darkmodewallpaper.activity
 
+import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
@@ -66,5 +69,24 @@ class AboutActivity : AppCompatActivity() {
         setHtmlText(binding.textViewTranslate, R.string.about_translate)
 
         setHtmlText(binding.textViewDonate, DONATE_HTML)
+
+        binding.buttonAboutUpdates.setOnClickListener {
+            val uri = Uri.parse(
+                getString(
+                    R.string.about_updates_url,
+                    packageName ?: "com.github.cvzi.darkmodewallpaper",
+                    BuildConfig.VERSION_CODE.toString(),
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.BUILD_TYPE,
+                    getString(R.string.about_update_ghrepo)
+                )
+            )
+            Intent(ACTION_VIEW, uri).apply {
+                if (resolveActivity(packageManager) != null) {
+                    startActivity(this)
+                }
+            }
+        }
+
     }
 }

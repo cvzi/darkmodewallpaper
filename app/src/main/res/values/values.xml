@@ -38,6 +38,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a> for more details.]]></string>
     <string name="about_open_source_licenses" translatable="false">Open source licenses</string>
     <string name="about_version" translatable="false"><![CDATA[Version: <a href="https://github.com/cvzi/darkmodewallpaper/blob/main/CHANGELOG.md">%1$s (%2$d)</a> %3$s]]></string>
+    <string name="about_button_check_for_updates" translatable="false">Check for updates</string>
+    <string name="about_updates_url" translatable="false">https://cvzi.github.io/WallpaperExport/updates_generic.html?package=%1$s&amp;code=%2$s&amp;name=%3$s&amp;type=%4$s&amp;ghrepo=%5$s</string>
+    <string name="about_update_ghrepo" translatable="false">cvzi/darkmodewallpaper</string>
 
     <string name="about_translate" translatable="false"><![CDATA[Would you like to help us translate this app into other languages?
 <br>
