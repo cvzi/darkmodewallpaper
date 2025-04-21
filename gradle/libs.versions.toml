@@ -5,7 +5,7 @@ sdk-min = "29"
 ndk = "28.0.13004108"
 jvm = "17"
 
-agp = "8.9.1"
+agp = "8.9.2"
 kotlin = "2.1.20"
 licensereport = "0.9.8"
 
