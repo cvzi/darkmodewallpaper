@@ -49,6 +49,8 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.math.abs
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withSave
 
 
 class DarkWallpaperService : WallpaperService() {
@@ -649,7 +651,7 @@ class DarkWallpaperService : WallpaperService() {
                     lastWallpaperColors = wallpaperColors
                 } else {
                     // Calculate wallpaper colors by drawing a frame on a canvas
-                    val bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                    val bm = createBitmap(width, height)
                     val canvas = Canvas(bm)
                     drawOnCanvas(canvas, helper.bitmapOrDrawable, helper.file)
                     wallpaperColors = WallpaperColors.fromBitmap(bm)
@@ -1182,36 +1184,36 @@ class DarkWallpaperService : WallpaperService() {
                 blendFromOffsetYPixel = -0.5f * (imageHeight - height)
             }
 
-            canvas.save()
+            canvas.withSave {
 
-            // Zoom in (e.g. in task view)
-            statusZoom = if (hasZoom) {
-                canvas.scale(
-                    1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
-                    0.5f * width, 0.5f * height
-                )
-                zoom
-            } else {
-                0f
+                // Zoom in (e.g. in task view)
+                statusZoom = if (hasZoom) {
+                    scale(
+                        1.0f + 0.05f * zoom, 1.0f + 0.05f * zoom,
+                        0.5f * width, 0.5f * height
+                    )
+                    zoom
+                } else {
+                    0f
+                }
+
+                // Apply offset/Scrolling
+                translate(blendFromOffsetXPixel, blendFromOffsetYPixel)
+
+                // Enlarge small images
+                if (scale != 1f) {
+                    scale(scale, scale)
+                }
+
+                // Draw animation
+                drawable.draw(this)
+
+                //  and color
+                if (overlayPaint.color != 0) {
+                    drawPaint(overlayPaint)
+                }
+
             }
-
-            // Apply offset/Scrolling
-            canvas.translate(blendFromOffsetXPixel, blendFromOffsetYPixel)
-
-            // Enlarge small images
-            if (scale != 1f) {
-                canvas.scale(scale, scale)
-            }
-
-            // Draw animation
-            drawable.draw(canvas)
-
-            //  and color
-            if (overlayPaint.color != 0) {
-                canvas.drawPaint(overlayPaint)
-            }
-
-            canvas.restore()
 
             // Turn of zoom if it reached zero
             if (hasZoom) {

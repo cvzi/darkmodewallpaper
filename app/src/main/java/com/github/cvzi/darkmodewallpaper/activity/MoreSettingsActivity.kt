@@ -52,6 +52,7 @@ import com.github.cvzi.darkmodewallpaper.supportsDarkTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.core.graphics.drawable.toDrawable
 
 /**
  * Advanced/More settings
@@ -72,8 +73,10 @@ class MoreSettingsActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        // TODO add a "reset to default" button to the colors
+
         checkeredBackground =
-            BitmapDrawable(resources, checkeredBackground()).apply {
+            checkeredBackground().toDrawable(resources).apply {
                 setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
                 setTargetDensity(resources.displayMetrics.densityDpi * 2)
             }

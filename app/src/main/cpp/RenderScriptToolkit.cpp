@@ -31,9 +31,8 @@ namespace renderscript {
 RenderScriptToolkit::RenderScriptToolkit(int numberOfThreads)
     : processor{new TaskProcessor(numberOfThreads)} {}
 
-RenderScriptToolkit::~RenderScriptToolkit() {
+RenderScriptToolkit::~RenderScriptToolkit() = default;
     // By defining the destructor here, we don't need to include TaskProcessor.h
     // in RenderScriptToolkit.h.
-}
 
 }  // namespace renderscript

@@ -68,6 +68,8 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
 
 const val UTILSTAG = "Utils.kt"
 
@@ -90,11 +92,7 @@ data class StoreFileResult(val success: Boolean, val isAnimated: Boolean)
  * Save the drawable to image file
  */
 fun storeFile(file: File, drawable: Drawable): Boolean {
-    val bitmap = Bitmap.createBitmap(
-        drawable.intrinsicWidth,
-        drawable.intrinsicHeight,
-        Bitmap.Config.ARGB_8888
-    )
+    val bitmap = createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight)
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, canvas.width, canvas.height)
     drawable.draw(canvas)
@@ -335,7 +333,7 @@ fun blur(mSrc: Bitmap, radius: Float): Bitmap {
             }
             Log.d(UTILSTAG, "Using RenderEffect.createBlurEffect($r, $r)")
             val result =
-                Bitmap.createBitmap(src.width, src.height, src.config ?: Bitmap.Config.ARGB_8888)
+                createBitmap(src.width, src.height, src.config ?: Bitmap.Config.ARGB_8888)
             canvas.setBitmap(result)
             val bitmapEffect = RenderEffect.createBitmapEffect(src)
             val blurEffect =
@@ -378,7 +376,7 @@ fun scaleAndAdjustBitmap(
         val paint = Paint().apply {
             colorFilter = createColorMatrix(brightness, contrast)
         }
-        Bitmap.createBitmap(src.width, src.height, src.config ?: Bitmap.Config.ARGB_8888).apply {
+        createBitmap(src.width, src.height, src.config ?: Bitmap.Config.ARGB_8888).apply {
             val canvas = Canvas(this)
             canvas.drawBitmap(src, 0f, 0f, paint)
         }
@@ -459,12 +457,8 @@ fun scaleBitmap(
         }"
     )
 
-    var newBm = Bitmap.createScaledBitmap(
-        src,
-        max(1, ceil(src.width * scale).toInt()),
-        max(1, ceil(src.height * scale).toInt()),
-        true
-    )
+    var newBm =
+        src.scale(max(1, ceil(src.width * scale).toInt()), max(1, ceil(src.height * scale).toInt()))
     Log.d(
         UTILSTAG,
         "scaleBitmap() created newBm = ${newBm.width}x${newBm.height}@${newBm.byteCount}"
@@ -507,11 +501,9 @@ fun scaleBitmap(
                         ).toInt()
                     }"
                 )
-                newBm = Bitmap.createScaledBitmap(
-                    src,
+                newBm = src.scale(
                     max(1, ceil(src.width * scale).toInt()),
-                    max(1, ceil(src.height * scale).toInt()),
-                    true
+                    max(1, ceil(src.height * scale).toInt())
                 )
             }
         }
@@ -849,7 +841,7 @@ fun scaleDrawableToCanvas(
  * Generate the usual checkered background to highlight transparency
  */
 fun checkeredBackground(): Bitmap {
-    return Bitmap.createBitmap(19, 19, Bitmap.Config.ARGB_8888).apply {
+    return createBitmap(19, 19).apply {
         Canvas(this).apply {
             val dark = Paint().apply {
                 color = 0xffCDCDCD.toInt()

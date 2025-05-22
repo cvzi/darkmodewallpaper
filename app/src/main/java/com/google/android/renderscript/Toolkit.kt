@@ -21,6 +21,7 @@ package com.google.android.renderscript
 
 import android.graphics.Bitmap
 import kotlin.math.min
+import androidx.core.graphics.createBitmap
 
 // This string is used for error messages.
 private const val EXTERNAL_NAME = "RenderScript Toolkit"
@@ -127,8 +128,10 @@ object Toolkit {
 
     private external fun createNative(): Long
 
+    @Suppress("unused")
     private external fun destroyNative(nativeHandle: Long)
 
+    @Suppress("unused")
     private external fun nativeBlurBitmap(
         nativeHandle: Long,
         inputBitmap: Bitmap,
@@ -183,7 +186,11 @@ internal fun validateBitmap(
 }
 
 internal fun createCompatibleBitmap(inputBitmap: Bitmap) =
-    Bitmap.createBitmap(inputBitmap.width, inputBitmap.height, inputBitmap.config ?: Bitmap.Config.ARGB_8888)
+    createBitmap(
+        inputBitmap.width,
+        inputBitmap.height,
+        inputBitmap.config ?: Bitmap.Config.ARGB_8888
+    )
 
 internal fun validateRestriction(
     tag: String,

@@ -81,7 +81,7 @@ class RenderScriptToolkit {
     /**
      * Creates the pool threads that are used for processing the method calls.
      */
-    RenderScriptToolkit(int numberOfThreads = 0);
+    explicit RenderScriptToolkit(int numberOfThreads = 0);
     /**
      * Destroys the thread pool. This stops any in-progress work; the Toolkit methods called from
      * other pool threads will return without having completed the work. Because of the undefined

@@ -97,6 +97,7 @@ import java.util.Locale
 import kotlin.math.exp
 import kotlin.math.log
 import kotlin.math.max
+import androidx.core.net.toUri
 
 /**
  * Wallpaper settings
@@ -1377,7 +1378,7 @@ open class MainActivity : AppCompatActivity() {
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             } else {
-                Intent(ACTION_VIEW, Uri.parse(wallpaperExportFDroidUrl)).apply {
+                Intent(ACTION_VIEW, wallpaperExportFDroidUrl.toUri()).apply {
                     if (resolveActivity(packageManager) != null) {
                         startActivity(Intent.createChooser(this, wallpaperExportFDroidUrl))
                     } else {
