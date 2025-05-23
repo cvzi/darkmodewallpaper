@@ -38,7 +38,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewLockScreenSwitch"
                 style="@style/CardViewPrimary"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:visibility="gone">
 
                 <TableLayout
@@ -809,6 +809,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:layout_marginBottom="50dp"
                 style="@style/CardViewPrimary">
 
                 <LinearLayout
