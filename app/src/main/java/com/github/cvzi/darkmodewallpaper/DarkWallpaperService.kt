@@ -18,8 +18,10 @@
 */
 package com.github.cvzi.darkmodewallpaper
 
+import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.app.WallpaperColors
+import android.app.wallpaper.WallpaperDescription
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -32,6 +34,10 @@ import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -41,6 +47,8 @@ import android.view.Display
 import android.view.SurfaceHolder
 import androidx.core.graphics.component1
 import androidx.core.graphics.component2
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withSave
 import com.github.cvzi.darkmodewallpaper.activity.MainActivity
 import com.github.cvzi.darkmodewallpaper.animation.BlendImages
 import com.github.cvzi.darkmodewallpaper.animation.WaitAnimation
@@ -49,8 +57,6 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.math.abs
-import androidx.core.graphics.createBitmap
-import androidx.core.graphics.withSave
 
 
 class DarkWallpaperService : WallpaperService() {
@@ -164,6 +170,14 @@ class DarkWallpaperService : WallpaperService() {
          */
         fun enableSoftReferencesCache(useSoftReferences: Boolean) =
             imageCache.enableSoftReferences(useSoftReferences)
+
+        fun updateLuxThreshold() {
+            synchronized(SERVICES) {
+                for (service in SERVICES) {
+                    service.get()?.updateLuxThreshold()
+                }
+            }
+        }
     }
 
     private val self = WeakReference(this)
@@ -180,6 +194,44 @@ class DarkWallpaperService : WallpaperService() {
     // Keeps the last calculated value, so a new engine doesn't start with null
     private var lastWallpaperColors: WallpaperColors? = null
     private val lastWallpaperColorsMap: HashMap<String, WallpaperColors> = HashMap()
+
+    var luxThreshold = 10
+    private var lastLux = -1f
+    private var lightSensorIsRegistered = false
+    private var proximityClose = false
+    private val sensorListener = object : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent) {
+            if (event.sensor.type == Sensor.TYPE_LIGHT && event.values.isNotEmpty()) {
+                if (!proximityClose) {
+                    onLuxChange(event.values[0])
+                }
+            } else if (event.sensor.type == Sensor.TYPE_PROXIMITY && event.values.isNotEmpty()) {
+                proximityClose = event.values[0] < event.sensor.maximumRange
+            }
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            // no-op
+        }
+    }
+
+    fun updateLuxThreshold() {
+        luxThreshold = preferencesGlobal.luxThreshold
+        if (luxThreshold > 0 && isDayOrNightMode() == DAY) {
+            registerLightSensor()
+        } else {
+            unRegisterLightSensor()
+        }
+    }
+
+    fun onLuxChange(lux: Float) {
+        lastLux = lux
+        if (lux < luxThreshold) {
+            updateDayOrNightForAll(NIGHT, false)
+        } else {
+            updateDayOrNightForAll(DAY, false)
+        }
+    }
 
     init {
         overlayPaint.color = Color.argb(120, 0, 0, 0)
@@ -209,6 +261,11 @@ class DarkWallpaperService : WallpaperService() {
         StaticDayAndNightProvider(this).moveFilesToDeviceProtectedStorage()
 
         enableSoftReferencesCache(preferencesGlobal.autoClearMemory)
+
+        luxThreshold = preferencesGlobal.luxThreshold
+        if (luxThreshold > 0 && isDayOrNightMode() == DAY) {
+            registerLightSensor()
+        }
     }
 
     override fun onDestroy() {
@@ -223,6 +280,7 @@ class DarkWallpaperService : WallpaperService() {
             self.clear()
         }
         Handler(Looper.getMainLooper()).removeCallbacksAndMessages(null)
+        unRegisterLightSensor()
         super.onDestroy()
     }
 
@@ -235,6 +293,10 @@ class DarkWallpaperService : WallpaperService() {
     }
 
     override fun onCreateEngine(): Engine {
+        return WallpaperEngine()
+    }
+
+    override fun onCreateEngine(description: WallpaperDescription): Engine {
         return WallpaperEngine()
     }
 
@@ -261,15 +323,75 @@ class DarkWallpaperService : WallpaperService() {
         }, 3000)
     }
 
-    private fun updateDayOrNightForAll(newDayOrNight: Boolean? = null) {
+    private fun updateDayOrNightForAll(newDayOrNight: Boolean? = null, update: Boolean = true) {
         synchronized(engines) {
             for (engine in engines) {
                 engine.get()?.run {
                     if (!this.fixedConfig) {
-                        this.dayOrNight = newDayOrNight ?: this.isDayOrNightMode()
-                        this.update()
+                        if (newDayOrNight != null && newDayOrNight == this.dayOrNight) {
+                            return@run
+                        }
+                        this.dayOrNight = newDayOrNight ?: isDayOrNightMode()
+                        if (update) {
+                            this.update()
+                        } else {
+                            if (this.isVisible) {
+                                this.invalidate()
+                            }
+                        }
                     }
                 }
+            }
+        }
+    }
+
+    fun registerLightSensor() {
+        if (lightSensorIsRegistered) {
+            return
+        }
+        luxThreshold = preferencesGlobal.luxThreshold
+
+        lightSensorIsRegistered = true
+        if (lastLux >= 0) {
+            onLuxChange(lastLux)
+        }
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)?.let { lightSensor ->
+            Log.d(TAG, "SensorManager.registerListener() for TYPE_LIGHT")
+            sensorManager.registerListener(
+                sensorListener,
+                lightSensor,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+        sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)?.let { proximitySensor ->
+            Log.d(TAG, "SensorManager.registerListener() for TYPE_PROXIMITY")
+            sensorManager.registerListener(
+                sensorListener,
+                proximitySensor,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+    }
+
+    fun unRegisterLightSensor() {
+        if (lightSensorIsRegistered) {
+            val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+            Log.d(TAG, "SensorManager.unregisterListener()")
+            sensorManager.unregisterListener(sensorListener)
+            lightSensorIsRegistered = false
+        }
+    }
+
+    fun isDayOrNightMode(): DayOrNight {
+        return when (preferencesGlobal.nightModeTrigger) {
+            NightModeTrigger.TIMERANGE -> {
+                timeIsInTimeRange(preferencesGlobal.nightModeTimeRange)
+            }
+
+            else -> {
+                resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
             }
         }
     }
@@ -357,18 +479,6 @@ class DarkWallpaperService : WallpaperService() {
             super.onDestroy()
         }
 
-        fun isDayOrNightMode(): DayOrNight {
-            return when (preferencesGlobal.nightModeTrigger) {
-                NightModeTrigger.TIMERANGE -> {
-                    timeIsInTimeRange(preferencesGlobal.nightModeTimeRange)
-                }
-
-                else -> {
-                    resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-                }
-            }
-        }
-
         inner class OnUnLockBroadcastReceiver : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (!fixedConfig) {
@@ -377,10 +487,18 @@ class DarkWallpaperService : WallpaperService() {
                 }
             }
 
+
             fun register() {
-                registerReceiver(this, IntentFilter().apply {
-                    addAction(Intent.ACTION_USER_PRESENT)
-                })
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    registerReceiver(this, IntentFilter().apply {
+                        addAction(Intent.ACTION_USER_PRESENT)
+                    }, RECEIVER_NOT_EXPORTED)
+                } else {
+                    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+                    registerReceiver(this, IntentFilter().apply {
+                        addAction(Intent.ACTION_USER_PRESENT)
+                    })
+                }
             }
 
             fun unregister() {
@@ -505,7 +623,16 @@ class DarkWallpaperService : WallpaperService() {
                 notifyColorsOnVisibilityChange = false
                 notifyColorsChanged()
             }
+
+            if (luxThreshold > 0) {
+                if (visible && isDayOrNightMode() == DAY) {
+                    registerLightSensor()
+                } else {
+                    unRegisterLightSensor()
+                }
+            }
         }
+
 
         override fun notifyColorsChanged() {
             if (isPreview && !isLockScreen && fixedConfig && MainActivity.originalDesiredWidth > 0) {
@@ -591,7 +718,10 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         override fun onComputeColors(): WallpaperColors? {
-            if (wallpaperImage?.customWallpaperColors != null) {
+            if (wallpaperColors == null && wallpaperImage?.customWallpaperColors != null) {
+                // Only use custom wallpaper colors if the image is not loaded yet
+                // otherwise the colors will be calculated from the image and mixed with the
+                // custom wallpaper colors
                 wallpaperColors = wallpaperImage?.customWallpaperColors
             }
             statusWallpaperColors = wallpaperColors
@@ -626,11 +756,13 @@ class DarkWallpaperService : WallpaperService() {
         }
 
         fun resetWallpaperColors() {
+            lastWallpaperColorsMap.clear()
             lastWallpaperColors = null
             calculateWallpaperColorsLastTime = 0L
             calculateWallpaperColorsLastKey = null
             wallpaperColors = null
             calculateWallpaperColorsHelper = null
+            imageCache.clear()
         }
 
         private val runnableComputeWallpaperColors = Runnable {
@@ -645,7 +777,10 @@ class DarkWallpaperService : WallpaperService() {
             if (System.nanoTime() - calculateWallpaperColorsLastTime > 1000000000L) {
                 // notifyColorsChanged() should only be called every 1 second
                 if (!helper.use()) return
-                if (calculateWallpaperColorsHelper?.customWallpaperColors != null) {
+                val customWallpaperColors = calculateWallpaperColorsHelper?.customWallpaperColors
+                if (customWallpaperColors != null &&
+                    customWallpaperColors.primaryColor.toArgb() != Color.TRANSPARENT
+                ) {
                     // Use custom wallpaper colors
                     wallpaperColors = calculateWallpaperColorsHelper?.customWallpaperColors
                     lastWallpaperColors = wallpaperColors
@@ -656,6 +791,13 @@ class DarkWallpaperService : WallpaperService() {
                     drawOnCanvas(canvas, helper.bitmapOrDrawable, helper.file)
                     wallpaperColors = WallpaperColors.fromBitmap(bm)
                     bm.recycle()
+                    if (customWallpaperColors != null) {
+                        // First color of customWallpaperColors is transparent,
+                        // mix custom wallpaper colors with calculated colors
+                        // this will preserve the customs dark text/theme settings
+                        wallpaperColors = mix(customWallpaperColors, wallpaperColors)
+                    }
+
                 }
                 lastWallpaperColors = wallpaperColors
                 helper.key?.let {
@@ -1223,7 +1365,6 @@ class DarkWallpaperService : WallpaperService() {
             }
             return WallpaperStatusLoadedImage()
         }
-
     }
 
     @Suppress("SameReturnValue")

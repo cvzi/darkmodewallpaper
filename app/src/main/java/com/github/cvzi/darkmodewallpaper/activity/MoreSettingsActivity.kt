@@ -26,11 +26,17 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.SeekBar
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isVisible
 import com.github.cvzi.darkmodewallpaper.DAY
 import com.github.cvzi.darkmodewallpaper.DarkWallpaperService
@@ -52,7 +58,8 @@ import com.github.cvzi.darkmodewallpaper.supportsDarkTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import androidx.core.graphics.drawable.toDrawable
+import kotlin.math.min
+
 
 /**
  * Advanced/More settings
@@ -72,8 +79,6 @@ class MoreSettingsActivity : AppCompatActivity() {
         binding = ActivityMoreSettingsBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-
-        // TODO add a "reset to default" button to the colors
 
         checkeredBackground =
             checkeredBackground().toDrawable(resources).apply {
@@ -288,6 +293,56 @@ class MoreSettingsActivity : AppCompatActivity() {
                 buttonNotifyColorsChanged.setTextColor(Color.LTGRAY)
             }
 
+            buttonResetColors.setOnClickListener {
+                // Reset all custom colors, dark text/theme and disable toggles
+
+                val transparent = WallpaperColors(Color.valueOf(Color.TRANSPARENT), null, null)
+
+                imageProvider.setWallpaperColors(DAY, isLockScreen = false, transparent)
+                imageProvider.setWallpaperColors(NIGHT, isLockScreen = false, transparent)
+                imageProvider.setWallpaperColors(DAY, isLockScreen = true, transparent)
+                imageProvider.setWallpaperColors(NIGHT, isLockScreen = true, transparent)
+
+                imageProvider.setUseCustomWallpaperColors(DAY, isLockScreen = false, false)
+                imageProvider.setUseCustomWallpaperColors(NIGHT, isLockScreen = false, false)
+                imageProvider.setUseCustomWallpaperColors(DAY, isLockScreen = true, false)
+                imageProvider.setUseCustomWallpaperColors(NIGHT, isLockScreen = true, false)
+
+                updateCustomColorToggles()
+                displayWallpaperColors()
+            }
+
+            seekBarCurrentLux.max = 200
+            seekBarLuxThreshold.max = 200
+            seekBarLuxThreshold.setOnSeekBarChangeListener(object :
+                SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    preferencesGlobal.luxThreshold = progress
+                    binding.editTextLuxThreshold.setText(progress.toString())
+                    toggleButtonLuxThreshold.isChecked = progress > 0
+                    DarkWallpaperService.updateLuxThreshold()
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            })
+            toggleButtonLuxThreshold.setOnCheckedChangeListener { _, isChecked ->
+                seekBarLuxThreshold.progress = if (isChecked) {
+                    if (seekBarLuxThreshold.progress > 0) {
+                        seekBarLuxThreshold.progress
+                    } else {
+                        15
+                    }
+                } else {
+                    0
+                }
+                preferencesGlobal.luxThreshold = seekBarLuxThreshold.progress
+            }
+
         }
     }
 
@@ -314,7 +369,7 @@ class MoreSettingsActivity : AppCompatActivity() {
         editColor: ((Int, WallpaperColorsEditor) -> WallpaperColorsEditor)
     ) {
         colorChooserDialog(
-            title, {
+            title, showAlpha = false, {
                 extractColor(
                     imageProvider.getWallpaperColors(
                         dayOrNight,
@@ -345,6 +400,28 @@ class MoreSettingsActivity : AppCompatActivity() {
             toggleButtonNotifyColors.isChecked = preferencesGlobal.notifyColors
             toggleButtonClearMemory.isChecked = preferencesGlobal.autoClearMemory
 
+            updateCustomColorToggles()
+
+            editTextLuxThreshold.setText(preferencesGlobal.luxThreshold.toString())
+            seekBarLuxThreshold.progress = preferencesGlobal.luxThreshold
+        }
+        displayWallpaperColors()
+
+        binding.buttonNotifyColorsChanged.setTextColor(Color.LTGRAY)
+
+        binding.textViewAndroid31.isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+        registerLightSensor()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        unRegisterLightSensor()
+    }
+
+    private fun updateCustomColorToggles() {
+        binding.apply {
             homeDayColors.switchUseCustomColors.isChecked =
                 imageProvider.useCustomWallpaperColors(DAY, isLockScreen = false)
             homeNightColors.switchUseCustomColors.isChecked =
@@ -353,14 +430,7 @@ class MoreSettingsActivity : AppCompatActivity() {
                 imageProvider.useCustomWallpaperColors(DAY, isLockScreen = true)
             lockNightColors.switchUseCustomColors.isChecked =
                 imageProvider.useCustomWallpaperColors(NIGHT, isLockScreen = true)
-
         }
-        displayWallpaperColors()
-
-        binding.buttonNotifyColorsChanged.setTextColor(Color.LTGRAY)
-
-        binding.textViewAndroid31.isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-
     }
 
     private fun displayWallpaperColors() {
@@ -467,6 +537,39 @@ class MoreSettingsActivity : AppCompatActivity() {
         }
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
+    }
+
+    private val sensorListener = object : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent?) {
+            if (event != null && event.values.isNotEmpty()) {
+                val lux = event.values[0].toInt()
+                binding.apply {
+                    seekBarCurrentLux.progress = min(lux, seekBarCurrentLux.max)
+                    editTextCurrentLux.setText(lux.toString())
+                }
+            }
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            // no-op
+        }
+    }
+
+    fun registerLightSensor() {
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        val light = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        light?.let {
+            sensorManager.registerListener(
+                sensorListener,
+                light,
+                SensorManager.SENSOR_DELAY_UI
+            )
+        }
+    }
+
+    fun unRegisterLightSensor() {
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        sensorManager.unregisterListener(sensorListener)
     }
 
 }

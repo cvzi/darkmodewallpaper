@@ -83,5 +83,7 @@
     <string name="pref_wallpaper_colors_hint_dark_text_night_key" translatable="false">wallpaper_colors_hint_dark_text_night</string>
     <string name="pref_wallpaper_colors_custom_day_key" translatable="false">wallpaper_colors_custom_day</string>
     <string name="pref_wallpaper_colors_custom_night_key" translatable="false">wallpaper_colors_custom_night</string>
+    <string name="pref_lux_threshold_key" translatable="false">lux_threshold</string>
+    <string name="pref_lux_threshold_default" translatable="false">-1</string>
 
 </resources>

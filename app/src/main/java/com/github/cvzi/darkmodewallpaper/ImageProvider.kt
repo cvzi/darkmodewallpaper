@@ -165,7 +165,10 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
         if (oldHomeDayFile.exists() && !newHomeDayFile.exists()) {
             oldHomeDayFile.copyTo(newHomeDayFile).let {
                 if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldHomeDayFile.length()) {
-                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldHomeDayFile to $newHomeDayFile")
+                    Log.v(
+                        IMAGEPROVIDERTAG,
+                        "Successfully copied $oldHomeDayFile to $newHomeDayFile"
+                    )
                     oldHomeDayFile.delete()
                 } else {
                     Log.e(IMAGEPROVIDERTAG, "Could not copy $oldHomeDayFile to $newHomeDayFile")
@@ -184,7 +187,10 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
         if (oldHomeNightFile.exists() && !newHomeNightFile.exists()) {
             oldHomeNightFile.copyTo(newHomeNightFile).let {
                 if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldHomeNightFile.length()) {
-                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldHomeNightFile to $newHomeNightFile")
+                    Log.v(
+                        IMAGEPROVIDERTAG,
+                        "Successfully copied $oldHomeNightFile to $newHomeNightFile"
+                    )
                     oldHomeNightFile.delete()
                 } else {
                     Log.e(IMAGEPROVIDERTAG, "Could not copy $oldHomeNightFile to $newHomeNightFile")
@@ -203,7 +209,10 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
         if (oldLockDayFile.exists() && !newLockDayFile.exists()) {
             oldLockDayFile.copyTo(newLockDayFile).let {
                 if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldLockDayFile.length()) {
-                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldLockDayFile to $newLockDayFile")
+                    Log.v(
+                        IMAGEPROVIDERTAG,
+                        "Successfully copied $oldLockDayFile to $newLockDayFile"
+                    )
                     oldLockDayFile.delete()
                 } else {
                     Log.e(IMAGEPROVIDERTAG, "Could not copy $oldLockDayFile to $newLockDayFile")
@@ -222,7 +231,10 @@ class StaticDayAndNightProvider(val context: Context) : ImageProvider() {
         if (oldLockNightFile.exists() && !newLockNightFile.exists()) {
             oldLockNightFile.copyTo(newLockNightFile).let {
                 if (it.exists() && it.canRead() && it.length() > 0L && it.length() == oldLockNightFile.length()) {
-                    Log.v(IMAGEPROVIDERTAG, "Successfully copied $oldLockNightFile to $newLockNightFile")
+                    Log.v(
+                        IMAGEPROVIDERTAG,
+                        "Successfully copied $oldLockNightFile to $newLockNightFile"
+                    )
                     oldLockNightFile.delete()
                 } else {
                     Log.e(IMAGEPROVIDERTAG, "Could not copy $oldLockNightFile to $newLockNightFile")

@@ -381,7 +381,6 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
         val primary =
             pref.getString(context.getString(R.string.pref_wallpaper_colors_primary_day_key), null)
                 ?.toIntOrNull()
-                ?.takeUnless { it == Color.TRANSPARENT }
                 ?: return null
         val secondary = pref.getString(
             context.getString(R.string.pref_wallpaper_colors_secondary_day_key),
@@ -540,6 +539,18 @@ class Preferences(mContext: Context, private val prefFile: StringRes) {
             putBoolean(
                 context.getString(R.string.pref_wallpaper_colors_custom_night_key),
                 value
+            )
+        }
+
+    var luxThreshold: Int
+        get() = pref.getString(
+            context.getString(R.string.pref_lux_threshold_key),
+            context.getString(R.string.pref_lux_threshold_default)
+        )?.toIntOrNull()?.takeIf { it > 0 } ?: -1
+        set(value) = pref.edit {
+            putString(
+                context.getString(R.string.pref_lux_threshold_key),
+                value.toString()
             )
         }
 

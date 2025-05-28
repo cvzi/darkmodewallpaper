@@ -54,6 +54,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.Companion.isPhotoPickerAvailable
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
 import com.github.cvzi.darkmodewallpaper.databinding.DialogColorBinding
 import com.google.android.renderscript.Toolkit
 import java.io.File
@@ -68,8 +70,6 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
-import androidx.core.graphics.createBitmap
-import androidx.core.graphics.scale
 
 const val UTILSTAG = "Utils.kt"
 
@@ -858,6 +858,7 @@ fun checkeredBackground(): Bitmap {
 
 fun Activity.colorChooserDialog(
     title: String,
+    showAlpha: Boolean,
     getColor: (() -> Int),
     storeColor: ((color: Int) -> Unit)
 ) {
@@ -875,16 +876,17 @@ fun Activity.colorChooserDialog(
     builder.show()
     dialogBinding.colorPicker.apply {
         color = getColor()
-        showAlpha(true)
+        showAlpha(showAlpha)
         showHex(true)
     }
 }
 
 fun Activity.colorChooserDialog(
     title: StringRes,
+    showAlpha: Boolean,
     getColor: (() -> Int),
     storeColor: ((color: Int) -> Unit)
-) = colorChooserDialog(getString(title), getColor, storeColor)
+) = colorChooserDialog(getString(title), showAlpha, getColor, storeColor)
 
 class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
     private var primaryColor: Color = wallpaperColors?.primaryColor ?: Color.valueOf(Color.WHITE)
@@ -904,6 +906,21 @@ class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
 
     fun setTertiaryColor(color: Int): WallpaperColorsEditor {
         tertiaryColor = Color.valueOf(color)
+        return this
+    }
+
+    fun setPrimaryColor(color: Color): WallpaperColorsEditor {
+        primaryColor = color
+        return this
+    }
+
+    fun setSecondaryColor(color: Color): WallpaperColorsEditor {
+        secondaryColor = color
+        return this
+    }
+
+    fun setTertiaryColor(color: Color): WallpaperColorsEditor {
+        tertiaryColor = color
         return this
     }
 
@@ -953,6 +970,29 @@ class WallpaperColorsEditor(wallpaperColors: WallpaperColors?) {
  * Use .build() to get a new WallpaperColors object
  */
 fun WallpaperColors?.edit() = WallpaperColorsEditor(this)
+
+/**
+ * Mix two WallpaperColors
+ */
+fun mix(custom: WallpaperColors, calculated: WallpaperColors?): WallpaperColors {
+    val ce = WallpaperColorsEditor(custom)
+    if (calculated == null) {
+        return ce.build()
+    }
+    if (custom.primaryColor.toArgb() == Color.TRANSPARENT) {
+        ce.setPrimaryColor(calculated.primaryColor)
+    }
+    val calculatedSecondaryColor = custom.secondaryColor
+    if ((custom.secondaryColor == null || custom.secondaryColor?.toArgb() == Color.TRANSPARENT) && calculatedSecondaryColor != null) {
+        ce.setSecondaryColor(calculatedSecondaryColor)
+    }
+    val calculatedTertiaryColor = custom.tertiaryColor
+    if ((custom.tertiaryColor == null || custom.tertiaryColor?.toArgb() == Color.TRANSPARENT) && calculatedTertiaryColor != null) {
+        ce.setTertiaryColor(calculatedTertiaryColor)
+    }
+    return ce.build()
+}
+
 
 fun Context.setHtmlText(
     textView: TextView,

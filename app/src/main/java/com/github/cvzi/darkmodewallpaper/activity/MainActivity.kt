@@ -56,6 +56,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.github.cvzi.darkmodewallpaper.DAY
@@ -97,7 +98,6 @@ import java.util.Locale
 import kotlin.math.exp
 import kotlin.math.log
 import kotlin.math.max
-import androidx.core.net.toUri
 
 /**
  * Wallpaper settings
@@ -152,7 +152,10 @@ open class MainActivity : AppCompatActivity() {
 
         // Try moving preferences to device protected storage
         Preferences.movePreferencesToDeviceProtectedStorage(this, getString(R.string.pref_file))
-        Preferences.movePreferencesToDeviceProtectedStorage(this, getString(R.string.pref_file_lock_screen))
+        Preferences.movePreferencesToDeviceProtectedStorage(
+            this,
+            getString(R.string.pref_file_lock_screen)
+        )
         // Move lock screen images to device protected storage
         StaticDayAndNightProvider(this).moveFilesToDeviceProtectedStorage()
 
@@ -350,7 +353,7 @@ open class MainActivity : AppCompatActivity() {
             )
         )
         binding.imageButtonColorDay.setOnClickListener {
-            colorChooserDialog(R.string.color_chooser_day, {
+            colorChooserDialog(R.string.color_chooser_day, showAlpha = true, {
                 imageProvider.getColor(DAY, isLockScreenActivity)
             }, { color ->
                 imageProvider.setColor(DAY, isLockScreenActivity, color)
@@ -369,7 +372,7 @@ open class MainActivity : AppCompatActivity() {
             )
         )
         binding.imageButtonColorNight.setOnClickListener {
-            colorChooserDialog(R.string.color_chooser_night, {
+            colorChooserDialog(R.string.color_chooser_night, showAlpha = true, {
                 imageProvider.getColor(NIGHT, isLockScreenActivity)
             }, { color ->
                 imageProvider.setColor(NIGHT, isLockScreenActivity, color)
@@ -418,7 +421,8 @@ open class MainActivity : AppCompatActivity() {
         onTriggerModeChanged(binding.switchTriggerSystem.isChecked)
 
         binding.textViewStartTime.setOnClickListener {
-            createTimePicker(this,
+            createTimePicker(
+                this,
                 load = { binding.textViewStartTime.text.toString() },
                 save = { v ->
                     binding.textViewStartTime.text = v
@@ -867,7 +871,8 @@ open class MainActivity : AppCompatActivity() {
         previewView: PreviewView, switchColor: SwitchMaterial, isDayOrNight: DayOrNight
     ) {
         var shownHintBlurNotAvailable = false
-        openAdvancedLayout(previewView,
+        openAdvancedLayout(
+            previewView,
             imageProvider.getColor(isDayOrNight, isLockScreenActivity),
             imageProvider.getContrast(isDayOrNight, isLockScreenActivity),
             imageProvider.getBrightness(isDayOrNight, isLockScreenActivity),
@@ -1175,7 +1180,8 @@ open class MainActivity : AppCompatActivity() {
 
             textStatusScrolling.text = DarkWallpaperService.statusScrolling.toString()
 
-            textStatusZoom.text = String.format(Locale.getDefault(), "%.2f", DarkWallpaperService.statusZoom)
+            textStatusZoom.text =
+                String.format(Locale.getDefault(), "%.2f", DarkWallpaperService.statusZoom)
 
             textWallpaperColors.text = colors?.toPrettyString() ?: "Not requested yet"
 

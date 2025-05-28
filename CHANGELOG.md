@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0
+*   Add option to switch to night wallpaper with ambient light sensor if environment is dark
+*   Dependency updates
+
 ## 1.8.0
 *   Allow animation from lock-screen to home-screen without images i.ie "only color"-mode
 *   Add "Check for updates" button to About-screen
@@ -32,7 +36,7 @@
 *   Fix a memory leak
 
 ## 1.6.5
-*   Dependency updates**
+*   Dependency updates
 
 ## 1.6.4
 *   Translations updated
