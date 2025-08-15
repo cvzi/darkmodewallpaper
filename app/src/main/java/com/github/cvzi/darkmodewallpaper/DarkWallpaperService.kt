@@ -1382,6 +1382,7 @@ class DarkWallpaperService : WallpaperService() {
         blur: Float?,
         absolutePath: String
     ): String {
-        return "${resources.configuration.orientation} $width $height $desiredWidth $desiredHeight $brightness $contrast $blur $absolutePath"
+        // TODO check why Lawnchair changes desiredWith when scrolling the wallpaper
+        return "${resources.configuration.orientation} $width $height desiredWidth $desiredHeight $brightness $contrast $blur $absolutePath"
     }
 }
