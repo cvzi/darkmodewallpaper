@@ -50,6 +50,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import android.window.OnBackInvokedCallback
 import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -133,16 +134,7 @@ open class MainActivity : AppCompatActivity() {
 
     private var importFileThread: Thread? = null
 
-    private val onBackInvokedCallback: OnBackInvokedCallback? =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Handle back button for Android 13+
-            OnBackInvokedCallback {
-                val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
-                if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
-                    goBackFromAdvancedLayout()
-                }
-            }
-        } else null
+    private lateinit var advancedLayoutBackPressedCallback: OnBackPressedCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -473,6 +465,22 @@ open class MainActivity : AppCompatActivity() {
 
         setHtmlText(binding.textViewDonate, DONATE_HTML)
 
+        advancedLayoutBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
+                if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
+                    goBackFromAdvancedLayout()
+                } else {
+                    if (isEnabled) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                    }
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, advancedLayoutBackPressedCallback)
+
         if (intent != null && (intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_ATTACH_DATA) && intent.type?.startsWith(
                 "image/"
             ) == true
@@ -738,10 +746,7 @@ open class MainActivity : AppCompatActivity() {
         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = false
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // This is no longer used on Android 13+/Tiramisu
-        // See onBackInvokedCallback for Android 13+
         val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
         if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
             goBackFromAdvancedLayout()
@@ -1012,14 +1017,7 @@ open class MainActivity : AppCompatActivity() {
 
         setPreviewDimension(previewView, 3, 1, 2)
 
-        // Handle back button on Android 13
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            onBackInvokedCallback?.let {
-                onBackInvokedDispatcher.registerOnBackInvokedCallback(
-                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, onBackInvokedCallback
-                )
-            }
-        }
+        advancedLayoutBackPressedCallback.isEnabled = true
     }
 
     private fun revertAdvancedLayout(layoutAdvanced: ViewGroup) {
@@ -1046,12 +1044,7 @@ open class MainActivity : AppCompatActivity() {
 
         previewViewLayoutIndex = -1
 
-        // Remove handler for back button on Android 13
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            onBackInvokedCallback?.let {
-                onBackInvokedDispatcher.unregisterOnBackInvokedCallback(onBackInvokedCallback)
-            }
-        }
+        advancedLayoutBackPressedCallback.isEnabled = false
     }
 
     private fun goBackFromAdvancedLayout() {
