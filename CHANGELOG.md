@@ -1,8 +1,11 @@
 # Changelog
 
+## 1.9.1
+*   Bugfix for lawnchair
+
 ## 1.9.0
 *   Add option to switch to night wallpaper with ambient light sensor if environment is dark
-*   Dependency updates
+*   Dependency updates**
 
 ## 1.8.0
 *   Allow animation from lock-screen to home-screen without images i.ie "only color"-mode
