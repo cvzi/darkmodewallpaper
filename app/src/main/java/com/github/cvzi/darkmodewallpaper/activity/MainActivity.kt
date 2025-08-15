@@ -48,8 +48,6 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.Toast
-import android.window.OnBackInvokedCallback
-import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -744,16 +742,6 @@ open class MainActivity : AppCompatActivity() {
                     DarkWallpaperService.invalidate(forceReload = true)
                 }.show()
         alert?.getButton(AlertDialog.BUTTON_POSITIVE)?.isVisible = false
-    }
-
-    override fun onBackPressed() {
-        val layoutAdvanced = findViewById<ViewGroup?>(R.id.layoutAdvanced)
-        if (previewViewLayoutIndex >= 0 && layoutAdvanced != null) {
-            goBackFromAdvancedLayout()
-        } else {
-            @Suppress("DEPRECATION")
-            super.onBackPressed()
-        }
     }
 
     private fun openAdvancedDialog(dayOrNight: DayOrNight) {
