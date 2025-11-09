@@ -45,11 +45,11 @@ There are three ways to load an image as a wallpaper:
 
 ## Translate
 
-To help translate this app, please visit [crowdin.com/project/darkmodewallpaper](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on), where the localizations are managed. If you like to add a new language, please open an issue or email me and I will add it.
+To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]([https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on](https://crowdin.com/project/darkmodewallpaper)), where the localizations are managed. If you like to add a new language, please open an issue or email me and I will add it.
 
 [<image src="https://badges.crowdin.net/badge/dark/crowdin-on-light.png"
      alt="Crowdin | Agile localization for tech companies"
-     height="40">](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on)
+     height="40">](https://crowdin.com/project/darkmodewallpaper)
 
 ## Screenshots
 
