@@ -34,13 +34,13 @@ jobs:
     - name: 🔨 Build
       run: ./gradlew build
     - name: Upload .apk files
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: apk-files
         path: app/build/outputs/apk/**/*.apk
     - name: 💬 Upload Lint report
       if: always()
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: lint-results.html
         path: app/build/reports/lint-results*.html
