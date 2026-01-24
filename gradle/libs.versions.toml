@@ -6,7 +6,7 @@ ndk = "29.0.13113456"
 jvm = "17"
 
 agp = "8.13.2"
-kotlin = "2.2.20"
+kotlin = "2.3.0"
 licensereport = "0.9.8"
 
 cardview = "1.0.0"
