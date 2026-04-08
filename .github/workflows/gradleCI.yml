@@ -28,7 +28,7 @@ jobs:
     - name: Validate Gradle Wrapper
       uses: gradle/actions/wrapper-validation@v6
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v4
       with:
         log-accepted-android-sdk-licenses: false
     - name: 🔨 Build
