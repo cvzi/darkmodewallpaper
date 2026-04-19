@@ -24,6 +24,10 @@ Also supports animated GIF and WebP animations.
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=com.github.cvzi.darkmodewallpaper)
 
+Consider [donating to F-Droid](https://f-droid.org/donate/).
+
+$\textcolor{#D00000}{\textsf{F-Droid is under threat. Google is changing the way you install apps on your device:}}$  https://keepandroidopen.org/
+
 This app requires Android 10 or a later version. If you are using an earlier version of Android, you may be able to
 achieve a comparable experience by using MacroDroid, Tasker or a similar automation tool.
 
