@@ -94,4 +94,12 @@ Beroende på bakgrundsfärgerna kan det här skapa flimmer på skärmen.
 Normalt sett sänds färgerna genast efter att du låser upp telefonen.
 Ändra den här inställningen till \"Vänta\" om du ser flimmer, och färgerna kommer istället att sändas när du öppnar appen.]]></string>
     <string name="blur_unavailable_in_animations">Kan inte göra animerade bilder oskarpa</string>
+    <string name="setting_inform_wallpaper_colors_heading">Informera Android om färgerna i låsskärmens bakgrund</string>
+    <string name="setting_inform_wallpaper_colors_description">Om du fortfarande ser flimmer kan du prova att inaktivera \"Informera Android om färgerna i låsskärmens bakgrund\".</string>
+    <string name="setting_clear_memory_heading">Ta automatiskt bort bakgrundsbilder ur minnet</string>
+    <string name="setting_clear_memory_description">Om din enhet börjar få slut på minne kan Android be appar frigöra minne. Om detta alternativ är aktiverat kommer appen att ta bort bakgrundsbilderna ur minnet.</string>
+    <string name="setting_manual_colors_heading">Ställ in färgerna som Android och startskärmsappen mottar</string>
+    <string name="setting_manual_colors_description">Färgerna kan användas av startskärmsappen för att modifiera textfärg, färg i applistan osv.\nVanligtvis genereras färgerna från bakgrundsbilden. Aktivera brytarna för att välja upp till tre olika färger:</string>
+    <string name="setting_button_insert_current_values">Infoga nuvarande värden</string>
+    <string name="setting_button_apply">Tillämpa</string>
 </resources>
