@@ -7,7 +7,7 @@ jvm = "17"
 
 agp = "8.13.2"
 kotlin = "2.3.21"
-licensereport = "0.9.8"
+licensereport = "0.9.91"
 
 cardview = "1.0.0"
 material = "1.14.0"
