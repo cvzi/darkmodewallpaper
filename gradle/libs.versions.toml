@@ -13,7 +13,7 @@ cardview = "1.0.0"
 material = "1.14.0"
 colorPicker = "3.1.0"
 appcompat = "1.6.1"
-activity = "1.8.0"
+activity = "1.13.0"
 constraintlayout = "2.1.4"
 
 [libraries]
