@@ -44,7 +44,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 
     <string name="about_translate" translatable="false"><![CDATA[Would you like to help us translate this app into other languages?
 <br>
-Contribute your translation on <a href="https://crwd.in/darkmodewallpaper">crwd.in/darkmodewallpaper</a> or <a href="mailto:cuzi-android@openmail.cc?subject=Translate%%20DarkModeLiveWallpaper%%20app">email me</a> if you need help translating.
+Contribute your translation on <a href="https://crowdin.com/project/darkmodewallpaper">crowdin.com/project/darkmodewallpaper</a> or <a href="mailto:cuzi-android@openmail.cc?subject=Translate%%20DarkModeLiveWallpaper%%20app">email me</a> if you need help translating.
 ]]></string>
 
     <string name="wallpaper_import_denied" translatable="false">Permission to import wallpaper was denied. If you did not see a permission dialog to allow the permission, Android 13+ has denied the permission automatically.\n\nHowever you can export the current wallpaper with a separate app and then import the image to this app.\n\nGo to separate app?\n\nhttps://f-droid.org/packages/com.github.cvzi.wallpaperexport/</string>
