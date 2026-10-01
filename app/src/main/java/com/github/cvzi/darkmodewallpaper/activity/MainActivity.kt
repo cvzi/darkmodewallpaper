@@ -1008,7 +1008,9 @@ open class MainActivity : AppCompatActivity() {
         advancedLayoutBackPressedCallback.isEnabled = true
     }
 
-    private fun revertAdvancedLayout(layoutAdvanced: ViewGroup) {
+    private fun revertAdvancedLayout(layoutAdvanced: ViewGroup?) {
+        layoutAdvanced ?: return
+
         // Remove advanced view
         val linearLayout = layoutAdvanced.parent as LinearLayout
         val previewView = linearLayout.findViewWithTag<PreviewView>("previewView")
@@ -1019,7 +1021,6 @@ open class MainActivity : AppCompatActivity() {
         linearLayout.children.forEach { child ->
             child.visibility = View.VISIBLE
         }
-
         // Restore lock screen switch
         if (isLockScreenActivity) {
             binding.cardViewLockScreenSwitch.visibility = View.VISIBLE
