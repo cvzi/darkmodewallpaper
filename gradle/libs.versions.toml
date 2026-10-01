@@ -6,15 +6,15 @@ ndk = "30.0.16248370"
 jvm = "17"
 
 agp = "9.4.1"
-kotlin = "2.3.21"
+kotlin = "2.4.20"
 licensereport = "0.9.91"
 
 cardview = "1.0.0"
 material = "1.14.0"
 colorPicker = "3.1.0"
-appcompat = "1.6.1"
-activity = "1.8.0"
-constraintlayout = "2.1.4"
+appcompat = "1.8.0"
+activity = "1.13.0"
+constraintlayout = "2.2.2"
 
 [libraries]
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
