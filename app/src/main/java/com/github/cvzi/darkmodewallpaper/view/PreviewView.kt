@@ -31,6 +31,7 @@ import android.view.View
 import com.github.cvzi.darkmodewallpaper.blur
 import com.github.cvzi.darkmodewallpaper.loadImageFile
 import com.github.cvzi.darkmodewallpaper.scaleBitmap
+import kotlinx.coroutines.runInterruptible
 import java.io.File
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
@@ -190,7 +191,10 @@ class PreviewView @JvmOverloads constructor(
                     if (bitmap != null) {
                         bitmaps[key] = WeakReference(bitmap)
                     }
-                    invalidate()
+
+                    post {
+                        invalidate()
+                    }
                 }
             }
         }.apply {

@@ -679,24 +679,24 @@ fun Color?.toPrettyString() = this?.let {
 /**
  * Turn WallpaperColors to readable text
  */
-fun WallpaperColors.toPrettyString() =
-    "${primaryColor.toPrettyString()} ${secondaryColor.toPrettyString()} ${tertiaryColor.toPrettyString()} ${
+fun WallpaperColors.toPrettyString(prefix: String="") =
+    "${prefix}${primaryColor.toPrettyString()} ${secondaryColor.toPrettyString()} ${tertiaryColor.toPrettyString()} ${
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            "\n" + prettyColorHints()
+            "\n" + prettyColorHints(prefix)
         } else ""
     }"
 
 /**
  * Turn WallpaperColors.colorHints to readable text
  */
-fun WallpaperColors.prettyColorHints(): String {
-    var s = "Dark text supported: "
+fun WallpaperColors.prettyColorHints(prefix: String=""): String {
+    var s = "${prefix}Dark text supported: "
     s += when (supportsDarkText) {
         true -> "yes"
         false -> "no"
         else -> "undefined"
     }
-    s += "\nDark theme supported: "
+    s += "\n${prefix}Dark theme supported: "
     s += when (supportsDarkTheme) {
         true -> "yes"
         false -> "no"

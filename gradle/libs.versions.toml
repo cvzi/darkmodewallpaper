@@ -2,7 +2,7 @@
 sdk-target= "36"
 sdk-compile = "36"
 sdk-min = "29"
-ndk = "29.0.13113456"
+ndk = "30.0.16248370"
 jvm = "17"
 
 agp = "8.13.0"
@@ -12,11 +12,17 @@ licensereport = "0.9.8"
 cardview = "1.0.0"
 material = "1.13.0"
 colorPicker = "3.1.0"
+appcompat = "1.6.1"
+activity = "1.8.0"
+constraintlayout = "2.1.4"
 
 [libraries]
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 color-picker = { module = "com.github.martin-stone:hsv-alpha-color-picker-android", version.ref = "colorPicker" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 [bundles]
 implementation-app = [
