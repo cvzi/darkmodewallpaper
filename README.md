@@ -24,6 +24,10 @@ Also supports animated GIF and WebP animations.
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=com.github.cvzi.darkmodewallpaper)
 
+Consider [donating to F-Droid](https://f-droid.org/donate/).
+
+$\textcolor{#D00000}{\textsf{F-Droid is under threat. Google is changing the way you install apps on your device:}}$  https://keepandroidopen.org/
+
 This app requires Android 10 or a later version. If you are using an earlier version of Android, you may be able to
 achieve a comparable experience by using MacroDroid, Tasker or a similar automation tool.
 
@@ -45,11 +49,11 @@ There are three ways to load an image as a wallpaper:
 
 ## Translate
 
-To help translate this app, please visit [crowdin.com/project/darkmodewallpaper](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on), where the localizations are managed. If you like to add a new language, please open an issue or email me and I will add it.
+To help translate this app, please visit [crowdin.com/project/darkmodewallpaper]([https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on](https://crowdin.com/project/darkmodewallpaper)), where the localizations are managed. If you like to add a new language, please open an issue or email me and I will add it.
 
 [<image src="https://badges.crowdin.net/badge/dark/crowdin-on-light.png"
      alt="Crowdin | Agile localization for tech companies"
-     height="40">](https://crwd.in/darkmodewallpaper?utm_source=badge&utm_medium=referral&utm_campaign=badge-add-on)
+     height="40">](https://crowdin.com/project/darkmodewallpaper)
 
 ## Screenshots
 
