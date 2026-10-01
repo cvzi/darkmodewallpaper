@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.2
+*   Update translations
+*   Include Android developer verification
+
 ## 1.9.1
 *   Bugfix for lawnchair
 
