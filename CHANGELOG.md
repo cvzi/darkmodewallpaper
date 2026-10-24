@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.3
+*   Improve advanced settings layout
+
 ## 1.9.2
 *   Update translations
 *   Include Android developer verification
